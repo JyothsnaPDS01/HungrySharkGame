@@ -20,6 +20,7 @@ namespace SharkGame
         private Quaternion targetRotation;  // The target rotation based on input
         private bool isMoving;              // Whether the shark is currently moving
         private bool isTransitioning = false; // To manage transition state
+        private bool transitionStarted = false;
 
         private SharkGameDataModel.SharkDirection _currentSharkDirection;
         private SharkGameDataModel.SharkDirection _previousSharkDirection;
@@ -54,68 +55,136 @@ namespace SharkGame
         private Vector3 velocity = Vector3.zero; // Current velocity
         [SerializeField] private float smoothSpeed = 2f; // Speed of smoothing
 
+        private bool transitionCompleted = false; // Flag to track if the transition is completed
         void FixedUpdate()
         {
-            // Check if the initial movement is completed
             if (initialMovementCompleted)
             {
-                // Handle smooth transition if it is in progress
+                // Detect all input
+                float horizontalInput = Input.GetAxis("Horizontal");
+                float verticalInput = Input.GetAxis("Vertical");
+
+                // Determine if "up" input is given
+                bool upKeyPressed = verticalInput > 0 && Mathf.Approximately(horizontalInput, 0); // Only "up" input, no horizontal input
+                bool noInput = Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0); // No input is given
+
+                // Debugging input and position
+                Debug.Log($"Horizontal Input: {horizontalInput}, Vertical Input: {verticalInput}");
+                Debug.Log($"Up Key Pressed: {upKeyPressed}, No Input: {noInput}");
+                Debug.Log($"Y Position: {transform.position.y}, Transitioning: {isTransitioning}, Transition Started: {transitionStarted}, Transition Completed: {transitionCompleted}");
+
+                // Check if transition is in progress
                 if (isTransitioning)
                 {
-                    StartCoroutine(HandleSmoothTransition());
+                    // If transitioning, do nothing and let the coroutine handle the movement
+                    return;
                 }
+
+                // Check if we are in the transition range
+                if (_sharkRB.position.y >= -1f && _sharkRB.position.y <= 0f)
+                {
+                    Debug.Log("Condition met for transition range");
+
+                    // Start the smooth transition if no input or "up" key is pressed and within Y range
+                    if ((noInput || upKeyPressed) && !transitionCompleted)
+                    {
+                        if (!transitionStarted)
+                        {
+                            Debug.Log("Starting smooth transition");
+                            StartSmoothTransition();
+                        }
+                    }
+                }
+
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+
+                }
+
                 else
                 {
-                    // Start the smooth transition if conditions are met
-                    if (transform.position.y >= -1f)
-                    {
-                        StartSmoothTransition();
-                    }
+                    // Reset transition flags if outside of the transition range
+                    transitionCompleted = false; // Allow transition to start again if conditions are met in the future
+                }
 
-                    // Regular movement and rotation handling
+                // Handle input and movement after transition is complete
+                if (transitionCompleted || !isTransitioning)
+                {
+                    // Handle movement and rotation based on input
                     HandleMovement();
                     HandleRotation();
                 }
             }
         }
-        float transitionElapsedTime;
-        Vector3 transitionStartPosition;
+
+        private void StartSmoothTransition()
+        {
+            // Ensure we only start the transition if it's not already in progress
+            if (isTransitioning || transitionStarted) return;
+
+            isTransitioning = true;
+            transitionStarted = true; // Mark the transition as started
+            transitionCompleted = false; // Reset the completion flag for new transitions
+
+            StartCoroutine(HandleSmoothTransition());
+        }
 
         private IEnumerator HandleSmoothTransition()
         {
             float elapsedTime = 0f;
+            float duration = 0.5f; // Duration for the smooth transition
 
             Vector3 initialPosition = _sharkRB.position;
             transitionTargetPosition = new Vector3(_sharkRB.position.x, 0, _sharkRB.position.z);
 
-            while (elapsedTime < .5f)
+            while (elapsedTime < duration)
             {
-                float t = elapsedTime / .5f;
+                float t = elapsedTime / duration;
 
-                // Move and rotate the shark smoothly
+                // Move the shark smoothly to the target position
                 _sharkRB.MovePosition(Vector3.Lerp(initialPosition, transitionTargetPosition, t));
 
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
-            // Ensure final position and rotation are set correctly
+            // Ensure the shark reaches the final target position
             _sharkRB.MovePosition(transitionTargetPosition);
 
-            // Stop the transition and finalize the position
+            // Stop the transition movement
             _sharkRB.velocity = Vector3.zero;
+
+            // Start the smooth rotation after the transition
+            yield return StartCoroutine(HandleSmoothRotation());
+
+            // Reset transition flags
             isTransitioning = false;
-            
+            transitionStarted = false; // Allow future transitions
+            transitionCompleted = true; // Mark the transition as completed
         }
 
-        private void StartSmoothTransition()
+        private IEnumerator HandleSmoothRotation()
         {
-            isTransitioning = true;
-            transitionElapsedTime = 0f;
-            transitionStartPosition = _sharkRB.position;
-            velocity = Vector3.zero; // Reset the velocity
-        }
+            Quaternion _targetRotation = Quaternion.Euler(0, 90, 0);
+            Quaternion initialRotation = _sharkRB.rotation;
 
+            float elapsedTime = 0f;
+            float duration = 1f; // Duration for the smooth rotation
+
+            while (elapsedTime < duration)
+            {
+                float t = elapsedTime / duration;
+
+                // Smoothly rotate the shark
+                _sharkRB.MoveRotation(Quaternion.Slerp(initialRotation, _targetRotation, t));
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure final rotation is set correctly
+            _sharkRB.MoveRotation(_targetRotation);
+        }
 
         private IEnumerator InitialSharkMovement()
         {
@@ -124,7 +193,7 @@ namespace SharkGame
             Quaternion _targetRotation = Quaternion.Euler(90, 90, -90);
 
             Vector3 initialPosition = _sharkRB.position;
-            Vector3 targetPosition = initialPosition + new Vector3(0, -5, 0);
+            Vector3 targetPosition = initialPosition + new Vector3(0, -3, 0);
 
             while (elapsedTime < 1f)
             {
@@ -152,7 +221,27 @@ namespace SharkGame
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
-            // Only proceed with movement if there's input
+            //// Define target positions based on input and current position
+            //float targetYPosition = transform.position.y; // Default to current Y position
+            //if (verticalInput > 0 && transform.position.y <= -1f) // Move up if "up" arrow is pressed
+            //{
+            //    targetYPosition = -2f; // Target Y position for "up" movement
+            //}
+            //else if (verticalInput < 0 && transform.position.y >= -23f) // Move down if "down" arrow is pressed
+            //{
+            //    targetYPosition = -5f; // Target Y position for "down" movement
+            //}
+
+            //// Move directly to the target Y position if it's different from the current position
+            //if (targetYPosition != transform.position.y)
+            //{
+            //    Vector3 targetPosition = new Vector3(transform.position.x, targetYPosition, transform.position.z);
+
+            //    StartCoroutine(MoveSmoothTargetYPosition(targetPosition));
+            //}
+            //else
+            //{
+            // Smooth movement based on input if no direct movement is needed
             if (horizontalInput != 0 || verticalInput != 0)
             {
                 Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
@@ -175,11 +264,35 @@ namespace SharkGame
                 _sharkRB.velocity = Vector3.zero;
                 isMoving = false;
             }
+            //}
 
+            // Handle fog based on the Y position
             if (transform.position.y >= -0.5f)
+            {
                 RenderSettings.fog = false;
+            }
             else if (transform.position.y <= -0.5f)
+            {
                 EnableFog();
+            }
+        }
+
+        private IEnumerator MoveSmoothTargetYPosition(Vector3 _targetPosition)
+        {
+            float elapsedTime = 0f;
+            float duration = 10f; // Duration for the smooth rotation
+            while (elapsedTime < duration)
+            {
+                float t = elapsedTime / duration;
+                // Smoothly rotate the shark
+                _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, _targetPosition, t));
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            // Ensure final rotation is set correctly
+            _sharkRB.MovePosition(_targetPosition);
+            _sharkRB.velocity = Vector3.zero; // Stop any current velocity
         }
 
         private void EnableFog()
