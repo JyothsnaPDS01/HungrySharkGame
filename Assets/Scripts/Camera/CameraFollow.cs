@@ -4,36 +4,43 @@ namespace SharkGame
 {
     public class CameraFollow : MonoBehaviour
     {
-        public Transform target;            // The Transform of the target the camera will follow
+        public Rigidbody targetRigidbody;  // The Rigidbody of the target the camera will follow
         public Vector3 offset;             // The offset from the target position
-        public float smoothSpeed = 0.25f;  // The speed at which the camera smooths to its position (adjust for desired smoothness)
+        public float smoothSpeed = 0.125f; // Speed at which the camera smooths to its position
 
-        private Vector3 velocity = Vector3.zero;
+        private Vector3 velocity = Vector3.zero; // Velocity for smoothing
 
-        void LateUpdate()  // Use FixedUpdate to align with Rigidbody updates
+        private void LateUpdate()
         {
-            if (target == null)
+            if (targetRigidbody == null)
             {
-                Debug.LogWarning("Target Transform is not assigned.");
+                Debug.LogWarning("Target Rigidbody is not assigned.");
                 return;
             }
 
-            // Calculate the desired position based on the target's Transform position + offset
-            Vector3 desiredPosition = target.position + offset;
+            // Calculate the desired position based on the target's Rigidbody position + offset
+            Vector3 desiredPosition = targetRigidbody.position + offset;
+
+            // Debug information for tracking positions
+            Debug.Log($"Target Position: {targetRigidbody.position}");
+            Debug.Log($"Desired Camera Position: {desiredPosition}");
 
             // Smoothly interpolate between the camera's current position and the desired position
             Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothSpeed);
 
             // Set the camera's position to the smoothed position
             transform.position = smoothedPosition;
+
+            // Optionally, make the camera look at the target
+            // transform.LookAt(targetRigidbody.transform);
         }
 
-        void Start()
+        private void Start()
         {
-            // You can add additional initialization here if needed
-            if (target != null)
+            if (targetRigidbody != null)
             {
-                target.gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.None;
+                // Ensure the target's Rigidbody is set to interpolate to smooth out visual movement
+                targetRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             }
         }
     }

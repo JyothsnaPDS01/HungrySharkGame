@@ -54,6 +54,8 @@ namespace SharkGame
         [SerializeField] private float maxSpeed = 10f; // Maximum speed
         private Vector3 velocity = Vector3.zero; // Current velocity
         [SerializeField] private float smoothSpeed = 2f; // Speed of smoothing
+        private bool isParabolicJumping = false; // Flag to indicate if a parabolic jump is in progress
+
 
         private bool transitionCompleted = false; // Flag to track if the transition is completed
         void FixedUpdate()
@@ -73,11 +75,30 @@ namespace SharkGame
                 Debug.Log($"Up Key Pressed: {upKeyPressed}, No Input: {noInput}");
                 Debug.Log($"Y Position: {transform.position.y}, Transitioning: {isTransitioning}, Transition Started: {transitionStarted}, Transition Completed: {transitionCompleted}");
 
+                // Check if parabolic jump is in progress
+                if (isParabolicJumping)
+                {
+                    // Skip input handling during the parabolic jump
+                    return;
+                }
+
                 // Check if transition is in progress
                 if (isTransitioning)
                 {
                     // If transitioning, do nothing and let the coroutine handle the movement
                     return;
+                }
+
+                Debug.LogError($"Shark Y Position: {_sharkRB.position.y}");
+                const float smallThreshold = 0.001f; // A small threshold value to consider "close to zero"
+
+                if (Mathf.Abs(_sharkRB.position.y) < smallThreshold && upKeyPressed)
+                {
+                    // Start the parabolic arc if the shark is effectively at the surface (Y near zero) and "Up" key is pressed
+                    Debug.LogError("Starting parabolic jump.");
+                    isParabolicJumping = true; // Set the flag to indicate a parabolic jump is in progress
+                    StartCoroutine(HandleParabolicJump());
+                    return; // Exit to prevent further handling until jump is complete
                 }
 
                 // Check if we are in the transition range
@@ -98,9 +119,12 @@ namespace SharkGame
 
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-
+                    // Prevent processing upward input if jumping
+                    if (!isParabolicJumping)
+                    {
+                        // Handle upward input here if necessary
+                    }
                 }
-
                 else
                 {
                     // Reset transition flags if outside of the transition range
@@ -116,6 +140,65 @@ namespace SharkGame
                 }
             }
         }
+
+        private IEnumerator HandleParabolicJump()
+        {
+            float elapsedTime = 0f;
+            float duration = 1f; // Duration for the parabolic jump
+
+            Vector3 initialPosition = _sharkRB.position;
+            Quaternion initialRotation = _sharkRB.rotation; // Save the initial rotation
+
+            // Define the peak height of the parabolic jump
+            float peakHeight = 3f; // Adjust this value to control the height of the jump
+
+            // Define the target position for the end of the jump
+            Vector3 targetPosition = new Vector3(_sharkRB.position.x, 0, _sharkRB.position.z); // The landing point at water level
+
+            // Define the target rotation for the end of the jump
+            Quaternion targetRotation = Quaternion.Euler(-90, 0, -180);
+
+            while (elapsedTime < duration)
+            {
+                // Normalize elapsed time to a value between 0 and 1
+                float t = elapsedTime / duration;
+
+                // Calculate the parabolic Y position using the quadratic equation
+                float yPosition = Mathf.Lerp(initialPosition.y, targetPosition.y, t) + (4 * peakHeight * t * (1 - t));
+
+                // Combine the new Y position with linearly interpolated X and Z positions
+                Vector3 newPosition = new Vector3(
+                    Mathf.Lerp(initialPosition.x, targetPosition.x, t),
+                    yPosition,
+                    Mathf.Lerp(initialPosition.z, targetPosition.z, t)
+                );
+
+                // Smoothly rotate the shark
+                Quaternion newRotation = Quaternion.Slerp(initialRotation, targetRotation, t);
+
+                // Move and rotate the shark smoothly to the new position and rotation
+                _sharkRB.MovePosition(newPosition);
+                _sharkRB.MoveRotation(newRotation);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure the shark reaches the final target position and rotation
+            _sharkRB.MovePosition(targetPosition);
+            _sharkRB.MoveRotation(targetRotation);
+
+            // Stop any residual velocity
+            _sharkRB.velocity = Vector3.zero;
+
+            // Reset the flag to allow input after the jump
+            isParabolicJumping = false;
+        }
+
+
+
+
+
 
         private void StartSmoothTransition()
         {
@@ -151,6 +234,17 @@ namespace SharkGame
             // Ensure the shark reaches the final target position
             _sharkRB.MovePosition(transitionTargetPosition);
 
+            // Correct any floating-point precision errors
+            Vector3 correctedPosition = _sharkRB.position;
+
+            // If Y position is very close to zero, set it explicitly to 0
+            if (Mathf.Abs(correctedPosition.y) < Mathf.Epsilon)
+            {
+                correctedPosition.y = 0;
+            }
+
+            _sharkRB.MovePosition(correctedPosition);
+
             // Stop the transition movement
             _sharkRB.velocity = Vector3.zero;
 
@@ -162,6 +256,7 @@ namespace SharkGame
             transitionStarted = false; // Allow future transitions
             transitionCompleted = true; // Mark the transition as completed
         }
+
 
         private IEnumerator HandleSmoothRotation()
         {
@@ -184,7 +279,22 @@ namespace SharkGame
 
             // Ensure final rotation is set correctly
             _sharkRB.MoveRotation(_targetRotation);
+
+            // Correct any floating-point precision errors in position
+            Vector3 correctedPosition = _sharkRB.position;
+
+            // If Y position is very close to zero, set it explicitly to 0
+            if (Mathf.Abs(correctedPosition.y) < Mathf.Epsilon)
+            {
+                correctedPosition.y = 0;
+            }
+
+            _sharkRB.MovePosition(correctedPosition);
+
+            // Stop the transition movement
+            _sharkRB.velocity = Vector3.zero;
         }
+
 
         private IEnumerator InitialSharkMovement()
         {
