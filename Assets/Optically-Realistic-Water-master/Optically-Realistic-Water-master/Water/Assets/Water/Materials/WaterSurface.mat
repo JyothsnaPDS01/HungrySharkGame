@@ -50,5 +50,5 @@ Material:
     - _WaveScale: 1
     - _WindSpeed: 0.6
     m_Colors:
-    - _ScatterColor: {r: 0, g: 1, b: 0.9806142, a: 1}
+    - _ScatterColor: {r: 1, g: 0.7111672, b: 0.06132078, a: 1}
     - _WindDirection: {r: -0.5, g: -0.8, b: 0, a: 0}
