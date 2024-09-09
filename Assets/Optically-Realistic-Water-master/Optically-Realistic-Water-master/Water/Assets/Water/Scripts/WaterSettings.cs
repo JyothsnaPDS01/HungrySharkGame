@@ -18,7 +18,6 @@ public class WaterSettings
 		aberrationAmount = .002f,
 		mudExtinction = new Color(1f, .7f, .5f),
 		waterExtinction = new Color(.6f, .8f, 1f),
-		sunExtinction = new Color(.45f, .55f, .7f)
 	};
 		
 	public Texture2D normalTexture;
@@ -33,5 +32,11 @@ public class WaterSettings
 	public float aberrationAmount;
 	public Color mudExtinction;
 	public Color waterExtinction;
-	public Color sunExtinction;
+	public static Color sunExtinction = Color.white;
+
+	public static void SetSunExtinctionColor(Color color)
+	{
+		sunExtinction = color;
+	}
+
 }

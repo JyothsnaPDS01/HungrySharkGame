@@ -27,7 +27,8 @@ namespace SharkGame.Models
             GoldenSmallFish,
             Chaetodon_Collare,
             Chelmon_Rostratus,
-            CoralBeauty
+            CoralBeauty,
+            ZebraSoma
         }
 
         [System.Serializable]

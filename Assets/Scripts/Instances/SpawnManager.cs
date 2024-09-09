@@ -11,6 +11,7 @@ namespace SharkGame
         [Header("Eatable Fish Components")]
         [SerializeField] private float spawnDistance = 1f;
         [SerializeField] private float spreadRange = 8f;
+        [SerializeField] private float clusterRadius = 2f; // Radius of the fish cluster
 
         [Header("Player Shark")]
         [SerializeField] private Transform _playerShark;
@@ -91,12 +92,12 @@ namespace SharkGame
             {
                 spawnPoint = new Vector3(_playerShark.position.x + spreadRange, _playerShark.position.y, _playerShark.position.z);
             }
-            else if(_sharkDirection == SharkGameDataModel.SharkDirection.Down)
+            else if (_sharkDirection == SharkGameDataModel.SharkDirection.Down)
             {
-                spawnPoint = new Vector3(_playerShark.position.x, _playerShark.position.y-spreadRange, _playerShark.position.z);
+                spawnPoint = new Vector3(_playerShark.position.x, _playerShark.position.y - spreadRange, _playerShark.position.z);
             }
 
-            int _spawnCount = Random.Range(4, 7);
+            int _spawnCount = Random.Range(6, 10);
             spawnedPositions.Clear();
 
             for (int i = 0; i < _spawnCount; i++)
@@ -107,8 +108,8 @@ namespace SharkGame
                 // Ensure the spawn position is valid
                 while (!validPosition)
                 {
-                    spawnPosition = GenerateSpawnPosition(spawnPoint);
-                    spawnPosition.y = Mathf.Clamp(spawnPosition.y, -20f, -0.5f);
+                    spawnPosition = GenerateClusteredSpawnPosition(spawnPoint);
+                    spawnPosition.y = Mathf.Clamp(spawnPosition.y, -20f, -1f);
 
                     if (IsPositionValid(spawnPosition))
                     {
@@ -122,22 +123,17 @@ namespace SharkGame
                             Quaternion.Euler(0, 90, 0)
                         );
 
-                        //if (_gamePlayObjectsParent != null)
-                        //{
-                        //    obj.transform.SetParent(_gamePlayObjectsParent);
-                        //}
-
-                        // Introduce delay between successive spawns
                         yield return new WaitForSeconds(spawnDelay);
                     }
                 }
             }
         }
 
-        private Vector3 GenerateSpawnPosition(Vector3 basePosition)
+        private Vector3 GenerateClusteredSpawnPosition(Vector3 basePosition)
         {
+            // Generate a position within a cluster radius around the base position
             float angle = Random.Range(0f, 360f);
-            float distance = Random.Range(spawnDistance, spreadRange);
+            float distance = Random.Range(0f, clusterRadius); // Use cluster radius
 
             float radian = angle * Mathf.Deg2Rad;
 
@@ -200,7 +196,6 @@ namespace SharkGame
 
             return false;
         }
-
 
         private SharkGameDataModel.SmallFishType GetRandomSmallFishType()
         {

@@ -117,7 +117,7 @@ public class Water : MonoBehaviour
 		// make up our own light direction if no light could be found
 		// (just avoids tedious null checks later on)
 		var lightDir = sunLight ? sunLight.transform.forward : -Vector3.one.normalized;
-		var transmittance = WaterUtility.GetTransmittance(lightDir, settings.sunExtinction.ToVector3());
+		var transmittance = WaterUtility.GetTransmittance(lightDir, WaterSettings.sunExtinction.ToVector3());
 		
 		float sunFade = Mathf.Clamp01((.1f - lightDir.y) * 10);
 		float scatterFade = Mathf.Clamp01((.15f - lightDir.y) * 4);

@@ -89,7 +89,6 @@ namespace SharkGame
                     return;
                 }
 
-                Debug.LogError($"Shark Y Position: {_sharkRB.position.y}");
                 const float smallThreshold = 0.001f; // A small threshold value to consider "close to zero"
 
                 if (Mathf.Abs(_sharkRB.position.y) < smallThreshold && upKeyPressed)
