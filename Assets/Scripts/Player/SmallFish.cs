@@ -45,11 +45,8 @@ namespace SharkGame
 
         private void FixedUpdate()
         {
-            // Only move the fish if the player is nearby
-            if (_isPlayerNearby)
-            {
-                MoveTheSmallFish();
-            }
+            // Move the fish continuously
+            MoveTheSmallFish();
         }
         #endregion
 

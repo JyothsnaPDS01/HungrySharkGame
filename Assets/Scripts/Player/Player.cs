@@ -17,6 +17,12 @@ namespace SharkGame
 
         [SerializeField] private Color _fogColor;
 
+        [SerializeField] private GameObject _waterSplashEffect; // Reference to the splash effect
+        [SerializeField] private Transform _splashEffectPosition; // Position for the splash effect
+
+        private bool isSplashing = false; // Flag to track if splashing
+
+
         private Quaternion targetRotation;  // The target rotation based on input
         private bool isMoving;              // Whether the shark is currently moving
         private bool isTransitioning = false; // To manage transition state
@@ -90,9 +96,10 @@ namespace SharkGame
                 }
 
                 const float smallThreshold = 0.001f; // A small threshold value to consider "close to zero"
+                const float yTargetValue = -0.002501681f; // New target Y value for surface interactions
 
-                if (Mathf.Abs(_sharkRB.position.y) < smallThreshold && upKeyPressed)
-                {
+                if (Mathf.Abs(_sharkRB.position.y - yTargetValue) < smallThreshold && upKeyPressed)
+                    {
                     // Start the parabolic arc if the shark is effectively at the surface (Y near zero) and "Up" key is pressed
                     Debug.LogError("Starting parabolic jump.");
                     isParabolicJumping = true; // Set the flag to indicate a parabolic jump is in progress
@@ -136,6 +143,15 @@ namespace SharkGame
                     // Handle movement and rotation based on input
                     HandleMovement();
                     HandleRotation();
+                }
+
+                // Update splash effect position to follow the shark
+                if (isSplashing && _waterSplashEffect != null)
+                {
+                    Vector3 splashPosition = _splashEffectPosition.position;
+                    splashPosition.y = 0; // Set Y position to 0
+                    _waterSplashEffect.transform.position = splashPosition;
+                    _waterSplashEffect.transform.SetParent(_splashEffectPosition);
                 }
             }
         }
@@ -217,7 +233,7 @@ namespace SharkGame
             float duration = 0.5f; // Duration for the smooth transition
 
             Vector3 initialPosition = _sharkRB.position;
-            transitionTargetPosition = new Vector3(_sharkRB.position.x, 0, _sharkRB.position.z);
+            transitionTargetPosition = new Vector3(_sharkRB.position.x, -0.0025f, _sharkRB.position.z);
 
             while (elapsedTime < duration)
             {
@@ -330,27 +346,21 @@ namespace SharkGame
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
-            //// Define target positions based on input and current position
-            //float targetYPosition = transform.position.y; // Default to current Y position
-            //if (verticalInput > 0 && transform.position.y <= -1f) // Move up if "up" arrow is pressed
-            //{
-            //    targetYPosition = -2f; // Target Y position for "up" movement
-            //}
-            //else if (verticalInput < 0 && transform.position.y >= -23f) // Move down if "down" arrow is pressed
-            //{
-            //    targetYPosition = -5f; // Target Y position for "down" movement
-            //}
+            const float yTargetValue = -0.002501681f; // New target Y value for surface interactions
+            const float smallThreshold = 0.001f; // A small threshold value to consider "close to zero"
+            bool isMovingOnWater = (Mathf.Abs(_sharkRB.position.y - yTargetValue) < smallThreshold  && (Input.GetAxis("Horizontal") != 0));
 
-            //// Move directly to the target Y position if it's different from the current position
-            //if (targetYPosition != transform.position.y)
-            //{
-            //    Vector3 targetPosition = new Vector3(transform.position.x, targetYPosition, transform.position.z);
+            if (isMovingOnWater && !isSplashing)
+            {
+                // Enable splash effect
+                EnableSplashEffect();
+            }
+            else if (!isMovingOnWater && isSplashing)
+            {
+                // Disable splash effect
+                DisableSplashEffect();
+            }
 
-            //    StartCoroutine(MoveSmoothTargetYPosition(targetPosition));
-            //}
-            //else
-            //{
-            // Smooth movement based on input if no direct movement is needed
             if (horizontalInput != 0 || verticalInput != 0)
             {
                 Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
@@ -373,7 +383,6 @@ namespace SharkGame
                 _sharkRB.velocity = Vector3.zero;
                 isMoving = false;
             }
-            //}
 
             // Handle fog based on the Y position
             if (transform.position.y >= -0.5f)
@@ -385,6 +394,27 @@ namespace SharkGame
                 EnableFog();
             }
         }
+
+
+        private void EnableSplashEffect()
+        {
+            if (_waterSplashEffect != null)
+            {
+                _waterSplashEffect.SetActive(true); // Activate the splash effect
+
+                isSplashing = true; // Set splashing flag to true
+            }
+        }
+
+        private void DisableSplashEffect()
+        {
+            if (_waterSplashEffect != null)
+            {
+                _waterSplashEffect.SetActive(false); // Deactivate the splash effect
+                isSplashing = false; // Reset splashing flag
+            }
+        }
+
 
         private IEnumerator MoveSmoothTargetYPosition(Vector3 _targetPosition)
         {
@@ -512,13 +542,13 @@ namespace SharkGame
 
             yield return new WaitForSeconds(.25f);
 
+            EnableBloodEffect();
+
             SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType; // Assuming your Fish class has a FishType property
 
             _fishObject.transform.parent = null;
 
             ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
-
-            EnableBloodEffect();
 
             yield return new WaitForSeconds(.25f);
 
