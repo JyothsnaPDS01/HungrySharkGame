@@ -41,7 +41,6 @@ namespace SharkGame
 
             // Start coroutine for direction change at intervals
             StartCoroutine(ChangeDirectionAtIntervals());
-          
         }
 
         private void FixedUpdate()
@@ -74,7 +73,9 @@ namespace SharkGame
 
             // Smoothly rotate the fish towards the movement direction
             RotateTowards(movementDirection);
-            _smallFishAnimator.SetFloat("moveAmount", .5f);
+
+            _smallFishAnimator.SetFloat("moveAmount", 0.5f);
+
             // Move the fish forward
             transform.position += movementDirection * movementSpeed * Time.deltaTime;
             Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
@@ -87,7 +88,6 @@ namespace SharkGame
             List<Vector3> directions = new List<Vector3>
             {
                 transform.forward,
-                -transform.forward
             };
 
             return directions[Random.Range(0, directions.Count)].normalized;
