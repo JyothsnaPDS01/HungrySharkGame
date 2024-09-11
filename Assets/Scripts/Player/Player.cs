@@ -18,7 +18,6 @@ namespace SharkGame
         [SerializeField] private Color _fogColor;
 
         [SerializeField] private GameObject _waterSplashEffect; // Reference to the splash effect
-        [SerializeField] private Transform _splashEffectPosition; // Position for the splash effect
 
         private bool isSplashing = false; // Flag to track if splashing
 
@@ -146,27 +145,27 @@ namespace SharkGame
                 }
 
                 // Update splash effect position to follow the shark
-                if (isSplashing && _waterSplashEffect != null)
-                {
-                    Vector3 splashPosition = _splashEffectPosition.position;
-                    splashPosition.y = 0; // Set Y position to 0
-                    _waterSplashEffect.transform.position = splashPosition;
-                    _waterSplashEffect.transform.SetParent(_splashEffectPosition);
-                }
+                //if (isSplashing && _waterSplashEffect != null)
+                //{
+                //    Vector3 splashPosition = _splashEffectPosition.position;
+                //    splashPosition.y = 0; // Set Y position to 0
+                //    _waterSplashEffect.transform.position = splashPosition;
+                //    _waterSplashEffect.transform.SetParent(_splashEffectPosition);
+                //}
 
                 // Handle rotation for single key presses
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    // Rotate the shark to the left to target rotation
-                    targetRotation = Quaternion.Euler(0, 90, 0);
-                    StartCoroutine(RotateToTargetRotation(targetRotation));
-                }
-                if (Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    // Rotate the shark to the right to target rotation
-                    targetRotation = Quaternion.Euler(0, -90, 0);
-                    StartCoroutine(RotateToTargetRotation(targetRotation));
-                }
+                //if (Input.GetKeyDown(KeyCode.LeftArrow))
+                //{
+                //    // Rotate the shark to the left to target rotation
+                //    targetRotation = Quaternion.Euler(0, 90, 0);
+                //    StartCoroutine(RotateToTargetRotation(targetRotation));
+                //}
+                //if (Input.GetKeyDown(KeyCode.RightArrow))
+                //{
+                //    // Rotate the shark to the right to target rotation
+                //    targetRotation = Quaternion.Euler(0, -90, 0);
+                //    StartCoroutine(RotateToTargetRotation(targetRotation));
+                //}
             }
         }
 
@@ -240,8 +239,6 @@ namespace SharkGame
             isParabolicJumping = false;
         }
 
-
-
         private void StartSmoothTransition()
         {
             // Ensure we only start the transition if it's not already in progress
@@ -278,12 +275,6 @@ namespace SharkGame
 
             // Correct any floating-point precision errors
             Vector3 correctedPosition = _sharkRB.position;
-
-            //// If Y position is very close to zero, set it explicitly to 0
-            //if (Mathf.Abs(correctedPosition.y) < Mathf.Epsilon)
-            //{
-            //    correctedPosition.y = 0;
-            //}
 
             _sharkRB.MovePosition(correctedPosition);
 
@@ -324,12 +315,6 @@ namespace SharkGame
 
             // Correct any floating-point precision errors in position
             Vector3 correctedPosition = _sharkRB.position;
-
-            // If Y position is very close to zero, set it explicitly to 0
-            //if (Mathf.Abs(correctedPosition.y) < Mathf.Epsilon)
-            //{
-            //    correctedPosition.y = 0;
-            //}
 
             _sharkRB.MovePosition(correctedPosition);
 
@@ -373,8 +358,8 @@ namespace SharkGame
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
-            const float yTargetValue = -0.002501681f; // New target Y value for surface interactions
-            const float smallThreshold = 0.001f; // A small threshold value to consider "close to zero"
+            const float smallThreshold = 0.05f; // Adjusted to accommodate fluctuations
+            const float yTargetValue = -0.155f; // Target Y value for surface interactions
             bool isMovingOnWater = (Mathf.Abs(_sharkRB.position.y - yTargetValue) < smallThreshold  && (Input.GetAxis("Horizontal") != 0));
 
             if (isMovingOnWater && !isSplashing)
@@ -531,6 +516,12 @@ namespace SharkGame
             {
                 collision.gameObject.transform.SetParent(_sharkHeadPosition);
                 StartCoroutine(DeactiveSmallFishAndPushBackToPool(collision.gameObject));
+            }
+            else if(collision.gameObject.tag == "Ground")
+            {
+                Debug.LogError("Collision to Ground");
+                targetRotation = Quaternion.Euler(0, 90, 0);
+                StartCoroutine(RotateToTargetRotation(targetRotation));
             }
         }
 
