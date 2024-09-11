@@ -1,10 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using SharkGame.Models;
 
 namespace SharkGame
 {
-    public class Player : MonoBehaviour
+    public class White_Shark : MonoBehaviour
     {
         #region Private Variables
         [SerializeField] private float _sharkSpeed = 2f;
@@ -98,8 +98,8 @@ namespace SharkGame
                     return;
                 }
 
-                const float smallThreshold = 0.05f; // Adjusted to accommodate fluctuations
-                const float yTargetValue = -0.155f; // Target Y value for surface interactions
+                const float smallThreshold = 0.001f; // Adjusted to accommodate fluctuations
+                const float yTargetValue = 0.335f; // Target Y value for surface interactions
 
                 // Check if the shark's Y position is close to the target Y value
                 bool isCloseToSurface = Mathf.Abs(_sharkRB.position.y - yTargetValue) < smallThreshold || Mathf.Approximately(_sharkRB.position.y, yTargetValue);
@@ -178,7 +178,7 @@ namespace SharkGame
             float peakHeight = 3f; // Adjust this value to control the height of the jump
 
             // Define the target position for the end of the jump
-            Vector3 targetPosition = new Vector3(_sharkRB.position.x, -0.15f, _sharkRB.position.z); // The landing point at water level
+            Vector3 targetPosition = new Vector3(_sharkRB.position.x, 0.33f, _sharkRB.position.z); // The landing point at water level
 
             // Define the target rotation for the end of the jump
             Quaternion targetRotation = Quaternion.Euler(-90, 0, -180);
@@ -208,7 +208,7 @@ namespace SharkGame
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-           
+
             // Ensure the shark reaches the final target position and rotation
             _sharkRB.MovePosition(targetPosition);
             _sharkRB.MoveRotation(targetRotation);
@@ -245,7 +245,7 @@ namespace SharkGame
             float duration = 0.5f; // Duration for the smooth transition
 
             Vector3 initialPosition = _sharkRB.position;
-            transitionTargetPosition = new Vector3(_sharkRB.position.x, -0.15f, _sharkRB.position.z);
+            transitionTargetPosition = new Vector3(_sharkRB.position.x, 0.33f, _sharkRB.position.z);
 
             while (elapsedTime < duration)
             {
@@ -346,8 +346,8 @@ namespace SharkGame
             float verticalInput = Input.GetAxis("Vertical");
 
             const float smallThreshold = 0.05f; // Adjusted to accommodate fluctuations
-            const float yTargetValue = -0.155f; // Target Y value for surface interactions
-            bool isMovingOnWater = (Mathf.Abs(_sharkRB.position.y - yTargetValue) < smallThreshold  && (Input.GetAxis("Horizontal") != 0));
+            const float yTargetValue = 0.335f; // Target Y value for surface interactions
+            bool isMovingOnWater = (Mathf.Abs(_sharkRB.position.y - yTargetValue) < smallThreshold && (Input.GetAxis("Horizontal") != 0));
 
             if (isMovingOnWater && !isSplashing)
             {
