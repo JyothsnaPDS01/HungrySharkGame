@@ -8,6 +8,7 @@ TagManager:
   - SmallFish
   - Terrain
   - Ground
+  - Ground1
   layers:
   - Default
   - TransparentFX

@@ -40,6 +40,8 @@ namespace SharkGame
 
         private float horizontalInput;
         private float verticalInput;
+
+        private bool isInputEnabled = true; // Flag to enable or disable input
         #endregion
 
         #region MonoBehaviour Methods
@@ -69,116 +71,118 @@ namespace SharkGame
         private bool transitionCompleted = false; // Flag to track if the transition is completed
         void FixedUpdate()
         {
-            if (initialMovementCompleted)
+            if (!IsReady()) return;
+
+            DetectInput();
+            if (isParabolicJumping || isTransitioning) return;
+
+            HandleSurfaceInteraction();
+            HandleMovementAfterTransition();
+        }
+
+        bool IsReady()
+        {
+            return initialMovementCompleted && isInputEnabled;
+        }
+
+        void DetectInput()
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+        }
+
+        void HandleSurfaceInteraction()
+        {
+            bool isCloseToSurface = IsCloseToSurface();
+            bool isInTransitionRange = IsInTransitionRange();
+
+            if (isCloseToSurface && IsUpKeyPressed())
             {
-                // Detect all input
-                horizontalInput = Input.GetAxis("Horizontal");
-                verticalInput = Input.GetAxis("Vertical");
+                StartParabolicJump();
+                return;
+            }
 
-                // Determine if "up" input is given
-                bool upKeyPressed = verticalInput > 0 && Mathf.Approximately(horizontalInput, 0); // Only "up" input, no horizontal input
-                bool noInput = Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0); // No input is given
+            if (!isCloseToSurface && _sharkRB.position.y > -1f && isInTransitionRange)
+            {
+                StartSmoothTransitionIfNecessary();
+            }
+            else
+            {
+                transitionCompleted = false;
+            }
+        }
 
-                // Debugging input and position
-                Debug.Log($"Horizontal Input: {horizontalInput}, Vertical Input: {verticalInput}");
-                Debug.Log($"Up Key Pressed: {upKeyPressed}, No Input: {noInput}");
-                Debug.Log($"Y Position: {_sharkRB.position.y}, Transitioning: {isTransitioning}, Transition Started: {transitionStarted}, Transition Completed: {transitionCompleted}");
+        bool IsCloseToSurface()
+        {
+            const float smallThreshold = 0.05f;
+            const float yTargetValue = -0.155f;
+            return Mathf.Abs(_sharkRB.position.y - yTargetValue) < smallThreshold || Mathf.Approximately(_sharkRB.position.y, yTargetValue);
+        }
 
-                // Check if parabolic jump is in progress
-                if (isParabolicJumping)
+        bool IsInTransitionRange()
+        {
+            return _sharkRB.position.y >= -1f && _sharkRB.position.y <= 0f;
+        }
+
+        bool IsUpKeyPressed()
+        {
+            return verticalInput > 0 && Mathf.Approximately(horizontalInput, 0);
+        }
+
+        void StartParabolicJump()
+        {
+#if UNITY_EDITOR
+            Debug.LogError("Starting parabolic jump.");
+#endif
+            isParabolicJumping = true;
+            StartCoroutine(HandleParabolicJump());
+        }
+
+        void StartSmoothTransitionIfNecessary()
+        {
+            if ((Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0) || IsUpKeyPressed()) && !transitionCompleted)
+            {
+                if (!transitionStarted)
                 {
-                    // Skip input handling during the parabolic jump
-                    return;
-                }
-
-                // Check if transition is in progress
-                if (isTransitioning)
-                {
-                    // If transitioning, do nothing and let the coroutine handle the movement
-                    return;
-                }
-
-                const float smallThreshold = 0.05f; // Adjusted to accommodate fluctuations
-                const float yTargetValue = -0.155f; // Target Y value for surface interactions
-
-                // Check if the shark's Y position is close to the target Y value
-                bool isCloseToSurface = Mathf.Abs(_sharkRB.position.y - yTargetValue) < smallThreshold || Mathf.Approximately(_sharkRB.position.y, yTargetValue);
-
-                // Check if we are in the transition range
-                bool isInTransitionRange = _sharkRB.position.y >= -1f && _sharkRB.position.y <= 0f;
-
-                if (isCloseToSurface && upKeyPressed)
-                {
-                    // Start the parabolic arc if the shark is effectively at the surface (Y near zero) and "Up" key is pressed
-                    Debug.LogError("Starting parabolic jump.");
-                    isParabolicJumping = true; // Set the flag to indicate a parabolic jump is in progress
-                    StartCoroutine(HandleParabolicJump());
-                    return; // Exit to prevent further handling until jump is complete
-                }
-
-                // Handle automatic movement only if the shark is not on the surface
-                if (!isCloseToSurface && _sharkRB.position.y > -1f)
-                {
-                    if (isInTransitionRange)
-                    {
-                        Debug.Log("Condition met for transition range");
-
-                        // Start the smooth transition if no input or "up" key is pressed and within Y range
-                        if ((noInput || upKeyPressed) && !transitionCompleted)
-                        {
-                            if (!transitionStarted)
-                            {
-                                Debug.Log("Starting smooth transition");
-                                StartSmoothTransition();
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    // Reset transition flags if outside of the transition range
-                    transitionCompleted = false; // Allow transition to start again if conditions are met in the future
-                }
-
-                // Handle input and movement after transition is complete
-                if (transitionCompleted || !isTransitioning)
-                {
-                    // Handle movement and rotation based on input
-                    HandleMovement();
-                    HandleRotation();
-
-                    // If no input is given, move the shark forward by a small distance
-                    if (noInput)
-                    {
-                        Debug.LogError("No Input detected. Moving shark forward.");
-                        MoveSharkForward();
-                    }
+#if UNITY_EDITOR
+                    Debug.Log("Starting smooth transition");
+#endif
+                    StartSmoothTransition();
                 }
             }
         }
+
+        void HandleMovementAfterTransition()
+        {
+            if (transitionCompleted || !isTransitioning)
+            {
+                HandleMovement();
+                HandleRotation();
+
+                if (Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0))
+                {
+#if UNITY_EDITOR
+                    Debug.LogError("No Input detected. Moving shark forward.");
+#endif
+                    MoveSharkForward();
+                }
+            }
+        }
+
+
 
         // Method to move the shark forward
         void MoveSharkForward()
         {
-            float forwardSpeed = 0.5f; // Adjust this value to control the forward movement speed
-            Vector3 forwardMovement = transform.forward * forwardSpeed * Time.fixedDeltaTime;
-            _sharkRB.MovePosition(_sharkRB.position + forwardMovement);
+            if (targetRotation != Quaternion.Euler(-25, 110, 50) || targetRotation != Quaternion.Euler(60, -250, -70) || targetRotation != Quaternion.Euler(230, 30, 130) || targetRotation != Quaternion.Euler(50, -90, 80))
+            {
+                float forwardSpeed = 0.5f; // Adjust this value to control the forward movement speed
+                Vector3 forwardMovement = transform.forward * forwardSpeed * Time.fixedDeltaTime;
+                _sharkRB.MovePosition(_sharkRB.position + forwardMovement);
+            }
         }
         // Assuming rotationSpeed is defined somewhere in your class
-        IEnumerator RotateToTargetRotation(Quaternion targetRotation)
-        {
-            while (Quaternion.Angle(_sharkRB.transform.rotation, targetRotation) > 0.01f)
-            {
-                _sharkRB.transform.rotation = Quaternion.RotateTowards(
-                    _sharkRB.transform.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.fixedDeltaTime
-                );
-                yield return null; // Wait for the next frame
-            }
-            // Ensure the final rotation is set
-            _sharkRB.transform.rotation = targetRotation;
-        }
+      
 
         private IEnumerator HandleParabolicJump()
         {
@@ -524,33 +528,54 @@ namespace SharkGame
             }
             if (collision.gameObject.tag == "Ground")
             {
-                // Stop the shark's movement
+                Debug.LogError("Ground hits");
                 _sharkRB.velocity = Vector3.zero;
-
-                // Check if enough time has passed since the last collision
-                if (Time.time - lastGroundCollisionTime > groundCollisionCooldown)
-                {
-                    // Log the collision
-                    Debug.LogError("Collision with Ground");
-
-                    // Update last collision time
-                    lastGroundCollisionTime = Time.time;
-
-                    // Set the target rotation
-                    targetRotation = Quaternion.Euler(0, 90, 0);
-
-                    // Start rotation coroutine
-                    StartCoroutine(RotateToTargetRotation(targetRotation));
-                }
-
-                // Set the grounded flag
-                isGrounded = true;
-
-                // Disable movement and rotation until the shark is in the air or another condition is met
                 StopMovementAndRotation();
+                targetRotation = Quaternion.Euler(0, 90, 0);
+                StartCoroutine(RotateToTargetRotation(targetRotation));
+                isGrounded = true;
+                DisableInput();
+            }
+            else if (collision.gameObject.tag == "Ground1")
+            {
+                    Debug.LogError("Ground hits");
+                    _sharkRB.velocity = Vector3.zero;
+                    StopMovementAndRotation();
+                    targetRotation = Quaternion.Euler(0, -90, 0);
+                    StartCoroutine(RotateToTargetRotation(targetRotation));
+                    isGrounded = true;
+                    DisableInput();
             }
         }
 
+        IEnumerator RotateToTargetRotation(Quaternion targetRotation)
+        {
+            while (Quaternion.Angle(_sharkRB.transform.rotation, targetRotation) > 0.01f)
+            {
+                _sharkRB.transform.rotation = Quaternion.RotateTowards(
+                    _sharkRB.transform.rotation,
+                    targetRotation,
+                    rotationSpeed * 20f * Time.fixedDeltaTime
+                );
+                yield return null; // Wait for the next frame
+            }
+            // Ensure the final rotation is set
+            _sharkRB.transform.rotation = targetRotation;
+
+            // Re-enable input after rotation
+            EnableInput();
+        }
+
+        // Methods to enable and disable input
+        public void EnableInput()
+        {
+            isInputEnabled = true;
+        }
+
+        public void DisableInput()
+        {
+            isInputEnabled = false;
+        }
 
         void StopMovementAndRotation()
         {
@@ -587,9 +612,11 @@ namespace SharkGame
 
             _sharkAnimator.SetBool("attack", true);
 
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.15f);
 
             EnableBloodEffect();
+
+            yield return new WaitForSeconds(.15f);
 
             SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType; // Assuming your Fish class has a FishType property
 

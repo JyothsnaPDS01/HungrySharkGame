@@ -20,6 +20,7 @@ namespace SharkGame
         [SerializeField] internal SharkGameDataModel.SmallFishType _smallFishType;
         private List<SmallFish> allFish;
         private bool _isPlayerNearby = false;
+        private bool _isCoroutineRunning = false;
         #endregion
 
         #region Monobehaviour Methods
@@ -39,14 +40,9 @@ namespace SharkGame
             _initialZ = transform.position.z;
             allFish = new List<SmallFish>(FindObjectsOfType<SmallFish>());
 
-            // Start coroutine for direction change at intervals
+            // Start coroutines for direction change and movement
             StartCoroutine(ChangeDirectionAtIntervals());
-        }
-
-        private void FixedUpdate()
-        {
-            // Move the fish continuously
-            MoveTheSmallFish();
+            StartCoroutine(MoveTheSmallFishCoroutine());
         }
         #endregion
 
@@ -60,6 +56,14 @@ namespace SharkGame
             }
         }
 
+        private IEnumerator MoveTheSmallFishCoroutine()
+        {
+            while (true)
+            {
+                MoveTheSmallFish();
+                yield return null; // Wait for the next frame
+            }
+        }
         #endregion
 
         #region Private Methods
