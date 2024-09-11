@@ -146,10 +146,24 @@ namespace SharkGame
                     // Handle movement and rotation based on input
                     HandleMovement();
                     HandleRotation();
+
+                    // If no input is given, move the shark forward by a small distance
+                    if (noInput)
+                    {
+                        Debug.LogError("No Input detected. Moving shark forward.");
+                        MoveSharkForward();
+                    }
                 }
             }
         }
 
+        // Method to move the shark forward
+        void MoveSharkForward()
+        {
+            float forwardSpeed = 0.5f; // Adjust this value to control the forward movement speed
+            Vector3 forwardMovement = transform.forward * forwardSpeed * Time.fixedDeltaTime;
+            _sharkRB.MovePosition(_sharkRB.position + forwardMovement);
+        }
         // Assuming rotationSpeed is defined somewhere in your class
         IEnumerator RotateToTargetRotation(Quaternion targetRotation)
         {
@@ -178,7 +192,7 @@ namespace SharkGame
             float peakHeight = 3f; // Adjust this value to control the height of the jump
 
             // Define the target position for the end of the jump
-            Vector3 targetPosition = new Vector3(_sharkRB.position.x, -0.15f, _sharkRB.position.z); // The landing point at water level
+            Vector3 targetPosition = new Vector3(_sharkRB.position.x, -0.155f, _sharkRB.position.z); // The landing point at water level
 
             // Define the target rotation for the end of the jump
             Quaternion targetRotation = Quaternion.Euler(-90, 0, -180);
@@ -245,7 +259,7 @@ namespace SharkGame
             float duration = 0.5f; // Duration for the smooth transition
 
             Vector3 initialPosition = _sharkRB.position;
-            transitionTargetPosition = new Vector3(_sharkRB.position.x, -0.15f, _sharkRB.position.z);
+            transitionTargetPosition = new Vector3(_sharkRB.position.x, -0.155f, _sharkRB.position.z);
 
             while (elapsedTime < duration)
             {

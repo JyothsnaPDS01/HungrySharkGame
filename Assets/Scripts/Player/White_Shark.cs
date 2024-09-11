@@ -79,6 +79,14 @@ namespace SharkGame
                 bool upKeyPressed = verticalInput > 0 && Mathf.Approximately(horizontalInput, 0); // Only "up" input, no horizontal input
                 bool noInput = Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0); // No input is given
 
+
+                // If no input is given, move the shark forward by a small distance
+                if (noInput)
+                {
+                    Debug.LogError("No Input detected. Moving shark forward.");
+                    MoveSharkForward();
+                }
+
                 // Debugging input and position
                 Debug.Log($"Horizontal Input: {horizontalInput}, Vertical Input: {verticalInput}");
                 Debug.Log($"Up Key Pressed: {upKeyPressed}, No Input: {noInput}");
@@ -87,16 +95,17 @@ namespace SharkGame
                 // Check if parabolic jump is in progress
                 if (isParabolicJumping)
                 {
-                    // Skip input handling during the parabolic jump
-                    return;
+                    Debug.Log("Parabolic jump in progress. Skipping input handling.");
+                    return; // Skip input handling during the parabolic jump
                 }
 
                 // Check if transition is in progress
                 if (isTransitioning)
                 {
-                    // If transitioning, do nothing and let the coroutine handle the movement
-                    return;
+                    Debug.Log("Transition is in progress. Skipping input handling.");
+                    return; // If transitioning, do nothing and let the coroutine handle the movement
                 }
+
 
                 const float smallThreshold = 0.001f; // Adjusted to accommodate fluctuations
                 const float yTargetValue = 0.335f; // Target Y value for surface interactions
@@ -109,7 +118,6 @@ namespace SharkGame
 
                 if (isCloseToSurface && upKeyPressed)
                 {
-                    // Start the parabolic arc if the shark is effectively at the surface (Y near zero) and "Up" key is pressed
                     Debug.LogError("Starting parabolic jump.");
                     isParabolicJumping = true; // Set the flag to indicate a parabolic jump is in progress
                     StartCoroutine(HandleParabolicJump());
@@ -143,11 +151,25 @@ namespace SharkGame
                 // Handle input and movement after transition is complete
                 if (transitionCompleted || !isTransitioning)
                 {
+                    Debug.Log("Handling movement and rotation after transition.");
+
                     // Handle movement and rotation based on input
                     HandleMovement();
                     HandleRotation();
+                   
                 }
+
+               
             }
+        }
+
+
+        // Method to move the shark forward
+        void MoveSharkForward()
+        {
+            float forwardSpeed = 30f; // Adjust this value to control the forward movement speed
+            Vector3 forwardMovement = transform.forward * forwardSpeed * Time.deltaTime;
+            _sharkRB.MovePosition(_sharkRB.position + forwardMovement);
         }
 
         // Assuming rotationSpeed is defined somewhere in your class
@@ -208,13 +230,10 @@ namespace SharkGame
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-
+            
             // Ensure the shark reaches the final target position and rotation
             _sharkRB.MovePosition(targetPosition);
             _sharkRB.MoveRotation(targetRotation);
-
-            // Stop any residual velocity
-            _sharkRB.velocity = Vector3.zero;
 
             if (_waterExplosionEffect != null)
             {
@@ -222,6 +241,9 @@ namespace SharkGame
                 yield return new WaitForSeconds(1f); // Wait for 2 seconds
                 _waterExplosionEffect.SetActive(false);
             }
+
+            // Stop any residual velocity
+            _sharkRB.velocity = Vector3.zero;
 
             // Reset the flag to allow input after the jump
             isParabolicJumping = false;
@@ -359,6 +381,9 @@ namespace SharkGame
                 // Disable splash effect
                 DisableSplashEffect();
             }
+
+          
+
 
             if (horizontalInput != 0 || verticalInput != 0)
             {
