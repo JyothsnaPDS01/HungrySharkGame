@@ -610,13 +610,15 @@ namespace SharkGame
                 yield return null;
             }
 
+            _fishObject.transform.localPosition = _sharkMouthPosition.localPosition;
+
             _sharkAnimator.SetBool("attack", true);
 
             yield return new WaitForSeconds(.15f);
 
             EnableBloodEffect();
 
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.25f);
 
             SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType; // Assuming your Fish class has a FishType property
 
@@ -624,7 +626,7 @@ namespace SharkGame
 
             ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
 
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.15f);
 
             _sharkAnimator.SetBool("attack", false);
 

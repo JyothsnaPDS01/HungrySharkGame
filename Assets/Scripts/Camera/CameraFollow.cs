@@ -14,16 +14,20 @@ namespace SharkGame
         {
             if (targetRigidbody == null)
             {
+#if UNITY_EDITOR
                 Debug.LogWarning("Target Rigidbody is not assigned.");
+#endif
                 return;
             }
 
             // Calculate the desired position based on the target's Rigidbody position + offset
             Vector3 desiredPosition = targetRigidbody.position + offset;
 
+#if UNITY_EDITOR
             // Debug information for tracking positions
             Debug.Log($"Target Position: {targetRigidbody.position}");
             Debug.Log($"Desired Camera Position: {desiredPosition}");
+#endif
 
             // Smoothly interpolate between the camera's current position and the desired position
             Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothSpeed);

@@ -1,0 +1,34 @@
+{
+  "levelNumber": 1,
+  "targets": [
+    {
+      "description": "Eat 10 small fishes",
+      "targetType": "smallFishes",
+      "amount": 10
+    },
+    {
+      "description": "Eat 5 tiny crabs",
+      "targetType": "tinyCrabs",
+      "amount": 5
+    }
+  ],
+  "smallObjects": [
+    {
+      "name": "smallFish",
+      "size": 1.2,
+      "quantity": 15
+    },
+    {
+      "name": "tinyCrab",
+      "size": 0.8,
+      "quantity": 10
+    }
+  ],
+  "enemies": [
+    {
+      "name": "shark",
+      "size": 3.5,
+      "quantity": 1
+    }
+  ]
+}
