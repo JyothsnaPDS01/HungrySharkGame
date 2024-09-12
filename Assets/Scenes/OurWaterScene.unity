@@ -1160,7 +1160,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49132062}
   m_LocalRotation: {x: -0.5627564, y: -0.27038866, z: -0.34273478, w: 0.70194596}
-  m_LocalPosition: {x: -62.8, y: -27.6, z: 82.6}
+  m_LocalPosition: {x: -62.8, y: -58.5, z: 82.6}
   m_LocalScale: {x: 10.424081, y: 10.437651, z: 10.437651}
   m_Children: []
   m_Father: {fileID: 1173965146}
@@ -3393,7 +3393,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 159235097}
   m_LocalRotation: {x: -0.18648067, y: 0.59584373, z: 0.74400496, w: 0.23801643}
-  m_LocalPosition: {x: -29.6, y: -17.6, z: 83.7}
+  m_LocalPosition: {x: 5.5, y: -45.8, z: 100.5}
   m_LocalScale: {x: 3.4774756, y: 3.4820025, z: 3.4820023}
   m_Children:
   - {fileID: 542495193}
@@ -7089,7 +7089,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328336832}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.33604175, y: 0.0033024214, z: 0.13173284}
+  m_LocalPosition: {x: -0.84, y: 0.0033024214, z: 2.77}
   m_LocalScale: {x: 0.6891523, y: 0.6891523, z: 0.6891523}
   m_Children: []
   m_Father: {fileID: 1931925816}
@@ -8080,7 +8080,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381097431}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.5006622, y: 0, z: 0}
+  m_LocalPosition: {x: -1.5006622, y: -31.92, z: 0.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1096861745}
@@ -11924,13 +11924,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571715305}
-  m_LocalRotation: {x: 0.62271965, y: 0.4410536, z: 0.4478154, w: -0.46599716}
-  m_LocalPosition: {x: 27.2, y: -28.613, z: 56.4}
+  m_LocalRotation: {x: -0.62624663, y: 0.32551765, z: 0.31002232, w: 0.636977}
+  m_LocalPosition: {x: 26.07, y: -57.76, z: 83.11}
   m_LocalScale: {x: 14.526347, y: 14.545258, z: 14.545255}
   m_Children: []
   m_Father: {fileID: 1173965146}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: -77.263, y: -221.7, z: -216.759}
+  m_LocalEulerAnglesHint: {x: -88.47301, y: -277.995, z: -388.59}
 --- !u!95 &571715307
 Animator:
   serializedVersion: 3
@@ -14426,7 +14426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691185103}
   m_LocalRotation: {x: -0.18648067, y: 0.59584373, z: 0.74400496, w: 0.23801643}
-  m_LocalPosition: {x: 2.4, y: -27.5, z: 55.05}
+  m_LocalPosition: {x: 23, y: -63.76, z: 72.7}
   m_LocalScale: {x: 3.4774756, y: 3.4820025, z: 3.4820023}
   m_Children: []
   m_Father: {fileID: 1173965146}
@@ -14948,7 +14948,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 731534639}
   m_LocalRotation: {x: 0, y: 0, z: -0.44095808, w: 0.8975277}
-  m_LocalPosition: {x: -0.66728634, y: -3.3217442, z: -3.3601713}
+  m_LocalPosition: {x: -0.85, y: -3.07, z: -4.74}
   m_LocalScale: {x: 0.6287652, y: 0.6287652, z: 0.89655524}
   m_Children: []
   m_Father: {fileID: 159235098}
@@ -15153,7 +15153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4301781751017244, guid: 20de1bf9e984c4606a378e2e88960fe2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4301781751017244, guid: 20de1bf9e984c4606a378e2e88960fe2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19844,7 +19844,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919703960}
   m_LocalRotation: {x: 0.04405717, y: 0.03843731, z: 0.6969693, w: 0.7147136}
-  m_LocalPosition: {x: -0.27072388, y: -3.5698204, z: -2.943786}
+  m_LocalPosition: {x: 0.46, y: -4.22, z: -5.56}
   m_LocalScale: {x: 2.320578, y: 2.3205793, z: 2.3205783}
   m_Children: []
   m_Father: {fileID: 159235098}
@@ -23026,7 +23026,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039389564}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -3.0261242, y: 0, z: 0}
+  m_LocalPosition: {x: -3.0261242, y: -0.1528, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1360124756}
@@ -24330,7 +24330,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096861744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50.26, y: -25.69, z: 67.3}
+  m_LocalPosition: {x: 50.26, y: -64.2, z: 67.3}
   m_LocalScale: {x: 14.526347, y: 14.545258, z: 14.545255}
   m_Children:
   - {fileID: 1502708323}
@@ -30175,7 +30175,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1360124755}
   m_LocalRotation: {x: -0, y: 0.40654838, z: -0, w: 0.91362923}
-  m_LocalPosition: {x: 77.19, y: -27.727, z: 7.2}
+  m_LocalPosition: {x: 77.19, y: -62.4, z: 7.2}
   m_LocalScale: {x: 25.954226, y: 25.988012, z: 25.988007}
   m_Children:
   - {fileID: 436821373}
@@ -30662,13 +30662,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393372575}
-  m_LocalRotation: {x: -0.47039482, y: 0.5547446, z: 0.5030396, w: 0.46683872}
-  m_LocalPosition: {x: 3.2460127, y: -24.005249, z: 115.6}
+  m_LocalRotation: {x: -0.6105559, y: 0.36861598, z: 0.31865618, w: 0.6243413}
+  m_LocalPosition: {x: -58.697094, y: -60.7, z: 85.301025}
   m_LocalScale: {x: 40.97592, y: 41.029263, z: 41.029255}
   m_Children: []
   m_Father: {fileID: 1173965146}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: -85.8, y: -577.60803, z: -45.477}
+  m_LocalEulerAnglesHint: {x: -85.8, y: -616.328, z: -45.476}
 --- !u!95 &1393372577
 Animator:
   serializedVersion: 3
@@ -33324,7 +33324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510149074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.12, y: -26.48, z: 46.5}
+  m_LocalPosition: {x: 35.12, y: -61.6, z: 46.5}
   m_LocalScale: {x: 34.812393, y: 34.85771, z: 34.857704}
   m_Children:
   - {fileID: 2008158532}
@@ -40037,7 +40037,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610418282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 104.89, y: -25.7, z: 76.8}
+  m_LocalPosition: {x: 104.89, y: -69.3, z: 76.8}
   m_LocalScale: {x: 34.812393, y: 34.85771, z: 34.857704}
   m_Children:
   - {fileID: 794584226}
@@ -46958,7 +46958,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1931925815}
   m_LocalRotation: {x: -0, y: 0.09410833, z: -0, w: 0.995562}
-  m_LocalPosition: {x: -19.1, y: -26.09, z: 39.51612}
+  m_LocalPosition: {x: 1.9, y: -64.1, z: 59.9}
   m_LocalScale: {x: 14.91187, y: 14.931282, z: 14.931281}
   m_Children:
   - {fileID: 2110724164}
@@ -49952,7 +49952,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2051864409}
   m_LocalRotation: {x: -0.18648067, y: 0.59584373, z: 0.74400496, w: 0.23801643}
-  m_LocalPosition: {x: 27.4, y: -26.3, z: 79.7}
+  m_LocalPosition: {x: 22.4, y: -57.9, z: 79.7}
   m_LocalScale: {x: 7.473095, y: 7.482823, z: 7.4828224}
   m_Children: []
   m_Father: {fileID: 1173965146}
@@ -51901,6 +51901,7 @@ GameObject:
   - component: {fileID: 7782739584273567542}
   - component: {fileID: 1297085329283766267}
   - component: {fileID: 7627391531593466517}
+  - component: {fileID: 60253630702428488}
   m_Layer: 0
   m_Name: Retopo_Curve.037
   m_TagString: Untagged
@@ -51908,6 +51909,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &60253630702428488
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60253630702428487}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3711408370842872677, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &70055987386783351
 GameObject:
   m_ObjectHideFlags: 0
@@ -51919,6 +51934,7 @@ GameObject:
   - component: {fileID: 2019723839134409625}
   - component: {fileID: 754378656170341739}
   - component: {fileID: 6501250749077383882}
+  - component: {fileID: 70055987386783352}
   m_Layer: 0
   m_Name: Retopo_Curve.024
   m_TagString: Untagged
@@ -51926,6 +51942,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &70055987386783352
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70055987386783351}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3128005988222154260, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &77325289125007086
 GameObject:
   m_ObjectHideFlags: 0
@@ -52249,7 +52279,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5295378925266861043}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -29.228846, y: -38.861404, z: 81.18088}
+  m_LocalPosition: {x: -11.4, y: -22.9, z: 11.4}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -52266,6 +52296,7 @@ GameObject:
   - component: {fileID: 7886510103672038643}
   - component: {fileID: 4612565921560353900}
   - component: {fileID: 4122090654014638752}
+  - component: {fileID: 459168312363074251}
   m_Layer: 0
   m_Name: Retopo_Curve.019
   m_TagString: Untagged
@@ -52273,6 +52304,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &459168312363074251
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459168312363074250}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1294004239091301191, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!23 &466253417663386288
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -52402,6 +52447,7 @@ GameObject:
   - component: {fileID: 4893430559780327610}
   - component: {fileID: 8518005271917060283}
   - component: {fileID: 1998401952472020465}
+  - component: {fileID: 529007371609780589}
   m_Layer: 0
   m_Name: Retopo_Curve.022
   m_TagString: Untagged
@@ -52409,6 +52455,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &529007371609780589
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529007371609780588}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -681317033592484666, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &538969807542201257
 Transform:
   m_ObjectHideFlags: 0
@@ -52417,7 +52477,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350753873629249469}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -27.66022, y: -4.2845945, z: 81.17814}
+  m_LocalPosition: {x: -50.4, y: -54.7, z: 81.17814}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -52696,7 +52756,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9165694952843110220}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 67.1, y: -20, z: 18.8}
+  m_LocalPosition: {x: 64.41, y: -51.4, z: 18.1}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -52922,6 +52982,7 @@ GameObject:
   - component: {fileID: 1016642000878639916}
   - component: {fileID: 2332681587362250621}
   - component: {fileID: 2285953498413297500}
+  - component: {fileID: 926607424064901828}
   m_Layer: 0
   m_Name: Retopo_Curve.013
   m_TagString: Untagged
@@ -52929,6 +52990,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &926607424064901828
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926607424064901827}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8264126075710765334, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!33 &947797514266401049
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -52948,6 +53023,7 @@ GameObject:
   - component: {fileID: 3687780402111118566}
   - component: {fileID: 597483817489430459}
   - component: {fileID: 5171590609153042579}
+  - component: {fileID: 994881966905635673}
   m_Layer: 0
   m_Name: Retopo_Curve.025
   m_TagString: Untagged
@@ -52955,6 +53031,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &994881966905635673
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994881966905635672}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5067850010557144110, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &1016642000878639916
 Transform:
   m_ObjectHideFlags: 0
@@ -52963,7 +53053,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926607424064901827}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -52.43063, y: -9.924283, z: 81.180046}
+  m_LocalPosition: {x: -52.43063, y: -9.924283, z: 21.8}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -53222,6 +53312,7 @@ GameObject:
   - component: {fileID: 538969807542201257}
   - component: {fileID: 7663026670975009313}
   - component: {fileID: 6685742635075568716}
+  - component: {fileID: 1350753873629249470}
   m_Layer: 0
   m_Name: Retopo_Curve.011
   m_TagString: Untagged
@@ -53229,6 +53320,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &1350753873629249470
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350753873629249469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8946159600505559767, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &1378046301299066485
 GameObject:
   m_ObjectHideFlags: 0
@@ -53281,6 +53386,7 @@ GameObject:
   - component: {fileID: 3321100185825796320}
   - component: {fileID: 2484633311861914758}
   - component: {fileID: 1436507927943320212}
+  - component: {fileID: 1436507927943320213}
   m_Layer: 0
   m_Name: Retopo_Curve.041
   m_TagString: Untagged
@@ -53289,6 +53395,20 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &1436507927943320212
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436507927943320211}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4327087941569400261, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
+--- !u!64 &1436507927943320213
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53324,7 +53444,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7807563477636530606}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 67.51312, y: -64.7097, z: 114.73997}
+  m_LocalPosition: {x: 67.51312, y: -64.7097, z: 133.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -53338,7 +53458,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3925824766258093942}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 35.561176, y: -19.9, z: 81.179306}
+  m_LocalPosition: {x: 66.7, y: 7.5, z: 11.3}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -53426,6 +53546,7 @@ GameObject:
   - component: {fileID: 8821632957029072409}
   - component: {fileID: 3918358999231827935}
   - component: {fileID: 3886102159317731101}
+  - component: {fileID: 1643093654006513847}
   m_Layer: 0
   m_Name: Retopo_Curve.017
   m_TagString: Untagged
@@ -53433,6 +53554,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &1643093654006513847
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643093654006513846}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6635138534734581974, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!23 &1647390825253372422
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63103,7 +63238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3536785822221728673}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -66.14208, y: -46.239258, z: 24.30333}
+  m_LocalPosition: {x: -66.14208, y: -46.239258, z: 53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -63120,6 +63255,7 @@ GameObject:
   - component: {fileID: 3125650855754734564}
   - component: {fileID: 6923829883064850965}
   - component: {fileID: 3057989512924585651}
+  - component: {fileID: 1788917418566962975}
   m_Layer: 0
   m_Name: Retopo_Curve.038
   m_TagString: Untagged
@@ -63127,6 +63263,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &1788917418566962975
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788917418566962974}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1659141751059641284, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!23 &1816330974023022699
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63373,7 +63523,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3832480752142473753}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -10.287683, y: -21.760513, z: 81.19314}
+  m_LocalPosition: {x: -10.287683, y: -21.760513, z: 24.5}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -63495,7 +63645,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3007624469408190094}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 37.05878, y: -0.25645834, z: 81.18075}
+  m_LocalPosition: {x: 43.1, y: -56.82, z: 49.2}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -63673,7 +63823,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2428775401614888744}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -74.54697, y: -8.402866, z: 81.177795}
+  m_LocalPosition: {x: -74.54697, y: -46.69, z: 81.177795}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -63729,6 +63879,7 @@ GameObject:
   - component: {fileID: 1458320696379073608}
   - component: {fileID: 2266932406791351196}
   - component: {fileID: 289731446176766997}
+  - component: {fileID: 2344701259833123763}
   m_Layer: 0
   m_Name: Retopo_Curve.020
   m_TagString: Untagged
@@ -63736,6 +63887,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &2344701259833123763
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2344701259833123762}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5837254608782147195, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &2355513499855847972
 Transform:
   m_ObjectHideFlags: 0
@@ -63775,6 +63940,7 @@ GameObject:
   - component: {fileID: 4996108469434906503}
   - component: {fileID: 3840235677605360161}
   - component: {fileID: 1614327860497638671}
+  - component: {fileID: 2366786006120702374}
   m_Layer: 0
   m_Name: Retopo_Curve.021
   m_TagString: Untagged
@@ -63782,6 +63948,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &2366786006120702374
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2366786006120702373}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5685438687543470015, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &2411298621446677979
 Transform:
   m_ObjectHideFlags: 0
@@ -63827,6 +64007,7 @@ GameObject:
   - component: {fileID: 2332839046284162062}
   - component: {fileID: 4913240831929441631}
   - component: {fileID: 3584050874338041077}
+  - component: {fileID: 2428775401614888745}
   m_Layer: 0
   m_Name: Retopo_Curve.014
   m_TagString: Untagged
@@ -63834,6 +64015,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &2428775401614888745
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2428775401614888744}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5335266610214796341, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &2440742799260255254
 GameObject:
   m_ObjectHideFlags: 0
@@ -63845,6 +64040,7 @@ GameObject:
   - component: {fileID: 6302638202387624550}
   - component: {fileID: 1427853385867868725}
   - component: {fileID: 3281790569415904621}
+  - component: {fileID: 2440742799260255255}
   m_Layer: 0
   m_Name: Retopo_Curve.042
   m_TagString: Untagged
@@ -63852,6 +64048,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &2440742799260255255
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440742799260255254}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2340747874939004551, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &2477237064794203031
 Transform:
   m_ObjectHideFlags: 0
@@ -63860,7 +64070,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6201489163458629365}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 82.02023, y: -61.46782, z: 41.794113}
+  m_LocalPosition: {x: 82.02023, y: -35, z: 83.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -63963,6 +64173,7 @@ GameObject:
   - component: {fileID: 3482587951581619863}
   - component: {fileID: 2328217543871985921}
   - component: {fileID: 2180748699404336637}
+  - component: {fileID: 2548163464174542282}
   m_Layer: 0
   m_Name: Retopo_Curve.028
   m_TagString: Untagged
@@ -63970,6 +64181,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &2548163464174542282
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548163464174542281}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6952568027102797765, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &2563293243476269782
 GameObject:
   m_ObjectHideFlags: 0
@@ -64063,7 +64288,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8903812869784382216}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 22.5, y: -49.1, z: 14.4}
+  m_LocalPosition: {x: -51.9, y: -50.4, z: 14.4}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -64090,13 +64315,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850078657660633856}
-  m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -3.2534537, y: -66.47302, z: -16.722404}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 6.1, y: -59.5, z: 86.312}
+  m_LocalScale: {x: 0.72, y: 0.72, z: 0.72}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 180}
 --- !u!1 &2683689898236780576
 GameObject:
   m_ObjectHideFlags: 0
@@ -64239,7 +64464,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8718860490096142733}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 11.624027, y: -20.263102, z: 81.15733}
+  m_LocalPosition: {x: -18.73, y: -8.03, z: 10.7}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -64380,6 +64605,7 @@ GameObject:
   - component: {fileID: 2244385131191017407}
   - component: {fileID: 5057390527789372530}
   - component: {fileID: 5601826631569719506}
+  - component: {fileID: 3007624469408190095}
   m_Layer: 0
   m_Name: Retopo_Curve.002
   m_TagString: Untagged
@@ -64387,6 +64613,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &3007624469408190095
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3007624469408190094}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8664669321117011784, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!23 &3057989512924585651
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -64448,7 +64688,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788917418566962974}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -124.9556, y: -39.630783, z: 81.18267}
+  m_LocalPosition: {x: -78.4, y: -17, z: 11.4}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -64502,7 +64742,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7191492354237052558}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 0.3118589, y: -15.515675, z: 81.178215}
+  m_LocalPosition: {x: 11.42, y: -59.8, z: 81.178215}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -64645,6 +64885,7 @@ GameObject:
   - component: {fileID: 1344437404082799478}
   - component: {fileID: 2335996067688580133}
   - component: {fileID: 3329680473647809651}
+  - component: {fileID: 3329680473647809652}
   m_Layer: 0
   m_Name: Retopo_Curve.040
   m_TagString: Untagged
@@ -64653,6 +64894,20 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &3329680473647809651
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3329680473647809650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7765796004537642211, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
+--- !u!64 &3329680473647809652
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64738,7 +64993,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7871219224291531175}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -66.243744, y: -47.4066, z: 24.485668}
+  m_LocalPosition: {x: -66.243744, y: -47.4066, z: 53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -64752,7 +65007,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7908518913289776271}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -31.828007, y: -22.73675, z: 81.17918}
+  m_LocalPosition: {x: 61.4, y: -16.3, z: 13.4}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -64880,6 +65135,7 @@ GameObject:
   - component: {fileID: 3271833455686770948}
   - component: {fileID: 7700524827177566206}
   - component: {fileID: 1816330974023022699}
+  - component: {fileID: 3632169791434468174}
   m_Layer: 0
   m_Name: Retopo_Curve.029
   m_TagString: Untagged
@@ -64887,6 +65143,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &3632169791434468174
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3632169791434468173}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3200587771057867713, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &3681574312350051387
 Transform:
   m_ObjectHideFlags: 0
@@ -64895,7 +65165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6650591695655748252}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -28.07484, y: -7.3391404, z: 81.17789}
+  m_LocalPosition: {x: -28.07484, y: -87.1, z: 81.17789}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -64926,6 +65196,7 @@ GameObject:
   - component: {fileID: 4198123463336797490}
   - component: {fileID: 5807440465858140153}
   - component: {fileID: 5396778348667460340}
+  - component: {fileID: 3693986678657046677}
   m_Layer: 0
   m_Name: Retopo_Curve.015
   m_TagString: Untagged
@@ -64933,6 +65204,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &3693986678657046677
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3693986678657046676}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6166156783122932089, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &3714871354716029418
 Transform:
   m_ObjectHideFlags: 0
@@ -64941,7 +65226,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4709475573789221018}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -7.1477284, y: -17.344015, z: 81.178444}
+  m_LocalPosition: {x: 29.77, y: -57.95, z: 83.98}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -64955,7 +65240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4505660552661538803}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -90.45626, y: -43.97791, z: 81.163414}
+  m_LocalPosition: {x: -38.2, y: -7.1, z: 42.2}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -65004,6 +65289,7 @@ GameObject:
   - component: {fileID: 2136968734414433106}
   - component: {fileID: 947797514266401049}
   - component: {fileID: 1205923540285246585}
+  - component: {fileID: 3832480752142473754}
   m_Layer: 0
   m_Name: Retopo_Curve.009
   m_TagString: Untagged
@@ -65011,6 +65297,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &3832480752142473754
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3832480752142473753}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1257755336626841201, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &3838664616922254295
 GameObject:
   m_ObjectHideFlags: 0
@@ -65180,6 +65480,7 @@ GameObject:
   - component: {fileID: 1491947321472809400}
   - component: {fileID: 5724913167413377993}
   - component: {fileID: 8115148535453869176}
+  - component: {fileID: 3925824766258093943}
   m_Layer: 0
   m_Name: Retopo_Curve.003
   m_TagString: Untagged
@@ -65187,6 +65488,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &3925824766258093943
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3925824766258093942}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -914228794596178960, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &3938787088562966770
 GameObject:
   m_ObjectHideFlags: 0
@@ -65383,6 +65698,7 @@ GameObject:
   - component: {fileID: 2692303256656553352}
   - component: {fileID: 5452383579340491750}
   - component: {fileID: 492718048676379128}
+  - component: {fileID: 4140230592003391518}
   m_Layer: 0
   m_Name: Retopo_Curve.032
   m_TagString: Untagged
@@ -65390,6 +65706,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &4140230592003391518
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4140230592003391517}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300903198030553010, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &4187209210229309824
 Transform:
   m_ObjectHideFlags: 0
@@ -65398,7 +65728,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9014018766206022947}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -19.058786, y: -8.827534, z: 81.17849}
+  m_LocalPosition: {x: -7.7, y: -60.83, z: 81.17849}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -65412,7 +65742,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3693986678657046676}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -77.712265, y: -11.001343, z: 81.178314}
+  m_LocalPosition: {x: -77.712265, y: -46.69, z: 81.178314}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -65429,6 +65759,7 @@ GameObject:
   - component: {fileID: 4319321289533936543}
   - component: {fileID: 7508221746162627592}
   - component: {fileID: 1927172766763655547}
+  - component: {fileID: 4200053797557215469}
   m_Layer: 0
   m_Name: Retopo_Curve.008
   m_TagString: Untagged
@@ -65436,6 +65767,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &4200053797557215469
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200053797557215468}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8646531328877109708, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &4215869341252073833
 Transform:
   m_ObjectHideFlags: 0
@@ -65607,6 +65952,7 @@ GameObject:
   - component: {fileID: 3802257015523625177}
   - component: {fileID: 6796239264135131400}
   - component: {fileID: 875435024207449794}
+  - component: {fileID: 4505660552661538804}
   m_Layer: 0
   m_Name: Retopo_Curve.043
   m_TagString: Untagged
@@ -65614,6 +65960,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &4505660552661538804
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4505660552661538803}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6304837199179758448, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!23 &4509964766238429879
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -65664,6 +66024,7 @@ GameObject:
   - component: {fileID: 8643049766724160783}
   - component: {fileID: 4353374227626713942}
   - component: {fileID: 6330773138982890213}
+  - component: {fileID: 4511650831760293001}
   m_Layer: 0
   m_Name: Retopo_Curve.039
   m_TagString: Untagged
@@ -65671,6 +66032,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &4511650831760293001
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4511650831760293000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6755487359208966036, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &4554595525630255344
 GameObject:
   m_ObjectHideFlags: 0
@@ -65740,6 +66115,7 @@ GameObject:
   - component: {fileID: 8050704154579211914}
   - component: {fileID: 8347860726467104928}
   - component: {fileID: 6118379368129065901}
+  - component: {fileID: 4636102821926578912}
   m_Layer: 0
   m_Name: Retopo_Curve.031
   m_TagString: Untagged
@@ -65747,6 +66123,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &4636102821926578912
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4636102821926578911}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7802871113570975855, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!33 &4701737519211889129
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -65766,6 +66156,7 @@ GameObject:
   - component: {fileID: 3714871354716029418}
   - component: {fileID: 4216692073374260546}
   - component: {fileID: 4891701799538635576}
+  - component: {fileID: 4709475573789221019}
   m_Layer: 0
   m_Name: Retopo_Curve.006
   m_TagString: Untagged
@@ -65773,6 +66164,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &4709475573789221019
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4709475573789221018}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5616465536041466702, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &4720294345892018054
 Transform:
   m_ObjectHideFlags: 0
@@ -65962,6 +66367,7 @@ GameObject:
   - component: {fileID: 6149230895525850431}
   - component: {fileID: 8094049077790250561}
   - component: {fileID: 5605707171347614136}
+  - component: {fileID: 4958734040267906324}
   m_Layer: 0
   m_Name: Retopo_Curve.035
   m_TagString: Untagged
@@ -65969,6 +66375,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &4958734040267906324
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4958734040267906323}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2716853867411985797, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &4996108469434906503
 Transform:
   m_ObjectHideFlags: 0
@@ -65991,7 +66411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5384028748160815973}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 44.9077, y: -51.555084, z: 81.17924}
+  m_LocalPosition: {x: 38.4, y: -51.555084, z: 66.2}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -66078,6 +66498,7 @@ GameObject:
   - component: {fileID: 2651371488347940126}
   - component: {fileID: 1919768493891324813}
   - component: {fileID: 6854422220553529689}
+  - component: {fileID: 5057527774840068100}
   m_Layer: 0
   m_Name: Retopo_Curve.034
   m_TagString: Untagged
@@ -66085,6 +66506,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &5057527774840068100
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5057527774840068099}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2534690494629662950, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &5112690395152981284
 Transform:
   m_ObjectHideFlags: 0
@@ -66243,6 +66678,7 @@ GameObject:
   - component: {fileID: 6097842167933756459}
   - component: {fileID: 3233174998597297206}
   - component: {fileID: 5457922166892595073}
+  - component: {fileID: 5227584831094640184}
   m_Layer: 0
   m_Name: Retopo_Curve.047
   m_TagString: Untagged
@@ -66250,6 +66686,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &5227584831094640184
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5227584831094640183}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6370331657928128893, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &5237186903033576911
 Transform:
   m_ObjectHideFlags: 0
@@ -66353,6 +66803,7 @@ GameObject:
   - component: {fileID: 410806540156087608}
   - component: {fileID: 7571369653733876448}
   - component: {fileID: 6745605591436918890}
+  - component: {fileID: 5295378925266861044}
   m_Layer: 0
   m_Name: Retopo_Curve.036
   m_TagString: Untagged
@@ -66360,6 +66811,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &5295378925266861044
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5295378925266861043}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1280003523335287317, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &5333143122808870358
 GameObject:
   m_ObjectHideFlags: 0
@@ -66371,6 +66836,7 @@ GameObject:
   - component: {fileID: 2579951929106554698}
   - component: {fileID: 4812890404016685051}
   - component: {fileID: 618914564893945191}
+  - component: {fileID: 5333143122808870359}
   m_Layer: 0
   m_Name: Retopo_Curve.018
   m_TagString: Untagged
@@ -66378,6 +66844,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &5333143122808870359
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333143122808870358}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7402634543904652775, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &5374487259008116110
 Transform:
   m_ObjectHideFlags: 0
@@ -66385,13 +66865,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6709432865930858418}
-  m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 79.191025, y: -29.908184, z: 81.18018}
-  m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
+  m_LocalRotation: {x: -0.009184093, y: -0.70704746, z: -0.7070468, w: 0.009184191}
+  m_LocalPosition: {x: 74.7, y: -32.418, z: 11.1}
+  m_LocalScale: {x: 2.017755, y: 2.017755, z: 2.017755}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
   m_RootOrder: 39
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -178.51201}
 --- !u!1 &5384028748160815973
 GameObject:
   m_ObjectHideFlags: 0
@@ -66403,6 +66883,7 @@ GameObject:
   - component: {fileID: 4999958496101396591}
   - component: {fileID: 6031842072051249146}
   - component: {fileID: 1730416638643023370}
+  - component: {fileID: 5384028748160815974}
   m_Layer: 0
   m_Name: Retopo_Curve.027
   m_TagString: Untagged
@@ -66410,6 +66891,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &5384028748160815974
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5384028748160815973}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1600353113105147191, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!23 &5396778348667460340
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -66569,6 +67064,7 @@ GameObject:
   - component: {fileID: 8133137902514437963}
   - component: {fileID: 3476944841860716370}
   - component: {fileID: 1647390825253372422}
+  - component: {fileID: 5487866544346052771}
   m_Layer: 0
   m_Name: Retopo_Curve.023
   m_TagString: Untagged
@@ -66576,6 +67072,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &5487866544346052771
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487866544346052770}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5972548876565871114, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!23 &5601826631569719506
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -66868,7 +67378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7335526034389204788}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -82.01862, y: -5.0051575, z: 81.17743}
+  m_LocalPosition: {x: -82.01862, y: -46.69, z: 81.17743}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -67046,7 +67556,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5227584831094640183}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 55.8, y: -40.9, z: 16.3}
+  m_LocalPosition: {x: 52.83, y: -46, z: 14.7}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -67116,6 +67626,7 @@ GameObject:
   - component: {fileID: 6239077225948046689}
   - component: {fileID: 8259286136704157418}
   - component: {fileID: 1864920588372331031}
+  - component: {fileID: 6176327938349076083}
   m_Layer: 0
   m_Name: Retopo_Curve.026
   m_TagString: Untagged
@@ -67123,6 +67634,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &6176327938349076083
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176327938349076082}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7078033651194549603, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &6201489163458629365
 GameObject:
   m_ObjectHideFlags: 0
@@ -67264,7 +67789,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2440742799260255254}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -23.2, y: -31.3, z: 15.2}
+  m_LocalPosition: {x: -63.4, y: -30.6, z: 15.2}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -67516,6 +68041,7 @@ GameObject:
   - component: {fileID: 3681574312350051387}
   - component: {fileID: 79069633787694872}
   - component: {fileID: 4509964766238429879}
+  - component: {fileID: 6650591695655748253}
   m_Layer: 0
   m_Name: Retopo_Curve.012
   m_TagString: Untagged
@@ -67523,6 +68049,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &6650591695655748253
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650591695655748252}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8742701071236089081, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!23 &6685742635075568716
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67573,6 +68113,7 @@ GameObject:
   - component: {fileID: 5374487259008116110}
   - component: {fileID: 4883735798913074722}
   - component: {fileID: 7076278488985185742}
+  - component: {fileID: 6709432865930858419}
   m_Layer: 0
   m_Name: Retopo_Curve.030
   m_TagString: Untagged
@@ -67580,6 +68121,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &6709432865930858419
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6709432865930858418}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7019482190130737172, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!23 &6745605591436918890
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67896,6 +68451,7 @@ GameObject:
   - component: {fileID: 3244816890909426347}
   - component: {fileID: 9024446802747877910}
   - component: {fileID: 9012775994179868888}
+  - component: {fileID: 7191492354237052559}
   m_Layer: 0
   m_Name: Retopo_Curve.005
   m_TagString: Untagged
@@ -67903,6 +68459,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &7191492354237052559
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7191492354237052558}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5887181342386600804, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &7198856960455978997
 Transform:
   m_ObjectHideFlags: 0
@@ -67958,6 +68528,7 @@ GameObject:
   - component: {fileID: 5641972605900829327}
   - component: {fileID: 8722829173389773853}
   - component: {fileID: 2534761316095013458}
+  - component: {fileID: 7335526034389204789}
   m_Layer: 0
   m_Name: Retopo_Curve.016
   m_TagString: Untagged
@@ -67965,6 +68536,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &7335526034389204789
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7335526034389204788}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8625796191840033800, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!33 &7422397879180733058
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -68344,13 +68929,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 60253630702428487}
-  m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -83.2, y: -31.336765, z: 81.17958}
+  m_LocalRotation: {x: -0.045222454, y: -0.7056593, z: -0.7056593, w: 0.045222424}
+  m_LocalPosition: {x: -92.2, y: -23.9, z: 20.794167}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
   m_RootOrder: 46
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -172.66602}
 --- !u!1 &7807563477636530606
 GameObject:
   m_ObjectHideFlags: 0
@@ -68368,7 +68953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &7871219224291531175
 GameObject:
   m_ObjectHideFlags: 0
@@ -68412,6 +68997,7 @@ GameObject:
   - component: {fileID: 3463752871745044687}
   - component: {fileID: 8213136924000714468}
   - component: {fileID: 2146170343354559939}
+  - component: {fileID: 7908518913289776272}
   m_Layer: 0
   m_Name: Retopo_Curve.010
   m_TagString: Untagged
@@ -68419,6 +69005,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &7908518913289776272
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908518913289776271}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3124171684000711688, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &7909143115162010505
 GameObject:
   m_ObjectHideFlags: 0
@@ -68704,7 +69304,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5487866544346052770}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -71.27253, y: -28.032238, z: 81.17874}
+  m_LocalPosition: {x: -68, y: -16.4, z: 40.8}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -68718,7 +69318,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4284154993001583220}
   m_LocalRotation: {x: -0.000000026692543, y: 0.70710677, z: 0.00000002669254, w: 0.7071068}
-  m_LocalPosition: {x: 54.8, y: -46.2, z: 17.5}
+  m_LocalPosition: {x: 53.3, y: -46.2, z: 44.4}
   m_LocalScale: {x: 1.3717442, y: 1.3717442, z: 1.3717442}
   m_Children: []
   m_Father: {fileID: 543450653492783212}
@@ -69146,6 +69746,7 @@ GameObject:
   - component: {fileID: 2787422930658787441}
   - component: {fileID: 6791078570042380892}
   - component: {fileID: 2306670618241453846}
+  - component: {fileID: 8718860490096142734}
   m_Layer: 0
   m_Name: Retopo_Curve.004
   m_TagString: Untagged
@@ -69153,6 +69754,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &8718860490096142734
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8718860490096142733}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2517934519548691348, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!33 &8722829173389773853
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -69250,6 +69865,7 @@ GameObject:
   - component: {fileID: 2607072908571377354}
   - component: {fileID: 6364204615387790730}
   - component: {fileID: 5858953631030342847}
+  - component: {fileID: 8903812869784382217}
   m_Layer: 0
   m_Name: Retopo_Curve.044
   m_TagString: Untagged
@@ -69257,6 +69873,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &8903812869784382217
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8903812869784382216}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -532674232333689480, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!4 &8963013819027593880
 Transform:
   m_ObjectHideFlags: 0
@@ -69335,6 +69965,7 @@ GameObject:
   - component: {fileID: 4187209210229309824}
   - component: {fileID: 602380346444261289}
   - component: {fileID: 6214646336853620268}
+  - component: {fileID: 9014018766206022948}
   m_Layer: 0
   m_Name: Retopo_Curve.007
   m_TagString: Untagged
@@ -69342,6 +69973,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &9014018766206022948
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9014018766206022947}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5195955764367931842, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!33 &9024446802747877910
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -69361,6 +70006,7 @@ GameObject:
   - component: {fileID: 1694666648817683836}
   - component: {fileID: 4380670832125458482}
   - component: {fileID: 6455603877853261100}
+  - component: {fileID: 9044025645367002732}
   m_Layer: 0
   m_Name: Retopo_Curve.033
   m_TagString: Untagged
@@ -69368,6 +70014,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &9044025645367002732
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9044025645367002731}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6556775117395512863, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &9048782715147190969
 GameObject:
   m_ObjectHideFlags: 0
@@ -69379,6 +70039,7 @@ GameObject:
   - component: {fileID: 8312292552709014575}
   - component: {fileID: 7489763510843671141}
   - component: {fileID: 5773799414457981924}
+  - component: {fileID: 9048782715147190970}
   m_Layer: 0
   m_Name: Retopo_Curve.045
   m_TagString: Untagged
@@ -69386,6 +70047,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &9048782715147190970
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9048782715147190969}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7053296669976048812, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &9165694952843110220
 GameObject:
   m_ObjectHideFlags: 0
@@ -69397,6 +70072,7 @@ GameObject:
   - component: {fileID: 783261237487304424}
   - component: {fileID: 1053557269741658302}
   - component: {fileID: 466253417663386288}
+  - component: {fileID: 9165694952843110221}
   m_Layer: 0
   m_Name: Retopo_Curve.046
   m_TagString: Untagged
@@ -69404,6 +70080,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &9165694952843110221
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165694952843110220}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4727564878940514843, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!33 &9208701979995989901
 MeshFilter:
   m_ObjectHideFlags: 0
