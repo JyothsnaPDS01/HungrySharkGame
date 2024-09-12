@@ -162,7 +162,7 @@ namespace SharkGame
                 if (Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0))
                 {
 #if UNITY_EDITOR
-                    Debug.LogError("No Input detected. Moving shark forward.");
+                    Debug.Log("No Input detected. Moving shark forward.");
 #endif
                     MoveSharkForward();
                 }
