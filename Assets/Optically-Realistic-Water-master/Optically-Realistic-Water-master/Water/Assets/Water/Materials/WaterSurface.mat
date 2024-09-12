@@ -41,11 +41,11 @@ Material:
     - _Bumpiness: 0.06
     - _Choppy: 0.8
     - _ReflBump: 0.04
-    - _ReflDistortionAmount: 0.5
+    - _ReflDistortionAmount: 0.3
     - _RefrBump: 0.03
-    - _RefrDistortionAmount: 1
-    - _ScatterAmount: 2.08
-    - _Visibility: 28
+    - _RefrDistortionAmount: 22.1
+    - _ScatterAmount: 3.5
+    - _Visibility: 30
     - _WaterLevel: 0
     - _WaveScale: 1
     - _WindSpeed: 0.6
