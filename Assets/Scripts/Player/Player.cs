@@ -164,7 +164,7 @@ namespace SharkGame
 #if UNITY_EDITOR
                     Debug.Log("No Input detected. Moving shark forward.");
 #endif
-                    MoveSharkForward();
+                  //  MoveSharkForward();
                 }
             }
         }

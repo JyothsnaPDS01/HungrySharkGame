@@ -9,6 +9,7 @@ TagManager:
   - Terrain
   - Ground
   - Ground1
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - 
   - Shark
-  - 
+  - Wall
   - 
   - 
   - 

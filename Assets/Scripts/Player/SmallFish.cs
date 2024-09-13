@@ -21,6 +21,8 @@ namespace SharkGame
         private List<SmallFish> allFish;
         private bool _isPlayerNearby = false;
         private bool _isCoroutineRunning = false;
+
+        [SerializeField] private SharkGameDataModel.SmallFishFiniteState _currentState = SharkGameDataModel.SmallFishFiniteState.ReBorn;  // FSM state
         #endregion
 
         #region Monobehaviour Methods
@@ -41,15 +43,34 @@ namespace SharkGame
             allFish = new List<SmallFish>(FindObjectsOfType<SmallFish>());
 
             // Start coroutines for direction change and movement
-            StartCoroutine(ChangeDirectionAtIntervals());
-            StartCoroutine(MoveTheSmallFishCoroutine());
+            StartCoroutine(FSMUpdate());
         }
         #endregion
 
         #region Coroutines
-        private IEnumerator ChangeDirectionAtIntervals()
+        private IEnumerator FSMUpdate()
         {
             while (true)
+            {
+                switch (_currentState)
+                {
+                    case SharkGameDataModel.SmallFishFiniteState.ReBorn:
+                        HandleBornState();
+                        break;
+                    case SharkGameDataModel.SmallFishFiniteState.Movement:
+                        HandleMovingState();
+                        break;
+                    case SharkGameDataModel.SmallFishFiniteState.Die:
+                        HandleDeadState();
+                        break;
+                }
+                yield return null; // Wait for the next frame
+            }
+        }
+
+        private IEnumerator ChangeDirectionAtIntervals()
+        {
+            while (_currentState == SharkGameDataModel.SmallFishFiniteState.Movement)
             {
                 yield return new WaitForSeconds(directionChangeInterval);
                 _targetDirection = GetRandomDirection();
@@ -58,7 +79,7 @@ namespace SharkGame
 
         private IEnumerator MoveTheSmallFishCoroutine()
         {
-            while (true)
+            while (_currentState == SharkGameDataModel.SmallFishFiniteState.Movement)
             {
                 MoveTheSmallFish();
                 yield return null; // Wait for the next frame
@@ -66,29 +87,94 @@ namespace SharkGame
         }
         #endregion
 
+        #region State Handling
+        private void HandleBornState()
+        {
+            // Initialization or birth logic
+            _currentState = SharkGameDataModel.SmallFishFiniteState.Movement;  // Transition to Moving state
+        }
+        private void HandleMovingState()
+        {
+            Debug.Log("Handling Movement State");
+            if (!_isCoroutineRunning)
+            {
+                StartCoroutine(ChangeDirectionAtIntervals());
+                StartCoroutine(MoveTheSmallFishCoroutine());
+                _isCoroutineRunning = true;
+            }
+            MoveTheSmallFish();
+            if (IsDeadConditionMet())
+            {
+                _currentState = SharkGameDataModel.SmallFishFiniteState.Die;
+            }
+        }
+
+
+        private void HandleDeadState()
+        {
+            // Logic for when fish is dead
+            _smallFishAnimator.SetTrigger("Die"); // Assuming you have a die animation
+            // Optionally remove or disable the fish object
+            Destroy(gameObject, 2f); // Destroy the fish after 2 seconds
+        }
+        #endregion
+
         #region Private Methods
+        private bool IsDeadConditionMet()
+        {
+            // Implement logic to determine if the fish should transition to the Dead state
+            // For example, check if fish collides with a certain object or goes out of bounds
+            return false; // Placeholder for actual logic
+        }
+
+        private float rayCastDistance = 5f;
+        [SerializeField] private LayerMask wallLayer;
         private void MoveTheSmallFish()
         {
             Vector3 separationVector = CalculateSeparationVector();
             Vector3 movementDirection = (_targetDirection + separationVector).normalized;
 
-            // Smoothly rotate the fish towards the movement direction
             RotateTowards(movementDirection);
 
             _smallFishAnimator.SetFloat("moveAmount", 0.5f);
 
-            // Move the fish forward
-            transform.position += movementDirection * movementSpeed * Time.deltaTime;
+            Debug.Log("Moving the fish");
+
+            RaycastHit hitInfo;
+            bool isHit = Physics.Raycast(transform.position, movementDirection, out hitInfo, rayCastDistance);
+
+            if (isHit)
+            {
+                Debug.Log("Raycast hit " + hitInfo.collider.gameObject.tag);
+                if (hitInfo.collider.gameObject.tag != "Wall")
+                {
+                    transform.position += movementDirection * movementSpeed * Time.deltaTime;
+                }
+                else
+                {
+                    Debug.LogError("Hit the wall");
+                    Vector3 reverseDirection = -movementDirection;
+                    RotateTowards(reverseDirection);
+                    transform.position += reverseDirection * movementSpeed * Time.deltaTime;
+                }
+            }
+            else
+            {
+                transform.position += movementDirection * movementSpeed * Time.deltaTime;
+            }
+
             Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
             newPosition.y = Mathf.Clamp(newPosition.y, -20f, -0.5f);
             transform.position = newPosition;
         }
+
 
         private Vector3 GetRandomDirection()
         {
             List<Vector3> directions = new List<Vector3>
             {
                 transform.forward,
+                -transform.forward
             };
 
             return directions[Random.Range(0, directions.Count)].normalized;

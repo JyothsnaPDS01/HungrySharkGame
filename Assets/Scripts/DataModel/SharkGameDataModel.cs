@@ -38,5 +38,13 @@ namespace SharkGame.Models
             public int _capacity;
             public GameObject _fishObject;
         }
+
+        [System.Serializable]
+        public enum SmallFishFiniteState
+        {
+            Movement,
+            Die,
+            ReBorn
+        }
     }
 }

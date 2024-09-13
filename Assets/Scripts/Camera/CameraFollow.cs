@@ -25,8 +25,7 @@ namespace SharkGame
 
 #if UNITY_EDITOR
             // Debug information for tracking positions
-            Debug.Log($"Target Position: {targetRigidbody.position}");
-            Debug.Log($"Desired Camera Position: {desiredPosition}");
+       
 #endif
 
             // Smoothly interpolate between the camera's current position and the desired position

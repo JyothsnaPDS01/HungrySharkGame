@@ -18225,7 +18225,7 @@ GameObject:
   - component: {fileID: 874792096}
   m_Layer: 0
   m_Name: LevelMap
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18286,6 +18286,8 @@ Transform:
   - {fileID: 4753450993675327282}
   - {fileID: 4067356866536353269}
   - {fileID: 7364361018248574774}
+  - {fileID: 2002078859}
+  - {fileID: 1648401756}
   m_Father: {fileID: 3829798055507557233}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -39941,6 +39943,100 @@ Transform:
   m_Father: {fileID: 1931925816}
   m_RootOrder: 60
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1648401755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1648401756}
+  - component: {fileID: 1648401759}
+  - component: {fileID: 1648401758}
+  - component: {fileID: 1648401757}
+  m_Layer: 0
+  m_Name: Retopo_Curve.002 (2)
+  m_TagString: Wall
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1648401756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648401755}
+  m_LocalRotation: {x: -0.7071069, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 122.1, y: -27.2, z: 97}
+  m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
+  m_Children: []
+  m_Father: {fileID: 874792096}
+  m_RootOrder: 46
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1648401757
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648401755}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8664669321117011784, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
+--- !u!23 &1648401758
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648401755}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 8235661634400746966, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1648401759
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648401755}
+  m_Mesh: {fileID: -8664669321117011784, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &1651018595
 GameObject:
   m_ObjectHideFlags: 0
@@ -47201,6 +47297,100 @@ Transform:
   m_Father: {fileID: 1537614137}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2002078858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2002078859}
+  - component: {fileID: 2002078862}
+  - component: {fileID: 2002078861}
+  - component: {fileID: 2002078860}
+  m_Layer: 0
+  m_Name: Retopo_Curve.002 (1)
+  m_TagString: Wall
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2002078859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002078858}
+  m_LocalRotation: {x: -0.7071069, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 122.1, y: -27.2, z: 111.3}
+  m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
+  m_Children: []
+  m_Father: {fileID: 874792096}
+  m_RootOrder: 45
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &2002078860
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002078858}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8664669321117011784, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
+--- !u!23 &2002078861
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002078858}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 8235661634400746966, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &2002078862
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002078858}
+  m_Mesh: {fileID: -8664669321117011784, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
 --- !u!1 &2003319600
 GameObject:
   m_ObjectHideFlags: 0
@@ -50515,7 +50705,7 @@ GameObject:
   - component: {fileID: 55339903067453521}
   m_Layer: 0
   m_Name: Retopo_Curve.029
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50710,7 +50900,7 @@ GameObject:
   - component: {fileID: 139392953876908938}
   m_Layer: 0
   m_Name: Retopo_Curve.015
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51105,11 +51295,11 @@ GameObject:
   - component: {fileID: 348959307109813356}
   m_Layer: 0
   m_Name: Retopo_Curve.003
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &348959307109813356
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -51435,7 +51625,7 @@ GameObject:
   - component: {fileID: 541312146179295493}
   m_Layer: 0
   m_Name: Retopo_Curve.009
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51727,7 +51917,7 @@ GameObject:
   - component: {fileID: 640921658211431410}
   m_Layer: 0
   m_Name: Retopo_Curve.008
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51901,7 +52091,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4298161781560724483}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 65.80209, y: -63.75785, z: -32.281532}
+  m_LocalPosition: {x: 65.80209, y: -27.54, z: 65.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3829798055507557233}
@@ -52034,7 +52224,7 @@ GameObject:
   - component: {fileID: 853882648823010049}
   m_Layer: 0
   m_Name: Retopo_Curve.032
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52136,7 +52326,7 @@ GameObject:
   - component: {fileID: 877012331614684399}
   m_Layer: 0
   m_Name: Retopo_Curve.043
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52169,7 +52359,7 @@ GameObject:
   - component: {fileID: 878218352362565526}
   m_Layer: 0
   m_Name: Retopo_Curve.039
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52559,7 +52749,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7258828426315079144}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 82.02023, y: -61.46782, z: 41.794113}
+  m_LocalPosition: {x: 95.2, y: -95.5, z: 97.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3829798055507557233}
@@ -52710,7 +52900,7 @@ GameObject:
   - component: {fileID: 1292657734510366421}
   m_Layer: 0
   m_Name: Retopo_Curve.028
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52759,7 +52949,7 @@ GameObject:
   - component: {fileID: 1307901141671342256}
   m_Layer: 0
   m_Name: Retopo_Curve.020
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52824,7 +53014,7 @@ GameObject:
   - component: {fileID: 1329713225118708409}
   m_Layer: 0
   m_Name: Retopo_Curve.021
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53068,7 +53258,7 @@ GameObject:
   - component: {fileID: 1375896051039345718}
   m_Layer: 0
   m_Name: Retopo_Curve.014
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53133,7 +53323,7 @@ GameObject:
   - component: {fileID: 1401700114332276492}
   m_Layer: 0
   m_Name: Retopo_Curve.042
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53343,8 +53533,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5277135565352531989}
   m_LocalRotation: {x: -0.7071069, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 114.65177, y: -31.372448, z: 81.1806}
-  m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
+  m_LocalPosition: {x: 114.65177, y: -31.144, z: 81.1806}
+  m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 1.6576989}
   m_Children: []
   m_Father: {fileID: 874792096}
   m_RootOrder: 41
@@ -53442,13 +53632,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3098574174847930397}
-  m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -3.2534537, y: -66.47302, z: -16.722404}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: -3.2534537, y: -66.47302, z: 45.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3829798055507557233}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 180}
 --- !u!4 &1714604476372880206
 Transform:
   m_ObjectHideFlags: 0
@@ -63343,7 +63533,7 @@ GameObject:
   - component: {fileID: 1950532468884856212}
   m_Layer: 0
   m_Name: Retopo_Curve.002
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63429,7 +63619,7 @@ GameObject:
   - component: {fileID: 2060945249352767344}
   m_Layer: 0
   m_Name: Retopo_Curve.040
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63506,7 +63696,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6886184534345845434}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -66.243744, y: -47.4066, z: 24.485668}
+  m_LocalPosition: {x: -66.243744, y: -47.4066, z: 57.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3829798055507557233}
@@ -63893,7 +64083,7 @@ GameObject:
   - component: {fileID: 2310983273163074721}
   m_Layer: 0
   m_Name: Retopo_Curve.011
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64097,7 +64287,7 @@ GameObject:
   - component: {fileID: 2396781616044065167}
   m_Layer: 0
   m_Name: Retopo_Curve.041
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64509,7 +64699,7 @@ GameObject:
   - component: {fileID: 2621627757408785324}
   m_Layer: 0
   m_Name: Retopo_Curve.017
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65081,7 +65271,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 268451812616415420}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -66.14208, y: -46.239258, z: 24.30333}
+  m_LocalPosition: {x: -66.14208, y: -46.239258, z: 55.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3829798055507557233}
@@ -65140,7 +65330,7 @@ GameObject:
   - component: {fileID: 3062191135810591748}
   m_Layer: 0
   m_Name: Retopo_Curve.038
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65973,7 +66163,7 @@ GameObject:
   - component: {fileID: 3626655522091058539}
   m_Layer: 0
   m_Name: Retopo_Curve.024
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66000,7 +66190,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726466203661423473}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -130.83675, y: -48.25137, z: 33.55613}
+  m_LocalPosition: {x: -8.6, y: -48.25137, z: 71.1}
   m_LocalScale: {x: 0.74626887, y: 0.74626887, z: 0.74626887}
   m_Children: []
   m_Father: {fileID: 3829798055507557233}
@@ -66053,7 +66243,7 @@ GameObject:
   - component: {fileID: 3637364976656872027}
   m_Layer: 0
   m_Name: Retopo_Curve.037
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66333,7 +66523,7 @@ GameObject:
   - component: {fileID: 3815638855023989208}
   m_Layer: 0
   m_Name: Retopo_Curve.019
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66591,7 +66781,7 @@ GameObject:
   - component: {fileID: 3889980956684804722}
   m_Layer: 0
   m_Name: Retopo_Curve.022
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67356,7 +67546,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4692683402116297527}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 33.518257, y: -68.84097, z: 4.1955833}
+  m_LocalPosition: {x: 33.518257, y: -68.84097, z: 43.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3829798055507557233}
@@ -67400,7 +67590,7 @@ GameObject:
   - component: {fileID: 4501186190015627743}
   m_Layer: 0
   m_Name: Retopo_Curve.013
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67609,7 +67799,7 @@ GameObject:
   - component: {fileID: 4567234513796358214}
   m_Layer: 0
   m_Name: Retopo_Curve.025
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68623,7 +68813,7 @@ GameObject:
   - component: {fileID: 5277135565352531990}
   m_Layer: 0
   m_Name: Retopo_Curve.044
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68754,7 +68944,7 @@ GameObject:
   - component: {fileID: 5355634401767602833}
   m_Layer: 0
   m_Name: Retopo_Curve.004
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69031,7 +69221,7 @@ GameObject:
   - component: {fileID: 5593332783946380370}
   m_Layer: 0
   m_Name: Retopo_Curve.046
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69384,7 +69574,7 @@ GameObject:
   - component: {fileID: 5705569379827701111}
   m_Layer: 0
   m_Name: Retopo_Curve.033
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69417,7 +69607,7 @@ GameObject:
   - component: {fileID: 5710335186645635493}
   m_Layer: 0
   m_Name: Retopo_Curve.045
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69498,7 +69688,7 @@ GameObject:
   - component: {fileID: 5743406980749092415}
   m_Layer: 0
   m_Name: Retopo_Curve.007
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69756,11 +69946,11 @@ GameObject:
   - component: {fileID: 5864183997111395732}
   m_Layer: 0
   m_Name: Retopo_Curve.005
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &5864183997111395732
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -70068,7 +70258,7 @@ GameObject:
   - component: {fileID: 6296474725220854826}
   m_Layer: 0
   m_Name: Retopo_Curve.016
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70792,7 +70982,7 @@ GameObject:
   - component: {fileID: 6875906447104688019}
   m_Layer: 0
   m_Name: Retopo_Curve.010
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71259,7 +71449,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4721091277083145758, guid: 1377afbc954f6ff4cb0613e51f8a1a11, type: 3}
+  - {fileID: 2100000, guid: aa792a34ef61a5943944adca66f9e1b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -71441,7 +71631,7 @@ GameObject:
   - component: {fileID: 7429301106057436528}
   m_Layer: 0
   m_Name: Retopo_Curve.026
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72201,7 +72391,7 @@ GameObject:
   - component: {fileID: 7991410618665996674}
   m_Layer: 0
   m_Name: Retopo_Curve.012
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72364,11 +72554,11 @@ GameObject:
   - component: {fileID: 8047974124901211312}
   m_Layer: 0
   m_Name: Retopo_Curve.030
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &8047974124901211312
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -72855,7 +73045,7 @@ GameObject:
   - component: {fileID: 8284981207527651779}
   m_Layer: 0
   m_Name: Retopo_Curve.031
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72998,11 +73188,11 @@ GameObject:
   - component: {fileID: 8356428430928229256}
   m_Layer: 0
   m_Name: Retopo_Curve.006
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &8356428430928229256
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -73133,7 +73323,7 @@ GameObject:
   - component: {fileID: 8537806889267236367}
   m_Layer: 0
   m_Name: Retopo_Curve.035
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73258,7 +73448,7 @@ GameObject:
   - component: {fileID: 8654649551908208761}
   m_Layer: 0
   m_Name: Retopo_Curve.027
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73284,13 +73474,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8047974124901211311}
-  m_LocalRotation: {x: -0.7071069, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 79.191025, y: -29.908184, z: 81.18018}
+  m_LocalRotation: {x: -0.70650846, y: -0.02907648, z: -0.029076714, w: 0.70650905}
+  m_LocalPosition: {x: 79.19185, y: -29.908184, z: 81.13809}
   m_LocalScale: {x: 0.88354063, y: 0.88354063, z: 0.88354063}
   m_Children: []
   m_Father: {fileID: 874792096}
   m_RootOrder: 28
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -4.7130003}
 --- !u!23 &8667636149775337961
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -73344,7 +73534,7 @@ GameObject:
   - component: {fileID: 8696368549640357580}
   m_Layer: 0
   m_Name: Retopo_Curve.018
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73529,7 +73719,7 @@ GameObject:
   - component: {fileID: 8800184046689426731}
   m_Layer: 0
   m_Name: Retopo_Curve.047
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73641,7 +73831,7 @@ GameObject:
   - component: {fileID: 8921740145820477679}
   m_Layer: 0
   m_Name: Retopo_Curve.036
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73798,7 +73988,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4047327537797110886}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -117.46252, y: -70.31829, z: 102.81635}
+  m_LocalPosition: {x: -117.46252, y: -69, z: 83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3829798055507557233}
@@ -73892,7 +74082,7 @@ GameObject:
   - component: {fileID: 9116488498232781760}
   m_Layer: 0
   m_Name: Retopo_Curve.023
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -72,6 +72,9 @@ MonoBehaviour:
   separationDistance: 1
   rotationSpeed: 5
   _smallFishType: 4
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!136 &1625042167604762760
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -26,18 +26,17 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6036616401076400763}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7857455451256566019}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3445271456067721417
 Animator:
-  serializedVersion: 5
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -50,12 +49,10 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!136 &2005940738489695625
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -64,17 +61,8 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6036616401076400763}
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.1
   m_Height: 0.25
   m_Direction: 2
@@ -95,13 +83,17 @@ MonoBehaviour:
   _smallFishAnimator: {fileID: 3445271456067721417}
   curveIntensity: 0.5
   directionChangeInterval: 2
+  separationDistance: 1
+  rotationSpeed: 5
   _smallFishType: 1
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1001 &7857455451256695681
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 3302089425349141534}
     m_Modifications:
     - target: {fileID: 100000, guid: 7262d5abd26354e42972fe27e696b998, type: 3}
@@ -250,12 +242,10 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 67fa4b1f5ada27d42844e1bc538f3d03, type: 2}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 7262d5abd26354e42972fe27e696b998, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7262d5abd26354e42972fe27e696b998, type: 3}
 --- !u!4 &7857455451256566019 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400002, guid: 7262d5abd26354e42972fe27e696b998, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 7262d5abd26354e42972fe27e696b998,
+    type: 3}
   m_PrefabInstance: {fileID: 7857455451256695681}
   m_PrefabAsset: {fileID: 0}
