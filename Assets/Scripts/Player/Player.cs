@@ -145,7 +145,6 @@ namespace SharkGame
                 if (!transitionStarted)
                 {
 #if UNITY_EDITOR
-                    Debug.Log("Starting smooth transition");
 #endif
                     StartSmoothTransition();
                 }
@@ -162,7 +161,6 @@ namespace SharkGame
                 if (Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0))
                 {
 #if UNITY_EDITOR
-                    Debug.Log("No Input detected. Moving shark forward.");
 #endif
                   //  MoveSharkForward();
                 }

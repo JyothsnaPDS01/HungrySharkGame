@@ -9,7 +9,7 @@ namespace SharkGame
     {
         #region Private Variables
         private Transform _playerShark;
-        [SerializeField] private float movementSpeed = 20f;
+        [SerializeField] private float movementSpeed = 10f;
         [SerializeField] private Animator _smallFishAnimator;
         [SerializeField] private float curveIntensity = 0.5f;
         [SerializeField] private float directionChangeInterval = 2f;
@@ -95,7 +95,6 @@ namespace SharkGame
         }
         private void HandleMovingState()
         {
-            Debug.Log("Handling Movement State");
             if (!_isCoroutineRunning)
             {
                 StartCoroutine(ChangeDirectionAtIntervals());
@@ -138,21 +137,17 @@ namespace SharkGame
 
             _smallFishAnimator.SetFloat("moveAmount", 0.5f);
 
-            Debug.Log("Moving the fish");
-
             RaycastHit hitInfo;
             bool isHit = Physics.Raycast(transform.position, movementDirection, out hitInfo, rayCastDistance);
 
             if (isHit)
             {
-                Debug.Log("Raycast hit " + hitInfo.collider.gameObject.tag);
                 if (hitInfo.collider.gameObject.tag != "Wall")
                 {
                     transform.position += movementDirection * movementSpeed * Time.deltaTime;
                 }
                 else
                 {
-                    Debug.LogError("Hit the wall");
                     Vector3 reverseDirection = -movementDirection;
                     RotateTowards(reverseDirection);
                     transform.position += reverseDirection * movementSpeed * Time.deltaTime;
