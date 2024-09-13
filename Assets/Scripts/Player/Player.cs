@@ -620,6 +620,8 @@ namespace SharkGame
 
             SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType; // Assuming your Fish class has a FishType property
             _fishObject.GetComponent<SmallFish>()._currentState = SharkGameDataModel.SmallFishFiniteState.Die;
+
+            _fishObject.GetComponent<SmallFish>().ResetFishState();
             _fishObject.transform.parent = null;
 
             ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);

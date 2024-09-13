@@ -12,7 +12,7 @@ namespace SharkGame
         [SerializeField] private float movementSpeed = 10f;
         [SerializeField] private Animator _smallFishAnimator;
         [SerializeField] private float curveIntensity = 0.5f;
-        [SerializeField] private float directionChangeInterval = 2f;
+        [SerializeField] private float directionChangeInterval = .5f;
         [SerializeField] private float separationDistance = 1f;
         [SerializeField] private float rotationSpeed = 5f;
         private Vector3 _targetDirection;
@@ -26,7 +26,8 @@ namespace SharkGame
         #endregion
 
         #region Monobehaviour Methods
-        private void Start()
+
+        private void OnEnable()
         {
             GameObject sharkObject = GameObject.Find("Player_Shark");
             if (sharkObject != null)
@@ -37,7 +38,15 @@ namespace SharkGame
             {
                 Debug.LogError("Player_Shark not found in the scene. Check the name or ensure it's active.");
             }
+        }
+        private void OnDisable()
+        {
+            StopAllCoroutines();  // Ensure that all coroutines stop when the object is disabled
+            _isCoroutineRunning = false;  // Reset the flag
+        }
 
+        private void Start()
+        {
             _targetDirection = GetRandomDirection();
             _initialZ = transform.position.z;
             allFish = new List<SmallFish>(FindObjectsOfType<SmallFish>());
@@ -102,20 +111,62 @@ namespace SharkGame
                 StartCoroutine(MoveTheSmallFishCoroutine());
                 _isCoroutineRunning = true;
             }
-            MoveTheSmallFish();
+
+            // Check if the shark is nearby
+            float distanceToShark = Vector3.Distance(transform.position, _playerShark.position);
+
+            if (distanceToShark <= 1.5f)
+            {
+                EscapeFromShark();  // Initiate the escape behavior
+            }
+            else
+            {
+                MoveTheSmallFish();
+            }
+
             if (IsDeadConditionMet())
             {
                 _currentState = SharkGameDataModel.SmallFishFiniteState.Die;
             }
         }
 
+        private void EscapeFromShark()
+        {
+            // Calculate direction away from the shark
+            Vector3 directionAwayFromShark = (transform.position - _playerShark.position).normalized;
+
+            // Add separation vector to avoid other fish while escaping
+            Vector3 separationVector = CalculateSeparationVector();
+            Vector3 escapeDirection = (directionAwayFromShark + separationVector).normalized;
+
+            // Rotate the fish smoothly towards the escape direction
+            RotateTowards(escapeDirection);
+
+            // Move the fish in the escape direction
+            _smallFishAnimator.SetFloat("moveAmount", 0.8f);  // Slightly faster movement for escape
+            transform.position += escapeDirection * (movementSpeed * 1.5f) * Time.deltaTime;  // Increase speed during escape
+
+            // Maintain fish's z-position and clamp y-position within bounds
+            Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
+            newPosition.y = Mathf.Clamp(newPosition.y, -20f, -0.5f);
+            transform.position = newPosition;
+        }
+
+        public void ResetFishState()
+        {
+            // Reset the state to ReBorn and ensure coroutines restart
+            _currentState = SharkGameDataModel.SmallFishFiniteState.ReBorn;
+            _isCoroutineRunning = false; // Mark coroutines not running so FSM can start them again
+
+            // Reset other necessary parameters if needed (e.g., position, speed, etc.)
+            _targetDirection = GetRandomDirection();
+            StopAllCoroutines(); // Ensure no old coroutines are running
+            StartCoroutine(FSMUpdate()); // Restart the FSM
+        }
 
         private void HandleDeadState()
         {
-            // Logic for when fish is dead
-            _smallFishAnimator.SetTrigger("Die"); // Assuming you have a die animation
-            // Optionally remove or disable the fish object
-            Destroy(gameObject, 2f); // Destroy the fish after 2 seconds
+            
         }
         #endregion
 

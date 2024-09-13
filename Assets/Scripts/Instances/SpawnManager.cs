@@ -116,13 +116,19 @@ namespace SharkGame
                         validPosition = true;
                         spawnedPositions.Add(spawnPosition);
 
-                        // Instantiate the fish at the valid position
-                        GameObject obj = ObjectPooling.Instance.SpawnFromPool(
-                            GetRandomSmallFishType(),
-                            spawnPosition,
-                            Quaternion.Euler(0, 90, 0)
-                        );
-                      
+                        
+
+                        GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), spawnPosition, Quaternion.Euler(0, 90, 0));
+
+                        if (fish != null)
+                        {
+                            SmallFish smallFish = fish.GetComponent<SmallFish>();
+                            if (smallFish != null)
+                            {
+                                smallFish.ResetFishState();
+                            }
+                        }
+
                         yield return new WaitForSeconds(spawnDelay);
                     }
                 }
