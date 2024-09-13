@@ -12,7 +12,7 @@ namespace SharkGame
         [SerializeField] private float movementSpeed = 10f;
         [SerializeField] private Animator _smallFishAnimator;
         [SerializeField] private float curveIntensity = 0.5f;
-        [SerializeField] private float directionChangeInterval = .5f;
+        [SerializeField] private float directionChangeInterval = .0035f;
         [SerializeField] private float separationDistance = 1f;
         [SerializeField] private float rotationSpeed = 5f;
         private Vector3 _targetDirection;
@@ -52,6 +52,8 @@ namespace SharkGame
             allFish = new List<SmallFish>(FindObjectsOfType<SmallFish>());
             if (_currentState == SharkGameDataModel.SmallFishFiniteState.Die)
                 _currentState = SharkGameDataModel.SmallFishFiniteState.ReBorn;
+
+            transform.rotation = Quaternion.Euler(0, 90, 0);
             // Start coroutines for direction change and movement
             StartCoroutine(FSMUpdate());
         }
@@ -115,9 +117,9 @@ namespace SharkGame
             // Check if the shark is nearby
             float distanceToShark = Vector3.Distance(transform.position, _playerShark.position);
 
-            if (distanceToShark <= 1.5f)
+            if (distanceToShark <= 1f)
             {
-                EscapeFromShark();  // Initiate the escape behavior
+                StartCoroutine(EscapeFromSharkCoroutine()); // Use coroutine for escape
             }
             else
             {
@@ -130,8 +132,10 @@ namespace SharkGame
             }
         }
 
-        private void EscapeFromShark()
+        private IEnumerator EscapeFromSharkCoroutine()
         {
+            Debug.Log("EscapeFromShark");
+
             // Calculate direction away from the shark
             Vector3 directionAwayFromShark = (transform.position - _playerShark.position).normalized;
 
@@ -139,17 +143,38 @@ namespace SharkGame
             Vector3 separationVector = CalculateSeparationVector();
             Vector3 escapeDirection = (directionAwayFromShark + separationVector).normalized;
 
-            // Rotate the fish smoothly towards the escape direction
-            RotateTowards(escapeDirection);
+            float originalSpeed = movementSpeed;
+            float escapeSpeed = .02f; // Increase speed during escape
+            float curveAmplitude = 4f; // Amplitude of the curve
+            float curveFrequency = 5f; // Frequency of the curve oscillation
+            float escapeDuration = 2f; // Duration of the escape phase
 
-            // Move the fish in the escape direction
-            _smallFishAnimator.SetFloat("moveAmount", 0.8f);  // Slightly faster movement for escape
-            transform.position += escapeDirection * (movementSpeed * 1.5f) * Time.deltaTime;  // Increase speed during escape
+            float timeElapsed = 0f;
 
-            // Maintain fish's z-position and clamp y-position within bounds
-            Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
-            newPosition.y = Mathf.Clamp(newPosition.y, -20f, -0.5f);
-            transform.position = newPosition;
+            while (timeElapsed < escapeDuration)
+            {
+                // Calculate the curve offset
+                float curveOffset = Mathf.Sin(timeElapsed * curveFrequency) * curveAmplitude;
+                Vector3 curvedDirection = Quaternion.Euler(0, 0, curveOffset) * escapeDirection;
+
+                // Rotate the fish smoothly towards the escape direction
+                RotateTowards(curvedDirection);
+
+                // Move the fish in the escape direction
+                _smallFishAnimator.SetFloat("moveAmount", 0.5f); // Slightly faster movement for escape
+                transform.position += curvedDirection * escapeSpeed * Time.deltaTime;
+
+                // Maintain fish's z-position and allow y-position to change during escape
+                Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
+                newPosition.y = Mathf.Clamp(newPosition.y, -20f, -0.5f); // Adjust this if needed for escape
+                transform.position = newPosition;
+
+                timeElapsed += Time.deltaTime;
+                yield return null; // Wait for the next frame
+            }
+
+            // Reset the speed to its original value after escaping
+            movementSpeed = originalSpeed;
         }
 
         public void ResetFishState()
@@ -179,11 +204,15 @@ namespace SharkGame
         }
 
         private float rayCastDistance = 5f;
-        [SerializeField] private LayerMask wallLayer;
+
         private void MoveTheSmallFish()
         {
             Vector3 separationVector = CalculateSeparationVector();
             Vector3 movementDirection = (_targetDirection + separationVector).normalized;
+
+            // Restrict movement to x direction only
+            movementDirection.y = 0;
+            movementDirection.z = 0;
 
             RotateTowards(movementDirection);
 
@@ -191,11 +220,12 @@ namespace SharkGame
 
             RaycastHit hitInfo;
             bool isHit = Physics.Raycast(transform.position, movementDirection, out hitInfo, rayCastDistance);
-
+            Debug.DrawRay(transform.position, movementDirection, Color.red);
             if (isHit)
             {
                 if (hitInfo.collider.gameObject.tag != "Wall")
                 {
+                    Debug.Log("Hitting the wall");
                     transform.position += movementDirection * movementSpeed * Time.deltaTime;
                 }
                 else
@@ -210,8 +240,33 @@ namespace SharkGame
                 transform.position += movementDirection * movementSpeed * Time.deltaTime;
             }
 
+            // Keep the z position constant and clamp y position within bounds
             Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
             newPosition.y = Mathf.Clamp(newPosition.y, -20f, -0.5f);
+            transform.position = newPosition;
+        }
+
+        private void EscapeFromShark()
+        {
+            Debug.Log("EscapeFromShark");
+
+            // Calculate direction away from the shark
+            Vector3 directionAwayFromShark = (transform.position - _playerShark.position).normalized;
+
+            // Add separation vector to avoid other fish while escaping
+            Vector3 separationVector = CalculateSeparationVector();
+            Vector3 escapeDirection = (directionAwayFromShark + separationVector).normalized;
+
+            // Rotate the fish smoothly towards the escape direction
+            RotateTowards(escapeDirection);
+
+            // Move the fish in the escape direction
+            _smallFishAnimator.SetFloat("moveAmount", 0.8f);  // Slightly faster movement for escape
+            transform.position += escapeDirection * (movementSpeed * 1.5f) * Time.deltaTime;  // Increase speed during escape
+
+            // Maintain fish's z-position and allow y-position to change during escape
+            Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
+            newPosition.y = Mathf.Clamp(newPosition.y, -20f, -0.5f); // Adjust this if needed for escape
             transform.position = newPosition;
         }
 
@@ -257,10 +312,23 @@ namespace SharkGame
         {
             if (direction != Vector3.zero)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                // Create a rotation that faces the direction, but keep z-axis unchanged
+                Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, 0), Vector3.up);
+
+
+                if (targetRotation != Quaternion.Euler(0, 0, 0))
+                {
+                    // Smoothly interpolate to the target rotation
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+                    // Ensure that the z rotation is fixed if that's intended
+                    Vector3 euler = transform.rotation.eulerAngles;
+                    euler.z = 0; // Fix z-axis rotation
+                    transform.rotation = Quaternion.Euler(euler);
+                }
             }
         }
+
         #endregion
     }
 }

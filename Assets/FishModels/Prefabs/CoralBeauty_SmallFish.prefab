@@ -45,9 +45,9 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a63dac4d4a607ba42ae68bb1c1357ea8, type: 3}
   m_Controller: {fileID: 9100000, guid: e852ae48e78dfb44c9233c737a5ae4de, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -72,9 +72,7 @@ MonoBehaviour:
   separationDistance: 1
   rotationSpeed: 5
   _smallFishType: 3
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  _currentState: 2
 --- !u!136 &2741866765477854453
 CapsuleCollider:
   m_ObjectHideFlags: 0

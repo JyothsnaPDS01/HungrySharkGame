@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6036616401076400763}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7857455451256566019}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!95 &3445271456067721417
 Animator:
   serializedVersion: 3
@@ -45,9 +45,9 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 7262d5abd26354e42972fe27e696b998, type: 3}
   m_Controller: {fileID: 9100000, guid: 67fa4b1f5ada27d42844e1bc538f3d03, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -63,10 +63,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
-  m_Height: 0.25
+  m_Radius: 0.06
+  m_Height: 0.21
   m_Direction: 2
-  m_Center: {x: 0.011051506, y: 0.034757867, z: 0}
+  m_Center: {x: 0.011051506, y: 0, z: 0}
 --- !u!114 &7626815658975910477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,9 +86,7 @@ MonoBehaviour:
   separationDistance: 1
   rotationSpeed: 5
   _smallFishType: 1
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  _currentState: 2
 --- !u!1001 &7857455451256695681
 PrefabInstance:
   m_ObjectHideFlags: 0

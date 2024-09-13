@@ -1906,7 +1906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: 2
   spreadRange: 1
-  clusterRadius: 2
+  clusterRadius: 0.5
   _playerShark: {fileID: 376064956}
   _gamePlayObjectsParent: {fileID: 1411043548}
   minSpawnDistanceBetweenFishes: 0.25
@@ -16573,10 +16573,70 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 235806285342907007, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 876810408565504600, guid: ac1cf53ef44dabd409f56de4aae80930,
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 876810408565504600, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538456046302816616, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.31033984
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538456046302816616, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.63536537
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538456046302816616, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.31033987
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538456046302816616, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6353655
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538456046302816616, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538456046302816616, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.10100093
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538456046302816616, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0000057294965
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538456046302816616, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.058000438
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538456046302816616, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -52.066
+      objectReference: {fileID: 0}
+    - target: {fileID: 2157108210661790460, guid: ac1cf53ef44dabd409f56de4aae80930,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5012452920482578973, guid: ac1cf53ef44dabd409f56de4aae80930,
         type: 3}

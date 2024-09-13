@@ -84,17 +84,32 @@ namespace SharkGame
         private IEnumerator SpawnFishesWithDelay(SharkGameDataModel.SharkDirection _sharkDirection)
         {
             // Set the spawn point based on shark direction
-            if (_sharkDirection == SharkGameDataModel.SharkDirection.Left)
+            switch (_sharkDirection)
             {
-                spawnPoint = new Vector3(_playerShark.position.x - spreadRange, _playerShark.position.y, _playerShark.position.z);
+                case SharkGameDataModel.SharkDirection.Left:
+                    spawnPoint = new Vector3(_playerShark.position.x - spreadRange, _playerShark.position.y, _playerShark.position.z);
+                    break;
+                case SharkGameDataModel.SharkDirection.Right:
+                    spawnPoint = new Vector3(_playerShark.position.x + spreadRange, _playerShark.position.y, _playerShark.position.z);
+                    break;
+                case SharkGameDataModel.SharkDirection.Down:
+                    spawnPoint = new Vector3(_playerShark.position.x, _playerShark.position.y - spreadRange, _playerShark.position.z);
+                    break;
             }
-            else if (_sharkDirection == SharkGameDataModel.SharkDirection.Right)
+
+            // Adjust the cluster position based on the shark's direction
+            Vector3 clusterOffset = Vector3.zero;
+            switch (_sharkDirection)
             {
-                spawnPoint = new Vector3(_playerShark.position.x + spreadRange, _playerShark.position.y, _playerShark.position.z);
-            }
-            else if (_sharkDirection == SharkGameDataModel.SharkDirection.Down)
-            {
-                spawnPoint = new Vector3(_playerShark.position.x, _playerShark.position.y - spreadRange, _playerShark.position.z);
+                case SharkGameDataModel.SharkDirection.Left:
+                    clusterOffset = Vector3.left * spreadRange;
+                    break;
+                case SharkGameDataModel.SharkDirection.Right:
+                    clusterOffset = Vector3.right * spreadRange;
+                    break;
+                case SharkGameDataModel.SharkDirection.Down:
+                    clusterOffset = Vector3.down * spreadRange;
+                    break;
             }
 
             int _spawnCount = Random.Range(6, 10);
@@ -104,11 +119,11 @@ namespace SharkGame
             {
                 Vector3 spawnPosition;
                 bool validPosition = false;
+                int attempts = 0; // Count attempts to prevent infinite loop
 
-                // Ensure the spawn position is valid
-                while (!validPosition)
+                while (!validPosition && attempts < 100)
                 {
-                    spawnPosition = GenerateClusteredSpawnPosition(spawnPoint);
+                    spawnPosition = GenerateClusteredSpawnPosition(spawnPoint) + clusterOffset;
                     spawnPosition.y = Mathf.Clamp(spawnPosition.y, -20f, -1f);
 
                     if (IsPositionValid(spawnPosition))
@@ -116,9 +131,7 @@ namespace SharkGame
                         validPosition = true;
                         spawnedPositions.Add(spawnPosition);
 
-                        
-
-                        GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), spawnPosition, Quaternion.Euler(0, 90, 0));
+                        GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), spawnPosition, Quaternion.identity);
 
                         if (fish != null)
                         {
@@ -131,6 +144,12 @@ namespace SharkGame
 
                         yield return new WaitForSeconds(spawnDelay);
                     }
+                    attempts++;
+                }
+
+                if (!validPosition)
+                {
+                    Debug.LogWarning("Failed to find a valid spawn position after 100 attempts.");
                 }
             }
         }
@@ -166,12 +185,6 @@ namespace SharkGame
                     return false;
                 }
             }
-
-            // Check if the new position overlaps with the shark's capsule collider
-            //if (IsPositionOverlappingWithShark(newPosition))
-            //{
-            //    return false;
-            //}
 
             return true;
         }
