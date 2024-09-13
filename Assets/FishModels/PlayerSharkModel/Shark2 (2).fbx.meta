@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: -7730660942125306417
     second: Armature|Armature|Armature|Animation_Armature.001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pyjama_shark_mat
+    second: {fileID: 2100000, guid: e01e51385f9f41744ab9b8d33bfa883b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

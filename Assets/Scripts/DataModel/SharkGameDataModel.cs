@@ -44,7 +44,8 @@ namespace SharkGame.Models
         {
             Movement,
             Die,
-            ReBorn
+            ReBorn,
+            Escape
         }
     }
 }

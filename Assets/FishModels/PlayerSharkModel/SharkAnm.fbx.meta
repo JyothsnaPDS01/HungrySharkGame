@@ -12,7 +12,12 @@ ModelImporter:
   - first:
       74: 5840575062104941655
     second: skeletal.3|skeletal.3|skeletal.3|skeletal.3|skeletal.3|swimming_skeletal.3
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_0
+    second: {fileID: 2100000, guid: 0942241b67b7e5a40b59ad54abe5f270, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.012
+    globalScale: 1.2
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
