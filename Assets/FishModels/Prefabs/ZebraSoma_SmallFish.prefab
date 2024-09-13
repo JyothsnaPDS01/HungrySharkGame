@@ -65,13 +65,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea2559480d66a6479948806fca59186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3
+  movementSpeed: 0.5
   _smallFishAnimator: {fileID: 5898399333938078527}
   curveIntensity: 0.5
   directionChangeInterval: 2
   separationDistance: 1
   rotationSpeed: 5
   _smallFishType: 4
+  _currentState: 2
   wallLayer:
     serializedVersion: 2
     m_Bits: 512

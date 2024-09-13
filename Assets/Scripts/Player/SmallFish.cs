@@ -22,7 +22,7 @@ namespace SharkGame
         private bool _isPlayerNearby = false;
         private bool _isCoroutineRunning = false;
 
-        [SerializeField] private SharkGameDataModel.SmallFishFiniteState _currentState = SharkGameDataModel.SmallFishFiniteState.ReBorn;  // FSM state
+        [SerializeField] internal SharkGameDataModel.SmallFishFiniteState _currentState = SharkGameDataModel.SmallFishFiniteState.ReBorn;  // FSM state
         #endregion
 
         #region Monobehaviour Methods
@@ -41,7 +41,8 @@ namespace SharkGame
             _targetDirection = GetRandomDirection();
             _initialZ = transform.position.z;
             allFish = new List<SmallFish>(FindObjectsOfType<SmallFish>());
-
+            if (_currentState == SharkGameDataModel.SmallFishFiniteState.Die)
+                _currentState = SharkGameDataModel.SmallFishFiniteState.ReBorn;
             // Start coroutines for direction change and movement
             StartCoroutine(FSMUpdate());
         }

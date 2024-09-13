@@ -122,7 +122,7 @@ namespace SharkGame
                             spawnPosition,
                             Quaternion.Euler(0, 90, 0)
                         );
-
+                      
                         yield return new WaitForSeconds(spawnDelay);
                     }
                 }
