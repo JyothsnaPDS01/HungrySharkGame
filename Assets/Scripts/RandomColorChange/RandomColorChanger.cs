@@ -7,6 +7,8 @@ public class RandomColorChanger : MonoBehaviour
     public float transitionDuration = 1.0f; // Duration of color transition in seconds
     public Material planeMaterial; // Reference to the plane's material
 
+    public Material UnderwaterMaterial;
+
     void Start()
     {
         StartCoroutine(ChangeColorOverTime()); // Start the coroutine
@@ -53,6 +55,7 @@ public class RandomColorChanger : MonoBehaviour
         if (planeMaterial != null)
         {
             planeMaterial.color = color;
+            UnderwaterMaterial.color = new Color(color.r, color.g, color.b, .1f);
         }
     }
 }
