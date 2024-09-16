@@ -134,8 +134,6 @@ namespace SharkGame
 
         private IEnumerator EscapeFromSharkCoroutine()
         {
-            Debug.Log("EscapeFromShark");
-
             // Calculate direction away from the shark
             Vector3 directionAwayFromShark = (transform.position - _playerShark.position).normalized;
 
@@ -186,7 +184,8 @@ namespace SharkGame
             // Reset other necessary parameters if needed (e.g., position, speed, etc.)
             _targetDirection = GetRandomDirection();
             StopAllCoroutines(); // Ensure no old coroutines are running
-            StartCoroutine(FSMUpdate()); // Restart the FSM
+            if(this.gameObject.activeInHierarchy)
+                StartCoroutine(FSMUpdate()); // Restart the FSM
         }
 
         private void HandleDeadState()
@@ -225,7 +224,6 @@ namespace SharkGame
             {
                 if (hitInfo.collider.gameObject.tag != "Wall")
                 {
-                    Debug.Log("Hitting the wall");
                     transform.position += movementDirection * movementSpeed * Time.deltaTime;
                 }
                 else

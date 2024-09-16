@@ -610,6 +610,8 @@ namespace SharkGame
 
             _fishObject.transform.localPosition = _sharkMouthPosition.localPosition;
 
+            _fishObject.transform.SetParent(_sharkMouthPosition);
+
             _sharkAnimator.SetBool("attack", true);
 
             yield return new WaitForSeconds(.15f);
@@ -626,7 +628,7 @@ namespace SharkGame
 
             ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
 
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.5f);
 
             _sharkAnimator.SetBool("attack", false);
 
