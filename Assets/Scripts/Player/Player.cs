@@ -66,8 +66,6 @@ namespace SharkGame
         private Vector3 velocity = Vector3.zero; // Current velocity
         [SerializeField] private float smoothSpeed = 2f; // Speed of smoothing
         private bool isParabolicJumping = false; // Flag to indicate if a parabolic jump is in progress
-
-
         private bool transitionCompleted = false; // Flag to track if the transition is completed
         void FixedUpdate()
         {
@@ -387,6 +385,8 @@ namespace SharkGame
                 // Clamp the Y position within specified bounds
                 targetPosition.y = Mathf.Clamp(targetPosition.y, -55f, 0);
 
+                targetPosition.x = Mathf.Clamp(targetPosition.x, -85f, 105f);
+
                 // Move the shark smoothly to the new position
                 _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
 
@@ -527,12 +527,12 @@ namespace SharkGame
             if (collision.gameObject.tag == "Ground")
             {
                 Debug.LogError("Ground hits");
+                DisableInput();
                 _sharkRB.velocity = Vector3.zero;
                 StopMovementAndRotation();
                 targetRotation = Quaternion.Euler(0, 90, 0);
                 StartCoroutine(RotateToTargetRotation(targetRotation));
                 isGrounded = true;
-                DisableInput();
             }
             else if (collision.gameObject.tag == "Ground1")
             {
