@@ -1,13 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class RandomColorChanger : MonoBehaviour
 {
-    public float interval = 2.0f; // Time interval in seconds
-    public float transitionDuration = 1.0f; // Duration of color transition in seconds
-    public Material planeMaterial; // Reference to the plane's material
+    #region Private Variables
+    [Header("BG transition Duration Parameters")]
+    [SerializeField] private float interval = 2.0f; // Time interval in seconds
+    [SerializeField] private float transitionDuration = 1.0f; // Duration of color transition in seconds
+    [Header("Plane Material")]
+    [SerializeField] private Material planeMaterial; // Reference to the plane's material
+    [Header("UnderWater Material")]
+    [SerializeField] private Material UnderwaterMaterial;
+    [Header("BG Colors")]
+    [SerializeField] private List<Color> BgColors = new List<Color>();
 
-    public Material UnderwaterMaterial;
+    #endregion
 
     void Start()
     {
@@ -19,7 +27,7 @@ public class RandomColorChanger : MonoBehaviour
         while (true)
         {
             // Generate a random color
-            Color newColor = new Color(Random.value, Random.value, Random.value);
+            Color newColor = BgColors[Random.Range(0, BgColors.Count)];
 
             // Smoothly transition to the new color
             yield return StartCoroutine(TransitionColor(newColor));
