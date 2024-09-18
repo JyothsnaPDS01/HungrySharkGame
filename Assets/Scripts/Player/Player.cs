@@ -28,7 +28,7 @@ namespace SharkGame
         private bool isTransitioning = false; // To manage transition state
         private bool transitionStarted = false;
 
-        private SharkGameDataModel.SharkDirection _currentSharkDirection;
+        [SerializeField] private SharkGameDataModel.SharkDirection _currentSharkDirection;
         private SharkGameDataModel.SharkDirection _previousSharkDirection;
         private bool initialMovementCompleted = false;  // Track if initial movement is completed
         private float spawnCooldown = 0.5f; // Time interval between consecutive spawns
@@ -41,7 +41,7 @@ namespace SharkGame
         private float horizontalInput;
         private float verticalInput;
 
-        private bool isInputEnabled = true; // Flag to enable or disable input
+        [SerializeField] private bool isInputEnabled = true; // Flag to enable or disable input
         #endregion
 
         #region MonoBehaviour Methods
@@ -67,16 +67,106 @@ namespace SharkGame
         [SerializeField] private float smoothSpeed = 2f; // Speed of smoothing
         private bool isParabolicJumping = false; // Flag to indicate if a parabolic jump is in progress
         private bool transitionCompleted = false; // Flag to track if the transition is completed
+
+         public float raycastDistance = 1f; // Distance to cast the ray
+        public LayerMask wallLayer; // LayerMask to specify which layers are considered as walls
+
+
+        private bool wasInputEnabled = true;
+        private float inputToggleCooldown = 0.2f; // Time to debounce input toggling
+        private float lastInputToggleTime = 0f;
+        public float stopDistance = 0.05f; // Distance to stop movement from the wall
+        private bool isMovementBlocked = false;
+
+        // Store the direction where the wall is detected
+        [SerializeField] private SharkGameDataModel.SharkDirection blockedDirection = SharkGameDataModel.SharkDirection.None;
         void FixedUpdate()
         {
             if (!IsReady()) return;
 
-            DetectInput();
+            DetectInput(); // Always check for input
+
             if (isParabolicJumping || isTransitioning) return;
 
-            HandleSurfaceInteraction();
-            HandleMovementAfterTransition();
+            // Update current movement direction
+            _currentSharkDirection = GetInputDirection(); // Implement this based on your input system
+
+            // Raycast to check for walls in front of the player
+            RaycastCheck();
+
+            // Handle movement based on whether it's blocked
+            if (!isMovementBlocked || (_currentSharkDirection != blockedDirection))
+            {
+                HandleSurfaceInteraction(); // Process movement if allowed
+                HandleMovementAfterTransition(); // Continue movement logic
+            }
         }
+
+
+
+        void RaycastCheck()
+        {
+            RaycastHit hit;
+            float distanceToWall;
+
+            // Check in the forward direction
+            Vector3 rayDirection = transform.forward;
+            if (Physics.Raycast(transform.position, rayDirection, out hit, raycastDistance, wallLayer))
+            {
+                distanceToWall = hit.distance;
+                if (distanceToWall <= stopDistance)
+                {
+#if UNITY_EDITOR
+                    Debug.Log("Wall detected in front within stop distance!");
+#endif
+                    _sharkRB.velocity = Vector3.zero;
+                    isMovementBlocked = true;
+                    return; // Exit early if a wall is detected in the forward direction
+                }
+            }
+
+            // Check in the up direction
+            rayDirection = transform.up;
+            if (Physics.Raycast(transform.position, rayDirection, out hit, raycastDistance, wallLayer))
+            {
+                distanceToWall = hit.distance;
+                if (distanceToWall <= stopDistance)
+                {
+#if UNITY_EDITOR
+                    Debug.Log("Wall detected above within stop distance!");
+#endif
+                    _sharkRB.velocity = Vector3.zero;
+                    isMovementBlocked = true;
+                    return; // Exit early if a wall is detected above
+                }
+            }
+
+            // Check in the down direction
+            rayDirection = -transform.up;
+            if (Physics.Raycast(transform.position, rayDirection, out hit, raycastDistance, wallLayer))
+            {
+                distanceToWall = hit.distance;
+                if (distanceToWall <= stopDistance)
+                {
+#if UNITY_EDITOR
+                    Debug.Log("Wall detected below within stop distance!");
+#endif
+                    _sharkRB.velocity = Vector3.zero;
+                    isMovementBlocked = true;
+                    return; // Exit early if a wall is detected below
+                }
+            }
+
+            // No walls detected in any direction
+            isMovementBlocked = false;
+
+            // Visualize the raycasts in the editor (optional for debugging)
+            Debug.DrawRay(transform.position, transform.forward * raycastDistance, Color.red);
+            Debug.DrawRay(transform.position, transform.up * raycastDistance, Color.cyan);
+            Debug.DrawRay(transform.position, -transform.up * raycastDistance, Color.magenta);
+        }
+
+
 
         bool IsReady()
         {
@@ -437,6 +527,46 @@ namespace SharkGame
             RenderSettings.fogColor = _fogColor;
         }
 
+        private SharkGameDataModel.SharkDirection GetInputDirection()
+        {
+            if (verticalInput > 0 && horizontalInput == 0)
+                return SharkGameDataModel.SharkDirection.Up;
+            else if (verticalInput < 0 && horizontalInput == 0)  // Down
+            {
+                return SharkGameDataModel.SharkDirection.Down;
+            }
+            else if (horizontalInput < 0 && verticalInput == 0)  // Left
+            {
+                return SharkGameDataModel.SharkDirection.Left;
+            }
+            else if (horizontalInput > 0 && verticalInput == 0)  // Right
+            {
+                return SharkGameDataModel.SharkDirection.Right;
+            }
+
+            else if (horizontalInput != 0 && verticalInput != 0)
+            {
+                if (horizontalInput > 0 && verticalInput > 0)  // Up-Right Diagonal
+                {
+                    return _currentSharkDirection = SharkGameDataModel.SharkDirection.UpRight;
+                }
+                else if (horizontalInput > 0 && verticalInput < 0)  // Down-Right Diagonal
+                {
+                    return _currentSharkDirection = SharkGameDataModel.SharkDirection.DownRight;
+                }
+                else if (horizontalInput < 0 && verticalInput > 0)  // Up-Left Diagonal
+                {
+                    return _currentSharkDirection = SharkGameDataModel.SharkDirection.UpLeft;
+                }
+                else if (horizontalInput < 0 && verticalInput < 0)  // Down-Left Diagonal
+                {
+                    return SharkGameDataModel.SharkDirection.DownLeft;
+                }
+            }
+
+            return SharkGameDataModel.SharkDirection.None;
+        }
+
         private void HandleRotation()
         {
             if (!isMoving)
@@ -526,26 +656,69 @@ namespace SharkGame
             }
             if (collision.gameObject.tag == "Ground")
             {
+#if UNITY_EDITOR
                 Debug.LogError("Ground hits");
-                DisableInput();
+#endif
+               // DisableInput();
                 _sharkRB.velocity = Vector3.zero;
                 StopMovementAndRotation();
-                targetRotation = Quaternion.Euler(0, 90, 0);
-                StartCoroutine(RotateToTargetRotation(targetRotation));
+                targetRotation = GetTargetRotation();
+              //  StartCoroutine(RotateToTargetRotation(targetRotation));
                 isGrounded = true;
+                blockedDirection = _currentSharkDirection;
             }
             else if (collision.gameObject.tag == "Ground1")
             {
-                    Debug.LogError("Ground hits");
-                    _sharkRB.velocity = Vector3.zero;
+#if UNITY_EDITOR
+                Debug.LogError("Ground hits");
+#endif
+                _sharkRB.velocity = Vector3.zero;
                     StopMovementAndRotation();
-                    targetRotation = Quaternion.Euler(0, -90, 0);
-                    StartCoroutine(RotateToTargetRotation(targetRotation));
+                    targetRotation = GetTargetRotation();
+                   // StartCoroutine(RotateToTargetRotation(targetRotation));
                     isGrounded = true;
-                    DisableInput();
+                 //   DisableInput();
             }
         }
 
+        private Quaternion GetTargetRotation()
+        {
+            if (_currentSharkDirection == SharkGameDataModel.SharkDirection.Up)  // Up
+            {
+                return Quaternion.Euler(90, 90, -90);
+            }
+            else if (_currentSharkDirection == SharkGameDataModel.SharkDirection.Down)  // Down
+            {
+                return Quaternion.Euler(-90, 0, -180);
+            }
+            else if (_currentSharkDirection == SharkGameDataModel.SharkDirection.Left)  // Left
+            {
+                return Quaternion.Euler(0, 90, 0);
+            }
+            else if (_currentSharkDirection == SharkGameDataModel.SharkDirection.Right)  // Right
+            {
+                return Quaternion.Euler(0, -90, 0);
+
+            }
+            else if (_currentSharkDirection == SharkGameDataModel.SharkDirection.UpRight)
+            {
+                return Quaternion.Euler(230, 30, 130);
+            }
+            else if (_currentSharkDirection == SharkGameDataModel.SharkDirection.DownRight)  // Down-Right Diagonal
+            {
+                return Quaternion.Euler(50, -90, 80);
+            }
+            else if (_currentSharkDirection == SharkGameDataModel.SharkDirection.UpLeft)  // Up-Left Diagonal
+            {
+                return Quaternion.Euler(-25, 110, 50);
+
+            }
+            else if (_currentSharkDirection == SharkGameDataModel.SharkDirection.DownLeft)  // Down-Left Diagonal
+            {
+                return Quaternion.Euler(60, -250, -70);
+            }
+            return Quaternion.Euler(0, 0, 0);
+        }
         IEnumerator RotateToTargetRotation(Quaternion targetRotation)
         {
             while (Quaternion.Angle(_sharkRB.transform.rotation, targetRotation) > 0.01f)
@@ -553,7 +726,7 @@ namespace SharkGame
                 _sharkRB.transform.rotation = Quaternion.RotateTowards(
                     _sharkRB.transform.rotation,
                     targetRotation,
-                    rotationSpeed * 20f * Time.fixedDeltaTime
+                    rotationSpeed * 100f * Time.fixedDeltaTime
                 );
                 yield return null; // Wait for the next frame
             }
