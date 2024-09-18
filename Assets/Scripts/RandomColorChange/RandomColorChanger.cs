@@ -54,8 +54,8 @@ public class RandomColorChanger : MonoBehaviour
     {
         if (planeMaterial != null)
         {
-            planeMaterial.color = color;
-            UnderwaterMaterial.color = new Color(color.r, color.g, color.b, .1f);
+            planeMaterial.color = new Color(color.r, color.g, color.b, .05f);
+            UnderwaterMaterial.color = new Color(color.r, color.g, color.b, .05f);
         }
     }
 }
