@@ -110,21 +110,7 @@ namespace SharkGame
             float distanceToWall;
 
             // Check in the forward direction
-            Vector3 rayDirection = transform.forward;
-            if (Physics.Raycast(transform.position, rayDirection, out hit, raycastDistance, wallLayer))
-            {
-                distanceToWall = hit.distance;
-                if (distanceToWall <= stopDistance)
-                {
-#if UNITY_EDITOR
-                    Debug.Log("Wall detected in front within stop distance!");
-#endif
-                    _sharkRB.velocity = Vector3.zero;
-                    isMovementBlocked = true;
-                    return; // Exit early if a wall is detected in the forward direction
-                }
-            }
-
+            Vector3 rayDirection;
             // Check in the up direction
             rayDirection = transform.up;
             if (Physics.Raycast(transform.position, rayDirection, out hit, raycastDistance, wallLayer))
@@ -157,13 +143,65 @@ namespace SharkGame
                 }
             }
 
+            // Check in the right direction
+            rayDirection = transform.right;
+            if (Physics.Raycast(transform.position, rayDirection, out hit, raycastDistance, wallLayer))
+            {
+                distanceToWall = hit.distance;
+                if (distanceToWall <= stopDistance)
+                {
+#if UNITY_EDITOR
+                    Debug.Log("Wall detected on the right within stop distance!");
+#endif
+                    _sharkRB.velocity = Vector3.zero;
+                    isMovementBlocked = true;
+                    return; // Exit early if a wall is detected in the right direction
+                }
+            }
+
+            // Check in the left direction
+            rayDirection = -transform.right;
+            if (Physics.Raycast(transform.position, rayDirection, out hit, raycastDistance, wallLayer))
+            {
+                distanceToWall = hit.distance;
+                if (distanceToWall <= stopDistance)
+                {
+#if UNITY_EDITOR
+                    Debug.Log("Wall detected on the left within stop distance!");
+#endif
+                    _sharkRB.velocity = Vector3.zero;
+                    isMovementBlocked = true;
+                    return; // Exit early if a wall is detected in the left direction
+                }
+            }
+
+            // Check in the left direction
+            rayDirection = transform.forward;
+            if (Physics.Raycast(transform.position, rayDirection, out hit, raycastDistance, wallLayer))
+            {
+                distanceToWall = hit.distance;
+                if (distanceToWall <= stopDistance)
+                {
+#if UNITY_EDITOR
+                    Debug.Log("Wall detected in front within stop distance!");
+#endif
+                    _sharkRB.velocity = Vector3.zero;
+                    isMovementBlocked = true;
+                    return; // Exit early if a wall is detected in the forward direction
+                }
+            }
+
             // No walls detected in any direction
             isMovementBlocked = false;
 
             // Visualize the raycasts in the editor (optional for debugging)
+#if UNITY_EDITOR
             Debug.DrawRay(transform.position, transform.forward * raycastDistance, Color.red);
             Debug.DrawRay(transform.position, transform.up * raycastDistance, Color.cyan);
             Debug.DrawRay(transform.position, -transform.up * raycastDistance, Color.magenta);
+            Debug.DrawRay(transform.position, transform.right * raycastDistance, Color.green);
+            Debug.DrawRay(transform.position, -transform.right * raycastDistance, Color.yellow);
+#endif
         }
 
 
@@ -642,44 +680,46 @@ namespace SharkGame
         #endregion
 
         #region Collision 
-
+        [Header("Collision Parameters")]
         private bool isGrounded = false;
-        private float groundCollisionCooldown = 1f; // Cooldown time to prevent repeated collisions
-        private float lastGroundCollisionTime = -1f;
+        [SerializeField] private float collisionCooldownDuration = 0.5f; // Adjust the cooldown duration as needed
+        private bool isCollisionOnCooldown = false;    // Flag to track if collision is on cooldown
 
         private void OnCollisionEnter(Collision collision)
         {
+            if (isCollisionOnCooldown) return; // Exit early if collision is on cooldown
+
             if (collision.gameObject.tag == "SmallFish")
             {
                 collision.gameObject.transform.SetParent(_sharkHeadPosition);
                 StartCoroutine(DeactiveSmallFishAndPushBackToPool(collision.gameObject));
             }
-            if (collision.gameObject.tag == "Ground")
+            else if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Ground1")
             {
 #if UNITY_EDITOR
                 Debug.LogError("Ground hits");
 #endif
-               // DisableInput();
                 _sharkRB.velocity = Vector3.zero;
                 StopMovementAndRotation();
                 targetRotation = GetTargetRotation();
-              //  StartCoroutine(RotateToTargetRotation(targetRotation));
                 isGrounded = true;
                 blockedDirection = _currentSharkDirection;
-            }
-            else if (collision.gameObject.tag == "Ground1")
-            {
-#if UNITY_EDITOR
-                Debug.LogError("Ground hits");
-#endif
-                _sharkRB.velocity = Vector3.zero;
-                    StopMovementAndRotation();
-                    targetRotation = GetTargetRotation();
-                   // StartCoroutine(RotateToTargetRotation(targetRotation));
-                    isGrounded = true;
-                 //   DisableInput();
+
+                // Optional: You can rotate the shark here if needed
+                // StartCoroutine(RotateToTargetRotation(targetRotation));
+
+                // Start the cooldown to avoid jerky movements
+                StartCoroutine(CollisionCooldown());
             }
         }
+
+        private IEnumerator CollisionCooldown()
+        {
+            isCollisionOnCooldown = true; // Set cooldown to active
+            yield return new WaitForSeconds(collisionCooldownDuration); // Wait for the cooldown duration
+            isCollisionOnCooldown = false; // Reset cooldown after the duration
+        }
+
 
         private Quaternion GetTargetRotation()
         {
