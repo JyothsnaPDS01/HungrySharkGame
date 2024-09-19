@@ -156,7 +156,7 @@ namespace SharkGame
                 Vector3 curvedDirection = Quaternion.Euler(0, 0, curveOffset) * escapeDirection;
 
                 // Rotate the fish smoothly towards the escape direction
-                RotateTowards(curvedDirection);
+           //     RotateTowards(curvedDirection);
 
                 // Move the fish in the escape direction
                 _smallFishAnimator.SetFloat("moveAmount", 0.5f); // Slightly faster movement for escape
@@ -182,7 +182,7 @@ namespace SharkGame
             _isCoroutineRunning = false; // Mark coroutines not running so FSM can start them again
 
             // Reset other necessary parameters if needed (e.g., position, speed, etc.)
-            _targetDirection = GetRandomDirection();
+         //   _targetDirection = GetRandomDirection();
             StopAllCoroutines(); // Ensure no old coroutines are running
             if(this.gameObject.activeInHierarchy)
                 StartCoroutine(FSMUpdate()); // Restart the FSM
