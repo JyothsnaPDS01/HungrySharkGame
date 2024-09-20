@@ -237,13 +237,14 @@ namespace SharkGame
             Debug.DrawRay(transform.position, transform.forward, Color.red);
             if (isHit)
             {
-                if (hitInfo.collider.gameObject.tag != "Wall")
+                if (hitInfo.collider.gameObject.tag != "Ground")
                 {
                     transform.position += movementDirection * movementSpeed * Time.deltaTime;
                 }
                 else
                 {
                     Debug.Log("Wall Hitted");
+                    Debug.Log("hitInfo.collider.gameObject" + hitInfo.collider.gameObject);
                     Vector3 reverseDirection = -movementDirection;
                    // RotateTowards(reverseDirection);
                     transform.position += reverseDirection * movementSpeed * Time.deltaTime;
