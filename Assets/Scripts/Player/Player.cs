@@ -132,7 +132,7 @@ namespace SharkGame
 
             Vector3 desiredPosition = new Vector3(_bgPlane.transform.position.x, desiredBGPlaneYValue, _bgPlane.transform.position.z);
 
-            _bgPlane.transform.position += Vector3.Lerp(_bgPlane.transform.position, desiredPosition, .5f);
+            _bgPlane.transform.position = Vector3.Lerp(_bgPlane.transform.position, desiredPosition, .5f);
         }
 
         void RaycastCheck()
