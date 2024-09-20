@@ -31,7 +31,7 @@ namespace SharkGame
         [SerializeField] private SharkGameDataModel.SharkDirection _currentSharkDirection;
         private SharkGameDataModel.SharkDirection _previousSharkDirection;
         private bool initialMovementCompleted = false;  // Track if initial movement is completed
-        private float spawnCooldown = 0.5f; // Time interval between consecutive spawns
+        private float spawnCooldown = 2f; // Time interval between consecutive spawns
         private float lastSpawnTime = 0f;  // Time of last fish spawn
 
         private Vector3 transitionTargetPosition; // Target position for transition

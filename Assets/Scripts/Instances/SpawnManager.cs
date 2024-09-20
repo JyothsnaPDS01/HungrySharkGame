@@ -25,7 +25,7 @@ namespace SharkGame
         private Vector3 spawnPoint;
         private List<Vector3> spawnedPositions = new List<Vector3>();
 
-        private float spawnDelay = 1f; // Delay between successive fish spawns
+        [SerializeField] private float spawnDelay = .2f; // Delay between successive fish spawns
         private Coroutine currentSpawnCoroutine; // Reference to the currently running coroutine
         #endregion
 
@@ -114,7 +114,9 @@ namespace SharkGame
 
             int _spawnCount = Random.Range(6, 10);
             spawnedPositions.Clear();
+            int groupSize = 5; // This seems to be fixed, but you can adjust if needed
 
+            // Use a single group spawn without delays
             for (int i = 0; i < _spawnCount; i++)
             {
                 Vector3 spawnPosition;
@@ -130,21 +132,12 @@ namespace SharkGame
                     {
                         validPosition = true;
                         spawnedPositions.Add(spawnPosition);
-
-                        GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), spawnPosition, Quaternion.identity);
-
-                        if (fish != null)
-                        {
-                            SmallFish smallFish = fish.GetComponent<SmallFish>();
-                            if (smallFish != null)
-                            {
-                                smallFish.ResetFishState();
-                            }
-                        }
-
-                        yield return new WaitForSeconds(spawnDelay);
+                        attempts = 100; // Exit while loop
                     }
-                    attempts++;
+                    else
+                    {
+                        attempts++;
+                    }
                 }
 
                 if (!validPosition)
@@ -152,7 +145,27 @@ namespace SharkGame
                     Debug.LogWarning("Failed to find a valid spawn position after 100 attempts.");
                 }
             }
+
+            // Spawn all fishes in the group with no delay between them
+            foreach (Vector3 pos in spawnedPositions)
+            {
+                GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), pos, Quaternion.identity);
+
+                if (fish != null)
+                {
+                    SmallFish smallFish = fish.GetComponent<SmallFish>();
+                    if (smallFish != null)
+                    {
+                        smallFish.ResetFishState();
+                        // Set the movement direction for all fishes in the group
+                       // smallFish.SetMovementDirection(clusterOffset.normalized); // Assuming SetMovementDirection sets the direction the fish moves
+                    }
+                }
+            }
+
+            yield return null; // Ensures coroutine completes without delays
         }
+
 
         private Vector3 GenerateClusteredSpawnPosition(Vector3 basePosition)
         {
