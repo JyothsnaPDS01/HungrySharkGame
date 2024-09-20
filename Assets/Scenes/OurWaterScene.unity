@@ -7828,6 +7828,7 @@ MonoBehaviour:
   _waterExplosionEffect: {fileID: 1000902003}
   _currentSharkDirection: 0
   isInputEnabled: 1
+  _bgPlane: {fileID: 677172861}
   smoothTime: 0.35
   maxSpeed: 5
   smoothSpeed: 5

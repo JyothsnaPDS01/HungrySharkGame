@@ -157,8 +157,11 @@ namespace SharkGame
                 Vector3 curvedDirection = Quaternion.Euler(0, 0, curveOffset) * escapeDirection;
 
                 // Rotate the fish smoothly towards the escape direction
-                //     RotateTowards(curvedDirection);
+                  RotateTowards(curvedDirection);
                 // Handle raycasting to detect walls and adjust movement accordingly
+
+                transform.LookAt(curvedDirection);
+
                 RaycastHit hitInfo;
                 bool isHit = Physics.Raycast(transform.position, -transform.up, out hitInfo, rayCastDistance);
                 Debug.DrawRay(transform.position, -transform.up, Color.red);
