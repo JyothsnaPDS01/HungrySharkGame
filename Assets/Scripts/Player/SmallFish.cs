@@ -157,11 +157,42 @@ namespace SharkGame
                 Vector3 curvedDirection = Quaternion.Euler(0, 0, curveOffset) * escapeDirection;
 
                 // Rotate the fish smoothly towards the escape direction
-           //     RotateTowards(curvedDirection);
+                //     RotateTowards(curvedDirection);
+                // Handle raycasting to detect walls and adjust movement accordingly
+                RaycastHit hitInfo;
+                bool isHit = Physics.Raycast(transform.position, -transform.up, out hitInfo, rayCastDistance);
+                Debug.DrawRay(transform.position, -transform.up, Color.red);
 
+                if (isHit)
+                {
+                    if (hitInfo.collider.CompareTag("Ground"))
+                    {
+                        Debug.Log("Ground Hit");
+                        // Move up or down with a small offset
+                        Vector3 offset = new Vector3(0, 0.5f, 0); // Adjust this offset as needed
+                        transform.position += offset; // Move the fish up
+                    }
+                    else
+                    {
+                        Debug.Log("Wall Hit");
+                        Debug.Log("Hit Object: " + hitInfo.collider.gameObject);
+                        // Move up or down with a small offset
+                        Vector3 offset = new Vector3(0, Random.Range(-0.5f, 0.5f), 0); // Randomly choose to move up or down
+                        transform.position += offset; // Move the fish up or down
+
+                        // Move horizontally away from the wall
+                        Vector3 reverseDirection = new Vector3(-curvedDirection.x, 0, 0);
+                        transform.position += reverseDirection * escapeSpeed * Time.deltaTime;
+                    }
+                }
+                else
+                {
+                    transform.position += curvedDirection * escapeSpeed * Time.deltaTime;
+                }
                 // Move the fish in the escape direction
                 _smallFishAnimator.SetFloat("moveAmount", 0.5f); // Slightly faster movement for escape
-                transform.position += curvedDirection * escapeSpeed * Time.deltaTime;
+               
+
 
                 // Maintain fish's z-position and allow y-position to change during escape
                 Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
@@ -203,7 +234,7 @@ namespace SharkGame
             return false; // Placeholder for actual logic
         }
 
-        private float rayCastDistance = 5f;
+        private float rayCastDistance = .5f;
 
         private void MoveTheSmallFish()
         {
@@ -222,7 +253,7 @@ namespace SharkGame
                                  alignmentVector * alignmentWeight +
                                  cohesionVector * cohesionWeight).normalized;
 
-            // Restrict movement to x and y direction (if needed)
+            // Restrict movement to x and y direction
             movementDirection.y = 0;
             movementDirection.z = 0;
 
@@ -235,18 +266,26 @@ namespace SharkGame
             RaycastHit hitInfo;
             bool isHit = Physics.Raycast(transform.position, transform.forward, out hitInfo, rayCastDistance);
             Debug.DrawRay(transform.position, transform.forward, Color.red);
+
             if (isHit)
             {
-                if (hitInfo.collider.gameObject.tag != "Ground")
+                if (hitInfo.collider.CompareTag("Ground"))
                 {
-                    transform.position += movementDirection * movementSpeed * Time.deltaTime;
+                    Debug.Log("Ground Hit");
+                    // Move up or down with a small offset
+                    Vector3 offset = new Vector3(0, 0.5f, 0); // Adjust this offset as needed
+                    transform.position += offset; // Move the fish up
                 }
                 else
                 {
-                    Debug.Log("Wall Hitted");
-                    Debug.Log("hitInfo.collider.gameObject" + hitInfo.collider.gameObject);
-                    Vector3 reverseDirection = -movementDirection;
-                   // RotateTowards(reverseDirection);
+                    Debug.Log("Wall Hit");
+                    Debug.Log("Hit Object: " + hitInfo.collider.gameObject);
+                    // Move up or down with a small offset
+                    Vector3 offset = new Vector3(0, Random.Range(-0.5f, 0.5f), 0); // Randomly choose to move up or down
+                    transform.position += offset; // Move the fish up or down
+
+                    // Move horizontally away from the wall
+                    Vector3 reverseDirection = new Vector3(-movementDirection.x, 0, 0);
                     transform.position += reverseDirection * movementSpeed * Time.deltaTime;
                 }
             }
@@ -261,12 +300,13 @@ namespace SharkGame
             newPosition.x = Mathf.Clamp(newPosition.x, -80f, 80f);
             transform.position = newPosition;
 
-            if(transform.position.x == 80f || transform.position.x == -80f)
+            if (transform.position.x == 80f || transform.position.x == -80f)
             {
                 movementDirection.x = -movementDirection.x;
                 RotateTowards(movementDirection);
             }
         }
+
 
 
         private void EscapeFromShark()
