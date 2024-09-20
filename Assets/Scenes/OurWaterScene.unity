@@ -1905,7 +1905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnDistance: 2
-  spreadRange: 1
+  spreadRange: 5
   clusterRadius: 0.5
   _playerShark: {fileID: 376064956}
   _gamePlayObjectsParent: {fileID: 1411043548}
@@ -7369,14 +7369,6 @@ MonoBehaviour:
   - _smallFishType: 1
     _capacity: 10
     _fishObject: {fileID: 6036616401076400763, guid: 792cfce66f59b134cafe338d73a50c0f,
-      type: 3}
-  - _smallFishType: 3
-    _capacity: 10
-    _fishObject: {fileID: 351876053838630626, guid: 78067d748e054334b9375b4518d9c611,
-      type: 3}
-  - _smallFishType: 4
-    _capacity: 10
-    _fishObject: {fileID: 4846512485359574177, guid: a81a79ae87f03ac4c98a5cfda51685eb,
       type: 3}
 --- !u!1 &342097591
 GameObject:

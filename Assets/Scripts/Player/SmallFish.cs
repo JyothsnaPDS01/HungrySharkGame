@@ -22,11 +22,12 @@ namespace SharkGame
         private bool _isPlayerNearby = false;
         private bool _isCoroutineRunning = false;
 
-        [SerializeField] internal SharkGameDataModel.SmallFishFiniteState _currentState = SharkGameDataModel.SmallFishFiniteState.ReBorn;  // FSM state
+        private Vector3 movementDirection;
+
+       [SerializeField] internal SharkGameDataModel.SmallFishFiniteState _currentState = SharkGameDataModel.SmallFishFiniteState.ReBorn;  // FSM state
         #endregion
 
         #region Monobehaviour Methods
-
         private void OnEnable()
         {
             GameObject sharkObject = GameObject.Find("Player_Shark");
@@ -206,20 +207,34 @@ namespace SharkGame
 
         private void MoveTheSmallFish()
         {
+            // Get the individual behavior vectors
             Vector3 separationVector = CalculateSeparationVector();
-            Vector3 movementDirection = (_targetDirection + separationVector).normalized;
+            Vector3 alignmentVector = CalculateAlignmentVector();
+            Vector3 cohesionVector = CalculateCohesionVector();
 
-            // Restrict movement to x direction only
+            // Adjust the weighting of each behavior
+            float separationWeight = 1.5f;
+            float alignmentWeight = 1.0f;
+            float cohesionWeight = 1.0f;
+
+            // Combine the behavior vectors to determine the new movement direction
+            movementDirection = (separationVector * separationWeight +
+                                 alignmentVector * alignmentWeight +
+                                 cohesionVector * cohesionWeight).normalized;
+
+            // Restrict movement to x and y direction (if needed)
             movementDirection.y = 0;
             movementDirection.z = 0;
 
             RotateTowards(movementDirection);
 
+            // Move the fish in the calculated direction
             _smallFishAnimator.SetFloat("moveAmount", 0.5f);
 
+            // Handle raycasting to detect walls and adjust movement accordingly
             RaycastHit hitInfo;
-            bool isHit = Physics.Raycast(transform.position, movementDirection, out hitInfo, rayCastDistance);
-            Debug.DrawRay(transform.position, movementDirection, Color.red);
+            bool isHit = Physics.Raycast(transform.position, transform.forward, out hitInfo, rayCastDistance);
+            Debug.DrawRay(transform.position, transform.forward, Color.red);
             if (isHit)
             {
                 if (hitInfo.collider.gameObject.tag != "Wall")
@@ -228,8 +243,9 @@ namespace SharkGame
                 }
                 else
                 {
+                    Debug.Log("Wall Hitted");
                     Vector3 reverseDirection = -movementDirection;
-                    RotateTowards(reverseDirection);
+                   // RotateTowards(reverseDirection);
                     transform.position += reverseDirection * movementSpeed * Time.deltaTime;
                 }
             }
@@ -241,8 +257,16 @@ namespace SharkGame
             // Keep the z position constant and clamp y position within bounds
             Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
             newPosition.y = Mathf.Clamp(newPosition.y, -20f, -0.5f);
+            newPosition.x = Mathf.Clamp(newPosition.x, -80f, 80f);
             transform.position = newPosition;
+
+            if(transform.position.x == 80f || transform.position.x == -80f)
+            {
+                movementDirection.x = -movementDirection.x;
+                RotateTowards(movementDirection);
+            }
         }
+
 
         private void EscapeFromShark()
         {
@@ -256,7 +280,7 @@ namespace SharkGame
             Vector3 escapeDirection = (directionAwayFromShark + separationVector).normalized;
 
             // Rotate the fish smoothly towards the escape direction
-            RotateTowards(escapeDirection);
+           //RotateTowards(escapeDirection);
 
             // Move the fish in the escape direction
             _smallFishAnimator.SetFloat("moveAmount", 0.8f);  // Slightly faster movement for escape
@@ -303,23 +327,77 @@ namespace SharkGame
                 separation /= nearbyFishCount;
             }
 
-            return separation.normalized * curveIntensity;
+            return separation.normalized * curveIntensity; // Scale the separation effect
         }
+
+        private Vector3 CalculateAlignmentVector()
+        {
+            Vector3 alignment = Vector3.zero;
+            int nearbyFishCount = 0;
+
+            foreach (SmallFish fish in allFish)
+            {
+                if (fish != this)
+                {
+                    float distance = Vector3.Distance(transform.position, fish.transform.position);
+                    if (distance < separationDistance * 2) // Align over a larger distance
+                    {
+                        alignment += fish.movementDirection; // Consider the direction of other fish
+                        nearbyFishCount++;
+                    }
+                }
+            }
+
+            if (nearbyFishCount > 0)
+            {
+                alignment /= nearbyFishCount; // Get the average direction
+            }
+
+            return alignment.normalized; // Return normalized vector to apply alignment force
+        }
+
+        private Vector3 CalculateCohesionVector()
+        {
+            Vector3 cohesion = Vector3.zero;
+            int nearbyFishCount = 0;
+
+            foreach (SmallFish fish in allFish)
+            {
+                if (fish != this)
+                {
+                    float distance = Vector3.Distance(transform.position, fish.transform.position);
+                    if (distance < separationDistance * 2)
+                    {
+                        cohesion += fish.transform.position; // Add the position of other fish
+                        nearbyFishCount++;
+                    }
+                }
+            }
+
+            if (nearbyFishCount > 0)
+            {
+                cohesion /= nearbyFishCount; // Get the average position of nearby fish
+                cohesion = (cohesion - transform.position).normalized; // Direction towards the average position
+            }
+
+            return cohesion;
+        }
+
 
         private void RotateTowards(Vector3 direction)
         {
             if (direction != Vector3.zero)
             {
-                // Create a rotation that faces the direction, but keep z-axis unchanged
-                Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, 0), Vector3.up);
+                //Create a rotation that faces the direction, but keep z - axis unchanged
+                 Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, 0), Vector3.up);
 
 
                 if (targetRotation != Quaternion.Euler(0, 0, 0))
                 {
-                    // Smoothly interpolate to the target rotation
+                    //Smoothly interpolate to the target rotation
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-                    // Ensure that the z rotation is fixed if that's intended
+                    //Ensure that the z rotation is fixed if that's intended
                     Vector3 euler = transform.rotation.eulerAngles;
                     euler.z = 0; // Fix z-axis rotation
                     transform.rotation = Quaternion.Euler(euler);
@@ -327,6 +405,13 @@ namespace SharkGame
             }
         }
 
+        public void SetMovementDirection(Vector3 direction)
+        {
+            movementDirection = direction;
+        }
+
         #endregion
+
+
     }
 }

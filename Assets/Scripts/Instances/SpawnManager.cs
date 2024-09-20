@@ -10,7 +10,7 @@ namespace SharkGame
         #region Private Variables
         [Header("Eatable Fish Components")]
         [SerializeField] private float spawnDistance = 1f;
-        [SerializeField] private float spreadRange = 8f;
+        [SerializeField] private float spreadRange = 20f;
         [SerializeField] private float clusterRadius = 2f; // Radius of the fish cluster
 
         [Header("Player Shark")]
@@ -27,6 +27,17 @@ namespace SharkGame
 
         [SerializeField] private float spawnDelay = .2f; // Delay between successive fish spawns
         private Coroutine currentSpawnCoroutine; // Reference to the currently running coroutine
+
+        private readonly List<Vector3> fishMovementDirections = new List<Vector3>
+        {
+             Vector3.left,          // Move Left
+             Vector3.right,         // Move Right
+             new Vector3(-1, 1, 0), // Move Upper-Left
+             new Vector3(-1, -1, 0), // Move Lower-Left
+             new Vector3(1, 1, 0),  // Move Upper-Right
+             new Vector3(1, -1, 0)  // Move Lower-Right
+        };
+
         #endregion
 
         #region Creating Instance
@@ -126,7 +137,7 @@ namespace SharkGame
                 while (!validPosition && attempts < 100)
                 {
                     spawnPosition = GenerateClusteredSpawnPosition(spawnPoint) + clusterOffset;
-                    spawnPosition.y = Mathf.Clamp(spawnPosition.y, -20f, -1f);
+                    spawnPosition.y = Mathf.Clamp(spawnPosition.y, -50f, -15f);
 
                     if (IsPositionValid(spawnPosition))
                     {
@@ -157,8 +168,11 @@ namespace SharkGame
                     if (smallFish != null)
                     {
                         smallFish.ResetFishState();
-                        // Set the movement direction for all fishes in the group
-                       // smallFish.SetMovementDirection(clusterOffset.normalized); // Assuming SetMovementDirection sets the direction the fish moves
+                        // Select a random movement direction
+                        Vector3 randomDirection = fishMovementDirections[Random.Range(0, fishMovementDirections.Count)];
+
+                        // Normalize the direction to ensure consistent movement speed
+                        smallFish.SetMovementDirection(randomDirection.normalized);
                     }
                 }
             }
@@ -233,6 +247,8 @@ namespace SharkGame
         {
             return ObjectPooling.Instance._fishPoolList[Random.Range(0, ObjectPooling.Instance._fishPoolList.Count)]._smallFishType;
         }
+
+
         #endregion
     }
 }

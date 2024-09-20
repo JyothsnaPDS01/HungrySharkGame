@@ -81,9 +81,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 0.5
   _smallFishAnimator: {fileID: 3445271456067721417}
-  curveIntensity: 0.5
+  curveIntensity: 0.2
   directionChangeInterval: 2
-  separationDistance: 1
+  separationDistance: 5
   rotationSpeed: 5
   _smallFishType: 1
   _currentState: 2
