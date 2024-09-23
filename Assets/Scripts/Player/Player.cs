@@ -545,7 +545,7 @@ namespace SharkGame
                 // Clamp the Y position within specified bounds
                 targetPosition.y = Mathf.Clamp(targetPosition.y, -55f, 0);
 
-                targetPosition.x = Mathf.Clamp(targetPosition.x, -85f, 105f);
+                targetPosition.x = Mathf.Clamp(targetPosition.x, -40f, 60f);
 
                 // Move the shark smoothly to the new position
                 _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));

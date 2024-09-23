@@ -60,7 +60,6 @@ namespace SharkGame
 #if UNITY_EDITOR
                 Debug.Log("smallfish enters");
 #endif
-                other.gameObject.transform.SetParent(_sharkHeadPosition);
                 StartCoroutine(DeactiveSmallFishAndPushBackToPool(other.gameObject));
             }
         }
@@ -70,6 +69,9 @@ namespace SharkGame
             float duration = .1f;
             float elapsedTime = 0f;
 
+            // Trigger shark attack animation
+            _player.PlayEatAnimation();
+
             // Move the fish to the shark's mouth position
             while (elapsedTime < duration)
             {
@@ -78,12 +80,13 @@ namespace SharkGame
                 yield return null;
             }
 
+           
+
             _fishObject.transform.position = _sharkMouthPosition.localPosition;
 
             _fishObject.transform.SetParent(_sharkMouthPosition);
 
-            // Trigger shark attack animation
-            _player.PlayEatAnimation();
+           
 
             // Play blood effect
             _player.EnableBloodEffect();

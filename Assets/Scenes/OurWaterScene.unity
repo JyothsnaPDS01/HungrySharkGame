@@ -6,7 +6,7 @@ OcclusionCullingSettings:
   serializedVersion: 2
   m_OcclusionBakeSettings:
     smallestOccluder: 5
-    smallestHole: 0.5
+    smallestHole: 3
     backfaceThreshold: 100
   m_SceneGUID: 749d42c2f623cb24183925a97e9efbd6
   m_OcclusionCullingData: {fileID: 36300000, guid: 8e105907cd6970b45b95d797ac89f6a7,
@@ -1065,7 +1065,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49132062}
   m_LocalRotation: {x: -0.5627564, y: -0.27038866, z: -0.34273478, w: 0.70194596}
-  m_LocalPosition: {x: -95.3, y: -45.12, z: 55.1}
+  m_LocalPosition: {x: -51.18, y: -45.12, z: 55.1}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 1173965146}
@@ -3299,7 +3299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 159235097}
   m_LocalRotation: {x: -0.23667207, y: 0.5520433, z: 0.75024545, w: 0.2763446}
-  m_LocalPosition: {x: -75.7, y: -39.42, z: 42}
+  m_LocalPosition: {x: -30.2, y: -39.42, z: 42}
   m_LocalScale: {x: 2.200307, y: 2.203171, z: 2.2031708}
   m_Children:
   - {fileID: 542495193}
@@ -7792,7 +7792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d565cb6ea52548b43815320f3c849037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sharkSpeed: 70
+  _sharkSpeed: 40
   rotationSpeed: 5
   _sharkAnimator: {fileID: 376064957}
   _sharkRB: {fileID: 376064961}
@@ -50707,8 +50707,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148610543767}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8458, y: 0.8458, z: 0.8458}
+  m_LocalPosition: {x: -3.3973, y: -12.554, z: 32.373}
+  m_LocalScale: {x: 0.4491282, y: 0.4491282, z: 0.4491282}
   m_Children:
   - {fileID: 2803976470724314017}
   - {fileID: 1916241235042443336}
@@ -51176,7 +51176,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8337102750058072283}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 84, y: -42.07, z: 6.1}
+  m_LocalPosition: {x: 35.2, y: -42.07, z: 6.1}
   m_LocalScale: {x: 85.30233, y: 85.30233, z: 85.30233}
   m_Children: []
   m_Father: {fileID: 543450652373008541}
@@ -63830,7 +63830,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 18
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &4549298427038998531
 MeshCollider:
   m_ObjectHideFlags: 0
