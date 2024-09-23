@@ -224,7 +224,6 @@ namespace SharkGame
 
         private void HandleDeadState()
         {
-            
         }
         #endregion
 

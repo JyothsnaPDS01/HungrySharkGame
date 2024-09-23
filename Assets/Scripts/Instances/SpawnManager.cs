@@ -32,10 +32,8 @@ namespace SharkGame
         {
              Vector3.left,          // Move Left
              Vector3.right,         // Move Right
-             new Vector3(-1, 1, 0), // Move Upper-Left
-             new Vector3(-1, -1, 0), // Move Lower-Left
-             new Vector3(1, 1, 0),  // Move Upper-Right
-             new Vector3(1, -1, 0)  // Move Lower-Right
+             Vector3.down,
+             Vector3.up
         };
 
         #endregion
