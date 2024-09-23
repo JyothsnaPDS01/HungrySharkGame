@@ -105,6 +105,10 @@ namespace SharkGame
                 HandleSurfaceInteraction(); // Process movement if allowed
                 HandleMovementAfterTransition(); // Continue movement logic
             }
+            if(IsSmallFishNearToPlayer())
+            {
+                StartCoroutine(FindNearbySmallFishesAndEat());
+            }
         }
         float desiredBGPlaneYValue;
         private void SetRunningBgPositions()
@@ -723,7 +727,7 @@ namespace SharkGame
             if (collision.gameObject.tag == "SmallFish")
             {
                 collision.gameObject.transform.SetParent(_sharkHeadPosition);
-                StartCoroutine(DeactiveSmallFishAndPushBackToPool(collision.gameObject));
+             //   StartCoroutine(DeactiveSmallFishAndPushBackToPool(collision.gameObject));
             }
             else if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Ground1")
             {
@@ -839,12 +843,31 @@ namespace SharkGame
             }
         }
 
+        private IEnumerator FindNearbySmallFishesAndEat()
+        {
+            float detectionRadius = 2f; // Adjust based on how far you want to detect small fish
+            Collider[] nearbyFishes = Physics.OverlapSphere(_sharkMouthPosition.position, detectionRadius, wallLayer); // Use a proper LayerMask for small fishes
+
+            foreach (Collider fishCollider in nearbyFishes)
+            {
+                GameObject fishObject = fishCollider.gameObject;
+
+                if (fishObject.CompareTag("SmallFish")) // Ensure the fish has a specific tag or component
+                {
+                    // Deactivate and push back the fish, then wait for this to complete before moving to the next fish
+                    yield return StartCoroutine(DeactiveSmallFishAndPushBackToPool(fishObject));
+                }
+            }
+
+            yield return null; // Coroutine ends once all nearby fishes are deactivated one by one
+        }
 
         private IEnumerator DeactiveSmallFishAndPushBackToPool(GameObject _fishObject)
         {
             float duration = .1f;
             float elapsedTime = 0f;
 
+            // Move the fish to the shark's mouth position
             while (elapsedTime < duration)
             {
                 _fishObject.transform.localPosition = Vector3.Lerp(_fishObject.transform.localPosition, _sharkMouthPosition.localPosition, elapsedTime / duration);
@@ -853,30 +876,40 @@ namespace SharkGame
             }
 
             _fishObject.transform.localPosition = _sharkMouthPosition.localPosition;
-
             _fishObject.transform.SetParent(_sharkMouthPosition);
 
+            // Trigger shark attack animation
             _sharkAnimator.SetBool("attack", true);
 
             yield return new WaitForSeconds(.15f);
 
+            // Play blood effect
             EnableBloodEffect();
 
             yield return new WaitForSeconds(.25f);
 
-            SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType; // Assuming your Fish class has a FishType property
+            // Mark the fish as dead and reset its state
+            SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
             _fishObject.GetComponent<SmallFish>()._currentState = SharkGameDataModel.SmallFishFiniteState.Die;
-
             _fishObject.GetComponent<SmallFish>().ResetFishState();
-            _fishObject.transform.parent = null;
 
+            // Return fish to the pool
+            _fishObject.transform.parent = null;
             ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
 
             yield return new WaitForSeconds(.5f);
 
+            // Reset shark attack animation and disable blood effect
             _sharkAnimator.SetBool("attack", false);
-
             DisableBloodEffect();
+        }
+
+
+        private bool IsSmallFishNearToPlayer()
+        {
+            float detectionRadius = .5f;
+            Collider[] nearbyFishes = Physics.OverlapSphere(_sharkMouthPosition.position, detectionRadius, wallLayer);
+            return nearbyFishes.Length > 0; // Returns true if any fish are detected nearby
         }
 
         private void EnableBloodEffect()

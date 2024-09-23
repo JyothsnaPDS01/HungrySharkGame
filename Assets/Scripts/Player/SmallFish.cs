@@ -156,12 +156,11 @@ namespace SharkGame
                 float curveOffset = Mathf.Sin(timeElapsed * curveFrequency) * curveAmplitude;
                 Vector3 curvedDirection = Quaternion.Euler(0, 0, curveOffset) * escapeDirection;
 
-                // Rotate the fish smoothly towards the escape direction
-                  RotateTowards(curvedDirection);
+                // Smooth rotation towards the curved escape direction
+                Quaternion targetRotation = Quaternion.LookRotation(curvedDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2f); // Adjust the speed of rotation
+
                 // Handle raycasting to detect walls and adjust movement accordingly
-
-                transform.LookAt(curvedDirection);
-
                 RaycastHit hitInfo;
                 bool isHit = Physics.Raycast(transform.position, -transform.up, out hitInfo, rayCastDistance);
                 Debug.DrawRay(transform.position, -transform.up, Color.red);
@@ -192,10 +191,9 @@ namespace SharkGame
                 {
                     transform.position += curvedDirection * escapeSpeed * Time.deltaTime;
                 }
+
                 // Move the fish in the escape direction
                 _smallFishAnimator.SetFloat("moveAmount", 0.5f); // Slightly faster movement for escape
-               
-
 
                 // Maintain fish's z-position and allow y-position to change during escape
                 Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
@@ -209,6 +207,7 @@ namespace SharkGame
             // Reset the speed to its original value after escaping
             movementSpeed = originalSpeed;
         }
+
 
         public void ResetFishState()
         {
@@ -432,22 +431,19 @@ namespace SharkGame
         {
             if (direction != Vector3.zero)
             {
-                //Create a rotation that faces the direction, but keep z - axis unchanged
-                 Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, 0), Vector3.up);
+                // Create a rotation that faces the direction, but keep the z-axis unchanged
+                Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, 0), Vector3.up);
 
+                // Smoothly interpolate to the target rotation
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-                if (targetRotation != Quaternion.Euler(0, 0, 0))
-                {
-                    //Smoothly interpolate to the target rotation
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-                    //Ensure that the z rotation is fixed if that's intended
-                    Vector3 euler = transform.rotation.eulerAngles;
-                    euler.z = 0; // Fix z-axis rotation
-                    transform.rotation = Quaternion.Euler(euler);
-                }
+                // Ensure that the z rotation is fixed
+                Vector3 euler = transform.rotation.eulerAngles;
+                euler.z = 0; // Fix z-axis rotation to keep it unchanged
+                transform.rotation = Quaternion.Euler(euler);
             }
         }
+
 
         public void SetMovementDirection(Vector3 direction)
         {
