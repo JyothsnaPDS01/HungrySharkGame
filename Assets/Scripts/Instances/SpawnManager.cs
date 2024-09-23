@@ -13,6 +13,9 @@ namespace SharkGame
         [SerializeField] private float spreadRange = 20f;
         [SerializeField] private float clusterRadius = 2f; // Radius of the fish cluster
 
+        [SerializeField] private Transform leftTransform;
+        [SerializeField] private Transform rightTransform;
+
         [Header("Player Shark")]
         [SerializeField] private Transform _playerShark;
 
@@ -96,13 +99,16 @@ namespace SharkGame
             switch (_sharkDirection)
             {
                 case SharkGameDataModel.SharkDirection.Left:
-                    spawnPoint = new Vector3(_playerShark.position.x - spreadRange, _playerShark.position.y, _playerShark.position.z);
+                    Debug.Log("Player y position" + _playerShark.transform.position.y);
+                    //spawnPoint = new Vector3(_playerShark.position.x - spreadRange, _playerShark.position.y, _playerShark.position.z);
+                    spawnPoint = leftTransform.position;
                     break;
                 case SharkGameDataModel.SharkDirection.Right:
-                    spawnPoint = new Vector3(_playerShark.position.x + spreadRange, _playerShark.position.y, _playerShark.position.z);
+                    //spawnPoint = new Vector3(_playerShark.position.x + spreadRange, _playerShark.position.y, _playerShark.position.z);
+                    spawnPoint = rightTransform.position;
                     break;
-                case SharkGameDataModel.SharkDirection.Down:
-                    spawnPoint = new Vector3(_playerShark.position.x, _playerShark.position.y - spreadRange, _playerShark.position.z);
+                //case SharkGameDataModel.SharkDirection.Down:
+                //    spawnPoint = new Vector3(_playerShark.position.x, _playerShark.position.y - spreadRange, _playerShark.position.z);
                     break;
             }
 
@@ -135,7 +141,7 @@ namespace SharkGame
                 while (!validPosition && attempts < 100)
                 {
                     spawnPosition = GenerateClusteredSpawnPosition(spawnPoint) + clusterOffset;
-                    spawnPosition.y = Mathf.Clamp(spawnPosition.y, -50f, -15f);
+                    spawnPosition.y = Mathf.Clamp(spawnPosition.y, -35f, -30f);
 
                     if (IsPositionValid(spawnPosition))
                     {

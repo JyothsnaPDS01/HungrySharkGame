@@ -84,6 +84,8 @@ namespace SharkGame
         // Store the direction where the wall is detected
         [SerializeField] private SharkGameDataModel.SharkDirection blockedDirection = SharkGameDataModel.SharkDirection.None;
 
+        [SerializeField] private GameObject _waterSurface;
+
         void FixedUpdate()
         {
             if (!IsReady()) return;
@@ -98,7 +100,7 @@ namespace SharkGame
             // Raycast to check for walls in front of the player
             RaycastCheck();
 
-            SetRunningBgPositions();
+          //  SetRunningBgPositions();
 
             // Handle movement based on whether it's blocked
             if (!isMovementBlocked || (_currentSharkDirection != blockedDirection))
@@ -491,9 +493,9 @@ namespace SharkGame
             Quaternion _targetRotation = Quaternion.Euler(90, 90, -90);
 
             Vector3 initialPosition = _sharkRB.position;
-            Vector3 targetPosition = initialPosition + new Vector3(0, -3, 0);
+            Vector3 targetPosition = initialPosition + new Vector3(0, -30f, 0);
 
-            while (elapsedTime < 1f)
+            while (elapsedTime < 3f)
             {
                 float t = elapsedTime / 1f;
 
@@ -508,6 +510,9 @@ namespace SharkGame
             // Ensure final position and rotation are set correctly
             _sharkRB.MovePosition(targetPosition);
             _sharkRB.MoveRotation(_targetRotation);
+
+            GameObject.Find("Main Camera").GetComponent<CameraFollow>().smoothSpeed = 0.0015625f;
+            _waterSurface.SetActive(false);
 
             // Mark the initial movement as completed
             initialMovementCompleted = true;
@@ -537,20 +542,28 @@ namespace SharkGame
             if (horizontalInput != 0 || verticalInput != 0)
             {
                 Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-                Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * Time.fixedDeltaTime);
+                Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
 
                 // Maintain the current Z position
                 targetPosition.z = _sharkRB.position.z;
 
                 // Clamp the Y position within specified bounds
-                targetPosition.y = Mathf.Clamp(targetPosition.y, -55f, 0);
+                targetPosition.y = Mathf.Clamp(targetPosition.y, -35f, -20f);
 
-                targetPosition.x = Mathf.Clamp(targetPosition.x, -40f, 60f);
+                targetPosition.x = Mathf.Clamp(targetPosition.x, -55f, 100f);
 
                 // Move the shark smoothly to the new position
                 _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
 
-                isMoving = true; // Set isMoving only when input is detected
+                isMoving = true; // Set isMoving only when
+                                 // 
+
+                                 // 
+
+                                 // 
+
+
+
             }
             else
             {

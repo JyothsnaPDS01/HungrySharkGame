@@ -297,7 +297,7 @@ namespace SharkGame
 
             // Keep the z position constant and clamp y position within bounds
             Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, _initialZ);
-            newPosition.y = Mathf.Clamp(newPosition.y, -20f, -0.5f);
+            newPosition.y = Mathf.Clamp(newPosition.y, -40f, -30f);
             newPosition.x = Mathf.Clamp(newPosition.x, -40f, 60f);
             transform.position = newPosition;
 
