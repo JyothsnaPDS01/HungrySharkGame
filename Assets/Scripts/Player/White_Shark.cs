@@ -508,15 +508,15 @@ namespace SharkGame
             _sharkRB.MoveRotation(Quaternion.Slerp(_sharkRB.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
             // Check and update direction if it has changed
-            if (_currentSharkDirection != _previousSharkDirection)
-            {
-                if (Time.time - lastSpawnTime > spawnCooldown) // Check cooldown
-                {
-                    SpawnManager._instance.SpawnFishes(_currentSharkDirection);
-                    _previousSharkDirection = _currentSharkDirection;
-                    lastSpawnTime = Time.time; // Update the last spawn time
-                }
-            }
+            //if (_currentSharkDirection != _previousSharkDirection)
+            //{
+            //    if (Time.time - lastSpawnTime > spawnCooldown) // Check cooldown
+            //    {
+            //        SpawnManager._instance.SpawnFishes(_currentSharkDirection);
+            //        _previousSharkDirection = _currentSharkDirection;
+            //        lastSpawnTime = Time.time; // Update the last spawn time
+            //    }
+            //}
         }
         #endregion
 
@@ -606,7 +606,7 @@ namespace SharkGame
 
             _fishObject.transform.parent = null;
 
-            ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
+          //  ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
 
             yield return new WaitForSeconds(.25f);
 

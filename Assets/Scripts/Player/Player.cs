@@ -15,11 +15,6 @@ namespace SharkGame
         [SerializeField] private Transform _sharkHeadPosition;
         [SerializeField] private GameObject _bloodEffectObject;
 
-        [SerializeField] private Color _fogColor;
-        [Header("VFX Effects")]
-        [SerializeField] private GameObject _waterSplashEffect; // Reference to the splash effect
-        [SerializeField] private GameObject _waterExplosionEffect;
-
         private bool isSplashing = false; // Flag to track if splashing
 
 
@@ -256,12 +251,6 @@ namespace SharkGame
             bool isCloseToSurface = IsCloseToSurface();
             bool isInTransitionRange = IsInTransitionRange();
 
-            if (isCloseToSurface && IsUpKeyPressed())
-            {
-                StartParabolicJump();
-                return;
-            }
-
             if (!isCloseToSurface && _sharkRB.position.y > -1f && isInTransitionRange)
             {
                 StartSmoothTransitionIfNecessary();
@@ -391,14 +380,6 @@ namespace SharkGame
 
             // Stop any residual velocity
             _sharkRB.velocity = Vector3.zero;
-
-            if (_waterExplosionEffect != null)
-            {
-                _waterExplosionEffect.SetActive(true);
-                yield return new WaitForSeconds(1f); // Wait for 2 seconds
-                _waterExplosionEffect.SetActive(false);
-            }
-
             // Reset the flag to allow input after the jump
             isParabolicJumping = false;
         }
@@ -528,17 +509,6 @@ namespace SharkGame
             const float yTargetValue = -0.155f; // Target Y value for surface interactions
             bool isMovingOnWater = (Mathf.Abs(_sharkRB.position.y - yTargetValue) < smallThreshold  && (Input.GetAxis("Horizontal") != 0));
 
-            if (isMovingOnWater && !isSplashing)
-            {
-                // Enable splash effect
-                EnableSplashEffect();
-            }
-            else if (!isMovingOnWater && isSplashing)
-            {
-                // Disable splash effect
-                DisableSplashEffect();
-            }
-
             if (horizontalInput != 0 || verticalInput != 0)
             {
                 Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
@@ -555,15 +525,7 @@ namespace SharkGame
                 // Move the shark smoothly to the new position
                 _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
 
-                isMoving = true; // Set isMoving only when
-                                 // 
-
-                                 // 
-
-                                 // 
-
-
-
+                isMoving = true; 
             }
             else
             {
@@ -571,45 +533,9 @@ namespace SharkGame
                 _sharkRB.velocity = Vector3.zero;
                 isMoving = false;
             }
-
-            // Handle fog based on the Y position
-            if (transform.position.y >= -0.5f)
-            {
-                RenderSettings.fog = false;
-            }
-            else if (transform.position.y <= -0.5f)
-            {
-                EnableFog();
-            }
         }
 
-
-        private void EnableSplashEffect()
-        {
-            if (_waterSplashEffect != null)
-            {
-                _waterSplashEffect.SetActive(true); // Activate the splash effect
-
-                isSplashing = true; // Set splashing flag to true
-            }
-        }
-
-        private void DisableSplashEffect()
-        {
-            if (_waterSplashEffect != null)
-            {
-                _waterSplashEffect.SetActive(false); // Deactivate the splash effect
-                isSplashing = false; // Reset splashing flag
-            }
-        }
-
-        private void EnableFog()
-        {
-            RenderSettings.fog = true;
-            RenderSettings.fogDensity = 0.005f;
-            RenderSettings.fogColor = _fogColor;
-        }
-
+      
         private SharkGameDataModel.SharkDirection GetInputDirection()
         {
             if (verticalInput > 0 && horizontalInput == 0)
@@ -710,17 +636,6 @@ namespace SharkGame
 
             // Smooth rotation
             _sharkRB.MoveRotation(Quaternion.Slerp(_sharkRB.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
-
-            // Check and update direction if it has changed
-            if (_currentSharkDirection != _previousSharkDirection)
-            {
-                if (Time.time - lastSpawnTime > spawnCooldown) // Check cooldown
-                {
-                    SpawnManager._instance.SpawnFishes(_currentSharkDirection);
-                    _previousSharkDirection = _currentSharkDirection;
-                    lastSpawnTime = Time.time; // Update the last spawn time
-                }
-            }
         }
         #endregion
 
@@ -797,23 +712,6 @@ namespace SharkGame
                 return Quaternion.Euler(60, -250, -70);
             }
             return Quaternion.Euler(0, 0, 0);
-        }
-        IEnumerator RotateToTargetRotation(Quaternion targetRotation)
-        {
-            while (Quaternion.Angle(_sharkRB.transform.rotation, targetRotation) > 0.01f)
-            {
-                _sharkRB.transform.rotation = Quaternion.RotateTowards(
-                    _sharkRB.transform.rotation,
-                    targetRotation,
-                    rotationSpeed * 100f * Time.fixedDeltaTime
-                );
-                yield return null; // Wait for the next frame
-            }
-            // Ensure the final rotation is set
-            _sharkRB.transform.rotation = targetRotation;
-
-            // Re-enable input after rotation
-            EnableInput();
         }
 
         // Methods to enable and disable input

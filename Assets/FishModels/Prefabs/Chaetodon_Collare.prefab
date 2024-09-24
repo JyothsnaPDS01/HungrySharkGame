@@ -79,14 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea2559480d66a6479948806fca59186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0.5
-  _smallFishAnimator: {fileID: 3445271456067721417}
-  curveIntensity: 0.5
-  directionChangeInterval: 0.0035
-  separationDistance: 1
-  rotationSpeed: 5
+  _fishAnimator: {fileID: 3445271456067721417}
   _smallFishType: 1
-  _currentState: 2
 --- !u!1001 &7857455451256695681
 PrefabInstance:
   m_ObjectHideFlags: 0

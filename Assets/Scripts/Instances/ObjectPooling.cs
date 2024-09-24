@@ -11,8 +11,7 @@ namespace SharkGame
         [Header("List of Fish Objects")]
         [SerializeField] public List<SharkGameDataModel.FishPool> _fishPoolList = new List<SharkGameDataModel.FishPool>();
 
-        private Dictionary<SharkGameDataModel.SmallFishType, Queue<GameObject>> _inactiveFishPool = new Dictionary<SharkGameDataModel.SmallFishType, Queue<GameObject>>();
-        private Dictionary<SharkGameDataModel.SmallFishType, List<GameObject>> _activeFishPool = new Dictionary<SharkGameDataModel.SmallFishType, List<GameObject>>();
+        private Dictionary<SharkGameDataModel.SmallFishType, Queue<GameObject>> _fishPoolDictionary = new Dictionary<SharkGameDataModel.SmallFishType, Queue<GameObject>>();
         #endregion
 
         #region Instance Creation
@@ -60,7 +59,6 @@ namespace SharkGame
             foreach (var item in _fishPoolList)
             {
                 Queue<GameObject> fishObjectQueue = new Queue<GameObject>();
-                List<GameObject> activeFishList = new List<GameObject>();
 
                 for (int i = 0; i < item._capacity; i++)
                 {
@@ -69,40 +67,61 @@ namespace SharkGame
                     fishObjectQueue.Enqueue(obj);
                 }
 
-                _inactiveFishPool.Add(item._smallFishType, fishObjectQueue);
-                _activeFishPool.Add(item._smallFishType, activeFishList);
+                _fishPoolDictionary.Add(item._smallFishType, fishObjectQueue);
+
+               
             }
         }
 
         internal GameObject SpawnFromPool(SharkGameDataModel.SmallFishType _fishType, Vector3 _position, Quaternion _rotation)
         {
-            if (!_inactiveFishPool.ContainsKey(_fishType) || _inactiveFishPool[_fishType].Count == 0)
+            if (!_fishPoolDictionary.ContainsKey(_fishType) || _fishPoolDictionary[_fishType].Count == 0)
                 return null;
 
             // Dequeue from inactive pool
-            GameObject spawnedObject = _inactiveFishPool[_fishType].Dequeue();
+            GameObject spawnedObject = _fishPoolDictionary[_fishType].Dequeue();
             spawnedObject.SetActive(true);
             spawnedObject.transform.position = _position;
             spawnedObject.transform.rotation = _rotation;
 
-            // Add to active pool
-            _activeFishPool[_fishType].Add(spawnedObject);
+            // Check if the object has the SmallFish component
+            if (spawnedObject.GetComponent<SmallFish>() == null)
+            {
+                Debug.LogError($"Spawned object {spawnedObject.name} does not have a SmallFish component.");
+                return null; // Handle the error as needed
+            }
 
+            // Add to active pool (Consider creating a separate active pool if needed)
+            // This may need adjustment if you're maintaining a separate active list.
             return spawnedObject;
         }
 
+
+        // Method to deactivate and return the object to the inactive pool
         // Method to deactivate and return the object to the inactive pool
         internal void ReturnToPool(GameObject obj, SharkGameDataModel.SmallFishType _fishType)
         {
-            if (!_activeFishPool.ContainsKey(_fishType))
+            if (!_fishPoolDictionary.ContainsKey(_fishType))
+            {
+                Debug.LogError($"Fish type {_fishType} not found in the pool.");
                 return;
+            }
 
-            // Deactivate and remove from active list
+            // Check if the object is already inactive
+            if (!obj.activeInHierarchy)
+            {
+                Debug.LogWarning("Object is already inactive.");
+                return;
+            }
+#if UNITY_EDITOR
+            Debug.Log("Returning to pool");
+#endif
+
+            // Deactivate the object
             obj.SetActive(false);
-            _activeFishPool[_fishType].Remove(obj);
 
             // Enqueue back to the inactive pool
-            _inactiveFishPool[_fishType].Enqueue(obj);
+            _fishPoolDictionary[_fishType].Enqueue(obj);
         }
         #endregion
     }

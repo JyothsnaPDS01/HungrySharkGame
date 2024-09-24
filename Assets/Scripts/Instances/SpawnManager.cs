@@ -1,47 +1,24 @@
+using SharkGame.Models;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SharkGame.Models;
 
 namespace SharkGame
 {
     public class SpawnManager : MonoBehaviour
     {
-        #region Private Variables
-        [Header("Eatable Fish Components")]
-        [SerializeField] private float spawnDistance = 1f;
-        [SerializeField] private float spreadRange = 20f;
-        [SerializeField] private float clusterRadius = 2f; // Radius of the fish cluster
-
-        [SerializeField] private Transform leftTransform;
-        [SerializeField] private Transform rightTransform;
+        [Header("Waypoints and Fish")]
+        [SerializeField] public List<Transform> waypoints;
 
         [Header("Player Shark")]
         [SerializeField] private Transform _playerShark;
 
-        [Header("Game Play Objects Parent")]
-        [SerializeField] private Transform _gamePlayObjectsParent;
-
+        [Header("Fish Settings")]
         [SerializeField] private float minSpawnDistanceBetweenFishes = 0.5f;
-        [SerializeField] private float minDistanceFromShark = 2f; // Distance to keep from player shark
+        [SerializeField] private float minDistanceFromShark = 2f;
 
-        private Vector3 spawnPoint;
-        private List<Vector3> spawnedPositions = new List<Vector3>();
+        private List<GameObject> activeFishes = new List<GameObject>(); // Active fish tracking
 
-        [SerializeField] private float spawnDelay = .2f; // Delay between successive fish spawns
-        private Coroutine currentSpawnCoroutine; // Reference to the currently running coroutine
-
-        private readonly List<Vector3> fishMovementDirections = new List<Vector3>
-        {
-             Vector3.left,          // Move Left
-             Vector3.right,         // Move Right
-             Vector3.down,
-             Vector3.up
-        };
-
-        #endregion
-
-        #region Creating Instance
         public static SpawnManager _instance;
         public static SpawnManager Instance
         {
@@ -52,207 +29,142 @@ namespace SharkGame
                     _instance = FindObjectOfType<SpawnManager>();
                     if (_instance == null)
                     {
+#if UNITY_EDITOR
                         Debug.LogError("There is no SpawnManager in the scene!");
+#endif
                     }
                 }
                 return _instance;
             }
         }
-        #endregion
-
-        #region MonoBehaviour Methods
-        private void Awake()
-        {
-            if (_instance == null)
-            {
-                _instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
 
         private void Start()
         {
-            _playerShark = GameObject.Find("Player_Shark").transform;
-        }
-        #endregion
-
-        #region Private Methods
-        internal void SpawnFishes(SharkGameDataModel.SharkDirection _sharkDirection)
-        {
-            // If a spawn coroutine is already running, stop it
-            if (currentSpawnCoroutine != null)
-            {
-                StopCoroutine(currentSpawnCoroutine);
-            }
-
-            // Start the spawning coroutine
-            currentSpawnCoroutine = StartCoroutine(SpawnFishesWithDelay(_sharkDirection));
+            StartCoroutine(CallSpawnFishesFrequently());
         }
 
-        private IEnumerator SpawnFishesWithDelay(SharkGameDataModel.SharkDirection _sharkDirection)
+        private IEnumerator CallSpawnFishesFrequently()
         {
-            // Set the spawn point based on shark direction
-            switch (_sharkDirection)
+            while (true)
             {
-                case SharkGameDataModel.SharkDirection.Left:
-                    Debug.Log("Player y position" + _playerShark.transform.position.y);
-                    //spawnPoint = new Vector3(_playerShark.position.x - spreadRange, _playerShark.position.y, _playerShark.position.z);
-                    spawnPoint = leftTransform.position;
-                    break;
-                case SharkGameDataModel.SharkDirection.Right:
-                    //spawnPoint = new Vector3(_playerShark.position.x + spreadRange, _playerShark.position.y, _playerShark.position.z);
-                    spawnPoint = rightTransform.position;
-                    break;
-                //case SharkGameDataModel.SharkDirection.Down:
-                //    spawnPoint = new Vector3(_playerShark.position.x, _playerShark.position.y - spreadRange, _playerShark.position.z);
-                    break;
+                SpawnFishesAtWaypoints();
+                yield return new WaitForSeconds(1f);
             }
+        }
 
-            // Adjust the cluster position based on the shark's direction
-            Vector3 clusterOffset = Vector3.zero;
-            switch (_sharkDirection)
+        public void SpawnFishesAtWaypoints()
+        {
+            foreach (var waypoint in waypoints)
             {
-                case SharkGameDataModel.SharkDirection.Left:
-                    clusterOffset = Vector3.left * spreadRange;
-                    break;
-                case SharkGameDataModel.SharkDirection.Right:
-                    clusterOffset = Vector3.right * spreadRange;
-                    break;
-                case SharkGameDataModel.SharkDirection.Down:
-                    clusterOffset = Vector3.down * spreadRange;
-                    break;
-            }
-
-            int _spawnCount = Random.Range(6, 10);
-            spawnedPositions.Clear();
-            int groupSize = 5; // This seems to be fixed, but you can adjust if needed
-
-            // Use a single group spawn without delays
-            for (int i = 0; i < _spawnCount; i++)
-            {
-                Vector3 spawnPosition;
-                bool validPosition = false;
-                int attempts = 0; // Count attempts to prevent infinite loop
-
-                while (!validPosition && attempts < 100)
+                if (Vector3.Distance(_playerShark.position, waypoint.position) > minDistanceFromShark)
                 {
-                    spawnPosition = GenerateClusteredSpawnPosition(spawnPoint) + clusterOffset;
-                    spawnPosition.y = Mathf.Clamp(spawnPosition.y, -35f, -30f);
+                    List<Vector3> fishOffsets = new List<Vector3>(); // To hold the offsets
+                    List<GameObject> fishesToMove = new List<GameObject>(); // Keep track of spawned fishes
 
-                    if (IsPositionValid(spawnPosition))
+                    int fishCount = Random.Range(4, 6); // Randomly choose between 4 and 5 fishes
+                    for (int i = 0; i < fishCount; i++)
                     {
-                        validPosition = true;
-                        spawnedPositions.Add(spawnPosition);
-                        attempts = 100; // Exit while loop
+                        Vector3 spawnPosition = waypoint.position + GetRandomSpawnOffset();
+
+                        if (!IsWaypointOccupied(spawnPosition))
+                        {
+                            GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), spawnPosition, Quaternion.identity);
+
+                            if (fish == null)
+                            {
+#if UNITY_EDITOR
+                                Debug.LogError("Fish is null case");
+#endif
+                                continue; // Skip further processing if the fish is null
+                            }
+
+                            // Reset rotation to horizontal
+                            fish.transform.rotation = Quaternion.Euler(0, 90, 0); // Adjust rotation as needed
+
+                            SmallFish smallFish = fish.GetComponent<SmallFish>();
+                            if (smallFish == null)
+                            {
+#if UNITY_EDITOR
+                                Debug.LogError($"Spawned fish {fish.name} does not have a SmallFish component.");
+#endif
+                                ObjectPooling.Instance.ReturnToPool(fish, GetRandomSmallFishType());
+                                continue;
+                            }
+
+                            smallFish.SetWaypoints(waypoints); // Assign waypoints to the fish
+                            fishesToMove.Add(fish); // Track the spawned fish
+                            fishOffsets.Add(spawnPosition - waypoint.position); // Store the relative position
+                        }
                     }
-                    else
+
+                    // Check if fishesToMove and fishOffsets are the same length before starting movement
+                    if (fishesToMove.Count > 0 && fishesToMove.Count == fishOffsets.Count)
                     {
-                        attempts++;
-                    }
-                }
-
-                if (!validPosition)
-                {
-                    Debug.LogWarning("Failed to find a valid spawn position after 100 attempts.");
-                }
-            }
-
-            // Spawn all fishes in the group with no delay between them
-            foreach (Vector3 pos in spawnedPositions)
-            {
-                GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), pos, Quaternion.identity);
-
-                if (fish != null)
-                {
-                    SmallFish smallFish = fish.GetComponent<SmallFish>();
-                    if (smallFish != null)
-                    {
-                        smallFish.ResetFishState();
-                        // Select a random movement direction
-                        Vector3 randomDirection = fishMovementDirections[Random.Range(0, fishMovementDirections.Count)];
-
-                        // Normalize the direction to ensure consistent movement speed
-                        smallFish.SetMovementDirection(randomDirection.normalized);
+                        activeFishes.AddRange(fishesToMove); // Add the new fishes to the active list
+                        StartCoroutine(MoveFishGroup(fishesToMove, fishOffsets, waypoint.position));
                     }
                 }
             }
-
-            yield return null; // Ensures coroutine completes without delays
         }
 
-
-        private Vector3 GenerateClusteredSpawnPosition(Vector3 basePosition)
+        private IEnumerator MoveFishGroup(List<GameObject> fishesToMove, List<Vector3> fishOffsets, Vector3 groupCenter)
         {
-            // Generate a position within a cluster radius around the base position
-            float angle = Random.Range(0f, 360f);
-            float distance = Random.Range(0f, clusterRadius); // Use cluster radius
+            float speed = .5f; // Adjust speed as needed
+            Vector3 direction = Vector3.right; // Set the movement direction
 
-            float radian = angle * Mathf.Deg2Rad;
-
-            return basePosition + new Vector3(
-                Mathf.Cos(radian) * distance,
-                Mathf.Sin(radian) * distance,
-                0f
-            );
-        }
-
-        private bool IsPositionValid(Vector3 newPosition)
-        {
-            // Check distance from the player shark
-            if (Vector3.Distance(newPosition, _playerShark.position) < minDistanceFromShark)
+            while (true)
             {
-                return false;
-            }
-
-            // Check distance from other spawned fish
-            foreach (Vector3 existingPosition in spawnedPositions)
-            {
-                if (Vector3.Distance(existingPosition, newPosition) < minSpawnDistanceBetweenFishes)
+                // Move each fish while maintaining their relative offsets
+                for (int i = 0; i < fishesToMove.Count; i++)
                 {
-                    return false;
+                    GameObject fish = fishesToMove[i];
+                    if (fish != null)
+                    {
+                        // Update position
+                        Vector3 targetPosition = groupCenter + fishOffsets[i] + (direction * speed * Time.deltaTime);
+                        fish.transform.position = targetPosition;
+
+                        if (targetPosition.x >= 100f || targetPosition.x <= -55f)
+                        {
+                            // Reverse direction
+                            direction = -direction;
+                            fish.transform.rotation = Quaternion.Euler(fish.transform.rotation.x, -fish.transform.rotation.y, fish.transform.rotation.z);
+                        }
+                    }
+                }
+
+                // Update the group center to maintain their movement
+                groupCenter += direction * speed * Time.deltaTime;
+
+                yield return null; // Wait for the next frame
+            }
+        }
+
+
+        private Vector3 GetRandomSpawnOffset()
+        {
+            float offsetX = Random.Range(-0.5f, 0.5f);
+            float offsetY = Random.Range(-0.5f, 0.5f);
+            float offsetZ = 0f;
+
+            return new Vector3(offsetX, offsetY, offsetZ);
+        }
+
+        private bool IsWaypointOccupied(Vector3 waypoint)
+        {
+            foreach (GameObject fish in activeFishes)
+            {
+                if (Vector3.Distance(fish.transform.position, waypoint) < minSpawnDistanceBetweenFishes)
+                {
+                    return true; // Waypoint is occupied
                 }
             }
-
-            return true;
-        }
-
-        private bool IsPositionOverlappingWithShark(Vector3 position)
-        {
-            // Assuming you have assigned the capsule collider to a variable
-            CapsuleCollider sharkCapsuleCollider = _playerShark.transform.GetChild(1).GetComponent<CapsuleCollider>();
-
-            if (sharkCapsuleCollider != null)
-            {
-                // Define the capsule's center and height
-                Vector3 capsuleCenter = _playerShark.position + sharkCapsuleCollider.center;
-                float capsuleHeight = sharkCapsuleCollider.height;
-                float capsuleRadius = sharkCapsuleCollider.radius;
-
-                // Check if the position is inside the capsule collider
-                // Calculate the distance to the closest point on the capsule's surface
-                float distanceToClosestPoint = Mathf.Sqrt(Mathf.Pow(position.x - capsuleCenter.x, 2) + Mathf.Pow(position.z - capsuleCenter.z, 2)) - capsuleRadius;
-                float distanceToTopBottom = Mathf.Abs(position.y - capsuleCenter.y);
-
-                // Check if the position is within the capsule bounds
-                if (distanceToClosestPoint <= 0 && distanceToTopBottom <= capsuleHeight / 2)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return false; // No fish at this waypoint
         }
 
         private SharkGameDataModel.SmallFishType GetRandomSmallFishType()
         {
             return ObjectPooling.Instance._fishPoolList[Random.Range(0, ObjectPooling.Instance._fishPoolList.Count)]._smallFishType;
         }
-
-
-        #endregion
     }
 }

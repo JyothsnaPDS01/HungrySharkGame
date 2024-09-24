@@ -11,7 +11,7 @@ namespace SharkGame
         [SerializeField] private Transform _sharkHeadPosition;
         [SerializeField] private Transform _sharkMouthPosition;
 
-        [SerializeField] private Player _player;
+        [SerializeField] private GameObject _player;
         [SerializeField] private Transform _playerShark;
 
         [SerializeField] private float detectionInterval;
@@ -20,7 +20,7 @@ namespace SharkGame
 
         private void Start()
         {
-            //StartCoroutine(CheckNearbyFishesAtIntervals());
+            StartCoroutine(CheckNearbyFishesAtIntervals());
         }
 
         private IEnumerator CheckNearbyFishesAtIntervals()
@@ -66,79 +66,63 @@ namespace SharkGame
 
         private IEnumerator DeactiveSmallFishAndPushBackToPool(GameObject _fishObject)
         {
-            float duration = .1f;
-            float elapsedTime = 0f;
+            // Move the fish to the shark's mouth position
+            _fishObject.transform.position = _playerShark.position;
+            _fishObject.transform.SetParent(_playerShark); // Set parent to the shark's mouth
+            RotatePlayerTowards(_fishObject.transform);
 
             // Trigger shark attack animation
-            _player.PlayEatAnimation();
-
-            // Move the fish to the shark's mouth position
-            while (elapsedTime < duration)
-            {
-                _fishObject.transform.localPosition = Vector3.Lerp(_fishObject.transform.localPosition, _sharkMouthPosition.localPosition, elapsedTime / duration);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-           
-
-            _fishObject.transform.position = _sharkMouthPosition.localPosition;
-
-            _fishObject.transform.SetParent(_sharkMouthPosition);
-
-           
+            _player.GetComponent<Player>().PlayEatAnimation();
 
             // Play blood effect
-            _player.EnableBloodEffect();
+            _player.GetComponent<Player>().EnableBloodEffect();
 
-            yield return new WaitForSeconds(.7f);
+            // Optionally, you could have a slight delay after the animations if needed
+            yield return new WaitForSeconds(0.2f); // Wait a bit for the attack animation to play
 
             // Mark the fish as dead and reset its state
             SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
-            //_fishObject.GetComponent<SmallFish>()._currentState = SharkGameDataModel.SmallFishFiniteState.Die;
-            //_fishObject.GetComponent<SmallFish>().ResetFishState();
 
             // Return fish to the pool
-            _fishObject.transform.parent = null;
+            _fishObject.transform.parent = null; // Remove from the shark's mouth
             ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
 
-            yield return new WaitForSeconds(.5f);
+            // Wait before resetting the shark's state
+            yield return new WaitForSeconds(0.5f);
 
             // Reset shark attack animation and disable blood effect
-            _player.BackToIdleAnimation();
-
-            _player.DisableBloodEffect();
+            _player.GetComponent<Player>().BackToIdleAnimation();
+            _player.GetComponent<Player>().DisableBloodEffect();
         }
 
+        private void RotatePlayerTowards(Transform target)
+        {
+            // Calculate the direction to the target
+            Vector3 direction = (target.position - _playerShark.position).normalized;
+
+            // Calculate the rotation step based on the speed and frame time
+            float step = 5f * Time.deltaTime; // Adjust the speed as needed
+
+            // Calculate the new rotation
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            _player.transform.rotation = Quaternion.Slerp(_playerShark.rotation, targetRotation, step);
+        }
 
         private IEnumerator BringSmallFishesNearToPlayer(GameObject _fishObject)
         {
-            float duration = .1f;
-            float elapsedTime = 0f;
+            _fishObject.transform.position = _playerShark.position;
+            _fishObject.transform.SetParent(_playerShark);
+            RotatePlayerTowards(_fishObject.transform);
 
-            // Move the fish to the shark's mouth position
-            while (elapsedTime < duration)
-            {
-                _fishObject.transform.localPosition = Vector3.Lerp(_fishObject.transform.localPosition, _sharkMouthPosition.localPosition, elapsedTime / duration);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            _fishObject.transform.position = _sharkMouthPosition.localPosition;
-            _fishObject.transform.SetParent(_sharkMouthPosition);
+            yield return new WaitForSeconds(0.5f);
 
             // Trigger shark attack animation
-            _player.PlayEatAnimation();
-
+            _player.GetComponent<Player>().PlayEatAnimation();
             // Play blood effect
-            _player.EnableBloodEffect();
-
-            yield return new WaitForSeconds(.7f);
+            _player.GetComponent<Player>().EnableBloodEffect();
 
             // Mark the fish as dead and reset its state
-            SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
-            //_fishObject.GetComponent<SmallFish>()._currentState = SharkGameDataModel.SmallFishFiniteState.Die;
-            //_fishObject.GetComponent<SmallFish>().ResetFishState();
+           SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
 
             // Return fish to the pool
             _fishObject.transform.parent = null;
@@ -147,13 +131,9 @@ namespace SharkGame
             yield return new WaitForSeconds(.5f);
 
             // Reset shark attack animation and disable blood effect
-            _player.BackToIdleAnimation();
+            _player.GetComponent<Player>().BackToIdleAnimation();
 
-            _player.DisableBloodEffect();
-        }
-        private void OnCollisionExit(Collision collision)
-        {
-
+            _player.GetComponent<Player>().DisableBloodEffect();
         }
     }
 }
