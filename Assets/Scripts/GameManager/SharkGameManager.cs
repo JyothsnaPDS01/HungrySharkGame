@@ -50,6 +50,9 @@ namespace SharkGame
         #region GameMode
         [Header("Shark Game Mode")]
         [SerializeField] private SharkGameDataModel.GameMode _currentGameMode;
+
+        [Header("UnderWaterAudio")]
+        [SerializeField] private AudioSource _underWaterAudio;
         public SharkGameDataModel.GameMode CurrentGameMode
         {
             get
@@ -60,6 +63,13 @@ namespace SharkGame
             {
                 _currentGameMode = value;
             }
+        }
+        #endregion
+
+        #region Public Methods
+        internal void PlayGameAudio()
+        {
+            _underWaterAudio.Play();
         }
         #endregion
     }

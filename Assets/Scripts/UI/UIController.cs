@@ -58,6 +58,8 @@ public class UIController : MonoBehaviour
     [Header("Data Load Manager")]
     [SerializeField] private DataLoadManager _dataLoadManager;
 
+    [SerializeField] private GameObject _fishObject;
+
     private SharkGameDataModel.Level _currentLevelData;
     private int _currentLevel;
     #endregion
@@ -73,8 +75,9 @@ public class UIController : MonoBehaviour
     #region Button Actions
     public void LevelButtonClick()
     {
-        _UIPanel.SetActive(true);
+        _UIPanel.SetActive(false);
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
+        SharkGameManager.Instance.PlayGameAudio();
     }
     #endregion
 
@@ -92,6 +95,8 @@ public class UIController : MonoBehaviour
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
 
         Debug.Log("pOOL QUANTITY" + _currentLevelData.smallObjects.Capacity);
+
+        ObjectPooling.Instance.SetPoolData(levelConfig.levels[0].smallObjects.Capacity, levelConfig.levels[0].smallObjects[0].quantity, levelConfig.levels[0].smallObjects[0].name, _fishObject);
     }
     #endregion
 }

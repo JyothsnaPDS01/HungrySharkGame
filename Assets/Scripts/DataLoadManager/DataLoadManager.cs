@@ -8,8 +8,6 @@ public class DataLoadManager : MonoBehaviour
 {
     [SerializeField] private SharkGameDataModel.LevelConfig _levelConfig;
 
-    [SerializeField] private GameObject _fishObject;
-
     private void OnValidate()
     {
         // Load the JSON file from Resources
@@ -22,16 +20,11 @@ public class DataLoadManager : MonoBehaviour
             if (!string.IsNullOrEmpty(levelJsonFile))
             {
                 _levelConfig = JsonUtility.FromJson<SharkGameDataModel.LevelConfig>(levelJsonFile);
+                SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.None;
 
 #if UNITY_EDIOR
                 Debug.Log("Level Config loaded successfully");
 #endif
-                // Set the pool data after loading the level config
-                if (_levelConfig != null && _levelConfig.levels.Count > 0)
-                {
-                    SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.None;
-                    ObjectPooling.Instance.SetPoolData(_levelConfig.levels[0].smallObjects.Capacity, _levelConfig.levels[0].smallObjects[0].quantity, _levelConfig.levels[0].smallObjects[0].name, _fishObject);
-                }
             }
             else
             {

@@ -45,18 +45,24 @@ namespace SharkGame
         #region MonoBehaviour Methods
         void Start()
         {
-            // Start the initial shark movement sequence
-            StartCoroutine(InitialSharkMovement());
+            if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.None ||
+                SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.MissionMode)
+                return;
+            else if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
+                // Start the initial shark movement sequence
+                StartCoroutine(InitialSharkMovement());
 
-            // Reset Rigidbody velocities to prevent unintended movement
-            _sharkRB.velocity = Vector3.zero;
-            _sharkRB.angularVelocity = Vector3.zero;
+                // Reset Rigidbody velocities to prevent unintended movement
+                _sharkRB.velocity = Vector3.zero;
+                _sharkRB.angularVelocity = Vector3.zero;
 
-            // Ensure Rigidbody is not influenced by gravity
-            _sharkRB.useGravity = false;
+                // Ensure Rigidbody is not influenced by gravity
+                _sharkRB.useGravity = false;
 
-            // Optional: Freeze unnecessary axes if needed
-            _sharkRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+                // Optional: Freeze unnecessary axes if needed
+                _sharkRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+            }
         }
 
         [SerializeField] private float smoothTime = 0.3f; // Duration for smoothing transition
@@ -95,42 +101,12 @@ namespace SharkGame
             // Raycast to check for walls in front of the player
             RaycastCheck();
 
-          //  SetRunningBgPositions();
-
             // Handle movement based on whether it's blocked
             if (!isMovementBlocked || (_currentSharkDirection != blockedDirection))
             {
                 HandleSurfaceInteraction(); // Process movement if allowed
                 HandleMovementAfterTransition(); // Continue movement logic
             }
-        }
-        float desiredBGPlaneYValue;
-        private void SetRunningBgPositions()
-        {
-            if (transform.position.y >= -4f && transform.position.y <= -2f)
-                desiredBGPlaneYValue = -26.2f;
-
-            else if (transform.position.y >= -7f && transform.position.y <= -4f)
-                desiredBGPlaneYValue = -26.6f;
-
-            else if (transform.position.y >= -11f && transform.position.y <= -7f)
-                desiredBGPlaneYValue = -26.8f;
-
-            else if (transform.position.y >= -15f && transform.position.y <= -11f)
-                desiredBGPlaneYValue = -27.2f;
-
-            else if (transform.position.y >= -17f && transform.position.y <= -11f)
-                desiredBGPlaneYValue = -27.6f;
-
-            else if (transform.position.y >= -21f && transform.position.y <= -17f)
-                desiredBGPlaneYValue = -28f;
-
-            else if (transform.position.y >= -24f && transform.position.y <= -21f)
-                desiredBGPlaneYValue = -28.4f;
-
-            Vector3 desiredPosition = new Vector3(_bgPlane.transform.position.x, desiredBGPlaneYValue, _bgPlane.transform.position.z);
-
-            _bgPlane.transform.position = Vector3.Lerp(_bgPlane.transform.position, desiredPosition, .5f);
         }
 
         void RaycastCheck()
