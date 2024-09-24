@@ -123,6 +123,20 @@ namespace SharkGame
             // Enqueue back to the inactive pool
             _fishPoolDictionary[_fishType].Enqueue(obj);
         }
+
+        internal void SetPoolData(int smallFishCount, int smallSpawnCount, string smallFishName, GameObject _fishObject)
+        {
+            for (int i=0;i<smallFishCount;i++)
+            {
+                SharkGameDataModel.FishPool _fishPool = new SharkGameDataModel.FishPool
+                {
+                    _smallFishType = SharkGameDataModel.SmallFishType.Chaetodon_Collare,
+                    _capacity = smallSpawnCount,
+                    _fishObject = _fishObject
+                };
+                _fishPoolList.Add(_fishPool);
+            }
+        }
         #endregion
     }
 }

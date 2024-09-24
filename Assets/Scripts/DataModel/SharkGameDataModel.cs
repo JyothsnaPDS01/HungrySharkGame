@@ -47,5 +47,47 @@ namespace SharkGame.Models
             ReBorn,
             Escape
         }
+
+        #region Level Config
+        [System.Serializable]
+        public class Level
+        {
+            public int levelNumber;
+            public List<Target> targets ;
+            public List<SmallObject> smallObjects ;
+            public List<object> enemies ;
+        }
+        [System.Serializable]
+        public class LevelConfig
+        {
+            public List<Level> levels ;
+        }
+        [System.Serializable]
+        public class SmallObject
+        {
+            public string name ;
+            public double size ;
+            public int quantity ;
+        }
+        [System.Serializable]
+        public class Target
+        {
+            public string description ;
+            public string targetType ;
+            public int amount ;
+        }
+        #endregion
+
+        #region Game Modes
+        [System.Serializable]
+        public enum GameMode
+        {
+            None,
+            Pause,
+            GameOver,
+            GameStart,
+            MissionMode
+        }
+        #endregion
     }
 }

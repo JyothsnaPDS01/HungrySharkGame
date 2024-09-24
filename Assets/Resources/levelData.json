@@ -1,34 +1,45 @@
 {
-  "levelNumber": 1,
-  "targets": [
+  "levels": [
     {
-      "description": "Eat 10 small fishes",
-      "targetType": "smallFishes",
-      "amount": 10
+      "levelNumber": 1,
+      "targets": [
+        {
+          "description": "Eat 10 small fishes",
+          "targetType": "smallFishes",
+          "amount": 10
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "Chaetodon_Collare",
+          "size": 1.2,
+          "quantity": 15
+        }
+      ],
+      "enemies": []
     },
     {
-      "description": "Eat 5 tiny crabs",
-      "targetType": "tinyCrabs",
-      "amount": 5
-    }
-  ],
-  "smallObjects": [
-    {
-      "name": "smallFish",
-      "size": 1.2,
-      "quantity": 15
-    },
-    {
-      "name": "tinyCrab",
-      "size": 0.8,
-      "quantity": 10
-    }
-  ],
-  "enemies": [
-    {
-      "name": "shark",
-      "size": 3.5,
-      "quantity": 1
+      "levelNumber": 2,
+      "targets": [
+        {
+          "description": "Eat 20 small fishes",
+          "targetType": "smallFishes",
+          "amount": 20
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "Chaetodon_Collare",
+          "size": 1.2,
+          "quantity": 10
+        },
+        {
+          "name": "Clown_Fish",
+          "size": 1.0,
+          "quantity": 10
+        }
+      ],
+      "enemies": []
     }
   ]
 }

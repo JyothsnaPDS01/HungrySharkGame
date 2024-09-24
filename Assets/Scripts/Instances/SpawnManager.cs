@@ -40,7 +40,10 @@ namespace SharkGame
 
         private void Start()
         {
-            StartCoroutine(CallSpawnFishesFrequently());
+            if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
+                StartCoroutine(CallSpawnFishesFrequently());
+            }
         }
 
         private IEnumerator CallSpawnFishesFrequently()
