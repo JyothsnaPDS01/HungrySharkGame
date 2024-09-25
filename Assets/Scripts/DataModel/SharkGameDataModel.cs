@@ -56,6 +56,7 @@ namespace SharkGame.Models
             public List<Target> targets ;
             public List<SmallObject> smallObjects ;
             public List<object> enemies ;
+            public int bufferAmount;
         }
         [System.Serializable]
         public class LevelConfig

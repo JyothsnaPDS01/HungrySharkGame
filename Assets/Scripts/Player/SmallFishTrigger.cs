@@ -18,9 +18,11 @@ namespace SharkGame
         [SerializeField] private float detectionRadius;
         [SerializeField] private LayerMask fishLayerMask;
 
+        [SerializeField] private int count = 0;
+
         private void Start()
         {
-            StartCoroutine(CheckNearbyFishesAtIntervals());
+           // StartCoroutine(CheckNearbyFishesAtIntervals());
         }
 
         private IEnumerator CheckNearbyFishesAtIntervals()
@@ -78,7 +80,15 @@ namespace SharkGame
             _player.GetComponent<Player>().EnableBloodEffect();
 
             // Optionally, you could have a slight delay after the animations if needed
-            yield return new WaitForSeconds(0.2f); // Wait a bit for the attack animation to play
+            yield return new WaitForSeconds(.8f); // Wait a bit for the attack animation to play
+
+            count += 1;
+
+            if(count == SharkGameManager.Instance.CurrentLevelTargetAmount)
+            {
+                yield return new WaitForSeconds(.5f);
+                SharkGameManager.Instance.LoadNextLevel();
+            }
 
             // Mark the fish as dead and reset its state
             SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
@@ -114,7 +124,6 @@ namespace SharkGame
             _fishObject.transform.SetParent(_playerShark);
             RotatePlayerTowards(_fishObject.transform);
 
-            yield return new WaitForSeconds(0.5f);
 
             // Trigger shark attack animation
             _player.GetComponent<Player>().PlayEatAnimation();

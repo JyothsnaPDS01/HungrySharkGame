@@ -13,11 +13,14 @@ namespace SharkGame
         [Header("Player Shark")]
         [SerializeField] private Transform _playerShark;
 
+        [Header("Spawn Point")]
+        [SerializeField] private Transform _spawnPoint;
+
         [Header("Fish Settings")]
         [SerializeField] private float minSpawnDistanceBetweenFishes = 0.5f;
         [SerializeField] private float minDistanceFromShark = 2f;
 
-        private List<GameObject> activeFishes = new List<GameObject>(); // Active fish tracking
+        [SerializeField] private List<GameObject> activeFishes = new List<GameObject>(); // Active fish tracking
 
         public static SpawnManager _instance;
         public static SpawnManager Instance
@@ -38,21 +41,28 @@ namespace SharkGame
             }
         }
 
-        private void Start()
+        #region Events
+        private void OnEnable()
         {
-            if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+            SharkGameManager.Instance.OnGameModeChanged += HandleGameMode;
+        }
+        private void OnDisable()
+        {
+            SharkGameManager.Instance.OnGameModeChanged -= HandleGameMode;
+        }
+
+        private void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
+        {
+            if(currentGameMode == SharkGameDataModel.GameMode.GameStart)
             {
                 StartCoroutine(CallSpawnFishesFrequently());
             }
         }
-
+        #endregion
         private IEnumerator CallSpawnFishesFrequently()
         {
-            while (true)
-            {
                 SpawnFishesAtWaypoints();
                 yield return new WaitForSeconds(1f);
-            }
         }
 
         public void SpawnFishesAtWaypoints()
@@ -72,6 +82,7 @@ namespace SharkGame
                         if (!IsWaypointOccupied(spawnPosition))
                         {
                             GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), spawnPosition, Quaternion.identity);
+                            fish.transform.SetParent(_spawnPoint);
 
                             if (fish == null)
                             {
@@ -168,6 +179,18 @@ namespace SharkGame
         private SharkGameDataModel.SmallFishType GetRandomSmallFishType()
         {
             return ObjectPooling.Instance._fishPoolList[Random.Range(0, ObjectPooling.Instance._fishPoolList.Count)]._smallFishType;
+        }
+
+        internal void PushBackObjectsToPool()
+        {
+            if(_spawnPoint.childCount > 0)
+            {
+                for(int i=0;i<_spawnPoint.childCount;i++)
+                {
+                    Transform childObject = _spawnPoint.GetChild(i);
+                    childObject.GetComponent<BackToPool>().PushBackToPool();
+                }
+            }
         }
     }
 }

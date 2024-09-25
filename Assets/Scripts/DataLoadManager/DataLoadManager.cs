@@ -49,4 +49,14 @@ public class DataLoadManager : MonoBehaviour
     {
         return _levelConfig;
     }
+
+    private int targetAmount = 0;
+    public int GetTargetAmount(int levelNumber)
+    {
+        foreach(var item in _levelConfig.levels[levelNumber - 1].smallObjects)
+        {
+            targetAmount += item.quantity;
+        }
+        return targetAmount;
+    }
 }

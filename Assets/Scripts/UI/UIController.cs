@@ -64,14 +64,14 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _fishObject;
 
     private SharkGameDataModel.Level _currentLevelData;
-    private int _currentLevel;
+  
     #endregion
 
     #region MonoBehaviour Methods
     private void Start()
     {
         levelConfig = _dataLoadManager.GetLevelConfig();
-        LoadLevel();
+        LoadInitialLevel();
     }
     #endregion
 
@@ -86,21 +86,32 @@ public class UIController : MonoBehaviour
     #endregion
 
     #region Private Methods
-    private void LoadLevel()
+    private void LoadInitialLevel()
     {
-        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.MissionMode;
+        SharkGameManager.Instance.InitializeLevel();
 
-        PlayerPrefs.SetInt("CurrentLevel", 1);
-
-        _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
-
-        _currentLevelData = levelConfig.levels[_currentLevel - 1];
-        _levelNumberTMP.text = _currentLevelData.levelNumber.ToString();
+        _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
+        _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
 
         Debug.Log("pOOL QUANTITY" + _currentLevelData.smallObjects.Capacity);
 
-        ObjectPooling.Instance.SetPoolData(levelConfig.levels[0].smallObjects.Capacity, levelConfig.levels[0].smallObjects[0].quantity, levelConfig.levels[0].smallObjects[0].name, _fishObject);
+        ObjectPooling.Instance.SetPoolData(levelConfig.levels[0].smallObjects.Capacity, levelConfig.levels[0].smallObjects[0].quantity + levelConfig.levels[0].bufferAmount, levelConfig.levels[0].smallObjects[0].name, _fishObject);
+    }
+
+    internal int GetTargetAmount(int _level)
+    {
+        return _dataLoadManager.GetTargetAmount(_level);
+    }
+
+    internal void LoadNextLevel()
+    {
+        _UIPanel.SetActive(true);
+
+        _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
+        _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
+        _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
+
     }
     #endregion
 }

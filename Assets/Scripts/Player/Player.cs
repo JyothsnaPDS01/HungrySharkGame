@@ -45,12 +45,10 @@ namespace SharkGame
         #region Events
         private void OnEnable()
         {
-            Debug.Log("Onenable");
             SharkGameManager.Instance.OnGameModeChanged += HandleGameMode;
         }
         private void OnDisable()
         {
-            Debug.Log("OnDisable");
             SharkGameManager.Instance.OnGameModeChanged -= HandleGameMode;
         }
 
@@ -58,14 +56,11 @@ namespace SharkGame
         {
             if(SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
             {
-                Debug.Log("Coming to gamestart mode");
                 StartGameStartSequence();
             }
         }
         internal void StartGameStartSequence()
         {
-            Debug.Log("Coming to StartGameStartSequence");
-
             // Start the initial shark movement sequence
             StartCoroutine(InitialSharkMovement());
 

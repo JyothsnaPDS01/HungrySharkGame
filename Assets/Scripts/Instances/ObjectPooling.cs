@@ -46,7 +46,6 @@ namespace SharkGame
                 Destroy(gameObject);
             }
         }
-
         private void Start()
         {
             InstantiatePoolObjects();
@@ -73,6 +72,7 @@ namespace SharkGame
             }
         }
 
+        #region Spawning Items from Pool
         internal GameObject SpawnFromPool(SharkGameDataModel.SmallFishType _fishType, Vector3 _position, Quaternion _rotation)
         {
             if (!_fishPoolDictionary.ContainsKey(_fishType) || _fishPoolDictionary[_fishType].Count == 0)
@@ -87,30 +87,32 @@ namespace SharkGame
             // Check if the object has the SmallFish component
             if (spawnedObject.GetComponent<SmallFish>() == null)
             {
+#if UNITY_EDITOR
                 Debug.LogError($"Spawned object {spawnedObject.name} does not have a SmallFish component.");
+#endif
                 return null; // Handle the error as needed
             }
-
-            // Add to active pool (Consider creating a separate active pool if needed)
-            // This may need adjustment if you're maintaining a separate active list.
             return spawnedObject;
         }
+        #endregion
 
-
-        // Method to deactivate and return the object to the inactive pool
-        // Method to deactivate and return the object to the inactive pool
+        #region Return Objects to Pool
         internal void ReturnToPool(GameObject obj, SharkGameDataModel.SmallFishType _fishType)
         {
             if (!_fishPoolDictionary.ContainsKey(_fishType))
             {
+#if UNITY_EDITOR
                 Debug.LogError($"Fish type {_fishType} not found in the pool.");
+#endif
                 return;
             }
 
             // Check if the object is already inactive
             if (!obj.activeInHierarchy)
             {
+#if UNITY_EDITOR
                 Debug.LogWarning("Object is already inactive.");
+#endif
                 return;
             }
 #if UNITY_EDITOR
@@ -123,7 +125,9 @@ namespace SharkGame
             // Enqueue back to the inactive pool
             _fishPoolDictionary[_fishType].Enqueue(obj);
         }
+        #endregion
 
+        #region Setting Pool Data
         internal void SetPoolData(int smallFishCount, int smallSpawnCount, string smallFishName, GameObject _fishObject)
         {
             for (int i=0;i<smallFishCount;i++)
@@ -137,6 +141,8 @@ namespace SharkGame
                 _fishPoolList.Add(_fishPool);
             }
         }
+        #endregion
+
         #endregion
     }
 }

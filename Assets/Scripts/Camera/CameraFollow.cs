@@ -64,13 +64,5 @@ namespace SharkGame
                 transform.position = smoothedPosition;
             }
         }
-
-        //private void Start()
-        //{
-        //    if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
-        //    {
-               
-        //    }
-        //}
     }
 }

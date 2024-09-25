@@ -16,7 +16,8 @@
           "quantity": 15
         }
       ],
-      "enemies": []
+      "enemies": [],
+      "bufferAmount": 10
     },
     {
       "levelNumber": 2,
@@ -39,7 +40,8 @@
           "quantity": 10
         }
       ],
-      "enemies": []
+      "enemies": [],
+      "bufferAmount" : 10
     }
   ]
 }

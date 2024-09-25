@@ -1882,8 +1882,10 @@ MonoBehaviour:
   - {fileID: 403034287}
   - {fileID: 378980395}
   _playerShark: {fileID: 376064956}
+  _spawnPoint: {fileID: 1320509459}
   minSpawnDistanceBetweenFishes: 0.25
   minDistanceFromShark: 2
+  activeFishes: []
 --- !u!1 &82508380
 GameObject:
   m_ObjectHideFlags: 0
@@ -10864,6 +10866,7 @@ Transform:
   - {fileID: 1643601653}
   - {fileID: 78430466}
   - {fileID: 1472948614}
+  - {fileID: 1320509459}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20043,10 +20046,11 @@ MonoBehaviour:
   _player: {fileID: 376064955}
   _playerShark: {fileID: 1568978343}
   detectionInterval: 1
-  detectionRadius: 2
+  detectionRadius: 0.5
   fishLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  count: 0
 --- !u!1 &944533399
 GameObject:
   m_ObjectHideFlags: 0
@@ -27957,6 +27961,36 @@ Transform:
   m_Father: {fileID: 788102689}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1320509458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1320509459}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1320509459
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320509458}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 526852143}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1322946538
 GameObject:
   m_ObjectHideFlags: 0
@@ -30846,6 +30880,8 @@ MonoBehaviour:
   _currentGameMode: 0
   _underWaterAudio: {fileID: 209028367}
   _playerSharkPrefab: {fileID: 376064955}
+  _currentLevel: 0
+  _targetAmount: 0
 --- !u!1 &1473122002
 GameObject:
   m_ObjectHideFlags: 0
@@ -39299,6 +39335,7 @@ MonoBehaviour:
       - name: Chaetodon_Collare
         size: 1.2
         quantity: 15
+      bufferAmount: 10
     - levelNumber: 2
       targets:
       - description: Eat 20 small fishes
@@ -39311,6 +39348,7 @@ MonoBehaviour:
       - name: Clown_Fish
         size: 1
         quantity: 10
+      bufferAmount: 10
   _player: {fileID: 376064955}
 --- !u!1 &1643978614
 GameObject:
