@@ -18,11 +18,9 @@ namespace SharkGame
         [SerializeField] private float detectionRadius;
         [SerializeField] private LayerMask fishLayerMask;
 
-        [SerializeField] private int count = 0;
-
         private void Start()
         {
-           // StartCoroutine(CheckNearbyFishesAtIntervals());
+            StartCoroutine(CheckNearbyFishesAtIntervals());
         }
 
         private IEnumerator CheckNearbyFishesAtIntervals()
@@ -80,11 +78,11 @@ namespace SharkGame
             _player.GetComponent<Player>().EnableBloodEffect();
 
             // Optionally, you could have a slight delay after the animations if needed
-            yield return new WaitForSeconds(.8f); // Wait a bit for the attack animation to play
+            yield return new WaitForSeconds(.5f); // Wait a bit for the attack animation to play
 
-            count += 1;
+            SharkGameManager.Instance.DestroyCount += 1;
 
-            if(count == SharkGameManager.Instance.CurrentLevelTargetAmount)
+            if(SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
             {
                 yield return new WaitForSeconds(.5f);
                 SharkGameManager.Instance.LoadNextLevel();

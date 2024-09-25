@@ -136,14 +136,14 @@ namespace SharkGame
         #endregion
 
         #region Setting Pool Data
-        internal void SetPoolData(List<SharkGameDataModel.SmallObject> smallObjects)
+        internal void SetPoolData(int bufferAmount, List<SharkGameDataModel.SmallObject> smallObjects)
         {
             for (int i = 0; i < smallObjects.Capacity; i++)
             {
                 SharkGameDataModel.FishPool _fishPool = new SharkGameDataModel.FishPool
                 {
                     _smallFishType = GetSmallFishType(smallObjects[i].name),
-                    _capacity = smallObjects[i].quantity,
+                    _capacity = smallObjects[i].quantity + bufferAmount,
                     _fishObject = SharkGameManager.Instance.GetSmallFishPrefab(GetSmallFishType(smallObjects[i].name))
                 };
                 _fishPoolList.Add(_fishPool);

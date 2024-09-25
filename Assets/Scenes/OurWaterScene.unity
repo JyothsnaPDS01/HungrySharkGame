@@ -20048,7 +20048,6 @@ MonoBehaviour:
   fishLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  count: 0
 --- !u!1 &944533399
 GameObject:
   m_ObjectHideFlags: 0
@@ -30892,6 +30891,7 @@ MonoBehaviour:
   - _smallFishType: 5
     _fishObject: {fileID: 4846512485359574177, guid: a81a79ae87f03ac4c98a5cfda51685eb,
       type: 3}
+  destroyCount: 0
 --- !u!1 &1473122002
 GameObject:
   m_ObjectHideFlags: 0

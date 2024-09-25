@@ -54,6 +54,9 @@ namespace SharkGame
         [Header("Current Level SharkAmount")]
         [SerializeField] private int _targetAmount;
 
+        [Header("Destroy Count")]
+        [SerializeField] private int destroyCount = 0;
+
         [Header("Small Fishes Prefabs List")]
         [SerializeField] private List<SharkGameDataModel.SmallFishes> smallFishesPrefabList;
         public int CurrentLevel
@@ -69,6 +72,18 @@ namespace SharkGame
             get
             {
                 return _targetAmount;
+            }
+        }
+       
+        public int DestroyCount
+        {
+            get
+            {
+                return destroyCount;
+            }
+            set
+            {
+                destroyCount = value;
             }
         }
         #endregion
@@ -119,6 +134,7 @@ namespace SharkGame
         {
             _playerSharkPrefab.SetActive(true);
             if(_currentLevel == 1) _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
+            _playerSharkPrefab.GetComponent<Player>().DisableBloodEffect();
             _spawnManager.SetActive(true);
             _objectPooling.GetComponent<ObjectPooling>().HandleGameMode(CurrentGameMode);
             _spawnManager.GetComponent<SpawnManager>().HandleGameMode(CurrentGameMode);
@@ -146,8 +162,8 @@ namespace SharkGame
             _playerSharkPrefab.SetActive(false);
             _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
             _spawnManager.SetActive(false);
+            destroyCount = 0;
 
-          //  SpawnManager.Instance.PushBackObjectsToPool();
             StopGameAudio();
             ObjectPooling.Instance.ClearFishPoolList();
 
@@ -155,6 +171,7 @@ namespace SharkGame
             PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
             PlayerPrefs.Save();
             UIController.Instance.LoadNextLevel();
+            _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
         }
 
         internal GameObject GetSmallFishPrefab(SharkGameDataModel.SmallFishType _smallFishType)

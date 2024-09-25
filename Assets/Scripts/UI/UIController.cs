@@ -98,11 +98,12 @@ public class UIController : MonoBehaviour
 
     internal void SetObjectPool()
     {
-        ObjectPooling.Instance.SetPoolData(_currentLevelData.smallObjects);
+        ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
     }
 
     internal int GetTargetAmount(int _level)
     {
+        _dataLoadManager.targetAmount = 0;
         return _dataLoadManager.GetTargetAmount(_level);
     }
 
@@ -114,7 +115,7 @@ public class UIController : MonoBehaviour
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
 
-        ObjectPooling.Instance.SetPoolData(_currentLevelData.smallObjects);
+        ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
     }
     #endregion
 }
