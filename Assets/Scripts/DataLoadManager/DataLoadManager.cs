@@ -8,6 +8,9 @@ public class DataLoadManager : MonoBehaviour
 {
     [SerializeField] private SharkGameDataModel.LevelConfig _levelConfig;
 
+    [Header("Player")]
+    [SerializeField] private GameObject _player;
+
     private void OnValidate()
     {
         // Load the JSON file from Resources

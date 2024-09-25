@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SharkGame.Models;
+using System;
 
 namespace SharkGame
 {
@@ -53,6 +54,17 @@ namespace SharkGame
 
         [Header("UnderWaterAudio")]
         [SerializeField] private AudioSource _underWaterAudio;
+
+        [Header("Player Shark Prefab")]
+        [SerializeField] private GameObject _playerSharkPrefab;
+
+        //[Header("Player Shark Position")]
+        //[SerializeField] private Transform _playerSharkSpawnPosition;
+
+
+        #region Events
+        public event Action<SharkGameDataModel.GameMode> OnGameModeChanged;
+        #endregion
         public SharkGameDataModel.GameMode CurrentGameMode
         {
             get
@@ -62,6 +74,7 @@ namespace SharkGame
             set
             {
                 _currentGameMode = value;
+                OnGameModeChanged?.Invoke(CurrentGameMode);
             }
         }
         #endregion
@@ -70,6 +83,12 @@ namespace SharkGame
         internal void PlayGameAudio()
         {
             _underWaterAudio.Play();
+        }
+
+        internal void InitializePlayer()
+        {
+            _playerSharkPrefab.SetActive(true);
+            _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
         }
         #endregion
     }

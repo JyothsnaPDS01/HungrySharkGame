@@ -1,4 +1,5 @@
 using UnityEngine;
+using SharkGame.Models;
 
 namespace SharkGame
 {
@@ -10,35 +11,28 @@ namespace SharkGame
 
         private Vector3 velocity = Vector3.zero; // Velocity for smoothing
 
-        private void LateUpdate()
+        private bool isFollowing = false;
+
+        #region Events
+        private void OnEnable()
         {
-            if (targetRigidbody == null)
-            {
-#if UNITY_EDITOR
-                Debug.LogWarning("Target Rigidbody is not assigned.");
-#endif
-                return;
-            }
-
-            // Calculate the desired position based on the target's Rigidbody position + offset
-            Vector3 desiredPosition = targetRigidbody.position + offset;
-
-#if UNITY_EDITOR
-            // Debug information for tracking positions
-       
-#endif
-
-            // Smoothly interpolate between the camera's current position and the desired position
-            Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothSpeed);
-
-            // Set the camera's position to the smoothed position
-            transform.position = smoothedPosition;
-
-            // Optionally, make the camera look at the target
-            // transform.LookAt(targetRigidbody.transform);
+            SharkGameManager.Instance.OnGameModeChanged += HandleGameMode;
         }
 
-        private void Start()
+        private void OnDisable()
+        {
+            SharkGameManager.Instance.OnGameModeChanged += HandleGameMode;
+        }
+
+        private void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
+        {
+            if(currentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
+                isFollowing = true;
+                InitialisePlayerProperties();
+            }
+        }
+        private void InitialisePlayerProperties()
         {
             if (targetRigidbody != null)
             {
@@ -46,5 +40,37 @@ namespace SharkGame
                 targetRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             }
         }
+        #endregion
+
+        private void LateUpdate()
+        {
+            if (isFollowing == true)
+            {
+                if (targetRigidbody == null)
+                {
+#if UNITY_EDITOR
+                    Debug.LogWarning("Target Rigidbody is not assigned.");
+#endif
+                    return;
+                }
+
+                // Calculate the desired position based on the target's Rigidbody position + offset
+                Vector3 desiredPosition = targetRigidbody.position + offset;
+
+                // Smoothly interpolate between the camera's current position and the desired position
+                Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothSpeed);
+
+                // Set the camera's position to the smoothed position
+                transform.position = smoothedPosition;
+            }
+        }
+
+        //private void Start()
+        //{
+        //    if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+        //    {
+               
+        //    }
+        //}
     }
 }

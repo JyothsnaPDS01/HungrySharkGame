@@ -58,6 +58,9 @@ public class UIController : MonoBehaviour
     [Header("Data Load Manager")]
     [SerializeField] private DataLoadManager _dataLoadManager;
 
+    [Header("Player Reference")]
+    [SerializeField] private GameObject _player;
+
     [SerializeField] private GameObject _fishObject;
 
     private SharkGameDataModel.Level _currentLevelData;
@@ -78,6 +81,7 @@ public class UIController : MonoBehaviour
         _UIPanel.SetActive(false);
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
         SharkGameManager.Instance.PlayGameAudio();
+        SharkGameManager.Instance.InitializePlayer();
     }
     #endregion
 

@@ -42,29 +42,46 @@ namespace SharkGame
         [SerializeField] private GameObject _bgPlane;
         #endregion
 
-        #region MonoBehaviour Methods
-        void Start()
+        #region Events
+        private void OnEnable()
         {
-            if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.None ||
-                SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.MissionMode)
-                return;
-            else if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
-            {
-                // Start the initial shark movement sequence
-                StartCoroutine(InitialSharkMovement());
-
-                // Reset Rigidbody velocities to prevent unintended movement
-                _sharkRB.velocity = Vector3.zero;
-                _sharkRB.angularVelocity = Vector3.zero;
-
-                // Ensure Rigidbody is not influenced by gravity
-                _sharkRB.useGravity = false;
-
-                // Optional: Freeze unnecessary axes if needed
-                _sharkRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
-            }
+            Debug.Log("Onenable");
+            SharkGameManager.Instance.OnGameModeChanged += HandleGameMode;
+        }
+        private void OnDisable()
+        {
+            Debug.Log("OnDisable");
+            SharkGameManager.Instance.OnGameModeChanged -= HandleGameMode;
         }
 
+        private void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
+        {
+            if(SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
+                Debug.Log("Coming to gamestart mode");
+                StartGameStartSequence();
+            }
+        }
+        internal void StartGameStartSequence()
+        {
+            Debug.Log("Coming to StartGameStartSequence");
+
+            // Start the initial shark movement sequence
+            StartCoroutine(InitialSharkMovement());
+
+            // Reset Rigidbody velocities to prevent unintended movement
+            _sharkRB.velocity = Vector3.zero;
+            _sharkRB.angularVelocity = Vector3.zero;
+
+            // Ensure Rigidbody is not influenced by gravity
+            _sharkRB.useGravity = false;
+
+            // Optional: Freeze unnecessary axes if needed
+            _sharkRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        }
+        #endregion
+
+        #region MonoBehaviour Methods
         [SerializeField] private float smoothTime = 0.3f; // Duration for smoothing transition
         [SerializeField] private float maxSpeed = 10f; // Maximum speed
         private Vector3 velocity = Vector3.zero; // Current velocity
@@ -445,6 +462,7 @@ namespace SharkGame
 
         private IEnumerator InitialSharkMovement()
         {
+            Debug.Log("Coming to InitialSharkMovement");
             float elapsedTime = 0f;
             Quaternion initialRotation = _sharkRB.rotation;
             Quaternion _targetRotation = Quaternion.Euler(90, 90, -90);
