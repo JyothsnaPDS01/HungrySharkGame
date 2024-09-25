@@ -24,6 +24,7 @@ namespace SharkGame.Models
         [System.Serializable]
         public enum SmallFishType
         {
+            None,
             GoldenSmallFish,
             Chaetodon_Collare,
             Chelmon_Rostratus,
@@ -36,6 +37,13 @@ namespace SharkGame.Models
         {
             public SmallFishType _smallFishType;
             public int _capacity;
+            public GameObject _fishObject;
+        }
+
+        [System.Serializable]
+        public class SmallFishes
+        {
+            public SmallFishType _smallFishType;
             public GameObject _fishObject;
         }
 

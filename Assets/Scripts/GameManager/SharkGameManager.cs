@@ -42,11 +42,20 @@ namespace SharkGame
         [Header("Player Shark Prefab")]
         [SerializeField] private GameObject _playerSharkPrefab;
 
+        [Header("SpawnManager")]
+        [SerializeField] private GameObject _spawnManager;
+
+        [Header("ObjectPooling")]
+        [SerializeField] private GameObject _objectPooling;
+
         [Header("Game Level")]
         [SerializeField] private int _currentLevel;
 
         [Header("Current Level SharkAmount")]
         [SerializeField] private int _targetAmount;
+
+        [Header("Small Fishes Prefabs List")]
+        [SerializeField] private List<SharkGameDataModel.SmallFishes> smallFishesPrefabList;
         public int CurrentLevel
         {
             get
@@ -109,7 +118,10 @@ namespace SharkGame
         internal void InitializePlayer()
         {
             _playerSharkPrefab.SetActive(true);
-            _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
+            if(_currentLevel == 1) _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
+            _spawnManager.SetActive(true);
+            _objectPooling.GetComponent<ObjectPooling>().HandleGameMode(CurrentGameMode);
+            _spawnManager.GetComponent<SpawnManager>().HandleGameMode(CurrentGameMode);
         }
 
         internal void InitializeLevel()
@@ -130,15 +142,24 @@ namespace SharkGame
 
         internal void LoadNextLevel()
         {
-            SpawnManager.Instance.PushBackObjectsToPool();
-            StopGameAudio();
-
             _currentGameMode = SharkGameDataModel.GameMode.MissionMode;
+            _playerSharkPrefab.SetActive(false);
+            _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
+            _spawnManager.SetActive(false);
+
+          //  SpawnManager.Instance.PushBackObjectsToPool();
+            StopGameAudio();
+            ObjectPooling.Instance.ClearFishPoolList();
+
             _currentLevel = _currentLevel + 1;
             PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
             PlayerPrefs.Save();
-
             UIController.Instance.LoadNextLevel();
+        }
+
+        internal GameObject GetSmallFishPrefab(SharkGameDataModel.SmallFishType _smallFishType)
+        {
+            return smallFishesPrefabList.Find(x => x._smallFishType == _smallFishType)._fishObject;
         }
         #endregion
     }

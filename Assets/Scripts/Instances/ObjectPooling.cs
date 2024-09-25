@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SharkGame.Models;
+using System;
 
 namespace SharkGame
 {
@@ -46,9 +47,15 @@ namespace SharkGame
                 Destroy(gameObject);
             }
         }
-        private void Start()
+        #endregion
+
+        #region Events
+        internal void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
         {
-            InstantiatePoolObjects();
+            if(currentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
+                InstantiatePoolObjects();
+            }
         }
         #endregion
 
@@ -59,16 +66,17 @@ namespace SharkGame
             {
                 Queue<GameObject> fishObjectQueue = new Queue<GameObject>();
 
-                for (int i = 0; i < item._capacity; i++)
+                if (!_fishPoolDictionary.ContainsKey(item._smallFishType))
                 {
-                    GameObject obj = Instantiate(item._fishObject);
-                    obj.SetActive(false);
-                    fishObjectQueue.Enqueue(obj);
+                    for (int i = 0; i < item._capacity; i++)
+                    {
+                        GameObject obj = Instantiate(item._fishObject);
+                        obj.SetActive(false);
+                        fishObjectQueue.Enqueue(obj);
+                    }
+
+                    _fishPoolDictionary.Add(item._smallFishType, fishObjectQueue);
                 }
-
-                _fishPoolDictionary.Add(item._smallFishType, fishObjectQueue);
-
-               
             }
         }
 
@@ -128,17 +136,36 @@ namespace SharkGame
         #endregion
 
         #region Setting Pool Data
-        internal void SetPoolData(int smallFishCount, int smallSpawnCount, string smallFishName, GameObject _fishObject)
+        internal void SetPoolData(List<SharkGameDataModel.SmallObject> smallObjects)
         {
-            for (int i=0;i<smallFishCount;i++)
+            for (int i = 0; i < smallObjects.Capacity; i++)
             {
                 SharkGameDataModel.FishPool _fishPool = new SharkGameDataModel.FishPool
                 {
-                    _smallFishType = SharkGameDataModel.SmallFishType.Chaetodon_Collare,
-                    _capacity = smallSpawnCount,
-                    _fishObject = _fishObject
+                    _smallFishType = GetSmallFishType(smallObjects[i].name),
+                    _capacity = smallObjects[i].quantity,
+                    _fishObject = SharkGameManager.Instance.GetSmallFishPrefab(GetSmallFishType(smallObjects[i].name))
                 };
                 _fishPoolList.Add(_fishPool);
+            }
+        }
+
+        internal void ClearFishPoolList()
+        {
+            _fishPoolList.Clear();
+        }
+
+        SharkGameDataModel.SmallFishType smallFishType;
+        internal SharkGameDataModel.SmallFishType GetSmallFishType(string _smallFishName)
+        {
+            // Attempt to parse the string into the enum type
+            if (Enum.TryParse(_smallFishName, true, out smallFishType))
+            {
+                return smallFishType; // Successfully parsed
+            }
+            else
+            {
+                return SharkGameDataModel.SmallFishType.None;
             }
         }
         #endregion

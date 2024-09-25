@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5898399333938078527}
   - component: {fileID: 397568958981130927}
   - component: {fileID: 1625042167604762760}
+  - component: {fileID: 568944156175456323}
   m_Layer: 6
   m_Name: ZebraSoma_SmallFish
   m_TagString: SmallFish
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fishAnimator: {fileID: 5898399333938078527}
-  _smallFishType: 4
+  _smallFishType: 5
 --- !u!136 &1625042167604762760
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -81,6 +82,19 @@ CapsuleCollider:
   m_Height: 0.36
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &568944156175456323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4846512485359574177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee8df6f46c7920a4f8c203a31b3e9d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _smallFishType: 5
 --- !u!1001 &2542143135294160738
 PrefabInstance:
   m_ObjectHideFlags: 0

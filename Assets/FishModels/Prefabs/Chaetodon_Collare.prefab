@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fishAnimator: {fileID: 3445271456067721417}
-  _smallFishType: 1
+  _smallFishType: 2
 --- !u!114 &-5295024044294324109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8df6f46c7920a4f8c203a31b3e9d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _smallFishType: 1
+  _smallFishType: 2
 --- !u!1001 &7857455451256695681
 PrefabInstance:
   m_ObjectHideFlags: 0

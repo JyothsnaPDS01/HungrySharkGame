@@ -1796,8 +1796,6 @@ MonoBehaviour:
     levels: []
   _dataLoadManager: {fileID: 1643601654}
   _player: {fileID: 376064955}
-  _fishObject: {fileID: 6036616401076400763, guid: 792cfce66f59b134cafe338d73a50c0f,
-    type: 3}
 --- !u!1 &78595105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,7 +1843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &78972355
 Transform:
   m_ObjectHideFlags: 0
@@ -30880,8 +30878,20 @@ MonoBehaviour:
   _currentGameMode: 0
   _underWaterAudio: {fileID: 209028367}
   _playerSharkPrefab: {fileID: 376064955}
+  _spawnManager: {fileID: 78972354}
+  _objectPooling: {fileID: 341308105}
   _currentLevel: 0
   _targetAmount: 0
+  smallFishesPrefabList:
+  - _smallFishType: 2
+    _fishObject: {fileID: 6036616401076400763, guid: 792cfce66f59b134cafe338d73a50c0f,
+      type: 3}
+  - _smallFishType: 4
+    _fishObject: {fileID: 351876053838630626, guid: 78067d748e054334b9375b4518d9c611,
+      type: 3}
+  - _smallFishType: 5
+    _fishObject: {fileID: 4846512485359574177, guid: a81a79ae87f03ac4c98a5cfda51685eb,
+      type: 3}
 --- !u!1 &1473122002
 GameObject:
   m_ObjectHideFlags: 0
@@ -39345,7 +39355,7 @@ MonoBehaviour:
       - name: Chaetodon_Collare
         size: 1.2
         quantity: 10
-      - name: Clown_Fish
+      - name: CoralBeauty
         size: 1
         quantity: 10
       bufferAmount: 10
@@ -50414,7 +50424,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 18
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &142402775795599393
 MeshCollider:
   m_ObjectHideFlags: 0

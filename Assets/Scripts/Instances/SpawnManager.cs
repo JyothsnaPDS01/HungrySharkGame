@@ -42,21 +42,10 @@ namespace SharkGame
         }
 
         #region Events
-        private void OnEnable()
+        internal void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
         {
-            SharkGameManager.Instance.OnGameModeChanged += HandleGameMode;
-        }
-        private void OnDisable()
-        {
-            SharkGameManager.Instance.OnGameModeChanged -= HandleGameMode;
-        }
-
-        private void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
-        {
-            if(currentGameMode == SharkGameDataModel.GameMode.GameStart)
-            {
+                Debug.Log("CallSpawnFishesFrequently");
                 StartCoroutine(CallSpawnFishesFrequently());
-            }
         }
         #endregion
         private IEnumerator CallSpawnFishesFrequently()
@@ -82,7 +71,6 @@ namespace SharkGame
                         if (!IsWaypointOccupied(spawnPosition))
                         {
                             GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), spawnPosition, Quaternion.identity);
-                            fish.transform.SetParent(_spawnPoint);
 
                             if (fish == null)
                             {
@@ -125,33 +113,33 @@ namespace SharkGame
         {
             float speed = .5f; // Adjust speed as needed
             Vector3 direction = Vector3.right; // Set the movement direction
-
-            while (true)
-            {
-                // Move each fish while maintaining their relative offsets
-                for (int i = 0; i < fishesToMove.Count; i++)
+            
+                while (true)
                 {
-                    GameObject fish = fishesToMove[i];
-                    if (fish != null)
+                    // Move each fish while maintaining their relative offsets
+                    for (int i = 0; i < fishesToMove.Count; i++)
                     {
-                        // Update position
-                        Vector3 targetPosition = groupCenter + fishOffsets[i] + (direction * speed * Time.deltaTime);
-                        fish.transform.position = targetPosition;
-
-                        if (targetPosition.x >= 100f || targetPosition.x <= -55f)
+                        GameObject fish = fishesToMove[i];
+                        if (fish != null)
                         {
-                            // Reverse direction
-                            direction = -direction;
-                            fish.transform.rotation = Quaternion.Euler(fish.transform.rotation.x, -fish.transform.rotation.y, fish.transform.rotation.z);
+                            // Update position
+                            Vector3 targetPosition = groupCenter + fishOffsets[i] + (direction * speed * Time.deltaTime);
+                            fish.transform.position = targetPosition;
+
+                            if (targetPosition.x >= 100f || targetPosition.x <= -55f)
+                            {
+                                // Reverse direction
+                                direction = -direction;
+                                fish.transform.rotation = Quaternion.Euler(fish.transform.rotation.x, -fish.transform.rotation.y, fish.transform.rotation.z);
+                            }
                         }
                     }
+
+                    // Update the group center to maintain their movement
+                    groupCenter += direction * speed * Time.deltaTime;
+
+                    yield return null; // Wait for the next frame
                 }
-
-                // Update the group center to maintain their movement
-                groupCenter += direction * speed * Time.deltaTime;
-
-                yield return null; // Wait for the next frame
-            }
         }
 
 
@@ -170,6 +158,7 @@ namespace SharkGame
             {
                 if (Vector3.Distance(fish.transform.position, waypoint) < minSpawnDistanceBetweenFishes)
                 {
+                    Debug.Log("IswaypointOccupied");
                     return true; // Waypoint is occupied
                 }
             }
@@ -178,6 +167,7 @@ namespace SharkGame
 
         private SharkGameDataModel.SmallFishType GetRandomSmallFishType()
         {
+            Debug.Log("FishPoolList Length" + ObjectPooling.Instance._fishPoolList.Count);
             return ObjectPooling.Instance._fishPoolList[Random.Range(0, ObjectPooling.Instance._fishPoolList.Count)]._smallFishType;
         }
 
@@ -188,9 +178,16 @@ namespace SharkGame
                 for(int i=0;i<_spawnPoint.childCount;i++)
                 {
                     Transform childObject = _spawnPoint.GetChild(i);
-                    childObject.GetComponent<BackToPool>().PushBackToPool();
+                    if (childObject.gameObject.activeInHierarchy)
+                    {
+                        childObject.gameObject.SetActive(false);
+                        childObject.GetComponent<BackToPool>().PushBackToPool();
+                    }
                 }
             }
+            activeFishes.Clear();
         }
+
+        internal void ClearActiveFishList() => activeFishes.Clear();
     }
 }

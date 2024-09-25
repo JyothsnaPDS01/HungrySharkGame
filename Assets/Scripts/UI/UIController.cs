@@ -61,10 +61,7 @@ public class UIController : MonoBehaviour
     [Header("Player Reference")]
     [SerializeField] private GameObject _player;
 
-    [SerializeField] private GameObject _fishObject;
-
     private SharkGameDataModel.Level _currentLevelData;
-  
     #endregion
 
     #region MonoBehaviour Methods
@@ -96,7 +93,12 @@ public class UIController : MonoBehaviour
 
         Debug.Log("pOOL QUANTITY" + _currentLevelData.smallObjects.Capacity);
 
-        ObjectPooling.Instance.SetPoolData(levelConfig.levels[0].smallObjects.Capacity, levelConfig.levels[0].smallObjects[0].quantity + levelConfig.levels[0].bufferAmount, levelConfig.levels[0].smallObjects[0].name, _fishObject);
+        SetObjectPool();
+    }
+
+    internal void SetObjectPool()
+    {
+        ObjectPooling.Instance.SetPoolData(_currentLevelData.smallObjects);
     }
 
     internal int GetTargetAmount(int _level)
@@ -112,6 +114,7 @@ public class UIController : MonoBehaviour
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
 
+        ObjectPooling.Instance.SetPoolData(_currentLevelData.smallObjects);
     }
     #endregion
 }
