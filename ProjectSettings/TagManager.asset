@@ -10,6 +10,8 @@ TagManager:
   - Ground
   - Ground1
   - Wall
+  - border
+  - Giveborder
   layers:
   - Default
   - TransparentFX

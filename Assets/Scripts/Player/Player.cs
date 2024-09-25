@@ -8,7 +8,7 @@ namespace SharkGame
     {
         #region Private Variables
         [SerializeField] private float _sharkSpeed = 2f;
-        [SerializeField] private float rotationSpeed = 5f; // Speed of rotation
+        [SerializeField] private float rotationSpeed = 1f; // Speed of rotation
         [SerializeField] private Animator _sharkAnimator;
         [SerializeField] private Rigidbody _sharkRB;
         [SerializeField] private Transform _sharkMouthPosition;
@@ -561,25 +561,21 @@ namespace SharkGame
             if (verticalInput > 0 && horizontalInput == 0)  // Up
             {
                 targetRotation = Quaternion.Euler(-90, 0, -180);
-                rotationSpeed = 5f;
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Up;
             }
             else if (verticalInput < 0 && horizontalInput == 0)  // Down
             {
                 targetRotation = Quaternion.Euler(90, 90, -90);
-                rotationSpeed = 5f;
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Down;
             }
             else if (horizontalInput < 0 && verticalInput == 0)  // Left
             {
                 targetRotation = Quaternion.Euler(0, -90, 0);
-                rotationSpeed = 5f;
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Left;
             }
             else if (horizontalInput > 0 && verticalInput == 0)  // Right
             {
                 targetRotation = Quaternion.Euler(0, 90, 0);
-                rotationSpeed = 5f;
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Right;
             }
             else if (horizontalInput != 0 && verticalInput != 0)
@@ -604,7 +600,6 @@ namespace SharkGame
                     targetRotation = Quaternion.Euler(50, -90, 80);
                     _currentSharkDirection = SharkGameDataModel.SharkDirection.DownLeft;
                 }
-                rotationSpeed = 2.5f;
             }
 
             // Smooth rotation
