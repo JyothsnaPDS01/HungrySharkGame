@@ -44,6 +44,33 @@
       "bufferAmount" : 10
     },
     {
+    "levelNumber" : 3,
+     "targets" :[
+         {
+                "description" : "Eat 30 small Fishes",
+                "targetType" : "smallFishes",
+                "amount" : 30
+          }
+      ],
+      "smallObjects": [
+        {
+          "name": "Chaetodon_Collare",
+          "size": 1.2,
+          "quantity": 10
+        },
+        {
+          "name": "CoralBeauty",
+          "size": 1.0,
+          "quantity": 10
+        },
+         {
+          "name": "ZebraSoma",
+          "size": 1.0,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount" : 10
 
     }
   ]

@@ -20630,7 +20630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 408480, guid: 8b85f3d6a03b40d4b87f3f6cf06a7677, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -50
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 408480, guid: 8b85f3d6a03b40d4b87f3f6cf06a7677, type: 3}
       propertyPath: m_LocalPosition.z
@@ -39505,10 +39505,22 @@ MonoBehaviour:
         size: 1
         quantity: 10
       bufferAmount: 10
-    - levelNumber: 0
-      targets: []
-      smallObjects: []
-      bufferAmount: 0
+    - levelNumber: 3
+      targets:
+      - description: Eat 30 small Fishes
+        targetType: smallFishes
+        amount: 30
+      smallObjects:
+      - name: Chaetodon_Collare
+        size: 1.2
+        quantity: 10
+      - name: CoralBeauty
+        size: 1
+        quantity: 10
+      - name: ZebraSoma
+        size: 1
+        quantity: 10
+      bufferAmount: 10
   _player: {fileID: 376064955}
   targetAmount: 0
 --- !u!1 &1643978614
@@ -40431,7 +40443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 431096, guid: 5e27fa15f838eef41a1e2fe546195433, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -50
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 431096, guid: 5e27fa15f838eef41a1e2fe546195433, type: 3}
       propertyPath: m_LocalPosition.z
@@ -41410,7 +41422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 409870, guid: fcb9a4da347ef4f4a860e97c97b6357f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -50
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 409870, guid: fcb9a4da347ef4f4a860e97c97b6357f, type: 3}
       propertyPath: m_LocalPosition.z

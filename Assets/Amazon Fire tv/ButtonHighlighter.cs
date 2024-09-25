@@ -35,7 +35,9 @@ public class ButtonHighlighter : MonoBehaviour
     void Update()
     {
         var selectedObj = EventSystem.current.currentSelectedGameObject;
+#if UNITY_EDITOR
         print(selectedObj);
+#endif
         if (selectedObj == null) return;
         var selectedAsButton = selectedObj.GetComponent<Button>();
         if (selectedAsButton != null && selectedAsButton != previousButton)
