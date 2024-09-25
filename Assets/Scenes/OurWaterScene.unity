@@ -6004,7 +6004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25, y: 0.01, z: 10}
+  m_LocalPosition: {x: -79.2, y: -43.27, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -25337,13 +25337,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175216763}
-  m_LocalRotation: {x: -0.6553601, y: -0.26552415, z: 0.6721161, w: 0.21968187}
-  m_LocalPosition: {x: 117, y: -38.1, z: 5.09}
+  m_LocalRotation: {x: 0.7737674, y: -0.01343195, z: 0.06388384, w: 0.6300972}
+  m_LocalPosition: {x: 84.21556, y: -39.49414, z: 21.959625}
   m_LocalScale: {x: 49.426697, y: 49.426697, z: 49.426697}
   m_Children: []
   m_Father: {fileID: 543450652373008541}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 3.956, y: -90.00001, z: 139.84401}
+  m_LocalEulerAnglesHint: {x: -257.638, y: -22.502014, z: 343.803}
 --- !u!23 &1175216765
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25390,7 +25390,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175216763}
-  m_Mesh: {fileID: -2658039199246296011, guid: cba39dd1f6bdde544b99466cc3a2c07b, type: 3}
+  m_Mesh: {fileID: 4300174, guid: e2f8bea8392232e47a79b348c0c67ad3, type: 3}
 --- !u!1 &1175565389
 GameObject:
   m_ObjectHideFlags: 0
@@ -27287,7 +27287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1276407163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31902,8 +31902,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510149074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.8, y: -42.3, z: 46.5}
-  m_LocalScale: {x: 34.812393, y: 34.85771, z: 34.857704}
+  m_LocalPosition: {x: -12.8, y: -51.2, z: 46.61}
+  m_LocalScale: {x: 23.036057, y: 23.066044, z: 23.06604}
   m_Children:
   - {fileID: 2008158532}
   - {fileID: 1395231456}
