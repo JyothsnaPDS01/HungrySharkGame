@@ -10,11 +10,18 @@ namespace SharkGame
     {
         private List<Transform> waypoints;
         private int currentWaypointIndex = 0;
-        private float moveSpeed = 1f;
+        [SerializeField] private float moveSpeed = 1f;
         [SerializeField] private Animator _fishAnimator;
 
         [SerializeField] public SharkGameDataModel.SmallFishType _smallFishType;
 
+        public float SmallFishSpeed
+        {
+            get
+            {
+                return moveSpeed;
+            }
+        }
         private void Start()
         {
             transform.rotation = Quaternion.Euler(0, 90, 0);

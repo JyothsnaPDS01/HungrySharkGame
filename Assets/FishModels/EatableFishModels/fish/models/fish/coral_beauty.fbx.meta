@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: a63dac4d4a607ba42ae68bb1c1357ea8
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 19301
   internalIDToNameTable:
   - first:
       1: 100000
@@ -165,7 +165,17 @@ ModelImporter:
   - first:
       137: 13700000
     second: coral_beauty
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: coral_beauty
+    second: {fileID: 2100000, guid: 6bb1f3de2ed8fb947849973bf667087d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: coral_beauty_fin
+    second: {fileID: 2100000, guid: 4f9cdde9731ecae44a84a2d253bde1db, type: 2}
   materials:
     materialImportMode: 1
     materialName: 1
@@ -176,7 +186,6 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -284,40 +293,32 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.5
+    globalScale: 0.6
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importPhysicalCameras: 0
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
-    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
-    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
-    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-    secondaryUVMarginMethod: 0
-    secondaryUVMinLightmapResolution: 40
-    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -339,7 +340,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.49999994
+    globalScale: 0.59999996
     rootMotionBoneName: coral_beauty
     hasTranslationDoF: 0
     hasExtraRoot: 0
@@ -349,9 +350,6 @@ ModelImporter:
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 1
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
-  importBlendShapeDeformPercent: 0
-  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

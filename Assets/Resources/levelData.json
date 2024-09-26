@@ -17,7 +17,7 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 20
     },
     {
       "levelNumber": 2,
@@ -35,7 +35,7 @@
           "quantity": 10
         },
         {
-          "name": "CoralBeauty",
+          "name": "ZebraSoma",
           "size": 1.0,
           "quantity": 10
         }

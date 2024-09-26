@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea2559480d66a6479948806fca59186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 0.5
   _fishAnimator: {fileID: 3445271456067721417}
   _smallFishType: 2
 --- !u!114 &-5295024044294324109

@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea2559480d66a6479948806fca59186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 1
   _fishAnimator: {fileID: 1055257200406620797}
   _smallFishType: 4
 --- !u!136 &2741866765477854453
@@ -78,8 +79,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.06
-  m_Height: 0.27
+  m_Radius: 0.1
+  m_Height: 0.4
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-2922089417803772519

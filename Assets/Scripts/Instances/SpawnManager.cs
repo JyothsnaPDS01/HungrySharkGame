@@ -17,7 +17,7 @@ namespace SharkGame
         [SerializeField] private Transform _spawnPoint;
 
         [Header("Fish Settings")]
-        [SerializeField] private float minSpawnDistanceBetweenFishes = 0.5f;
+        [SerializeField] private float minSpawnDistanceBetweenFishes = 1f;
         [SerializeField] private float minDistanceFromShark = 2f;
 
         [SerializeField] private List<GameObject> activeFishes = new List<GameObject>(); // Active fish tracking
@@ -50,8 +50,11 @@ namespace SharkGame
         #endregion
         private IEnumerator CallSpawnFishesFrequently()
         {
-                SpawnFishesAtWaypoints();
+            while (true)
+            {
                 yield return new WaitForSeconds(1f);
+                SpawnFishesAtWaypoints();
+            }
         }
 
         public void SpawnFishesAtWaypoints()
@@ -63,7 +66,8 @@ namespace SharkGame
                     List<Vector3> fishOffsets = new List<Vector3>(); // To hold the offsets
                     List<GameObject> fishesToMove = new List<GameObject>(); // Keep track of spawned fishes
 
-                    int fishCount = Random.Range(4, 6); // Randomly choose between 4 and 5 fishes
+                    //int fishCount = Random.Range(4, 6); // Randomly choose between 4 and 5 fishes
+                    int fishCount = Random.Range(4,5);
                     for (int i = 0; i < fishCount; i++)
                     {
                         Vector3 spawnPosition = waypoint.position + GetRandomSpawnOffset();
@@ -103,50 +107,186 @@ namespace SharkGame
                     if (fishesToMove.Count > 0 && fishesToMove.Count == fishOffsets.Count)
                     {
                         activeFishes.AddRange(fishesToMove); // Add the new fishes to the active list
-                        StartCoroutine(MoveFishGroup(fishesToMove, fishOffsets, waypoint.position));
+                        if (SharkGameManager.Instance.CurrentLevel == 2 || SharkGameManager.Instance.CurrentLevel == 1)
+                        {
+                            StartCoroutine(MoveFishGroup(fishesToMove, fishOffsets, waypoint.position));
+                        }
+                        else if(SharkGameManager.Instance.CurrentLevel == 3)
+                        {
+                            StartCoroutine(MoveLevelThreeFishGroup(fishesToMove, fishOffsets, waypoint.position));
+                        }
                     }
                 }
             }
         }
 
-        private IEnumerator MoveFishGroup(List<GameObject> fishesToMove, List<Vector3> fishOffsets, Vector3 groupCenter)
-        {
-            float speed = .5f; // Adjust speed as needed
-            Vector3 direction = Vector3.right; // Set the movement direction
-            
-                while (true)
-                {
-                    // Move each fish while maintaining their relative offsets
-                    for (int i = 0; i < fishesToMove.Count; i++)
-                    {
-                        GameObject fish = fishesToMove[i];
-                        if (fish != null)
-                        {
-                            // Update position
-                            Vector3 targetPosition = groupCenter + fishOffsets[i] + (direction * speed * Time.deltaTime);
-                            fish.transform.position = targetPosition;
+        //private IEnumerator MoveFishGroup(List<GameObject> fishesToMove, List<Vector3> fishOffsets, Vector3 groupCenter)
+        //{
+        //    float speed = .5f; // Adjust speed as needed
+        //    Vector3 direction = Vector3.right; // Set the movement direction
 
-                            if (targetPosition.x >= 100f || targetPosition.x <= -55f)
-                            {
-                                // Reverse direction
-                                direction = -direction;
-                                fish.transform.rotation = Quaternion.Euler(fish.transform.rotation.x, -fish.transform.rotation.y, fish.transform.rotation.z);
-                            }
-                        }
+        //        while (true)
+        //        {
+        //            // Move each fish while maintaining their relative offsets
+        //            for (int i = 0; i < fishesToMove.Count; i++)
+        //            {
+        //                GameObject fish = fishesToMove[i];
+        //                if (fish != null)
+        //                {
+        //                    // Update position
+        //                    Vector3 targetPosition = groupCenter + fishOffsets[i] + (direction * speed * Time.deltaTime);
+        //                    fish.transform.position = targetPosition;
+
+        //                    if (targetPosition.x >= 100f || targetPosition.x <= -55f)
+        //                    {
+        //                        // Reverse direction
+        //                        direction = -direction;
+        //                        fish.transform.rotation = Quaternion.Euler(fish.transform.rotation.x, -fish.transform.rotation.y, fish.transform.rotation.z);
+        //                    }
+        //                }
+        //            }
+
+        //            // Update the group center to maintain their movement
+        //            groupCenter += direction * speed * Time.deltaTime;
+
+        //            yield return null; // Wait for the next frame
+        //        }
+        //}
+
+
+        private IEnumerator MoveFishGroup(List<GameObject> fishesToMove, List<Vector3> fishOffsets, Vector3 waypointPosition)
+        {
+            float minX = -100f; // Left boundary
+            float maxX = 150f; // Right boundary
+
+            while (true) // Keep moving fishes indefinitely
+            {
+                foreach (var fish in fishesToMove)
+                {
+                    if (fish == null) continue;
+
+                    SmallFish smallFishComponent = fish.GetComponent<SmallFish>();
+                    if (smallFishComponent == null)
+                    {
+                        Debug.LogError($"Fish {fish.name} does not have a SmallFish component.");
+                        continue; // Skip this fish if it doesn't have the component
                     }
 
-                    // Update the group center to maintain their movement
-                    groupCenter += direction * speed * Time.deltaTime;
+                    float moveSpeed = smallFishComponent.SmallFishSpeed; // Get the speed from the fish script
 
-                    yield return null; // Wait for the next frame
+                    Vector3 targetPosition = fish.transform.position;
+                    bool movingRight = fish.transform.position.x < maxX;
+
+                    // If movingRight, move towards maxX (100), otherwise move towards minX (-50)
+                    if (movingRight)
+                    {
+                        targetPosition.x = maxX;
+                        // Rotate the fish to face the right direction
+                        fish.transform.rotation = Quaternion.Euler(0, -90, 0); // Face right
+                    }
+                    else
+                    {
+                        targetPosition.x = minX;
+                        // Rotate the fish to face the left direction
+                        fish.transform.rotation = Quaternion.Euler(0, 90, 0); // Face left
+                    }
+
+                    // Move the fish to the target position
+                    while (Vector3.Distance(fish.transform.position, targetPosition) > 0.1f)
+                    {
+                        fish.transform.position = Vector3.MoveTowards(fish.transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                        yield return null;
+                    }
+
+                    // Once the fish reaches the target position, switch direction
+                    movingRight = !movingRight; // Toggle movement direction
                 }
+
+                // Wait briefly before repeating the loop
+                yield return new WaitForSeconds(1.0f);
+            }
         }
+
+
+
+
+        private IEnumerator MoveLevelThreeFishGroup(List<GameObject> fishesToMove, List<Vector3> fishOffsets, Vector3 groupCenter)
+        {
+            // Dictionary to store the current waypoint index for each fish
+            Dictionary<GameObject, int> fishWaypointIndices = new Dictionary<GameObject, int>();
+            Dictionary<GameObject, float> fishTimers = new Dictionary<GameObject, float>();
+
+            foreach (var fish in fishesToMove)
+            {
+                // Start each fish at the first waypoint
+                fishWaypointIndices[fish] = 0;
+                fishTimers[fish] = 0f; // Timer for sine wave calculation
+            }
+
+            while (true)
+            {
+                // Move each fish towards the current target waypoint
+                for (int i = 0; i < fishesToMove.Count; i++)
+                {
+                    GameObject fish = fishesToMove[i];
+
+                    if (fish != null)
+                    {
+                        SmallFish smallFishComponent = fish.GetComponent<SmallFish>();
+                        if (smallFishComponent == null)
+                        {
+                            Debug.LogError($"Fish {fish.name} does not have a SmallFish component.");
+                            continue; // Skip this fish if it doesn't have the component
+                        }
+
+                        float speed = smallFishComponent.SmallFishSpeed; // Get the speed from the fish script
+
+                        int currentWaypointIndex = fishWaypointIndices[fish];
+                        Transform targetWaypoint = waypoints[currentWaypointIndex]; // Current target waypoint
+
+                        // Calculate direction to the target waypoint
+                        Vector3 directionToWaypoint = (targetWaypoint.position - fish.transform.position).normalized;
+
+                        // Rotate the fish to face the target waypoint
+                        fish.transform.rotation = Quaternion.LookRotation(directionToWaypoint);
+
+                        // Calculate sine wave offset based on time
+                        fishTimers[fish] += Time.deltaTime; // Increment timer
+                        float sineWaveOffset = Mathf.Sin(fishTimers[fish] * speed) * 0.01f; // Adjust amplitude (0.5f) as needed
+
+                        // Move the fish towards the target waypoint with sine wave effect
+                        Vector3 movement = Vector3.MoveTowards(fish.transform.position, targetWaypoint.position, speed * Time.deltaTime);
+                        movement.y += sineWaveOffset; // Add sine wave vertical offset
+                        fish.transform.position = movement;
+
+                        // Check if the fish has reached the target waypoint
+                        if (Vector3.Distance(fish.transform.position, targetWaypoint.position) < 0.1f)
+                        {
+                            // Move to the next waypoint
+                            currentWaypointIndex++;
+                            if (currentWaypointIndex >= waypoints.Count)
+                            {
+                                // Loop back to the first waypoint if necessary
+                                currentWaypointIndex = 0;
+                            }
+
+                            // Update the current waypoint index for the fish
+                            fishWaypointIndices[fish] = currentWaypointIndex;
+                        }
+                    }
+                }
+
+                yield return null; // Wait for the next frame
+            }
+        }
+
+
 
 
         private Vector3 GetRandomSpawnOffset()
         {
-            float offsetX = Random.Range(-0.5f, 0.5f);
-            float offsetY = Random.Range(-0.5f, 0.5f);
+            float offsetX = Random.Range(-1f, 1f);
+            float offsetY = Random.Range(-1f, 1f);
             float offsetZ = 0f;
 
             return new Vector3(offsetX, offsetY, offsetZ);
@@ -188,6 +328,13 @@ namespace SharkGame
             activeFishes.Clear();
         }
 
-        internal void ClearActiveFishList() => activeFishes.Clear();
+        internal void ClearActiveFishList()
+        {
+            foreach(var item in activeFishes)
+            {
+                item.GetComponent<BackToPool>().PushBackToPool();
+            }
+            activeFishes.Clear();
+        }
     }
 }
