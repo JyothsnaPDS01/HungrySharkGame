@@ -23,9 +23,9 @@
       "levelNumber": 2,
       "targets": [
         {
-          "description": "Eat 20 small fishes",
+          "description": "Eat 15 small fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 15
         }
       ],
       "smallObjects": [
@@ -37,7 +37,7 @@
         {
           "name": "ZebraSoma",
           "size": 1.0,
-          "quantity": 10
+          "quantity": 5
         }
       ],
       "enemies": [],
@@ -47,9 +47,9 @@
     "levelNumber" : 3,
      "targets" :[
          {
-                "description" : "Eat 30 small Fishes",
+                "description" : "Eat 20 small Fishes",
                 "targetType" : "smallFishes",
-                "amount" : 30
+                "amount" : 20
           }
       ],
       "smallObjects": [
@@ -61,16 +61,16 @@
         {
           "name": "CoralBeauty",
           "size": 1.0,
-          "quantity": 10
+          "quantity": 5
         },
          {
           "name": "ZebraSoma",
           "size": 1.0,
-          "quantity": 10
+          "quantity": 5
         }
       ],
       "enemies": [],
-      "bufferAmount" : 10
+      "bufferAmount" : 15
 
     }
   ]

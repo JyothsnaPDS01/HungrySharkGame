@@ -252,15 +252,16 @@ namespace SharkGame
 
                         // Calculate sine wave offset based on time
                         fishTimers[fish] += Time.deltaTime; // Increment timer
-                        float sineWaveOffset = Mathf.Sin(fishTimers[fish] * speed) * 0.01f; // Adjust amplitude (0.5f) as needed
+                        float sineWaveAmplitude = 0.5f; // Adjust amplitude as needed
+                        float sineWaveFrequency = 1.0f; // Control frequency of the sine wave
+                        float sineWaveOffset = Mathf.Sin(fishTimers[fish] * sineWaveFrequency) * sineWaveAmplitude;
 
-                        // Move the fish towards the target waypoint with sine wave effect
-                        Vector3 movement = Vector3.MoveTowards(fish.transform.position, targetWaypoint.position, speed * Time.deltaTime);
-                        movement.y += sineWaveOffset; // Add sine wave vertical offset
-                        fish.transform.position = movement;
+                        // Move the fish towards the target waypoint with smooth damping
+                        Vector3 targetPosition = new Vector3(targetWaypoint.position.x, targetWaypoint.position.y + sineWaveOffset, targetWaypoint.position.z);
+                        fish.transform.position = Vector3.MoveTowards(fish.transform.position, targetPosition, speed * Time.deltaTime);
 
                         // Check if the fish has reached the target waypoint
-                        if (Vector3.Distance(fish.transform.position, targetWaypoint.position) < 0.1f)
+                        if (Vector3.Distance(fish.transform.position, targetPosition) < 0.1f)
                         {
                             // Move to the next waypoint
                             currentWaypointIndex++;
@@ -279,6 +280,7 @@ namespace SharkGame
                 yield return null; // Wait for the next frame
             }
         }
+
 
 
 

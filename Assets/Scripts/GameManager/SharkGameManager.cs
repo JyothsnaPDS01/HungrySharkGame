@@ -59,6 +59,9 @@ namespace SharkGame
 
         [Header("Small Fishes Prefabs List")]
         [SerializeField] private List<SharkGameDataModel.SmallFishes> smallFishesPrefabList;
+
+        [Header("SharkEating Collision")]
+        [SerializeField] private GameObject _sharkEatingCollision;
         public int CurrentLevel
         {
             get
@@ -135,6 +138,8 @@ namespace SharkGame
             _playerSharkPrefab.SetActive(true);
             if(_currentLevel == 1) _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
             _playerSharkPrefab.GetComponent<Player>().DisableBloodEffect();
+            if (_currentLevel == 2) _sharkEatingCollision.GetComponent<SmallFishTrigger>().DetectionRadius = 1.2f;
+            else if (_currentLevel == 3) _sharkEatingCollision.GetComponent<SmallFishTrigger>().DetectionRadius = 1.5f;
             _spawnManager.SetActive(true);
             _objectPooling.GetComponent<ObjectPooling>().HandleGameMode(CurrentGameMode);
             _spawnManager.GetComponent<SpawnManager>().HandleGameMode(CurrentGameMode);

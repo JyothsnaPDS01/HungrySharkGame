@@ -6,8 +6,8 @@ OcclusionCullingSettings:
   serializedVersion: 2
   m_OcclusionBakeSettings:
     smallestOccluder: 5
-    smallestHole: 4
-    backfaceThreshold: 71.3
+    smallestHole: 3
+    backfaceThreshold: 52.8
   m_SceneGUID: 749d42c2f623cb24183925a97e9efbd6
   m_OcclusionCullingData: {fileID: 36300000, guid: 8e105907cd6970b45b95d797ac89f6a7,
     type: 2}
@@ -7886,7 +7886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &376064956
 Transform:
   m_ObjectHideFlags: 0
@@ -7966,7 +7966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d565cb6ea52548b43815320f3c849037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sharkSpeed: 20
+  _sharkSpeed: 15
   rotationSpeed: 5
   _sharkAnimator: {fileID: 376064957}
   _sharkRB: {fileID: 376064961}
@@ -20515,9 +20515,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 3.02
-  m_Height: 11.18
+  m_Height: 20.07
   m_Direction: 2
-  m_Center: {x: -0.35, y: 1.57, z: 6.4}
+  m_Center: {x: -0.35, y: 1.57, z: 0.6}
 --- !u!114 &944446497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20534,8 +20534,8 @@ MonoBehaviour:
   _sharkMouthPosition: {fileID: 865672794116859662}
   _player: {fileID: 376064955}
   _playerShark: {fileID: 1568978343}
-  detectionInterval: 1
-  detectionRadius: 0.5
+  detectionInterval: 0.1
+  detectionRadius: 0.9
   fishLayerMask:
     serializedVersion: 2
     m_Bits: 512
@@ -31520,6 +31520,7 @@ MonoBehaviour:
   - _smallFishType: 5
     _fishObject: {fileID: 4846512485359574177, guid: a81a79ae87f03ac4c98a5cfda51685eb,
       type: 3}
+  _sharkEatingCollision: {fileID: 944446494}
 --- !u!1 &1473122002
 GameObject:
   m_ObjectHideFlags: 0
@@ -40106,33 +40107,33 @@ MonoBehaviour:
       bufferAmount: 20
     - levelNumber: 2
       targets:
-      - description: Eat 20 small fishes
+      - description: Eat 15 small fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: Chaetodon_Collare
+        size: 1.2
+        quantity: 10
+      - name: ZebraSoma
+        size: 1
+        quantity: 5
+      bufferAmount: 10
+    - levelNumber: 3
+      targets:
+      - description: Eat 20 small Fishes
         targetType: smallFishes
         amount: 20
       smallObjects:
       - name: Chaetodon_Collare
         size: 1.2
         quantity: 10
-      - name: ZebraSoma
-        size: 1
-        quantity: 10
-      bufferAmount: 10
-    - levelNumber: 3
-      targets:
-      - description: Eat 30 small Fishes
-        targetType: smallFishes
-        amount: 30
-      smallObjects:
-      - name: Chaetodon_Collare
-        size: 1.2
-        quantity: 10
       - name: CoralBeauty
         size: 1
-        quantity: 10
+        quantity: 5
       - name: ZebraSoma
         size: 1
-        quantity: 10
-      bufferAmount: 10
+        quantity: 5
+      bufferAmount: 15
   _player: {fileID: 376064955}
   targetAmount: 0
 --- !u!1 &1643978614
@@ -68331,7 +68332,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2254445553947366284}
   m_LocalRotation: {x: 0.65505695, y: 0.00000025812216, z: 0.7555796, w: -0.00000012386073}
-  m_LocalPosition: {x: 116.6, y: -89, z: 136.74153}
+  m_LocalPosition: {x: 128.4, y: -91.7, z: 136.74153}
   m_LocalScale: {x: -7597.298, y: -8167.874, z: -11415.6455}
   m_Children: []
   m_Father: {fileID: 543450653069077037}
