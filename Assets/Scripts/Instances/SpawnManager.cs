@@ -44,8 +44,11 @@ namespace SharkGame
         #region Events
         internal void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
         {
+            if (currentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
                 Debug.Log("CallSpawnFishesFrequently");
                 StartCoroutine(CallSpawnFishesFrequently());
+            }
         }
         #endregion
         private IEnumerator CallSpawnFishesFrequently()
@@ -107,13 +110,13 @@ namespace SharkGame
                     if (fishesToMove.Count > 0 && fishesToMove.Count == fishOffsets.Count)
                     {
                         activeFishes.AddRange(fishesToMove); // Add the new fishes to the active list
-                        if (SharkGameManager.Instance.CurrentLevel == 2 || SharkGameManager.Instance.CurrentLevel == 1)
+                        if (SharkGameManager.Instance.CurrentLevel == 2 || SharkGameManager.Instance.CurrentLevel == 1 || SharkGameManager.Instance.CurrentLevel == 3 || SharkGameManager.Instance.CurrentLevel == 5)
                         {
                             StartCoroutine(MoveFishGroup(fishesToMove, fishOffsets, waypoint.position));
                         }
-                        else if(SharkGameManager.Instance.CurrentLevel == 3)
+                        else if(SharkGameManager.Instance.CurrentLevel == 4)
                         {
-                            StartCoroutine(MoveLevelThreeFishGroup(fishesToMove, fishOffsets, waypoint.position));
+                            StartCoroutine(EscapeFishGroup(fishesToMove, fishOffsets, waypoint.position, _playerShark));
                         }
                     }
                 }
@@ -207,6 +210,91 @@ namespace SharkGame
             }
         }
 
+        private IEnumerator EscapeFishGroup(List<GameObject> fishesToMove, List<Vector3> fishOffsets, Vector3 waypointPosition, Transform playerTransform)
+        {
+            float minX = -100f; // Left boundary
+            float maxX = 150f;  // Right boundary
+            float escapeDistance = 20f; // Distance at which fish will escape from the player
+            float curveIntensity = 2f;  // Intensity of the curved path while escaping
+            float normalWaitTime = 1.0f; // Normal wait time between movements
+            float escapeSpeedMultiplier = 4f; // Speed multiplier when escaping
+
+            while (true) // Keep moving fishes indefinitely
+            {
+                foreach (var fish in fishesToMove)
+                {
+                    if (fish == null) continue;
+
+                    SmallFish smallFishComponent = fish.GetComponent<SmallFish>();
+                    if (smallFishComponent == null)
+                    {
+                        Debug.LogError($"Fish {fish.name} does not have a SmallFish component.");
+                        continue; // Skip this fish if it doesn't have the component
+                    }
+
+                    float moveSpeed = smallFishComponent.SmallFishSpeed; // Get normal speed from the fish script
+                    Vector3 targetPosition = fish.transform.position;
+                    bool movingRight = fish.transform.position.x < maxX;
+
+                    // Check if player is near the fish
+                    bool isPlayerNear = Vector3.Distance(fish.transform.position, playerTransform.position) <= escapeDistance;
+
+                    // If player is near, move faster and in a curved path
+                    if (isPlayerNear)
+                    {
+                        moveSpeed *= escapeSpeedMultiplier; // Move faster
+                        targetPosition = GetEscapeCurvePosition(fish.transform.position, playerTransform.position, curveIntensity); // Curve escape path
+
+                        // Move the fish to the curved escape position
+                        while (Vector3.Distance(fish.transform.position, targetPosition) > 0.1f)
+                        {
+                            fish.transform.position = Vector3.MoveTowards(fish.transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                            yield return null;
+                        }
+                    }
+                    else
+                    {
+                        // Regular waypoint movement
+                        if (movingRight)
+                        {
+                            targetPosition.x = maxX;
+                            fish.transform.rotation = Quaternion.Euler(0, -90, 0); // Face right
+                        }
+                        else
+                        {
+                            targetPosition.x = minX;
+                            fish.transform.rotation = Quaternion.Euler(0, 90, 0); // Face left
+                        }
+
+                        // Move the fish towards the target position
+                        while (Vector3.Distance(fish.transform.position, targetPosition) > 0.1f)
+                        {
+                            fish.transform.position = Vector3.MoveTowards(fish.transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                            yield return null;
+                        }
+
+                        // Toggle movement direction after reaching the edge
+                        movingRight = !movingRight;
+                    }
+                }
+
+                // Wait briefly before repeating the loop
+                yield return new WaitForSeconds(normalWaitTime);
+            }
+        }
+
+        // Helper method to create a curved escape path
+        private Vector3 GetEscapeCurvePosition(Vector3 fishPosition, Vector3 playerPosition, float curveIntensity)
+        {
+            // Calculate the direction away from the player
+            Vector3 escapeDirection = (fishPosition - playerPosition).normalized;
+
+            // Apply a curve to the escape path (add some vertical offset)
+            Vector3 curveOffset = new Vector3(0, Mathf.Sin(Time.time * curveIntensity) * 0.5f, 0);
+
+            // Return the new target position for the fish to escape to
+            return fishPosition + (escapeDirection * curveIntensity) + curveOffset;
+        }
 
 
 

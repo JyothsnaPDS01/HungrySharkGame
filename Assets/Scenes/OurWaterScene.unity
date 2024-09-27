@@ -7967,7 +7967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sharkSpeed: 15
-  rotationSpeed: 1
+  rotationSpeed: 3
   _sharkAnimator: {fileID: 376064957}
   _sharkRB: {fileID: 376064961}
   _sharkMouthPosition: {fileID: 865672794116859662}
@@ -13673,7 +13673,7 @@ PrefabInstance:
     - target: {fileID: 6558649665621596493, guid: c7c4ad5c16f5f71458c95fb7fbd45a23,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -77.43
+      value: -15.5
       objectReference: {fileID: 0}
     - target: {fileID: 6558649665621596493, guid: c7c4ad5c16f5f71458c95fb7fbd45a23,
         type: 3}
@@ -20514,8 +20514,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 3.02
-  m_Height: 20.07
+  m_Radius: 6
+  m_Height: 25
   m_Direction: 2
   m_Center: {x: -0.35, y: 1.57, z: 0.6}
 --- !u!114 &944446497
@@ -21121,7 +21121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 408480, guid: 8b85f3d6a03b40d4b87f3f6cf06a7677, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -40
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 408480, guid: 8b85f3d6a03b40d4b87f3f6cf06a7677, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22412,7 +22412,7 @@ PrefabInstance:
     - target: {fileID: 8760546513794281613, guid: 2a901a0d128767e45943c94aaa8f2bbc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -77.43
+      value: -15.5
       objectReference: {fileID: 0}
     - target: {fileID: 8760546513794281613, guid: 2a901a0d128767e45943c94aaa8f2bbc,
         type: 3}
@@ -23205,7 +23205,7 @@ PrefabInstance:
     - target: {fileID: 8466857969215426738, guid: f1329420ac2e81a4fb722ebc4d2608a4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -77.43
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 8466857969215426738, guid: f1329420ac2e81a4fb722ebc4d2608a4,
         type: 3}
@@ -31519,6 +31519,12 @@ MonoBehaviour:
       type: 3}
   - _smallFishType: 5
     _fishObject: {fileID: 4846512485359574177, guid: a81a79ae87f03ac4c98a5cfda51685eb,
+      type: 3}
+  - _smallFishType: 6
+    _fishObject: {fileID: 2321932629325896735, guid: cce0b4b9ccbfebd45bb511a98e816452,
+      type: 3}
+  - _smallFishType: 7
+    _fishObject: {fileID: 2390892411539254347, guid: a1924d5c6f037f14b86fb78fba056d55,
       type: 3}
   _sharkEatingCollision: {fileID: 944446494}
 --- !u!1 &1473122002
@@ -40107,13 +40113,16 @@ MonoBehaviour:
       bufferAmount: 20
     - levelNumber: 2
       targets:
-      - description: Eat 10 Medium fishes
-        targetType: Medium Fishes
-        amount: 10
+      - description: Eat 15 small fishes
+        targetType: smallFishes
+        amount: 15
       smallObjects:
+      - name: Chaetodon_Collare
+        size: 1.2
+        quantity: 10
       - name: ZebraSoma
         size: 1
-        quantity: 10
+        quantity: 5
       bufferAmount: 10
     - levelNumber: 3
       targets:
@@ -40121,13 +40130,36 @@ MonoBehaviour:
         targetType: smallFishes
         amount: 20
       smallObjects:
+      - name: Chaetodon_Collare
+        size: 1.2
+        quantity: 10
       - name: CoralBeauty
         size: 1
-        quantity: 10
+        quantity: 5
       - name: ZebraSoma
         size: 1
-        quantity: 10
+        quantity: 5
       bufferAmount: 15
+    - levelNumber: 4
+      targets:
+      - description: Eat 10 Escape Fishes
+        targetType: EscapeFishes
+        amount: 10
+      smallObjects:
+      - name: Lyretail_Anthias
+        size: 1.2
+        quantity: 10
+      bufferAmount: 10
+    - levelNumber: 5
+      targets:
+      - description: Eat 10 Double Attack Fishes
+        targetType: DoubleAttack
+        amount: 10
+      smallObjects:
+      - name: Mandarin_Fish
+        size: 1.2
+        quantity: 10
+      bufferAmount: 10
   _player: {fileID: 376064955}
   targetAmount: 0
 --- !u!1 &1643978614
@@ -41050,7 +41082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 431096, guid: 5e27fa15f838eef41a1e2fe546195433, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -40
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 431096, guid: 5e27fa15f838eef41a1e2fe546195433, type: 3}
       propertyPath: m_LocalPosition.z
@@ -42081,7 +42113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 409870, guid: fcb9a4da347ef4f4a860e97c97b6357f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -40
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 409870, guid: fcb9a4da347ef4f4a860e97c97b6357f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -42169,7 +42201,7 @@ PrefabInstance:
     - target: {fileID: 5737365304979332783, guid: 8f1326a3b8696b54e8687b5b5cbe4453,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -77.43
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 5737365304979332783, guid: 8f1326a3b8696b54e8687b5b5cbe4453,
         type: 3}
@@ -46930,7 +46962,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1955222287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -25.3, z: 80.7}
+  m_LocalPosition: {x: 0, y: -25.3, z: 50.1}
   m_LocalScale: {x: 500, y: 100, z: 20}
   m_Children: []
   m_Father: {fileID: 1346727309}

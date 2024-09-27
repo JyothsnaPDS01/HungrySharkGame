@@ -12,6 +12,8 @@ TagManager:
   - Wall
   - border
   - Giveborder
+  - EscapeSmallFish
+  - DoubleAttackSmallFish
   layers:
   - Default
   - TransparentFX

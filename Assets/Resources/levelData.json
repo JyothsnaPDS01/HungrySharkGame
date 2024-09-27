@@ -47,10 +47,10 @@
     "levelNumber" : 3,
      "targets" :[
          {
-                "description" : "Eat 20 small Fishes",
-                "targetType" : "smallFishes",
-                "amount" : 20
-          }
+             "description" : "Eat 20 small Fishes",
+             "targetType" : "smallFishes",
+             "amount" : 20
+         }
       ],
       "smallObjects": [
         {
@@ -71,7 +71,44 @@
       ],
       "enemies": [],
       "bufferAmount" : 15
-
+    },
+    {
+       "levelNumber" : 4,
+        "targets" :[
+         {
+             "description" : "Eat 10 Escape Fishes",
+             "targetType" : "EscapeFishes",
+             "amount" : 10
+         }
+      ],
+      "smallObjects": [
+        {
+          "name": "Lyretail_Anthias",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 15
+    },
+     {
+       "levelNumber" : 5,
+        "targets" :[
+         {
+             "description" : "Eat 10 Double Attack Fishes",
+             "targetType" : "DoubleAttack",
+             "amount" : 10
+         }
+      ],
+      "smallObjects": [
+        {
+          "name": "Mandarin_Fish",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
     }
   ]
 }
