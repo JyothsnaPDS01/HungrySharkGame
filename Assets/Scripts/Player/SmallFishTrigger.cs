@@ -12,11 +12,13 @@ namespace SharkGame
         [SerializeField] private Transform _sharkMouthPosition;
 
         [SerializeField] private GameObject _player;
-        [SerializeField] private Transform _playerShark;
+        [SerializeField] private Transform _eatingPosition;
 
         [SerializeField] private float detectionInterval;
         [SerializeField] private float detectionRadius;
         [SerializeField] private LayerMask fishLayerMask;
+
+        private Rigidbody _sharkRigidBody;
 
         public float DetectionRadius
         {
@@ -28,7 +30,26 @@ namespace SharkGame
 
         private void Start()
         {
-            StartCoroutine(CheckNearbyFishesAtIntervals());
+            _sharkRigidBody = _player.GetComponent<Rigidbody>();
+        }
+
+
+        private void OnEnable()
+        {
+            SharkGameManager.Instance.OnGameModeChanged += HandleGameMode;
+        }
+
+        private void OnDisable()
+        {
+            SharkGameManager.Instance.OnGameModeChanged -= HandleGameMode;
+        }
+
+        private void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
+        {
+            if (currentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
+                StartCoroutine(CheckNearbyFishesAtIntervals());
+            }
         }
 
         private IEnumerator CheckNearbyFishesAtIntervals()
@@ -44,11 +65,12 @@ namespace SharkGame
 
         private IEnumerator CheckNearbyFishesOverTime()
         {
-            Collider[] nearbyFishes = Physics.OverlapSphere(_playerShark.position, detectionRadius, fishLayerMask);
+            Debug.Log("CheckNearbyFishesOverTime");
+            Collider[] nearbyFishes = Physics.OverlapSphere(this.transform.position, detectionRadius, fishLayerMask);
 
             foreach (Collider fishCollider in nearbyFishes)
             {
-                if (fishCollider.CompareTag("SmallFish") && fishCollider.isTrigger)
+                if (fishCollider.CompareTag("SmallFish"))
                 {
 #if UNITY_EDITOR
                     Debug.Log("Finding the small fishes");
@@ -75,8 +97,8 @@ namespace SharkGame
         private IEnumerator DeactiveSmallFishAndPushBackToPool(GameObject _fishObject)
         {
             // Move the fish to the shark's mouth position
-            _fishObject.transform.position = _playerShark.position;
-            _fishObject.transform.SetParent(_playerShark); // Set parent to the shark's mouth
+            _fishObject.transform.position = _eatingPosition.position;
+            _fishObject.transform.SetParent(_eatingPosition); // Set parent to the shark's mouth
             RotatePlayerTowards(_fishObject.transform);
 
             // Trigger shark attack animation
@@ -85,16 +107,18 @@ namespace SharkGame
             // Play blood effect
             _player.GetComponent<Player>().EnableBloodEffect();
 
-            // Optionally, you could have a slight delay after the animations if needed
-            yield return new WaitForSeconds(.5f); // Wait a bit for the attack animation to play
 
             SharkGameManager.Instance.DestroyCount += 1;
 
             if(SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
             {
-                yield return new WaitForSeconds(.5f);
+                _fishObject.transform.parent = null; // Remove from the shark's mouth
+                ObjectPooling.Instance.ClearFishPoolList();
+                yield return new WaitForSeconds(1f);
                 SharkGameManager.Instance.LoadNextLevel();
             }
+            // Optionally, you could have a slight delay after the animations if needed
+            yield return new WaitForSeconds(.25f); // Wait a bit for the attack animation to play
 
             // Mark the fish as dead and reset its state
             SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
@@ -104,7 +128,7 @@ namespace SharkGame
             ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
 
             // Wait before resetting the shark's state
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
 
             // Reset shark attack animation and disable blood effect
             _player.GetComponent<Player>().BackToIdleAnimation();
@@ -114,22 +138,34 @@ namespace SharkGame
         private void RotatePlayerTowards(Transform target)
         {
             // Calculate the direction to the target
-            Vector3 direction = (target.position - _playerShark.position).normalized;
+            Vector3 direction = (target.position - _eatingPosition.position).normalized;
 
-            // Calculate the rotation step based on the speed and frame time
-            float step = 5f * Time.deltaTime; // Adjust the speed as needed
-
-            // Calculate the new rotation
+            // Calculate the new rotation based on the direction
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            _player.transform.rotation = Quaternion.Slerp(_playerShark.rotation, targetRotation, step);
+
+            // Calculate the rotation step based on the rotation speed and frame time
+            float rotationSpeed = .5f; // Adjust the rotation speed as needed
+            Quaternion smoothedRotation = Quaternion.Slerp(_sharkRigidBody.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            // Apply the rotation to the Rigidbody
+            _sharkRigidBody.MoveRotation(smoothedRotation);
         }
+
 
         private IEnumerator BringSmallFishesNearToPlayer(GameObject _fishObject)
         {
-            _fishObject.transform.position = _playerShark.position;
-            _fishObject.transform.SetParent(_playerShark);
+            Debug.Log("BringSmallFishesNearToPlayer");
+            // Rotate the shark to face the small fish
             RotatePlayerTowards(_fishObject.transform);
 
+            Vector3 initialPosition = _sharkRigidBody.position;
+            Vector3 targetPosition = _fishObject.transform.position;
+
+            // Calculate the new position using Lerp
+            Vector3 newPosition = Vector3.Lerp(_sharkRigidBody.position, targetPosition, .25f * Time.deltaTime);
+
+            // Move the shark's Rigidbody to the new position
+            _sharkRigidBody.MovePosition(newPosition);
 
             // Trigger shark attack animation
             _player.GetComponent<Player>().PlayEatAnimation();
@@ -140,9 +176,49 @@ namespace SharkGame
 
             if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
             {
-                yield return new WaitForSeconds(.5f);
+                _fishObject.transform.parent = null; // Remove from the shark's mouth
+                ObjectPooling.Instance.ClearFishPoolList();
+                yield return new WaitForSeconds(2f);
                 SharkGameManager.Instance.LoadNextLevel();
             }
+
+            yield return new WaitForSeconds(.25f);
+
+            // Mark the fish as dead and reset its state
+            SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
+
+            // Return fish to the pool
+            ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
+
+            yield return new WaitForSeconds(1f);
+
+            // Reset shark attack animation and disable blood effect
+            _player.GetComponent<Player>().BackToIdleAnimation();
+            _player.GetComponent<Player>().DisableBloodEffect();
+        }
+
+
+
+        public IEnumerator SmallFishNearToSharkCoroutine(GameObject _fishObject)
+        {
+            RotatePlayerTowards(_fishObject.transform);
+
+            // Trigger shark attack animation
+            _player.GetComponent<Player>().PlayEatAnimation();
+            // Play blood effect
+            _player.GetComponent<Player>().EnableBloodEffect();
+
+            SharkGameManager.Instance.DestroyCount += 1;
+
+            if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
+            {
+                _fishObject.transform.parent = null; // Remove from the shark's mouth
+                ObjectPooling.Instance.ClearFishPoolList();
+                yield return new WaitForSeconds(2f);
+                SharkGameManager.Instance.LoadNextLevel();
+            }
+
+            yield return new WaitForSeconds(.25f);
 
             // Mark the fish as dead and reset its state
             SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
@@ -151,12 +227,17 @@ namespace SharkGame
             _fishObject.transform.parent = null;
             ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
 
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(1f);
 
             // Reset shark attack animation and disable blood effect
             _player.GetComponent<Player>().BackToIdleAnimation();
 
             _player.GetComponent<Player>().DisableBloodEffect();
+        }
+
+        public void SmallFishNearToShark(GameObject _fishObject)
+        {
+            StartCoroutine(SmallFishNearToSharkCoroutine(_fishObject));
         }
     }
 }

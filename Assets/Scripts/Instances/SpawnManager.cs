@@ -247,8 +247,9 @@ namespace SharkGame
                         // Calculate direction to the target waypoint
                         Vector3 directionToWaypoint = (targetWaypoint.position - fish.transform.position).normalized;
 
-                        // Rotate the fish to face the target waypoint
-                        fish.transform.rotation = Quaternion.LookRotation(directionToWaypoint);
+                        // Rotate the fish to face the target waypoint smoothly
+                        Quaternion targetRotation = Quaternion.LookRotation(directionToWaypoint);
+                        fish.transform.rotation = Quaternion.Slerp(fish.transform.rotation, targetRotation, Time.deltaTime * 2.0f); // Smooth rotation
 
                         // Calculate sine wave offset based on time
                         fishTimers[fish] += Time.deltaTime; // Increment timer
@@ -256,12 +257,14 @@ namespace SharkGame
                         float sineWaveFrequency = 1.0f; // Control frequency of the sine wave
                         float sineWaveOffset = Mathf.Sin(fishTimers[fish] * sineWaveFrequency) * sineWaveAmplitude;
 
-                        // Move the fish towards the target waypoint with smooth damping
+                        // Calculate the final target position with the sine wave offset
                         Vector3 targetPosition = new Vector3(targetWaypoint.position.x, targetWaypoint.position.y + sineWaveOffset, targetWaypoint.position.z);
+
+                        // Move the fish towards the target waypoint with smooth damping
                         fish.transform.position = Vector3.MoveTowards(fish.transform.position, targetPosition, speed * Time.deltaTime);
 
                         // Check if the fish has reached the target waypoint
-                        if (Vector3.Distance(fish.transform.position, targetPosition) < 0.1f)
+                        if (Vector3.Distance(fish.transform.position, targetWaypoint.position) < 0.1f)
                         {
                             // Move to the next waypoint
                             currentWaypointIndex++;
@@ -280,6 +283,7 @@ namespace SharkGame
                 yield return null; // Wait for the next frame
             }
         }
+
 
 
 

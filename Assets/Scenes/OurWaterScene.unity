@@ -7237,7 +7237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331231797}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.1, y: -37.3, z: 42.9}
+  m_LocalPosition: {x: 11.1, y: -52.5, z: 42.9}
   m_LocalScale: {x: 14.526347, y: 14.545258, z: 14.545255}
   m_Children:
   - {fileID: 1800236632}
@@ -7967,7 +7967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sharkSpeed: 15
-  rotationSpeed: 5
+  rotationSpeed: 1
   _sharkAnimator: {fileID: 376064957}
   _sharkRB: {fileID: 376064961}
   _sharkMouthPosition: {fileID: 865672794116859662}
@@ -14894,7 +14894,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725028442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.5, y: -45.1, z: 49.6}
+  m_LocalPosition: {x: 27.5, y: -52.5, z: 49.6}
   m_LocalScale: {x: 14.526347, y: 14.545258, z: 14.545255}
   m_Children:
   - {fileID: 1491536720}
@@ -20533,8 +20533,8 @@ MonoBehaviour:
   _sharkHeadPosition: {fileID: 2099439560497252988}
   _sharkMouthPosition: {fileID: 865672794116859662}
   _player: {fileID: 376064955}
-  _playerShark: {fileID: 1568978343}
-  detectionInterval: 0.1
+  _eatingPosition: {fileID: 1568978343}
+  detectionInterval: 1
   detectionRadius: 0.9
   fishLayerMask:
     serializedVersion: 2
@@ -40107,16 +40107,13 @@ MonoBehaviour:
       bufferAmount: 20
     - levelNumber: 2
       targets:
-      - description: Eat 15 small fishes
-        targetType: smallFishes
-        amount: 15
+      - description: Eat 10 Medium fishes
+        targetType: Medium Fishes
+        amount: 10
       smallObjects:
-      - name: Chaetodon_Collare
-        size: 1.2
-        quantity: 10
       - name: ZebraSoma
         size: 1
-        quantity: 5
+        quantity: 10
       bufferAmount: 10
     - levelNumber: 3
       targets:
@@ -40124,15 +40121,12 @@ MonoBehaviour:
         targetType: smallFishes
         amount: 20
       smallObjects:
-      - name: Chaetodon_Collare
-        size: 1.2
-        quantity: 10
       - name: CoralBeauty
         size: 1
-        quantity: 5
+        quantity: 10
       - name: ZebraSoma
         size: 1
-        quantity: 5
+        quantity: 10
       bufferAmount: 15
   _player: {fileID: 376064955}
   targetAmount: 0
