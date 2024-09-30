@@ -195,6 +195,11 @@ namespace SharkGame
             _fishObject.transform.SetParent(_eatingPosition); // Set parent to the shark's mouth
             RotatePlayerTowards(_fishObject.transform);
 
+            // Trigger shark attack animation
+            _player.GetComponent<Player>().PlayEatAnimation();
+            // Play blood effect
+            _player.GetComponent<Player>().EnableBloodEffect();
+
             Debug.Log("BringSmallFishesNearToPlayer");
             Vector3 initialPosition = _sharkRigidBody.position;
             Vector3 targetPosition = _fishObject.transform.position;
@@ -204,12 +209,6 @@ namespace SharkGame
 
             // Move the shark's Rigidbody to the new position
             _sharkRigidBody.MovePosition(newPosition);
-
-            // Trigger shark attack animation
-            _player.GetComponent<Player>().PlayEatAnimation();
-            // Play blood effect
-            _player.GetComponent<Player>().EnableBloodEffect();
-
 
             if(_fishObject.tag == "DoubleAttackSmallFish")
             {

@@ -503,7 +503,7 @@ namespace SharkGame
                 // Clamp the Y position within specified bounds
                 targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
 
-                targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 100f);
+                targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
 
                 // Move the shark smoothly to the new position
                 _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
@@ -743,6 +743,7 @@ namespace SharkGame
         internal void PlayEatAnimation()
         {
             _sharkAnimator.SetBool("attack", true);
+            SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.EatingShark);
         }
 
         internal void BackToIdleAnimation()

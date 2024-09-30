@@ -57,7 +57,7 @@ namespace SharkGame
                 }
                 if (_playerShark.InitialMovement)
                 {
-                    if (targetRigidbody.transform.position.y >= -43f && targetRigidbody.transform.position.y <= -20f && targetRigidbody.transform.position.x >= -50f && targetRigidbody.transform.position.x <= 100f)
+                    if (targetRigidbody.transform.position.y >= -43f && targetRigidbody.transform.position.y <= -20f && targetRigidbody.transform.position.x >= -50f && targetRigidbody.transform.position.x <= 83f)
                     {
                        
                             Debug.Log("On Y clamping");
@@ -73,8 +73,8 @@ namespace SharkGame
                     }
                     else
                     {
-                        Debug.Log("Targetposition" + Mathf.Round(targetRigidbody.transform.position.y));
-                        if(targetRigidbody.transform.position.y >=-43f && targetRigidbody.transform.position.y <= -20f && Mathf.Round(targetRigidbody.transform.position.x) == -53f)
+                        Debug.Log("Targetposition" + Mathf.Round(targetRigidbody.transform.position.x));
+                        if(targetRigidbody.transform.position.y >=-43f && targetRigidbody.transform.position.y <= -20f && Mathf.Round(targetRigidbody.transform.position.x) == -53f || Mathf.Round(targetRigidbody.transform.position.x) == 86f)
                         {
                             Debug.Log("On Y else case");
 
@@ -92,7 +92,7 @@ namespace SharkGame
                             // Set the camera's position to the new smoothed position
                             transform.position = smoothedPosition;
                         }
-                        else if(targetRigidbody.transform.position.x >= -50f && targetRigidbody.transform.position.x <= 100f && (Mathf.Round(targetRigidbody.transform.position.y) == -45f || Mathf.Round(targetRigidbody.transform.position.y) == -20f))
+                        else if(targetRigidbody.transform.position.x >= -50f && targetRigidbody.transform.position.x <= 83f && (Mathf.Round(targetRigidbody.transform.position.y) == -45f || Mathf.Round(targetRigidbody.transform.position.y) == -20f))
                         {
                             Debug.Log("On X else case");
 

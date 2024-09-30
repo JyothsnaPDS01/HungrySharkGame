@@ -17,7 +17,7 @@ namespace SharkGame
         [SerializeField] private Transform _spawnPoint;
 
         [Header("Fish Settings")]
-        [SerializeField] private float minSpawnDistanceBetweenFishes = 1f;
+        [SerializeField] private float minSpawnDistanceBetweenFishes = .5f;
         [SerializeField] private float minDistanceFromShark = 2f;
 
         [SerializeField] private List<GameObject> activeFishes = new List<GameObject>(); // Active fish tracking
@@ -53,7 +53,7 @@ namespace SharkGame
         #endregion
         private IEnumerator CallSpawnFishesFrequently()
         {
-            while (true)
+            //while (true)
             {
                 yield return new WaitForSeconds(1f);
                 SpawnFishesAtWaypoints();
@@ -64,13 +64,13 @@ namespace SharkGame
         {
             foreach (var waypoint in waypoints)
             {
-                if (Vector3.Distance(_playerShark.position, waypoint.position) > minDistanceFromShark)
+               // if (Vector3.Distance(_playerShark.position, waypoint.position) > minDistanceFromShark)
                 {
                     List<Vector3> fishOffsets = new List<Vector3>(); // To hold the offsets
                     List<GameObject> fishesToMove = new List<GameObject>(); // Keep track of spawned fishes
 
                     //int fishCount = Random.Range(4, 6); // Randomly choose between 4 and 5 fishes
-                    int fishCount = Random.Range(4,5);
+                    int fishCount = 8;
                     for (int i = 0; i < fishCount; i++)
                     {
                         Vector3 spawnPosition = waypoint.position + GetRandomSpawnOffset();
@@ -88,7 +88,7 @@ namespace SharkGame
                             }
 
                             // Reset rotation to horizontal
-                            fish.transform.rotation = Quaternion.Euler(0, 90, 0); // Adjust rotation as needed
+                          //  fish.transform.rotation = Quaternion.Euler(0, 90, 0); // Adjust rotation as needed
 
                             SmallFish smallFish = fish.GetComponent<SmallFish>();
                             if (smallFish == null)
@@ -106,19 +106,19 @@ namespace SharkGame
                         }
                     }
 
-                    // Check if fishesToMove and fishOffsets are the same length before starting movement
-                    if (fishesToMove.Count > 0 && fishesToMove.Count == fishOffsets.Count)
-                    {
-                        activeFishes.AddRange(fishesToMove); // Add the new fishes to the active list
-                        if (SharkGameManager.Instance.CurrentLevel == 2 || SharkGameManager.Instance.CurrentLevel == 1 || SharkGameManager.Instance.CurrentLevel == 3 || SharkGameManager.Instance.CurrentLevel == 5)
-                        {
-                            StartCoroutine(MoveFishGroup(fishesToMove, fishOffsets, waypoint.position));
-                        }
-                        else if(SharkGameManager.Instance.CurrentLevel == 4)
-                        {
-                            StartCoroutine(EscapeFishGroup(fishesToMove, fishOffsets, waypoint.position, _playerShark));
-                        }
-                    }
+                    //// Check if fishesToMove and fishOffsets are the same length before starting movement
+                    //if (fishesToMove.Count > 0 && fishesToMove.Count == fishOffsets.Count)
+                    //{
+                    //    activeFishes.AddRange(fishesToMove); // Add the new fishes to the active list
+                    //    if (SharkGameManager.Instance.CurrentLevel == 2 || SharkGameManager.Instance.CurrentLevel == 1 || SharkGameManager.Instance.CurrentLevel == 3 || SharkGameManager.Instance.CurrentLevel == 5)
+                    //    {
+                    //        StartCoroutine(MoveFishGroup(fishesToMove, fishOffsets, waypoint.position));
+                    //    }
+                    //    else if (SharkGameManager.Instance.CurrentLevel == 4)
+                    //    {
+                    //        StartCoroutine(EscapeFishGroup(fishesToMove, fishOffsets, waypoint.position, _playerShark));
+                    //    }
+                    //}
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace SharkGame
         private IEnumerator MoveFishGroup(List<GameObject> fishesToMove, List<Vector3> fishOffsets, Vector3 waypointPosition)
         {
             float minX = -100f; // Left boundary
-            float maxX = 150f; // Right boundary
+            float maxX = 150f;  // Right boundary
 
             while (true) // Keep moving fishes indefinitely
             {
@@ -177,38 +177,59 @@ namespace SharkGame
 
                     float moveSpeed = smallFishComponent.SmallFishSpeed; // Get the speed from the fish script
 
-                    Vector3 targetPosition = fish.transform.position;
+                    // Check whether the fish is moving right or left
                     bool movingRight = fish.transform.position.x < maxX;
 
-                    // If movingRight, move towards maxX (100), otherwise move towards minX (-50)
+                    smallFishComponent.isMovingRight = movingRight;
+
+                    Vector3 targetPosition = fish.transform.position;
+
+                    // If the fish is moving right and has not reached maxX, keep moving to the right
                     if (movingRight)
                     {
                         targetPosition.x = maxX;
-                        // Rotate the fish to face the right direction
+                        // Rotate the fish to face the right direction (if not already facing right)
                         fish.transform.rotation = Quaternion.Euler(0, -90, 0); // Face right
                     }
                     else
                     {
+                        Debug.Log("Moving Left");
                         targetPosition.x = minX;
-                        // Rotate the fish to face the left direction
+                        // Rotate the fish to face the left direction (if not already facing left)
                         fish.transform.rotation = Quaternion.Euler(0, 90, 0); // Face left
                     }
 
-                    // Move the fish to the target position
-                    while (Vector3.Distance(fish.transform.position, targetPosition) > 0.1f)
+                    // Move the fish towards the target position, no idling
+                    fish.transform.position = Vector3.MoveTowards(fish.transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+                    // If the fish reaches the target position, switch direction
+                    if (Mathf.Abs(fish.transform.position.x - targetPosition.x) <= 0.1f)
                     {
-                        fish.transform.position = Vector3.MoveTowards(fish.transform.position, targetPosition, moveSpeed * Time.deltaTime);
-                        yield return null;
+                        // If moving right, switch to moving left, and vice versa
+
+                        Debug.Log("Moving right" + movingRight);
+                        movingRight = !movingRight;
+
+                        smallFishComponent.isMovingRight = movingRight;
+
+                        Debug.Log("Moving right 1" + movingRight);
+
+                        // Update target position based on new direction
+                        targetPosition.x = movingRight ? maxX : minX;
+
+                        // Ensure the fish rotates correctly for the new direction
+                        fish.transform.rotation = movingRight ? Quaternion.Euler(0, -90, 0) : Quaternion.Euler(0, 90, 0);
+
                     }
 
-                    // Once the fish reaches the target position, switch direction
-                    movingRight = !movingRight; // Toggle movement direction
+                    yield return null; // Continue every frame
                 }
 
-                // Wait briefly before repeating the loop
-                yield return new WaitForSeconds(1.0f);
+                // No wait time, continuous movement
             }
         }
+
+
 
         private IEnumerator EscapeFishGroup(List<GameObject> fishesToMove, List<Vector3> fishOffsets, Vector3 waypointPosition, Transform playerTransform)
         {

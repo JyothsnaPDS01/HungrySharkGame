@@ -101,5 +101,21 @@ namespace SharkGame.Models
             MissionMode
         }
         #endregion
+
+        #region Sounds
+        [System.Serializable]
+        public enum Sound
+        {
+            EatingShark,
+            SharkMovement,
+            WaterSplash
+        }
+        [System.Serializable]
+        public class SoundModel
+        {
+            public Sound _soundType;
+            public AudioClip _audioClip;
+        }
+        #endregion
     }
 }
