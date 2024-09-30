@@ -92,7 +92,7 @@ namespace SharkGame
                             // Set the camera's position to the new smoothed position
                             transform.position = smoothedPosition;
                         }
-                        else if(targetRigidbody.transform.position.x >= -50f && targetRigidbody.transform.position.x <= 100f && Mathf.Round(targetRigidbody.transform.position.y) == -45f)
+                        else if(targetRigidbody.transform.position.x >= -50f && targetRigidbody.transform.position.x <= 100f && (Mathf.Round(targetRigidbody.transform.position.y) == -45f || Mathf.Round(targetRigidbody.transform.position.y) == -20f))
                         {
                             Debug.Log("On X else case");
 
