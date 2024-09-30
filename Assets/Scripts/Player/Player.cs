@@ -40,6 +40,16 @@ namespace SharkGame
 
         [Header("Running BG Plane")]
         [SerializeField] private GameObject _bgPlane;
+
+        public bool InitialMovement
+        {
+            get
+            {
+                return initialMovementCompleted;
+            }
+        }
+
+        public SharkGameDataModel.SharkDirection CurrentSharkDirection { get { return _currentSharkDirection; } }
         #endregion
 
         #region Events
@@ -493,7 +503,7 @@ namespace SharkGame
                 // Clamp the Y position within specified bounds
                 targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
 
-                targetPosition.x = Mathf.Clamp(targetPosition.x, -50f, 100f);
+                targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 100f);
 
                 // Move the shark smoothly to the new position
                 _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));

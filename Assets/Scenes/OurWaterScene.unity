@@ -6005,6 +6005,7 @@ MonoBehaviour:
   targetRigidbody: {fileID: 376064961}
   offset: {x: 0, y: -1, z: -8}
   smoothSpeed: 0.0375
+  _playerShark: {fileID: 376064962}
 --- !u!20 &282840813
 Camera:
   m_ObjectHideFlags: 0
