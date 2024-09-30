@@ -54,6 +54,9 @@ namespace SharkGame
                     return;
                 }
 
+                if(targetRigidbody.transform.position.y >= -43f && targetRigidbody.transform.position.y <= -20 && targetRigidbody.transform.position.x >=- 50f && targetRigidbody.transform.position.x <= 100f)
+                { 
+
                 // Calculate the desired position based on the target's Rigidbody position + offset
                 Vector3 desiredPosition = targetRigidbody.position + offset;
 
@@ -62,6 +65,7 @@ namespace SharkGame
 
                 // Set the camera's position to the smoothed position
                 transform.position = smoothedPosition;
+                }
             }
         }
     }

@@ -109,6 +109,25 @@
       ],
       "enemies": [],
       "bufferAmount": 10
+    },
+     {
+       "levelNumber" : 6,
+        "targets" :[
+         {
+             "description" : "Eat 20 ZebraSoma Fishes",
+             "targetType" : "smallFishes",
+             "amount" : 20
+         }
+      ],
+      "smallObjects": [
+        {
+          "name": "ZebraSoma_2",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
     }
   ]
 }

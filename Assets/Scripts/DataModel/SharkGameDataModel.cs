@@ -31,7 +31,8 @@ namespace SharkGame.Models
             CoralBeauty,
             ZebraSoma,
             Lyretail_Anthias,
-            Mandarin_Fish
+            Mandarin_Fish,
+            ZebraSoma_2
         }
 
         [System.Serializable]

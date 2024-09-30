@@ -491,7 +491,7 @@ namespace SharkGame
                 targetPosition.z = _sharkRB.position.z;
 
                 // Clamp the Y position within specified bounds
-                targetPosition.y = Mathf.Clamp(targetPosition.y, -43f, -20f);
+                targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
 
                 targetPosition.x = Mathf.Clamp(targetPosition.x, -50f, 100f);
 
@@ -712,10 +712,6 @@ namespace SharkGame
                 isGrounded = false;
             }
         }
-
-
-      
-
 
         private bool IsSmallFishNearToPlayer()
         {

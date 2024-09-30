@@ -108,6 +108,7 @@ namespace SharkGame
 
             if(_fishObject.tag == "DoubleAttackSmallFish")
             {
+                yield return new WaitForSeconds(.1f);
                 // Trigger shark attack animation
                 _player.GetComponent<Player>().PlayEatAnimation();
 
@@ -124,7 +125,7 @@ namespace SharkGame
                     SharkGameManager.Instance.LoadNextLevel();
                 }
                 // Optionally, you could have a slight delay after the animations if needed
-                yield return new WaitForSeconds(.8f); // Wait a bit for the attack animation to play
+                yield return new WaitForSeconds(.7f); // Wait a bit for the attack animation to play
 
                 // Mark the fish as dead and reset its state
                 SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
@@ -189,10 +190,12 @@ namespace SharkGame
 
         private IEnumerator BringSmallFishesNearToPlayer(GameObject _fishObject)
         {
-            Debug.Log("BringSmallFishesNearToPlayer");
-            // Rotate the shark to face the small fish
+            // Move the fish to the shark's mouth position
+            _fishObject.transform.position = _eatingPosition.position;
+            _fishObject.transform.SetParent(_eatingPosition); // Set parent to the shark's mouth
             RotatePlayerTowards(_fishObject.transform);
 
+            Debug.Log("BringSmallFishesNearToPlayer");
             Vector3 initialPosition = _sharkRigidBody.position;
             Vector3 targetPosition = _fishObject.transform.position;
 
@@ -210,6 +213,8 @@ namespace SharkGame
 
             if(_fishObject.tag == "DoubleAttackSmallFish")
             {
+                yield return new WaitForSeconds(.1f);
+
                 _player.GetComponent<Player>().PlayEatAnimation();
 
                 // Play blood effect
@@ -225,7 +230,7 @@ namespace SharkGame
                     SharkGameManager.Instance.LoadNextLevel();
                 }
 
-                yield return new WaitForSeconds(.8f);
+                yield return new WaitForSeconds(.7f);
 
                 // Mark the fish as dead and reset its state
                 SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
