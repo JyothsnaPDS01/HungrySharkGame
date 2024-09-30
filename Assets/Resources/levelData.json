@@ -13,16 +13,16 @@
         {
           "name": "Chaetodon_Collare",
           "size": 1.2,
-          "quantity": 10
+          "quantity": 5
         },
          {
           "name": "ZebraSoma",
           "size": 1.0,
-          "quantity": 10
+          "quantity": 5
         }
       ],
       "enemies": [],
-      "bufferAmount": 30
+      "bufferAmount": 5
     },
     {
       "levelNumber": 2,

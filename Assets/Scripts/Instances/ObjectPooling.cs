@@ -93,7 +93,7 @@ namespace SharkGame
             spawnedObject.transform.rotation = _rotation;
 
             // Check if the object has the SmallFish component
-            if (spawnedObject.GetComponent<SmallFish>() == null)
+            if (spawnedObject.transform.GetComponentInChildren<SmallFish>() == null)
             {
 #if UNITY_EDITOR
                 Debug.LogError($"Spawned object {spawnedObject.name} does not have a SmallFish component.");

@@ -53,7 +53,7 @@ namespace SharkGame
         #endregion
         private IEnumerator CallSpawnFishesFrequently()
         {
-            //while (true)
+            while (true)
             {
                 yield return new WaitForSeconds(1f);
                 SpawnFishesAtWaypoints();
@@ -70,10 +70,10 @@ namespace SharkGame
                     List<GameObject> fishesToMove = new List<GameObject>(); // Keep track of spawned fishes
 
                     //int fishCount = Random.Range(4, 6); // Randomly choose between 4 and 5 fishes
-                    int fishCount = 8;
+                    int fishCount = 1;
                     for (int i = 0; i < fishCount; i++)
                     {
-                        Vector3 spawnPosition = waypoint.position + GetRandomSpawnOffset();
+                        Vector3 spawnPosition = waypoint.position;
 
                         if (!IsWaypointOccupied(spawnPosition))
                         {
@@ -87,22 +87,13 @@ namespace SharkGame
                                 continue; // Skip further processing if the fish is null
                             }
 
-                            // Reset rotation to horizontal
-                          //  fish.transform.rotation = Quaternion.Euler(0, 90, 0); // Adjust rotation as needed
-
-                            SmallFish smallFish = fish.GetComponent<SmallFish>();
-                            if (smallFish == null)
+                            FishGroup smallFish = fish.GetComponent<FishGroup>();
+                            if (smallFish != null)
                             {
-#if UNITY_EDITOR
-                                Debug.LogError($"Spawned fish {fish.name} does not have a SmallFish component.");
-#endif
-                                ObjectPooling.Instance.ReturnToPool(fish, GetRandomSmallFishType());
-                                continue;
+                                smallFish.SetWaypoints(waypoints); // Assign waypoints to the fish
+                                fishesToMove.Add(fish); // Track the spawned fish
+                                fishOffsets.Add(spawnPosition - waypoint.position); // Store the relative position
                             }
-
-                            smallFish.SetWaypoints(waypoints); // Assign waypoints to the fish
-                            fishesToMove.Add(fish); // Track the spawned fish
-                            fishOffsets.Add(spawnPosition - waypoint.position); // Store the relative position
                         }
                     }
 

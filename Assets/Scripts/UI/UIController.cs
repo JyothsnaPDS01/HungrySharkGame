@@ -81,7 +81,7 @@ public class UIController : MonoBehaviour
     public void LevelButtonClick()
     {
         _UIPanel.SetActive(false);
-        _GamePanel.SetActive(true);
+      //  _GamePanel.SetActive(true);
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
         SharkGameManager.Instance.PlayGameAudio();
         SharkGameManager.Instance.InitializePlayer();
