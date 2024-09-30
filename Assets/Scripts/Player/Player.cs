@@ -459,6 +459,8 @@ namespace SharkGame
             Vector3 initialPosition = _sharkRB.position;
             Vector3 targetPosition = initialPosition + new Vector3(0, -30f, 0);
 
+            SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.WaterSplash);
+
             while (elapsedTime < 3f)
             {
                 float t = elapsedTime / 1f;

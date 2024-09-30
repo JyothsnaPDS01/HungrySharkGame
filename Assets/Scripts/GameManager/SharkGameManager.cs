@@ -60,6 +60,9 @@ namespace SharkGame
         [Header("Small Fishes Prefabs List")]
         [SerializeField] private List<SharkGameDataModel.SmallFishes> smallFishesPrefabList;
 
+        [Header("Health Duration")]
+        [SerializeField] private float _healthDuration;
+
         [Header("SharkEating Collision")]
         [SerializeField] private GameObject _sharkEatingCollision;
         public int CurrentLevel
@@ -143,6 +146,8 @@ namespace SharkGame
             _spawnManager.SetActive(true);
             _objectPooling.GetComponent<ObjectPooling>().HandleGameMode(CurrentGameMode);
             _spawnManager.GetComponent<SpawnManager>().HandleGameMode(CurrentGameMode);
+
+            StartTimer();
         }
 
         internal void InitializeLevel()
@@ -183,6 +188,34 @@ namespace SharkGame
         {
             return smallFishesPrefabList.Find(x => x._smallFishType == _smallFishType)._fishObject;
         }
+
+        #region Health Timer
+        internal void StartTimer()
+        {
+            StartCoroutine(StartHealthTimer(_healthDuration));
+        }
+
+        private IEnumerator StartHealthTimer(float duration)
+        {
+            float timeRemaining = duration;
+
+            while(timeRemaining > 0)
+            {
+                Debug.Log("Time Remaining" + Mathf.Max(timeRemaining, 0).ToString("F2") + " seconds remaining");
+                yield return new WaitForSeconds(1f);
+                timeRemaining--;
+            }
+
+            HealthTimerEnded();
+        }
+
+        private void HealthTimerEnded()
+        {
+            Debug.Log("Health Timer Ended");
+        }
+        #endregion
+
+
         #endregion
     }
 }

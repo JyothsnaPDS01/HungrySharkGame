@@ -108,7 +108,9 @@ namespace SharkGame.Models
         {
             EatingShark,
             SharkMovement,
-            WaterSplash
+            WaterSplash,
+            MissionPassed,
+            MissionFail
         }
         [System.Serializable]
         public class SoundModel

@@ -52,7 +52,12 @@ public class UIController : MonoBehaviour
     [SerializeField] private Text _levelNumberTMP;
     [SerializeField] private Text _targetDescTMP;
 
+    [Header("Level Panel")]
     [SerializeField] private GameObject _UIPanel;
+
+    [Header("Game UI Panel")]
+    [SerializeField] private GameObject _GamePanel;
+
     [SerializeField] private SharkGameDataModel.LevelConfig levelConfig;
 
     [Header("Data Load Manager")]
@@ -76,6 +81,7 @@ public class UIController : MonoBehaviour
     public void LevelButtonClick()
     {
         _UIPanel.SetActive(false);
+        _GamePanel.SetActive(true);
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
         SharkGameManager.Instance.PlayGameAudio();
         SharkGameManager.Instance.InitializePlayer();
