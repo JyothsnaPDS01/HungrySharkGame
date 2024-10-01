@@ -17,7 +17,7 @@ namespace SharkGame
         [SerializeField] private Transform _spawnPoint;
 
         [Header("Fish Settings")]
-        [SerializeField] private float minSpawnDistanceBetweenFishes = .5f;
+        [SerializeField] private float minSpawnDistanceBetweenFishes = 20f;
         [SerializeField] private float minDistanceFromShark = 2f;
 
         [SerializeField] private List<GameObject> activeFishes = new List<GameObject>(); // Active fish tracking
@@ -51,6 +51,7 @@ namespace SharkGame
             }
         }
         #endregion
+
         private IEnumerator CallSpawnFishesFrequently()
         {
             while (true)
@@ -64,71 +65,92 @@ namespace SharkGame
         {
             foreach (var waypoint in waypoints)
             {
-               // if (Vector3.Distance(_playerShark.position, waypoint.position) > minDistanceFromShark)
+                // Check if waypoint is occupied or too close to the shark
+                if (Vector3.Distance(_playerShark.position, waypoint.position) > minDistanceFromShark && !IsWaypointOccupied(waypoint.position))
                 {
-                    List<Vector3> fishOffsets = new List<Vector3>(); // To hold the offsets
-                    List<GameObject> fishesToMove = new List<GameObject>(); // Keep track of spawned fishes
-
-                    //int fishCount = Random.Range(4, 6); // Randomly choose between 4 and 5 fishes
                     int fishCount = 1;
+
                     for (int i = 0; i < fishCount; i++)
                     {
                         Vector3 spawnPosition = waypoint.position;
 
-                        if (!IsWaypointOccupied(spawnPosition))
+                        // Ensure enough space between the new fish and all existing active fishes
+                        if (!IsFishTooCloseToOthers(spawnPosition))
                         {
                             GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), spawnPosition, Quaternion.identity);
 
-                            if (fish == null)
+                            if (fish != null)
                             {
-#if UNITY_EDITOR
-                                Debug.LogError("Fish is null case");
-#endif
-                                continue; // Skip further processing if the fish is null
-                            }
+                                activeFishes.Add(fish); // Track spawned fish
 
-                            FishGroup smallFish = fish.GetComponent<FishGroup>();
-                            if (smallFish != null)
-                            {
-                                smallFish.SetWaypoints(waypoints); // Assign waypoints to the fish
-                                fishesToMove.Add(fish); // Track the spawned fish
-                                fishOffsets.Add(spawnPosition - waypoint.position); // Store the relative position
+                                FishGroup smallFish = fish.GetComponent<FishGroup>();
+                                if (smallFish != null)
+                                {
+                                    smallFish.SetWaypoints(waypoints); // Assign waypoints to the fish
+                                }
+                                else
+                                {
+                                    Debug.LogWarning("FishGroup component is missing on the spawned fish!");
+                                }
                             }
+                            else
+                            {
+                                Debug.LogWarning("SpawnFromPool returned null for fish.");
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Not enough space to spawn fish at the current waypoint.");
                         }
                     }
                 }
             }
         }
 
-        private bool IsWaypointOccupied(Vector3 waypoint)
+        // Checks if the current waypoint is already occupied by any fish
+        private bool IsWaypointOccupied(Vector3 spawnPosition)
         {
             foreach (GameObject fish in activeFishes)
             {
-                if (Vector3.Distance(fish.transform.position, waypoint) < minSpawnDistanceBetweenFishes)
+                if (fish != null && Vector3.Distance(fish.transform.position, spawnPosition) < minSpawnDistanceBetweenFishes)
                 {
-                    Debug.Log("IswaypointOccupied");
                     return true; // Waypoint is occupied
                 }
             }
             return false; // No fish at this waypoint
         }
 
+        // This method ensures that the new fish is not too close to other active fishes
+        private bool IsFishTooCloseToOthers(Vector3 spawnPosition)
+        {
+            foreach (GameObject fish in activeFishes)
+            {
+                if (fish != null && Vector3.Distance(fish.transform.position, spawnPosition) < minSpawnDistanceBetweenFishes)
+                {
+                    return true; // Too close to another fish
+                }
+            }
+            return false; // Safe to spawn
+        }
+
         private SharkGameDataModel.SmallFishType GetRandomSmallFishType()
         {
-            Debug.Log("FishPoolList Length" + ObjectPooling.Instance._fishPoolList.Count);
             if (ObjectPooling.Instance._fishPoolList.Count > 0)
             {
                 return ObjectPooling.Instance._fishPoolList[Random.Range(0, ObjectPooling.Instance._fishPoolList.Count)]._smallFishType;
             }
-            else return SharkGameDataModel.SmallFishType.None;
-            
+            else
+            {
+                Debug.LogWarning("FishPoolList is empty.");
+                return SharkGameDataModel.SmallFishType.None;
+            }
         }
 
         internal void PushBackObjectsToPool()
         {
-            if(_spawnPoint.childCount > 0)
+            if (_spawnPoint.childCount > 0)
             {
-                for(int i=0;i<_spawnPoint.childCount;i++)
+                for (int i = 0; i < _spawnPoint.childCount; i++)
                 {
                     Transform childObject = _spawnPoint.GetChild(i);
                     if (childObject.gameObject.activeInHierarchy)
@@ -143,9 +165,13 @@ namespace SharkGame
 
         internal void ClearActiveFishList()
         {
-            foreach(var item in activeFishes)
+            foreach (var item in activeFishes)
             {
-                item.GetComponent<BackToPool>().PushBackToPool();
+                if (item != null)
+                {
+                    item.GetComponent<FishGroup>().FishGroupDestroyCount = 0;
+                    item.GetComponent<BackToPool>().PushBackToPool();
+                }
             }
             activeFishes.Clear();
         }

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1055257200406620797}
   - component: {fileID: 6401141070238333991}
   - component: {fileID: 2741866765477854453}
-  - component: {fileID: -2922089417803772519}
   m_Layer: 6
   m_Name: CoralBeauty_SmallFish
   m_TagString: SmallFish
@@ -69,6 +68,7 @@ MonoBehaviour:
   moveSpeed: 1
   _fishAnimator: {fileID: 1055257200406620797}
   _smallFishType: 4
+  isMovingRight: 0
 --- !u!136 &2741866765477854453
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -83,19 +83,6 @@ CapsuleCollider:
   m_Height: 0.4
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-2922089417803772519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351876053838630626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee8df6f46c7920a4f8c203a31b3e9d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _smallFishType: 4
 --- !u!1001 &5783697276354371130
 PrefabInstance:
   m_ObjectHideFlags: 0

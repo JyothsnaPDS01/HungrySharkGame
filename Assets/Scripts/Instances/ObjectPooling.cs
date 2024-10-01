@@ -88,12 +88,13 @@ namespace SharkGame
 
             // Dequeue from inactive pool
             GameObject spawnedObject = _fishPoolDictionary[_fishType].Dequeue();
+            spawnedObject.GetComponent<FishGroup>().FishGroupDestroyCount = 0;
             spawnedObject.SetActive(true);
             spawnedObject.transform.position = _position;
             spawnedObject.transform.rotation = _rotation;
 
             // Check if the object has the SmallFish component
-            if (spawnedObject.transform.GetComponentInChildren<SmallFish>() == null)
+            if (spawnedObject.GetComponent<FishGroup>() == null)
             {
 #if UNITY_EDITOR
                 Debug.LogError($"Spawned object {spawnedObject.name} does not have a SmallFish component.");
@@ -124,7 +125,7 @@ namespace SharkGame
                 return;
             }
 #if UNITY_EDITOR
-            Debug.Log("Returning to pool");
+            Debug.LogError("Returning to pool" + obj.name);
 #endif
 
             // Deactivate the object

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3560352385845205526}
   - component: {fileID: 876710217156452852}
+  - component: {fileID: 1498292928086318019}
   m_Layer: 9
   m_Name: ZebraSoma_2_SmallFish_Group
   m_TagString: Untagged
@@ -63,6 +64,21 @@ MonoBehaviour:
   - {fileID: 7610270925873726622}
   - {fileID: 7610270927313445501}
   moveSpeed: 1
+  _smallFishType: 8
+  capacity: 9
+  destroyCount: 0
+--- !u!114 &1498292928086318019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3560352385845205527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee8df6f46c7920a4f8c203a31b3e9d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _smallFishType: 8
 --- !u!1001 &4603143333144458690
 PrefabInstance:
