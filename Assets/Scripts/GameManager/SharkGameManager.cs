@@ -65,6 +65,10 @@ namespace SharkGame
 
         [Header("SharkEating Collision")]
         [SerializeField] private GameObject _sharkEatingCollision;
+
+        [Header("Shark Eating Position")]
+        [SerializeField] private GameObject _sharkEatingPosition;
+
         public int CurrentLevel
         {
             get
@@ -169,6 +173,29 @@ namespace SharkGame
         internal void LoadNextLevel()
         {
             _currentGameMode = SharkGameDataModel.GameMode.MissionMode;
+
+            if(_sharkEatingPosition.transform.childCount > 0)
+            {
+                for (int i = 0; i < _sharkEatingPosition.transform.childCount; i++)
+                {
+                    Transform childObject = _sharkEatingPosition.transform.GetChild(i);
+                    if (childObject.gameObject.activeInHierarchy)
+                    {
+                        childObject.gameObject.SetActive(false);
+                        if (childObject.GetComponent<FishGroup>() != null)
+                        {
+                            ObjectPooling.Instance.ReturnToPool(childObject.gameObject, childObject.GetComponent<FishGroup>().FishGroupType);
+                        }
+                        else if (childObject.GetComponent<SmallFish>() != null)
+                        {
+                            ObjectPooling.Instance.ReturnToPool(childObject.gameObject, childObject.GetComponent<SmallFish>()._smallFishType);
+                        }
+                        childObject.transform.parent = null;
+                    }
+                    
+                }
+            }
+
             _playerSharkPrefab.SetActive(false);
             _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
             _spawnManager.SetActive(false);

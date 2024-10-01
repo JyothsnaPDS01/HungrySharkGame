@@ -97,7 +97,6 @@ namespace SharkGame
         {
             // Move the fish to the shark's mouth position
             _fishObject.transform.position = _eatingPosition.position;
-            _fishObject.transform.SetParent(_eatingPosition); // Set parent to the shark's mouth
             RotatePlayerTowards(_fishObject.transform);
 
             // Trigger shark attack animation
@@ -116,6 +115,8 @@ namespace SharkGame
                 _player.GetComponent<Player>().EnableBloodEffect();
 
                 SharkGameManager.Instance.DestroyCount += 1;
+
+                UIController.Instance.UpdateKillAmount();
 
                 if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
                 {
@@ -144,6 +145,8 @@ namespace SharkGame
             else
             {
                 SharkGameManager.Instance.DestroyCount += 1;
+
+                UIController.Instance.UpdateKillAmount();
 
                 if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
                 {
@@ -192,7 +195,6 @@ namespace SharkGame
         {
             // Move the fish to the shark's mouth position
             _fishObject.transform.position = _eatingPosition.position;
-            _fishObject.transform.SetParent(_eatingPosition); // Set parent to the shark's mouth
             RotatePlayerTowards(_fishObject.transform);
 
             // Trigger shark attack animation
@@ -221,6 +223,8 @@ namespace SharkGame
 
                 SharkGameManager.Instance.DestroyCount += 1;
 
+                UIController.Instance.UpdateKillAmount();
+
                 if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
                 {
                     _fishObject.transform.parent = null; // Remove from the shark's mouth
@@ -246,6 +250,8 @@ namespace SharkGame
             else
             {
                 SharkGameManager.Instance.DestroyCount += 1;
+
+                UIController.Instance.UpdateKillAmount();
 
                 if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
                 {

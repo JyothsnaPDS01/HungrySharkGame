@@ -67,6 +67,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _player;
 
     private SharkGameDataModel.Level _currentLevelData;
+
+    [Header("In Game UI")]
+    [SerializeField] private Text _killAmountTMP;
     #endregion
 
     #region MonoBehaviour Methods
@@ -81,10 +84,18 @@ public class UIController : MonoBehaviour
     public void LevelButtonClick()
     {
         _UIPanel.SetActive(false);
-      //  _GamePanel.SetActive(true);
+
+        _killAmountTMP.text = "0 /" + _currentLevelData.targets[0].amount.ToString();
+
+        _GamePanel.SetActive(true);
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
         SharkGameManager.Instance.PlayGameAudio();
         SharkGameManager.Instance.InitializePlayer();
+    }
+
+    public void UpdateKillAmount()
+    {
+        _killAmountTMP.text = SharkGameManager.Instance.DestroyCount + " / " + _currentLevelData.targets[0].amount.ToString();
     }
     #endregion
 
@@ -116,6 +127,7 @@ public class UIController : MonoBehaviour
     internal void LoadNextLevel()
     {
         _UIPanel.SetActive(true);
+        _GamePanel.SetActive(false);
 
         _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();

@@ -4,7 +4,7 @@
       "levelNumber": 1,
       "targets": [
         {
-          "description": "Eat 10 small fishes",
+          "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
           "amount": 10
         }

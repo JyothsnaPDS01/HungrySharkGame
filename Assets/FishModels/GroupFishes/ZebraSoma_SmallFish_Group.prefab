@@ -61,6 +61,7 @@ MonoBehaviour:
   - {fileID: 6318275416906851324}
   - {fileID: 6318275417294949946}
   moveSpeed: 1
+  _smallFishType: 5
 --- !u!1001 &5920954608359626883
 PrefabInstance:
   m_ObjectHideFlags: 0
