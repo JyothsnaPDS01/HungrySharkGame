@@ -239,7 +239,7 @@ namespace SharkGame
         private IEnumerator EscapeFromPlayer(Transform playerTransform)
         {
             float escapeDistance = 5f;      // The distance the fish group should maintain from the player
-            float escapeSpeed = moveSpeed * 2f;  // Speed of escape (faster than normal movement)
+            float escapeSpeed = moveSpeed * .5f;  // Speed of escape (faster than normal movement)
 
             while (true)
             {

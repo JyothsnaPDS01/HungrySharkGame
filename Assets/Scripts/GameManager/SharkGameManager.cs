@@ -69,6 +69,15 @@ namespace SharkGame
         [Header("Shark Eating Position")]
         [SerializeField] private GameObject _sharkEatingPosition;
 
+        [Header("Time Remaining")]
+        [SerializeField] private float timeRemaining;
+
+        public float PlayerHealthTimerRemaining
+        {
+            get { return timeRemaining; }
+            set { timeRemaining = value; }
+        }
+
         public int CurrentLevel
         {
             get
@@ -150,8 +159,6 @@ namespace SharkGame
             _spawnManager.SetActive(true);
             _objectPooling.GetComponent<ObjectPooling>().HandleGameMode(CurrentGameMode);
             _spawnManager.GetComponent<SpawnManager>().HandleGameMode(CurrentGameMode);
-
-            StartTimer();
         }
 
         internal void InitializeLevel()
@@ -174,6 +181,16 @@ namespace SharkGame
         {
             _currentGameMode = SharkGameDataModel.GameMode.MissionMode;
 
+            UIController.Instance.EnableKillUI();
+
+            
+            StartCoroutine(DelayTheLevel());
+        }
+
+        private IEnumerator DelayTheLevel()
+        {
+            yield return new WaitForSeconds(1f);
+
             _sharkEatingCollision.GetComponent<SmallFishTrigger>().IsOnCoolDown = false;
             _playerSharkPrefab.SetActive(false);
             _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
@@ -186,6 +203,11 @@ namespace SharkGame
             _currentLevel = _currentLevel + 1;
             PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
             PlayerPrefs.Save();
+
+            UIController.Instance.DisableKillUI();
+
+            yield return new WaitForSeconds(1f);
+            
             UIController.Instance.LoadNextLevel();
             _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
         }
@@ -203,7 +225,7 @@ namespace SharkGame
 
         private IEnumerator StartHealthTimer(float duration)
         {
-            float timeRemaining = duration;
+            timeRemaining = duration;
 
             while(timeRemaining > 0)
             {
@@ -218,6 +240,12 @@ namespace SharkGame
         private void HealthTimerEnded()
         {
             Debug.Log("Health Timer Ended");
+
+            if(timeRemaining == 0)
+            {
+                UIController.Instance.UpdatePlayerHealth(5);
+                StartTimer();
+            }
         }
         #endregion
 

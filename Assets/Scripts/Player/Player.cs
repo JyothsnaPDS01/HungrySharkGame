@@ -482,6 +482,8 @@ namespace SharkGame
 
             // Mark the initial movement as completed
             initialMovementCompleted = true;
+
+            SharkGameManager.Instance.StartTimer();
         }
 
         private void HandleMovement()

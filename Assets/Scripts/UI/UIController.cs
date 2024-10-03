@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using SharkGame.Models;
 using SharkGame;
+using DG.Tweening;
 
 public class UIController : MonoBehaviour
 {
@@ -51,6 +52,8 @@ public class UIController : MonoBehaviour
     [Header("Mission UI Components")]
     [SerializeField] private Text _levelNumberTMP;
     [SerializeField] private Text _targetDescTMP;
+    [SerializeField] private Text _killDescText;
+    [SerializeField] private GameObject _killImage;
 
     [Header("Level Panel")]
     [SerializeField] private GameObject _UIPanel;
@@ -73,12 +76,17 @@ public class UIController : MonoBehaviour
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private Slider _ammoSlider;
 
+    [Header("Player Health Values")]
+    [SerializeField] private int _playerMaxHealth = 100;
+    [SerializeField] private int currentHealth;
+
     #endregion
 
     #region MonoBehaviour Methods
     private void Start()
     {
         levelConfig = _dataLoadManager.GetLevelConfig();
+        currentHealth = _playerMaxHealth;
         LoadInitialLevel();
     }
     #endregion
@@ -129,14 +137,45 @@ public class UIController : MonoBehaviour
 
     internal void LoadNextLevel()
     {
-        _UIPanel.SetActive(true);
-        _GamePanel.SetActive(false);
-
         _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
 
         ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
+    }
+
+    internal void EnableKillUI()
+    {
+        _UIPanel.SetActive(true);
+        _GamePanel.SetActive(false);
+
+        _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
+        _killImage.SetActive(true);
+
+        _killImage.transform.DOScale(Vector3.one, .5f);
+    }
+
+    internal void DisableKillUI()
+    {
+        _killImage.SetActive(false);
+        _killImage.transform.DOScale(Vector3.zero, .2f);
+    }
+
+    internal void UpdatePlayerHealth(int _damageAmount)
+    {
+        if(currentHealth >= 0)
+        {
+            currentHealth -= _damageAmount;
+        }
+        _healthSlider.value = (float)currentHealth / _playerMaxHealth;
+    }
+
+    internal void MakeMaxHealth()
+    {
+        currentHealth = 100;
+        _healthSlider.value = (float)currentHealth / _playerMaxHealth;
+        SharkGameManager.Instance.PlayerHealthTimerRemaining = 0;
+        SharkGameManager.Instance.StartTimer();
     }
     #endregion
 }

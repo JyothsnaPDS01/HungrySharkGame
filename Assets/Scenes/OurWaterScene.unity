@@ -1866,6 +1866,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelNumberTMP: {fileID: 1849517128}
   _targetDescTMP: {fileID: 871674986}
+  _killDescText: {fileID: 1916140726}
+  _killImage: {fileID: 1434013938}
   _UIPanel: {fileID: 408380056}
   _GamePanel: {fileID: 1370008412}
   levelConfig:
@@ -1875,6 +1877,8 @@ MonoBehaviour:
   _killAmountTMP: {fileID: 189603760}
   _healthSlider: {fileID: 86504872}
   _ammoSlider: {fileID: 680842067}
+  _playerMaxHealth: 100
+  currentHealth: 100
 --- !u!1 &78595105
 GameObject:
   m_ObjectHideFlags: 0
@@ -21676,7 +21680,7 @@ MonoBehaviour:
   fishLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  cooldownDuration: 0.0625
+  cooldownDuration: 0.020833334
   isOnCooldown: 0
 --- !u!1 &944533399
 GameObject:
@@ -31421,7 +31425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1381407618
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33176,9 +33180,10 @@ MonoBehaviour:
   - _smallFishType: 8
     _fishObject: {fileID: 3560352385845205527, guid: 0b7de39ce7c365e44829ae9621aeabb4,
       type: 3}
-  _healthDuration: 0
+  _healthDuration: 15
   _sharkEatingCollision: {fileID: 944446494}
   _sharkEatingPosition: {fileID: 1568978342}
+  timeRemaining: 0
 --- !u!1 &1473021182
 GameObject:
   m_ObjectHideFlags: 0
@@ -33407,12 +33412,12 @@ PrefabInstance:
     - target: {fileID: 8723688351441565442, guid: 78f894c3db032a440950ea3308515182,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 8723688351441565442, guid: 78f894c3db032a440950ea3308515182,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 8723688351441565442, guid: 78f894c3db032a440950ea3308515182,
         type: 3}
@@ -33444,6 +33449,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8723688351441565443, guid: 78f894c3db032a440950ea3308515182,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c1846307b2791aa4e8b0d7b6bd026a73,
+        type: 3}
     - target: {fileID: 8723688351441565445, guid: 78f894c3db032a440950ea3308515182,
         type: 3}
       propertyPath: m_Name
@@ -41962,15 +41973,15 @@ MonoBehaviour:
       targets:
       - description: Kill 10 Fishes
         targetType: smallFishes
-        amount: 10
+        amount: 20
       smallObjects:
       - name: Chaetodon_Collare
         size: 1.2
-        quantity: 5
+        quantity: 10
       - name: ZebraSoma
         size: 1
-        quantity: 5
-      bufferAmount: 5
+        quantity: 10
+      bufferAmount: 10
     - levelNumber: 2
       targets:
       - description: Eat 15 small fishes
@@ -45071,19 +45082,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804538106}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1477194655}
   - {fileID: 1381407618}
-  m_Father: {fileID: 2131895753}
-  m_RootOrder: 4
+  m_Father: {fileID: 2033079484}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 104.2}
-  m_SizeDelta: {x: 150, y: 50}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1804538108
 MonoBehaviour:
@@ -45098,7 +45109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.084905684, g: 0.0805002, b: 0.0805002, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -51127,6 +51138,81 @@ MonoBehaviour:
   - {r: 0.0033374948, g: 0.44626102, b: 0.7075472, a: 1}
   - {r: 0.41921717, g: 0.17377181, b: 0.6698113, a: 1}
   - {r: 0.04672481, g: 0.32318062, b: 0.4716981, a: 1}
+--- !u!1 &2033079483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2033079484}
+  - component: {fileID: 2033079486}
+  - component: {fileID: 2033079485}
+  m_Layer: 5
+  m_Name: OkayButtonImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2033079484
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033079483}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1804538107}
+  m_Father: {fileID: 2131895753}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
+  m_SizeDelta: {x: 500, y: 200}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &2033079485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033079483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 13f6b9487a6a4df4887591fe8a319178, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2033079486
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033079483}
+  m_CullTransparentMesh: 0
 --- !u!1 &2034164773
 GameObject:
   m_ObjectHideFlags: 0
@@ -53149,7 +53235,7 @@ RectTransform:
   - {fileID: 1849517127}
   - {fileID: 871674985}
   - {fileID: 1916140725}
-  - {fileID: 1804538107}
+  - {fileID: 2033079484}
   m_Father: {fileID: 408380057}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

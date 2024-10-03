@@ -6,23 +6,23 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 10
+          "amount": 20
         }
       ],
       "smallObjects": [
         {
           "name": "Chaetodon_Collare",
           "size": 1.2,
-          "quantity": 5
+          "quantity": 10
         },
          {
           "name": "ZebraSoma",
           "size": 1.0,
-          "quantity": 5
+          "quantity": 10
         }
       ],
       "enemies": [],
-      "bufferAmount": 5
+      "bufferAmount": 10
     },
     {
       "levelNumber": 2,

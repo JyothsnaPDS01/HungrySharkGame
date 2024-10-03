@@ -82,7 +82,7 @@ namespace SharkGame
             }
         }
 
-        [SerializeField] private float cooldownDuration = 1f; // Cooldown duration in seconds
+        [SerializeField] private float cooldownDuration = 0.02083333f; // Cooldown duration in seconds
         [SerializeField] private bool isOnCooldown = false; // Flag to check if the shark is on cooldown
 
         public bool IsOnCoolDown
@@ -120,6 +120,8 @@ namespace SharkGame
 
             // Increment destroy count and update UI
             SharkGameManager.Instance.DestroyCount += 1;
+            UIController.Instance.MakeMaxHealth();
+
             UIController.Instance.UpdateKillAmount();
             _fishObject.transform.parent.GetComponent<FishGroup>().UpdateDestroyCount(1, _fishObject);
 
@@ -198,13 +200,15 @@ namespace SharkGame
 
                 SharkGameManager.Instance.DestroyCount += 1;
 
+                UIController.Instance.MakeMaxHealth();
+
                 UIController.Instance.UpdateKillAmount();
 
                 if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
                 {
                     _fishObject.transform.parent = null; // Remove from the shark's mouth
                     ObjectPooling.Instance.ClearFishPoolList();
-                    yield return new WaitForSeconds(2f);
+                    yield return new WaitForSeconds(.5f);
                     SharkGameManager.Instance.LoadNextLevel();
                 }
 
@@ -228,11 +232,13 @@ namespace SharkGame
 
                 UIController.Instance.UpdateKillAmount();
 
+                UIController.Instance.MakeMaxHealth();
+
                 if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
                 {
                     _fishObject.transform.parent = null; // Remove from the shark's mouth
                     ObjectPooling.Instance.ClearFishPoolList();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(.5f);
                     SharkGameManager.Instance.LoadNextLevel();
                 }
 
@@ -268,7 +274,7 @@ namespace SharkGame
             {
                 _fishObject.transform.parent = null; // Remove from the shark's mouth
                 ObjectPooling.Instance.ClearFishPoolList();
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(.5f);
                 SharkGameManager.Instance.LoadNextLevel();
             }
 
