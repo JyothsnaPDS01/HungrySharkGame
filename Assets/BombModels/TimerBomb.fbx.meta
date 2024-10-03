@@ -3,7 +3,12 @@ guid: ebe0a8c0261441e46b9c3e6e4ceb7771
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: bomb_D
+    second: {fileID: 2800000, guid: cb878d7b1d44d7043ad01f382a82a267, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0

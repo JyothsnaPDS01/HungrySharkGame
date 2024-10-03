@@ -1280,6 +1280,37 @@ Transform:
   m_Father: {fileID: 640465299}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &53778266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 53778267}
+  m_Layer: 0
+  m_Name: BombPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &53778267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53778266}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 32.95, y: -30, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 486690238}
+  m_Father: {fileID: 1763306048}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &54489727
 GameObject:
   m_ObjectHideFlags: 0
@@ -11123,6 +11154,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486056565}
   m_Mesh: {fileID: 4300106, guid: 904b575792f751a4cb685e0ec87d03c6, type: 3}
+--- !u!1001 &486690237
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 53778267}
+    m_Modifications:
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50348466963615124, guid: bf467c2af5884464d926a2e6493dfbe1,
+        type: 3}
+      propertyPath: m_Name
+      value: RedBomb
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bf467c2af5884464d926a2e6493dfbe1, type: 3}
+--- !u!4 &486690238 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 50348466963615122, guid: bf467c2af5884464d926a2e6493dfbe1,
+    type: 3}
+  m_PrefabInstance: {fileID: 486690237}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &487208130
 GameObject:
   m_ObjectHideFlags: 0
@@ -21782,6 +21888,11 @@ MonoBehaviour:
     m_Bits: 512
   cooldownDuration: 0.020833334
   isOnCooldown: 0
+  mainCamera: {fileID: 282840813}
+  shakeDuration: 1
+  shakeStrength: 2
+  shakeVibrato: 10
+  randomness: 90
 --- !u!1 &944533399
 GameObject:
   m_ObjectHideFlags: 0
@@ -42246,6 +42357,19 @@ MonoBehaviour:
         size: 1.2
         quantity: 10
       bufferAmount: 10
+    - levelNumber: 7
+      targets:
+      - description: Eat 20 Fishes
+        targetType: smallFishes
+        amount: 20
+      smallObjects:
+      - name: Cown_TriggerFish
+        size: 1.2
+        quantity: 10
+      - name: Lyretail_Anthias
+        size: 1.2
+        quantity: 10
+      bufferAmount: 10
   _player: {fileID: 376064955}
   targetAmount: 0
 --- !u!1 &1643978614
@@ -44137,6 +44261,7 @@ Transform:
   - {fileID: 322009740}
   - {fileID: 1265061310}
   - {fileID: 382078709}
+  - {fileID: 53778267}
   m_Father: {fileID: 1169019080}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
