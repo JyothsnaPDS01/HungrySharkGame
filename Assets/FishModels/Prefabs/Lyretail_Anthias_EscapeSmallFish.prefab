@@ -65,7 +65,7 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.08
-  m_Height: 0.25
+  m_Height: 0.52
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: -0.04}
 --- !u!114 &2321932629325896675
@@ -83,6 +83,7 @@ MonoBehaviour:
   moveSpeed: 2
   _fishAnimator: {fileID: 2321932629325896673}
   _smallFishType: 6
+  isMovingRight: 0
 --- !u!114 &2321932629325896674
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2875042732353950887}
   - component: {fileID: 2875042732353950880}
+  - component: {fileID: 1702684482781581625}
   m_Layer: 0
   m_Name: Mandarin_Fish_DoubleAttackSmallFish_GroupFishe
-  m_TagString: Untagged
+  m_TagString: DoubleAttackSmallFish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,6 +63,20 @@ MonoBehaviour:
   _smallFishType: 7
   capacity: 7
   destroyCount: 0
+  isSineWave: 0
+--- !u!114 &1702684482781581625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2875042732353950886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee8df6f46c7920a4f8c203a31b3e9d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _smallFishType: 7
 --- !u!1001 &2875042730889556528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -82,7 +97,7 @@ PrefabInstance:
     - target: {fileID: 2390892411539254346, guid: a1924d5c6f037f14b86fb78fba056d55,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2390892411539254346, guid: a1924d5c6f037f14b86fb78fba056d55,
         type: 3}
@@ -343,7 +358,7 @@ PrefabInstance:
     - target: {fileID: 2390892411539254346, guid: a1924d5c6f037f14b86fb78fba056d55,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2390892411539254346, guid: a1924d5c6f037f14b86fb78fba056d55,
         type: 3}
@@ -430,7 +445,7 @@ PrefabInstance:
     - target: {fileID: 2390892411539254346, guid: a1924d5c6f037f14b86fb78fba056d55,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2390892411539254346, guid: a1924d5c6f037f14b86fb78fba056d55,
         type: 3}
@@ -604,7 +619,7 @@ PrefabInstance:
     - target: {fileID: 2390892411539254346, guid: a1924d5c6f037f14b86fb78fba056d55,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2390892411539254346, guid: a1924d5c6f037f14b86fb78fba056d55,
         type: 3}

@@ -62,7 +62,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2390892411539254347}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.14
   m_Height: 0.45
@@ -83,6 +83,7 @@ MonoBehaviour:
   moveSpeed: 1
   _fishAnimator: {fileID: 2390892411539254388}
   _smallFishType: 7
+  isMovingRight: 0
 --- !u!114 &2390892411539254390
 MonoBehaviour:
   m_ObjectHideFlags: 0

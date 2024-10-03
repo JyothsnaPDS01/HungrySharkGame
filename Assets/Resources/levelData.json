@@ -37,17 +37,17 @@
         {
           "name": "Chaetodon_Collare",
           "size": 1.2,
-          "quantity": 1
+          "quantity": 5
         },
         {
           "name": "ZebraSoma",
           "size": 1.0,
-          "quantity": 1
+          "quantity": 5
         },
          {
           "name": "ZebraSoma_2",
           "size": 1.0,
-          "quantity": 1
+          "quantity": 5
         }
       ],
       "enemies": [],
@@ -66,7 +66,7 @@
         {
           "name": "Chaetodon_Collare",
           "size": 1.2,
-          "quantity": 10
+          "quantity": 5
         },
         {
           "name": "CoralBeauty",
@@ -138,6 +138,31 @@
       ],
       "enemies": [],
       "bufferAmount": 10
+    },
+    {
+       "levelNumber" : 7,
+        "targets" :[
+         {
+             "description" : "Eat 20 Fishes",
+             "targetType" : "smallFishes",
+             "amount" : 20
+         }
+      ],
+      "smallObjects": [
+        {
+          "name": "Cown_TriggerFish",
+          "size": 1.2,
+          "quantity": 10
+        },
+         {
+          "name": "Lyretail_Anthias",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
     }
+
   ]
 }

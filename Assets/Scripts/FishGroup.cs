@@ -24,6 +24,8 @@ namespace SharkGame
         [SerializeField] private int capacity;
         [SerializeField] private int destroyCount = 0;
 
+        [SerializeField] private bool isSineWave;
+
         public int FishGroupDestroyCount
         {
             get { return destroyCount; }
@@ -52,7 +54,7 @@ namespace SharkGame
             {
                 StartCoroutine(MoveInSineWave());
             }
-            else if (SharkGameManager.Instance.CurrentLevel == 3)
+            else if (SharkGameManager.Instance.CurrentLevel == 3 || SharkGameManager.Instance.CurrentLevel == 6)
             {
                 StartCoroutine(MoveInCurvedSineWave());
             }
@@ -64,9 +66,20 @@ namespace SharkGame
             {
                 StartCoroutine(EscapeFromPlayer(GameObject.Find("Player_Shark").transform));
             }
+            else if(SharkGameManager.Instance.CurrentLevel == 7)
+            {
+                if(this.isSineWave)
+                {
+                    StartCoroutine(MoveInSineWave());
+                }
+                else
+                {
+                    StartCoroutine(MoveHorizontally());
+                }
+            }
             else
             {
-                StartCoroutine(MoveThroughWaypoints());
+                StartCoroutine(MoveThroughWaypoints(this));
             }
         }
 
@@ -223,7 +236,7 @@ namespace SharkGame
                 if (direction != Vector3.zero)
                 {
                     float angleToTarget = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                    transform.rotation = Quaternion.Euler(0f, 0f, angleToTarget);
+                    transform.rotation = Quaternion.Euler(0f, angleToTarget, 0f);
                 }
 
                 // Update the position to simulate circular movement
@@ -285,61 +298,51 @@ namespace SharkGame
 
 
         // Move along waypoints for other levels
-        private IEnumerator MoveThroughWaypoints()
+        private IEnumerator MoveThroughWaypoints(FishGroup fish)
         {
+            if (waypoints.Count < 4)
+            {
+                Debug.LogError("Need at least 4 waypoints for smooth Catmull-Rom movement.");
+                yield break;
+            }
+
             while (true)
             {
-                if (waypoints.Count < 4)
+                Transform p0 = waypoints[(currentWaypointIndex - 1 + waypoints.Count) % waypoints.Count];
+                Transform p1 = waypoints[currentWaypointIndex];
+                Transform p2 = waypoints[(currentWaypointIndex + 1) % waypoints.Count];
+                Transform p3 = waypoints[(currentWaypointIndex + 2) % waypoints.Count];
+
+                float t = 0f;
+                float curveSpeed = 1f / Vector3.Distance(p1.position, p2.position); // Adjust speed based on distance
+
+                while (t <= 1f)
                 {
-                    Debug.LogError("Need at least 4 waypoints for smooth Catmull-Rom movement.");
-                    yield break; // Not enough waypoints for Catmull-Rom spline
-                }
+                    Vector3 newPosition = CatmullRom(p0.position, p1.position, p2.position, p3.position, t);
 
-                foreach (var item in smallFishes)
-                {
-                    item.PlaySwimAnimation();
-                }
-
-                // Loop through the waypoints
-                while (true)
-                {
-                    Transform p0 = waypoints[(currentWaypointIndex - 1 + waypoints.Count) % waypoints.Count];
-                    Transform p1 = waypoints[currentWaypointIndex];
-                    Transform p2 = waypoints[(currentWaypointIndex + 1) % waypoints.Count];
-                    Transform p3 = waypoints[(currentWaypointIndex + 2) % waypoints.Count];
-
-                    float t = 0f;
-                    float curveSpeed = 1f / Vector3.Distance(p1.position, p2.position); // Adjust speed based on distance between waypoints
-
-                    while (t <= 1f)
+                    // Smoothly rotate towards the new position
+                    Vector3 directionToWaypoint = (newPosition - fish.transform.position).normalized;
+                    if (directionToWaypoint != Vector3.zero)
                     {
-                        // Get the next position on the Catmull-Rom spline
-                        Vector3 newPosition = CatmullRom(p0.position, p1.position, p2.position, p3.position, t);
-
-                        // Smoothly rotate towards the new position
-                        Vector3 directionToWaypoint = (newPosition - transform.position).normalized;
-                        if (directionToWaypoint != Vector3.zero)
-                        {
-                            Quaternion targetRotation = Quaternion.LookRotation(directionToWaypoint);
-                            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-                        }
-
-                        // Move the fish to the new position
-                        transform.position = newPosition;
-
-                        // Increment t based on speed
-                        t += moveSpeed * Time.deltaTime * curveSpeed;
-
-                        yield return null; // Wait for the next frame
+                        Quaternion targetRotation = Quaternion.LookRotation(directionToWaypoint);
+                        fish.transform.rotation = Quaternion.Slerp(fish.transform.rotation, targetRotation, Time.deltaTime * 5f);
                     }
 
-                    // Move to the next waypoint, looping if needed
-                    currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+                    // Move fish to new position
+                    fish.transform.position = newPosition;
 
-                    yield return null; // Wait before moving to the next waypoint
+                    // Increment t based on speed
+                    t += moveSpeed * Time.deltaTime * curveSpeed;
+
+                    yield return null;
                 }
+
+                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+
+                yield return null;
             }
         }
+
 
         // Catmull-Rom spline for smooth curves between waypoints
         public static Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)

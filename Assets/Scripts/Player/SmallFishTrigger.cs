@@ -117,33 +117,73 @@ namespace SharkGame
 
             // Play blood effect
             _player.GetComponent<Player>().EnableBloodEffect();
-
-            // Increment destroy count and update UI
-            SharkGameManager.Instance.DestroyCount += 1;
-            UIController.Instance.MakeMaxHealth();
-
-            UIController.Instance.UpdateKillAmount();
-            _fishObject.transform.parent.GetComponent<FishGroup>().UpdateDestroyCount(1, _fishObject);
-
-            if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
+            if (_fishObject.tag == "DoubleAttackSmallFish")
             {
-                _fishObject.transform.parent = null; // Remove from the shark's mouth
+                yield return new WaitForSeconds(.1f);
+
+                _player.GetComponent<Player>().PlayEatAnimation();
+
+                // Play blood effect
+                _player.GetComponent<Player>().EnableBloodEffect();
+
+                SharkGameManager.Instance.DestroyCount += 1;
+
+                UIController.Instance.MakeMaxHealth();
+
+                UIController.Instance.UpdateKillAmount();
+
+                if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
+                {
+                    _fishObject.transform.parent = null; // Remove from the shark's mouth
+                    ObjectPooling.Instance.ClearFishPoolList();
+                    yield return new WaitForSeconds(1f);
+                    SharkGameManager.Instance.LoadNextLevel();
+                }
+
+                yield return new WaitForSeconds(.7f);
+
+                // Mark the fish as dead and reset its state
+                SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
+
+                // Return fish to the pool
+                ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
+
                 yield return new WaitForSeconds(1f);
-                SharkGameManager.Instance.LoadNextLevel();
+
+                // Reset shark attack animation and disable blood effect
+                _player.GetComponent<Player>().BackToIdleAnimation();
+                _player.GetComponent<Player>().DisableBloodEffect();
             }
+            else
+            {
 
-            // Wait a bit for the attack animation to play
-            yield return new WaitForSeconds(0.25f);
+                // Increment destroy count and update UI
+                SharkGameManager.Instance.DestroyCount += 1;
+                UIController.Instance.MakeMaxHealth();
 
-            // Mark the fish as dead and reset its state
-            SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
+                UIController.Instance.UpdateKillAmount();
+                _fishObject.transform.parent.GetComponent<FishGroup>().UpdateDestroyCount(1, _fishObject);
 
-            // Wait before resetting the shark's state
-            yield return new WaitForSeconds(1f);
+                if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
+                {
+                    _fishObject.transform.parent = null; // Remove from the shark's mouth
+                    yield return new WaitForSeconds(1f);
+                    SharkGameManager.Instance.LoadNextLevel();
+                }
 
-            // Reset shark attack animation and disable blood effect
-            _player.GetComponent<Player>().BackToIdleAnimation();
-            _player.GetComponent<Player>().DisableBloodEffect();
+                // Wait a bit for the attack animation to play
+                yield return new WaitForSeconds(0.25f);
+
+                // Mark the fish as dead and reset its state
+                SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
+
+                // Wait before resetting the shark's state
+                yield return new WaitForSeconds(1f);
+
+                // Reset shark attack animation and disable blood effect
+                _player.GetComponent<Player>().BackToIdleAnimation();
+                _player.GetComponent<Player>().DisableBloodEffect();
+            }
 
             // Cooldown period before allowing the next fish to be eaten
             yield return new WaitForSeconds(cooldownDuration);

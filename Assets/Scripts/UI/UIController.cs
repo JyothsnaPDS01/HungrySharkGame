@@ -94,6 +94,16 @@ public class UIController : MonoBehaviour
     #region Button Actions
     public void LevelButtonClick()
     {
+        SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
+
+        Debug.LogError("LevelButtonClick");
+
+        StartCoroutine(GiveSlightDelay());
+    }
+
+    private IEnumerator GiveSlightDelay()
+    {
+        yield return new WaitForSeconds(.5f);
         _UIPanel.SetActive(false);
 
         _killAmountTMP.text = "0 /" + _currentLevelData.targets[0].amount.ToString();
@@ -107,6 +117,11 @@ public class UIController : MonoBehaviour
     public void UpdateKillAmount()
     {
         _killAmountTMP.text = SharkGameManager.Instance.DestroyCount + " / " + _currentLevelData.targets[0].amount.ToString();
+    }
+
+    public void SetCurrentLevelConfig()
+    {
+        _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
     }
     #endregion
 
@@ -141,11 +156,13 @@ public class UIController : MonoBehaviour
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
 
-        //ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
+      //  ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
     }
 
     internal void EnableKillUI()
     {
+        SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.MissionPassed);
+
         _UIPanel.SetActive(true);
         _GamePanel.SetActive(false);
 

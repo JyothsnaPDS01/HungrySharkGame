@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea2559480d66a6479948806fca59186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 0.5
   _fishAnimator: {fileID: 5898399333938078527}
   _smallFishType: 5
   isMovingRight: 0

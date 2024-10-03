@@ -37,8 +37,17 @@ namespace SharkGame
         #endregion
         public void PlayAudioClip(SharkGameDataModel.Sound _sound)
         {
+            Debug.LogError("Watersplash" + _sound);
+
             _gameAudioSource.clip = _soundsList.Find(x => x._soundType == _sound)._audioClip;
             _gameAudioSource.Play();
+
+            StartCoroutine(PlayTheAudioTillLength(_gameAudioSource.clip));
+        }
+
+        private IEnumerator PlayTheAudioTillLength(AudioClip _clip)
+        {
+            yield return new WaitForSeconds(_clip.length);
         }
     }
 }

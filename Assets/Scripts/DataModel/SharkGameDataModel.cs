@@ -32,7 +32,8 @@ namespace SharkGame.Models
             ZebraSoma,
             Lyretail_Anthias,
             Mandarin_Fish,
-            ZebraSoma_2
+            ZebraSoma_2,
+            Cown_TriggerFish
         }
 
         [System.Serializable]
@@ -110,7 +111,8 @@ namespace SharkGame.Models
             SharkMovement,
             WaterSplash,
             MissionPassed,
-            MissionFail
+            MissionFail,
+            Button
         }
         [System.Serializable]
         public class SoundModel

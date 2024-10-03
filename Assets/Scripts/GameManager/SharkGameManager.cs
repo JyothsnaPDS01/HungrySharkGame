@@ -202,16 +202,18 @@ namespace SharkGame
             _currentLevel = _currentLevel + 1;
             PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
             PlayerPrefs.Save();
-
-            UIController.Instance.DisableKillUI();
-
-            yield return new WaitForSeconds(2f);
+            UIController.Instance.SetCurrentLevelConfig();
 
             UIController.Instance.SetObjectPool();
 
+            UIController.Instance.DisableKillUI();
+
             yield return new WaitForSeconds(3f);
-            
+
             UIController.Instance.LoadNextLevel();
+
+            //yield return new WaitForSeconds(3f);
+            
             _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
         }
 
