@@ -1873,6 +1873,8 @@ MonoBehaviour:
   _dataLoadManager: {fileID: 1643601654}
   _player: {fileID: 376064955}
   _killAmountTMP: {fileID: 189603760}
+  _healthSlider: {fileID: 86504872}
+  _ammoSlider: {fileID: 680842067}
 --- !u!1 &78595105
 GameObject:
   m_ObjectHideFlags: 0
@@ -15314,7 +15316,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.593
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -21675,6 +21677,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   cooldownDuration: 0.0625
+  isOnCooldown: 0
 --- !u!1 &944533399
 GameObject:
   m_ObjectHideFlags: 0
@@ -33165,10 +33168,10 @@ MonoBehaviour:
     _fishObject: {fileID: 5920954610320137639, guid: a9915d48ccfdecd4ca32b436ba2bc21c,
       type: 3}
   - _smallFishType: 6
-    _fishObject: {fileID: 2321932629325896735, guid: cce0b4b9ccbfebd45bb511a98e816452,
+    _fishObject: {fileID: 2895115243155486122, guid: 18dd1adc919313546adf57a12559ad63,
       type: 3}
   - _smallFishType: 7
-    _fishObject: {fileID: 2390892411539254347, guid: a1924d5c6f037f14b86fb78fba056d55,
+    _fishObject: {fileID: 2875042732353950886, guid: 091a0f667457d064cbc5994aae439812,
       type: 3}
   - _smallFishType: 8
     _fishObject: {fileID: 3560352385845205527, guid: 0b7de39ce7c365e44829ae9621aeabb4,
@@ -33208,8 +33211,8 @@ RectTransform:
   m_Father: {fileID: 340013631}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.593, y: 0}
-  m_AnchorMax: {x: 0.593, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -41976,14 +41979,14 @@ MonoBehaviour:
       smallObjects:
       - name: Chaetodon_Collare
         size: 1.2
-        quantity: 10
+        quantity: 1
       - name: ZebraSoma
         size: 1
-        quantity: 10
+        quantity: 1
       - name: ZebraSoma_2
         size: 1
-        quantity: 5
-      bufferAmount: 30
+        quantity: 1
+      bufferAmount: 1
     - levelNumber: 3
       targets:
       - description: Eat 20 small Fishes
@@ -51620,7 +51623,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.593, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -2.5, y: 0}
   m_SizeDelta: {x: 5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

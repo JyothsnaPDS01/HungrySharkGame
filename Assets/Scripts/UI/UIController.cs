@@ -48,7 +48,7 @@ public class UIController : MonoBehaviour
     #endregion
 
     #region Private Variables
-    [Header("UI Components")]
+    [Header("Mission UI Components")]
     [SerializeField] private Text _levelNumberTMP;
     [SerializeField] private Text _targetDescTMP;
 
@@ -68,8 +68,11 @@ public class UIController : MonoBehaviour
 
     private SharkGameDataModel.Level _currentLevelData;
 
-    [Header("In Game UI")]
+    [Header("In Game UI Components")]
     [SerializeField] private Text _killAmountTMP;
+    [SerializeField] private Slider _healthSlider;
+    [SerializeField] private Slider _ammoSlider;
+
     #endregion
 
     #region MonoBehaviour Methods

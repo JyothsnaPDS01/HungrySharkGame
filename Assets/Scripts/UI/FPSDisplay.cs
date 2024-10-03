@@ -18,7 +18,9 @@ public class FPSDisplay : MonoBehaviour
         }
         else
         {
+#if UNITY_EDITOR
             Debug.Log($"FPS: {Mathf.Ceil(fps)}");
+#endif
         }
     }
 }

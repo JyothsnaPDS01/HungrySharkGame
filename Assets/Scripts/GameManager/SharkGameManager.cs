@@ -151,7 +151,7 @@ namespace SharkGame
             _objectPooling.GetComponent<ObjectPooling>().HandleGameMode(CurrentGameMode);
             _spawnManager.GetComponent<SpawnManager>().HandleGameMode(CurrentGameMode);
 
-          //  StartTimer();
+            StartTimer();
         }
 
         internal void InitializeLevel()

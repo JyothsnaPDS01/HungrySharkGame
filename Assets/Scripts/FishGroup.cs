@@ -44,9 +44,25 @@ namespace SharkGame
         {
             waypoints = waypointList;
             // Start movement logic based on the level
-            if (SharkGameManager.Instance.CurrentLevel == 1 || SharkGameManager.Instance.CurrentLevel == 2)
+            if (SharkGameManager.Instance.CurrentLevel == 1)
             {
                 StartCoroutine(MoveHorizontally());
+            }
+            else if (SharkGameManager.Instance.CurrentLevel == 2)
+            {
+                StartCoroutine(MoveInSineWave());
+            }
+            else if (SharkGameManager.Instance.CurrentLevel == 3)
+            {
+                StartCoroutine(MoveInCurvedSineWave());
+            }
+            else if (SharkGameManager.Instance.CurrentLevel == 4)
+            {
+                StartCoroutine(MoveInCircularPath());
+            }
+            else if(SharkGameManager.Instance.CurrentLevel == 5)
+            {
+                StartCoroutine(EscapeFromPlayer(GameObject.Find("Player_Shark").transform));
             }
             else
             {
@@ -87,6 +103,179 @@ namespace SharkGame
                 yield return null; // Wait before reversing
             }
         }
+
+        private IEnumerator MoveInSineWave()
+        {
+            float horizontalSpeed = moveSpeed;        // Speed for horizontal movement
+            float verticalAmplitude = 1f;             // Amplitude for the vertical movement
+            float verticalFrequency = 1f;             // Frequency for the vertical sine wave movement
+            float time = 0f;                          // Track time to simulate wave motion
+
+            // Capture the initial Y position to keep the sine wave motion centered around it
+            float initialY = transform.position.y;
+
+            while (true)
+            {
+                // Ensure the fish swim animation plays for each small fish
+                foreach (var item in smallFishes)
+                {
+                    item.PlaySwimAnimation();
+                }
+
+                // Determine the target X position (either maxX or minX based on direction)
+                float targetX = isMovingRight ? maxX : minX;
+
+                // Apply the appropriate rotation based on the direction
+                transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+
+                // Start moving the fish group horizontally while applying sine wave for vertical movement
+                while (Mathf.Abs(transform.position.x - targetX) > 0.1f)
+                {
+                    // Calculate the new X and Y positions
+                    float newX = Mathf.MoveTowards(transform.position.x, targetX, horizontalSpeed * Time.deltaTime);
+                    float newY = Mathf.Sin(time * verticalFrequency) * verticalAmplitude + initialY; // Center around initial Y
+
+                    // Update the position with both horizontal and sine wave vertical motion
+                    transform.position = new Vector3(newX, newY, transform.position.z);
+
+                    time += Time.deltaTime; // Update time to simulate continuous motion
+
+                    yield return null;
+                }
+
+                // Switch direction after reaching the target position
+                isMovingRight = !isMovingRight;
+
+                yield return null; // Small delay before switching direction
+            }
+        }
+
+        private IEnumerator MoveInCurvedSineWave()
+        {
+            float horizontalSpeed = moveSpeed * 1.5f;   // Increased speed for faster horizontal movement
+            float verticalAmplitude = 0.5f;             // Smaller amplitude for a smoother curve
+            float verticalFrequency = 2f;               // Higher frequency for more curves in the sine wave
+            float time = 0f;                            // Track time to simulate wave motion
+
+            // Capture the initial Y position to keep the sine wave motion centered around it
+            float initialY = transform.position.y;
+
+            while (true)
+            {
+                // Ensure the fish swim animation plays for each small fish
+                foreach (var item in smallFishes)
+                {
+                    item.PlaySwimAnimation();
+                }
+
+                // Determine the target X position (either maxX or minX based on direction)
+                float targetX = isMovingRight ? maxX : minX;
+
+                // Apply the appropriate rotation based on the direction
+                transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+
+                // Start moving the fish group horizontally while applying a smoother sine wave for vertical movement
+                while (Mathf.Abs(transform.position.x - targetX) > 0.1f)
+                {
+                    // Calculate the new X and Y positions
+                    float newX = Mathf.MoveTowards(transform.position.x, targetX, horizontalSpeed * Time.deltaTime);
+                    float newY = Mathf.Sin(time * verticalFrequency) * verticalAmplitude + initialY; // Smoother, gentler curve
+
+                    // Update the position with both horizontal and sine wave vertical motion
+                    transform.position = new Vector3(newX, newY, transform.position.z);
+
+                    time += Time.deltaTime * 2; // Increase time faster to simulate faster sine wave motion
+
+                    yield return null;
+                }
+
+                // Switch direction after reaching the target position
+                isMovingRight = !isMovingRight;
+
+                yield return null; // Small delay before switching direction
+            }
+        }
+
+        private IEnumerator MoveInCircularPath()
+        {
+            float horizontalSpeed = moveSpeed * 1.5f;   // Increased speed for faster circular movement
+            float radius = 3f;                          // Radius of the circular path
+            float angle = 0f;                           // Track the angle for circular movement
+            float time = 0f;                            // Time to control the speed of rotation
+            Vector3 centerPosition = transform.position; // Central point of the circular movement
+
+            while (true)
+            {
+                // Ensure the fish swim animation plays for each small fish
+                foreach (var item in smallFishes)
+                {
+                    item.PlaySwimAnimation();
+                }
+
+                // Calculate the new position based on the circular movement formula
+                float newX = centerPosition.x + Mathf.Cos(angle) * radius;
+                float newY = centerPosition.y + Mathf.Sin(angle) * radius;
+
+                // Update the position to simulate circular movement
+                transform.position = new Vector3(newX, newY, transform.position.z);
+
+                // Apply rotation to the fish to face the movement direction
+                Vector3 direction = new Vector3(newX, newY, 0) - transform.position;
+                transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+
+                // Increase the angle over time to continue the circular motion
+                angle += Time.deltaTime * horizontalSpeed;  // Increase speed by adjusting how fast the angle changes
+
+                // Reset the angle to avoid overflow
+                if (angle >= 360f)
+                {
+                    angle = 0f;
+                }
+
+                yield return null;
+            }
+        }
+
+        private IEnumerator EscapeFromPlayer(Transform playerTransform)
+        {
+            float escapeDistance = 5f;      // The distance the fish group should maintain from the player
+            float escapeSpeed = moveSpeed * 2f;  // Speed of escape (faster than normal movement)
+
+            while (true)
+            {
+                // Ensure the fish swim animation plays for each small fish
+                foreach (var item in smallFishes)
+                {
+                    item.PlaySwimAnimation();
+                }
+
+                // Calculate the distance between the player and the fish group
+                float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+                // If the player is too close, trigger the escape behavior
+                if (distanceToPlayer < escapeDistance)
+                {
+                    // Calculate the escape direction (away from the player)
+                    Vector3 escapeDirection = (transform.position - playerTransform.position).normalized;
+
+                    // Move the fish group away from the player in the calculated escape direction
+                    Vector3 escapeTarget = transform.position + escapeDirection * escapeSpeed * Time.deltaTime;
+
+                    // Smoothly move towards the escape target
+                    transform.position = Vector3.MoveTowards(transform.position, escapeTarget, escapeSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    // If the player is not too close, return to normal behavior (e.g., circular movement)
+                    yield return StartCoroutine(MoveInCircularPath());
+                }
+
+                yield return null;
+            }
+        }
+
+
+
 
         // Move along waypoints for other levels
         private IEnumerator MoveThroughWaypoints()

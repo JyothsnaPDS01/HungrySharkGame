@@ -48,7 +48,7 @@ namespace SharkGame
         {
             if (currentGameMode == SharkGameDataModel.GameMode.GameStart)
             {
-               // StartCoroutine(CheckNearbyFishesAtIntervals());
+                StartCoroutine(CheckNearbyFishesAtIntervals());
             }
         }
 
@@ -126,7 +126,7 @@ namespace SharkGame
             if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
             {
                 _fishObject.transform.parent = null; // Remove from the shark's mouth
-                yield return null;
+                yield return new WaitForSeconds(.25f);
                 SharkGameManager.Instance.LoadNextLevel();
             }
 
