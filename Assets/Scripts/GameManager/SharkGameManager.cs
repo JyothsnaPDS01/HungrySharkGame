@@ -61,7 +61,7 @@ namespace SharkGame
         [SerializeField] private List<SharkGameDataModel.SmallFishes> smallFishesPrefabList;
 
         [Header("Health Duration")]
-        [SerializeField] private float _healthDuration;
+        [SerializeField] public float _healthDuration;
 
         [Header("SharkEating Collision")]
         [SerializeField] private GameObject _sharkEatingCollision;
@@ -74,7 +74,6 @@ namespace SharkGame
 
         public float PlayerHealthTimerRemaining
         {
-            get { return timeRemaining; }
             set { timeRemaining = value; }
         }
 
@@ -206,7 +205,11 @@ namespace SharkGame
 
             UIController.Instance.DisableKillUI();
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
+
+            UIController.Instance.SetObjectPool();
+
+            yield return new WaitForSeconds(3f);
             
             UIController.Instance.LoadNextLevel();
             _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
@@ -243,7 +246,7 @@ namespace SharkGame
 
             if(timeRemaining == 0)
             {
-                UIController.Instance.UpdatePlayerHealth(5);
+                UIController.Instance.UpdatePlayerHealth(1);
                 StartTimer();
             }
         }

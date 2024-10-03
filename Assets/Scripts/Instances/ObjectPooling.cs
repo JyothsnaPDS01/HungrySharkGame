@@ -88,7 +88,6 @@ namespace SharkGame
 
             // Dequeue from inactive pool
             GameObject spawnedObject = _fishPoolDictionary[_fishType].Dequeue();
-            spawnedObject.GetComponent<FishGroup>().FishGroupDestroyCount = 0;
             spawnedObject.SetActive(true);
             spawnedObject.transform.position = _position;
             spawnedObject.transform.rotation = _rotation;

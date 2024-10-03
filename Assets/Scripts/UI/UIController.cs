@@ -141,7 +141,7 @@ public class UIController : MonoBehaviour
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
 
-        ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
+        //ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
     }
 
     internal void EnableKillUI()
@@ -174,7 +174,7 @@ public class UIController : MonoBehaviour
     {
         currentHealth = 100;
         _healthSlider.value = (float)currentHealth / _playerMaxHealth;
-        SharkGameManager.Instance.PlayerHealthTimerRemaining = 0;
+        SharkGameManager.Instance.PlayerHealthTimerRemaining = SharkGameManager.Instance._healthDuration;
         SharkGameManager.Instance.StartTimer();
     }
     #endregion

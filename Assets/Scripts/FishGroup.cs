@@ -19,7 +19,7 @@ namespace SharkGame
 
         private bool isMovingRight = true; // Used for horizontal movement logic
         private float minX = -50f; // Left boundary
-        private float maxX = 80f;  // Right boundary
+        private float maxX = 65f;  // Right boundary
 
         [SerializeField] private int capacity;
         [SerializeField] private int destroyCount = 0;
@@ -152,7 +152,7 @@ namespace SharkGame
 
         private IEnumerator MoveInCurvedSineWave()
         {
-            float horizontalSpeed = moveSpeed * 1.5f;   // Increased speed for faster horizontal movement
+            float horizontalSpeed = moveSpeed;   // Increased speed for faster horizontal movement
             float verticalAmplitude = 0.5f;             // Smaller amplitude for a smoother curve
             float verticalFrequency = 2f;               // Higher frequency for more curves in the sine wave
             float time = 0f;                            // Track time to simulate wave motion
@@ -198,10 +198,9 @@ namespace SharkGame
 
         private IEnumerator MoveInCircularPath()
         {
-            float horizontalSpeed = moveSpeed * 1.5f;   // Increased speed for faster circular movement
-            float radius = 3f;                          // Radius of the circular path
-            float angle = 0f;                           // Track the angle for circular movement
-            float time = 0f;                            // Time to control the speed of rotation
+            float horizontalSpeed = moveSpeed;     // Increased speed for faster circular movement
+            float radius = 1f;                     // Radius of the circular path
+            float angle = 0f;                      // Track the angle for circular movement
             Vector3 centerPosition = transform.position; // Central point of the circular movement
 
             while (true)
@@ -212,19 +211,26 @@ namespace SharkGame
                     item.PlaySwimAnimation();
                 }
 
-                // Calculate the new position based on the circular movement formula
+                // Calculate the next position based on the circular movement formula
                 float newX = centerPosition.x + Mathf.Cos(angle) * radius;
                 float newY = centerPosition.y + Mathf.Sin(angle) * radius;
+                Vector3 newPosition = new Vector3(newX, newY, transform.position.z);
+
+                // Calculate the direction from the current position to the next position
+                Vector3 direction = newPosition - transform.position;
+
+                // Apply rotation to face the direction of movement
+                if (direction != Vector3.zero)
+                {
+                    float angleToTarget = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 0f, angleToTarget);
+                }
 
                 // Update the position to simulate circular movement
-                transform.position = new Vector3(newX, newY, transform.position.z);
-
-                // Apply rotation to the fish to face the movement direction
-                Vector3 direction = new Vector3(newX, newY, 0) - transform.position;
-                transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+                transform.position = newPosition;
 
                 // Increase the angle over time to continue the circular motion
-                angle += Time.deltaTime * horizontalSpeed;  // Increase speed by adjusting how fast the angle changes
+                angle += Time.deltaTime * horizontalSpeed;
 
                 // Reset the angle to avoid overflow
                 if (angle >= 360f)
@@ -236,10 +242,11 @@ namespace SharkGame
             }
         }
 
+
         private IEnumerator EscapeFromPlayer(Transform playerTransform)
         {
-            float escapeDistance = 5f;      // The distance the fish group should maintain from the player
-            float escapeSpeed = moveSpeed * .5f;  // Speed of escape (faster than normal movement)
+            float escapeDistance = 1f;      // The distance the fish group should maintain from the player
+            float escapeSpeed = moveSpeed;  // Speed of escape (faster than normal movement)
 
             while (true)
             {
