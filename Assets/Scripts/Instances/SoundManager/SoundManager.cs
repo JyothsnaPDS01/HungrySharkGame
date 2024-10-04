@@ -37,7 +37,9 @@ namespace SharkGame
         #endregion
         public void PlayAudioClip(SharkGameDataModel.Sound _sound)
         {
+#if UNITY_EDITOR
             Debug.LogError("Watersplash" + _sound);
+#endif
 
             _gameAudioSource.clip = _soundsList.Find(x => x._soundType == _sound)._audioClip;
             _gameAudioSource.Play();

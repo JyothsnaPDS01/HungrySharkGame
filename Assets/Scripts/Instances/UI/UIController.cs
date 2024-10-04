@@ -108,8 +108,9 @@ public class UIController : MonoBehaviour
     public void LevelButtonClick()
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
-
+#if UNITY_EDITOR
         Debug.LogError("LevelButtonClick");
+#endif
 
         StartCoroutine(GiveSlightDelay());
     }
