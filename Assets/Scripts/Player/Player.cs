@@ -877,11 +877,8 @@ namespace SharkGame
             _sharkRB.MovePosition(finalPosition);
 
             isDying = false;
+
         }
-
-
-
-
         #endregion
     }
 }

@@ -210,11 +210,23 @@ public class UIController : MonoBehaviour
 
     internal void UpdateAmmoHealth(int _damageAmount)
     {
-        if(currentAmmoValue > 0)
+        if (currentAmmoValue > 0)
         {
             currentAmmoValue -= _damageAmount;
         }
-        _ammoSlider.value = (float)currentAmmoValue / _ammoMaxValue; 
+        _ammoSlider.value = (float)currentAmmoValue / _ammoMaxValue;
+
+        if (currentAmmoValue == 0)
+        {
+            SharkGameManager.Instance.SetGameOver();
+        }
+    }
+
+    internal void SetGameOver()
+    {
+        _GamePanel.SetActive(false);
+        _gameOverPanel.SetActive(true);
+        SharkGameManager.Instance.SetGameOver();
     }
     #endregion
 }

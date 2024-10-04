@@ -260,6 +260,25 @@ namespace SharkGame
                 StartTimer();
             }
         }
+
+        #endregion
+
+        #region GameOver
+
+        internal void SetGameOver()
+        {
+            CurrentGameMode = SharkGameDataModel.GameMode.GameOver;
+
+            _playerSharkPrefab.GetComponent<Player>().StartDieAnimation();
+
+            _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
+            _spawnManager.SetActive(false);
+            destroyCount = 0;
+
+            UIController.Instance.SetGameOver();
+            StopGameAudio();
+            ObjectPooling.Instance.ClearFishPoolList();
+        }
         #endregion
 
 
