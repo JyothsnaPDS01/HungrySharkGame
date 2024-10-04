@@ -67,7 +67,7 @@ namespace SharkGame.Models
             public int levelNumber;
             public List<Target> targets ;
             public List<SmallObject> smallObjects ;
-            public List<object> enemies ;
+            public List<Bomb> enemies ;
             public int bufferAmount;
         }
         [System.Serializable]
@@ -88,6 +88,12 @@ namespace SharkGame.Models
             public string description ;
             public string targetType ;
             public int amount ;
+        }
+
+        [System.Serializable]
+        public class Bomb
+        {
+            public string bomb;
         }
         #endregion
 
@@ -119,6 +125,24 @@ namespace SharkGame.Models
         {
             public Sound _soundType;
             public AudioClip _audioClip;
+        }
+        #endregion
+
+        #region Bomb Types
+        [System.Serializable]
+        public enum BombType
+        {
+            None,
+            RedBomb,
+            TimerBomb,
+            SharpBomb
+        }
+
+        [System.Serializable]
+        public class BombObject
+        {
+            public BombType _bombType;
+            public GameObject _bombObject;
         }
         #endregion
     }

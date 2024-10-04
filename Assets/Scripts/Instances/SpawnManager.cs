@@ -1,4 +1,5 @@
 using SharkGame.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,11 +17,18 @@ namespace SharkGame
         [Header("Spawn Point")]
         [SerializeField] private Transform _spawnPoint;
 
+        [Header("BombSpawn Position")]
+        [SerializeField] private Transform _bombSpawnPoint;
+
         [Header("Fish Settings")]
         [SerializeField] private float minSpawnDistanceBetweenFishes = 20f;
         [SerializeField] private float minDistanceFromShark = 2f;
 
         [SerializeField] private List<GameObject> activeFishes = new List<GameObject>(); // Active fish tracking
+
+        private GameObject bombObject;
+
+        public GameObject BombObject { get { return bombObject; } }
 
         public static SpawnManager _instance;
         public static SpawnManager Instance
@@ -48,6 +56,8 @@ namespace SharkGame
             {
                 Debug.Log("CallSpawnFishesFrequently");
                 StartCoroutine(CallSpawnFishesFrequently());
+
+                SpawnLevelBomb();
             }
         }
         #endregion
@@ -137,7 +147,7 @@ namespace SharkGame
         {
             if (ObjectPooling.Instance._fishPoolList.Count > 0)
             {
-                return ObjectPooling.Instance._fishPoolList[Random.Range(0, ObjectPooling.Instance._fishPoolList.Count)]._smallFishType;
+                return ObjectPooling.Instance._fishPoolList[UnityEngine.Random.Range(0, ObjectPooling.Instance._fishPoolList.Count)]._smallFishType;
             }
             else
             {
@@ -175,5 +185,29 @@ namespace SharkGame
             }
             activeFishes.Clear();
         }
+
+        public void SpawnLevelBomb()
+        {
+            SharkGameDataModel.Level currentLevelData = UIController.Instance.GetCurrentLevelData();
+            if(currentLevelData.enemies.Count > 0)
+            {
+                GameObject _bombObject = SharkGameManager.Instance.BombObjectLists.Find(x => x._bombType == GetBombType(currentLevelData.enemies[0].bomb))._bombObject;
+                bombObject = Instantiate(_bombObject, _bombSpawnPoint);
+            }
+        }
+        SharkGameDataModel.BombType bombType;
+        private SharkGameDataModel.BombType GetBombType(string bombName)
+        {
+            // Attempt to parse the string into the enum type
+            if (Enum.TryParse(bombName, true, out bombType))
+            {
+                return bombType; // Successfully parsed
+            }
+            else
+            {
+                return SharkGameDataModel.BombType.None;
+            }
+        }
+
     }
 }

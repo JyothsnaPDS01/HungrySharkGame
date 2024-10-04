@@ -60,6 +60,9 @@ namespace SharkGame
         [Header("Small Fishes Prefabs List")]
         [SerializeField] private List<SharkGameDataModel.SmallFishes> smallFishesPrefabList;
 
+        [Header("Bomb Prefabs")]
+        [SerializeField] private List<SharkGameDataModel.BombObject> bombPrefabsList;
+
         [Header("Health Duration")]
         [SerializeField] public float _healthDuration;
 
@@ -103,6 +106,11 @@ namespace SharkGame
             {
                 destroyCount = value;
             }
+        }
+
+        public List<SharkGameDataModel.BombObject> BombObjectLists
+        {
+            get { return bombPrefabsList; }
         }
         #endregion
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using SharkGame.Models;
+using DG.Tweening;
 
 namespace SharkGame
 {
@@ -106,6 +107,11 @@ namespace SharkGame
 
             // Raycast to check for walls in front of the player
             RaycastCheck();
+
+            if(Input.GetKeyDown(KeyCode.H))
+            {
+                StartDieAnimation();
+            }
 
             // Handle movement based on whether it's blocked
             if (!isMovementBlocked || (_currentSharkDirection != blockedDirection))
@@ -647,7 +653,53 @@ namespace SharkGame
                 // Start the cooldown to avoid jerky movements
                 StartCoroutine(CollisionCooldown());
             }
+
+            
+                if (collision.gameObject.CompareTag("Bomb"))
+                {
+                    TriggerShake();
+                }
         }
+
+        public Camera mainCamera;
+
+        // Shake parameters
+        public float shakeDuration = 0.5f;   // How long the camera will shake
+        public float shakeStrength = 1f;     // How intense the shaking is
+        public int shakeVibrato = 10;        // How many times it shakes in the given duration
+        public float randomness = 90f;       // How random the shaking is
+
+        public GameObject _particleEffect;
+
+        // Call this function to trigger the shake
+        public void TriggerShake()
+        {
+            if (mainCamera != null)
+            {
+                // Shake the camera
+                mainCamera.transform.DOShakePosition(shakeDuration, new Vector3(shakeStrength, 0, 0), shakeVibrato, randomness);
+
+                UIController.Instance.UpdateAmmoHealth(5);
+
+                // Set the particle effect active
+                _particleEffect.SetActive(true);
+
+                // Scale the particle effect from (0,0,0) to (5.5,1,5.5) using DOScale
+                _particleEffect.transform.localScale = Vector3.zero; // Start at scale (0,0,0)
+                _particleEffect.transform.DOScale(new Vector3(5.5f, 1f, 5.5f), .5f); // Tween to scale (5.5, 1, 5.5)
+
+                // Deactivate the particle effect after the shake duration
+                StartCoroutine(DeactiveTheParticleEffect());
+
+                IEnumerator DeactiveTheParticleEffect()
+                {
+                    yield return new WaitForSeconds(shakeDuration);
+                    _particleEffect.SetActive(false);
+                    _particleEffect.transform.localScale = Vector3.zero; // Reset scale after deactivation
+                }
+            }
+        }
+
 
         private IEnumerator CollisionCooldown()
         {
@@ -754,6 +806,82 @@ namespace SharkGame
         {
             _sharkAnimator.SetBool("attack", false);
         }
+        #endregion
+
+        #region Player Die Animation
+        public float sineAmplitude = 0.5f;   // Amplitude of the sine wave (how much it oscillates up/down)
+        public float sineFrequency = 2f;     // Frequency of the sine wave (how fast it oscillates)
+        public float dierotationSpeed = 20f;    // Speed of rotation around Z-axis
+        public float moveSpeed = 2f;         // Speed of moving down
+        public float totalFallDistance = 5f; // Total distance to move down
+
+        private float initialYPosition;
+        private float currentDistanceMoved = 0f;
+
+        private bool isDying = false;
+
+        public void StartDieAnimation()
+        {
+            initialYPosition = _sharkRB.position.y;
+
+            // Check if the initial Y position is between -40 and -45
+            if (initialYPosition >= -45f && initialYPosition <= -40f)
+            {
+                // Add the offset of 10 to the Y position
+                initialYPosition += 10f;
+            }
+
+            Debug.LogError("StartDieAnimation");
+
+            if (!isDying)
+            {
+                StartCoroutine(DieAnimation());
+            }
+        }
+
+        IEnumerator DieAnimation()
+        {
+            isDying = true;
+            currentDistanceMoved = 0f;  // Reset the distance moved
+
+            while (currentDistanceMoved < totalFallDistance)
+            {
+                // Calculate new Y position with sine wave
+                float sineWaveOffset = Mathf.Sin(Time.time * sineFrequency) * sineAmplitude;
+                float newYPosition = initialYPosition - currentDistanceMoved + sineWaveOffset;
+
+                // Move the shark using Rigidbody (MovePosition)
+                Vector3 newPosition = new Vector3(transform.position.x, newYPosition, transform.position.z);
+                _sharkRB.MovePosition(newPosition);
+
+                // Get current Z-axis rotation
+                float currentZRotation = _sharkRB.rotation.eulerAngles.z;
+                // Calculate the new Z-axis rotation, clamped between 180 and 260 degrees
+                float newZRotation = Mathf.Clamp(currentZRotation + (dierotationSpeed * Time.deltaTime), 180f, 260f);
+
+                // Apply the X-axis rotation based on the sine wave for wobble effect
+                float newXRotation = Mathf.Sin(Time.time * sineFrequency) * 10f;  // Adjust '10f' for how much the X-axis rotates
+
+                // Apply the new rotation using Rigidbody (MoveRotation)
+                Quaternion newRotation = Quaternion.Euler(newXRotation, 0, newZRotation);
+                _sharkRB.MoveRotation(newRotation);
+
+                // Increase the distance moved down smoothly
+                currentDistanceMoved += moveSpeed * Time.deltaTime;
+
+                yield return null; // Wait for the next frame
+            }
+
+            // Ensure the shark reaches the exact destination using Rigidbody
+            Vector3 finalPosition = new Vector3(transform.position.x, initialYPosition - totalFallDistance, transform.position.z);
+            _sharkRB.MovePosition(finalPosition);
+
+            isDying = false;
+        }
+
+
+
+
         #endregion
     }
 }

@@ -103,11 +103,9 @@ namespace SharkGame
                     StartCoroutine(DeactiveSmallFishAndPushBackToPool(other.gameObject));
                 }
             }
-            else if(other.gameObject.CompareTag("Bomb"))
-            {
-                TriggerShake();
-            }
         }
+
+     
 
         private IEnumerator DeactiveSmallFishAndPushBackToPool(GameObject _fishObject)
         {
@@ -345,21 +343,6 @@ namespace SharkGame
             StartCoroutine(SmallFishNearToSharkCoroutine(_fishObject));
         }
 
-        public Camera mainCamera;
-
-        // Shake parameters
-        public float shakeDuration = 0.5f;   // How long the camera will shake
-        public float shakeStrength = 1f;     // How intense the shaking is
-        public int shakeVibrato = 10;        // How many times it shakes in the given duration
-        public float randomness = 90f;       // How random the shaking is
-
-        // Call this function to trigger the shake
-        public void TriggerShake()
-        {
-            if (mainCamera != null)
-            {
-                mainCamera.transform.DOShakePosition(shakeDuration, shakeStrength, shakeVibrato, randomness);
-            }
-        }
+       
     }
 }

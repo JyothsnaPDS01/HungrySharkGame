@@ -56,7 +56,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _killImage;
 
     [Header("Level Panel")]
-    [SerializeField] private GameObject _UIPanel;
+    [SerializeField] private GameObject _missionPanel;
+
+    [Header("GameOver Panel")]
+    [SerializeField] private GameObject _gameOverPanel;
 
     [Header("Game UI Panel")]
     [SerializeField] private GameObject _GamePanel;
@@ -80,6 +83,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private int _playerMaxHealth = 100;
     [SerializeField] private int currentHealth;
 
+    [Header("Ammo Values")]
+    [SerializeField] private int _ammoMaxValue = 100;
+    [SerializeField] private int currentAmmoValue;
+
     #endregion
 
     #region MonoBehaviour Methods
@@ -87,6 +94,7 @@ public class UIController : MonoBehaviour
     {
         levelConfig = _dataLoadManager.GetLevelConfig();
         currentHealth = _playerMaxHealth;
+        currentAmmoValue = _ammoMaxValue;
         LoadInitialLevel();
     }
     #endregion
@@ -104,7 +112,7 @@ public class UIController : MonoBehaviour
     private IEnumerator GiveSlightDelay()
     {
         yield return new WaitForSeconds(.5f);
-        _UIPanel.SetActive(false);
+        _missionPanel.SetActive(false);
 
         _killAmountTMP.text = "0 /" + _currentLevelData.targets[0].amount.ToString();
 
@@ -141,7 +149,7 @@ public class UIController : MonoBehaviour
 
     internal void SetObjectPool()
     {
-        ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
+        ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount, _currentLevelData.smallObjects);
     }
 
     internal int GetTargetAmount(int _level)
@@ -150,20 +158,25 @@ public class UIController : MonoBehaviour
         return _dataLoadManager.GetTargetAmount(_level);
     }
 
+    internal SharkGameDataModel.Level GetCurrentLevelData()
+    {
+        return _currentLevelData;
+    }
+
     internal void LoadNextLevel()
     {
         _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
 
-      //  ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
+        //  ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
     }
 
     internal void EnableKillUI()
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.MissionPassed);
 
-        _UIPanel.SetActive(true);
+        _missionPanel.SetActive(true);
         _GamePanel.SetActive(false);
 
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
@@ -180,7 +193,7 @@ public class UIController : MonoBehaviour
 
     internal void UpdatePlayerHealth(int _damageAmount)
     {
-        if(currentHealth >= 0)
+        if (currentHealth > 0)
         {
             currentHealth -= _damageAmount;
         }
@@ -193,6 +206,15 @@ public class UIController : MonoBehaviour
         _healthSlider.value = (float)currentHealth / _playerMaxHealth;
         SharkGameManager.Instance.PlayerHealthTimerRemaining = SharkGameManager.Instance._healthDuration;
         SharkGameManager.Instance.StartTimer();
+    }
+
+    internal void UpdateAmmoHealth(int _damageAmount)
+    {
+        if(currentAmmoValue > 0)
+        {
+            currentAmmoValue -= _damageAmount;
+        }
+        _ammoSlider.value = (float)currentAmmoValue / _ammoMaxValue; 
     }
     #endregion
 }
