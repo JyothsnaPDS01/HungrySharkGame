@@ -108,11 +108,6 @@ namespace SharkGame
             // Raycast to check for walls in front of the player
             RaycastCheck();
 
-            if(Input.GetKeyDown(KeyCode.H))
-            {
-                StartDieAnimation();
-            }
-
             // Handle movement based on whether it's blocked
             if (!isMovementBlocked || (_currentSharkDirection != blockedDirection))
             {
@@ -654,11 +649,19 @@ namespace SharkGame
                 StartCoroutine(CollisionCooldown());
             }
 
-            
-                if (collision.gameObject.CompareTag("Bomb"))
+
+            if (collision.gameObject.CompareTag("Bomb"))
+            {
+                if (UIController.Instance.CurrentAmmo > 0)
                 {
+                    UIController.Instance.UpdateAmmoHealth(5);
                     TriggerShake();
                 }
+                else if (UIController.Instance.CurrentAmmo == 0)
+                {
+                    SharkGameManager.Instance.SetGameOver();
+                }
+            }
         }
 
         public Camera mainCamera;
@@ -678,8 +681,6 @@ namespace SharkGame
             {
                 // Shake the camera
                 mainCamera.transform.DOShakePosition(shakeDuration, new Vector3(shakeStrength, 0, 0), shakeVibrato, randomness);
-
-                UIController.Instance.UpdateAmmoHealth(5);
 
                 // Set the particle effect active
                 _particleEffect.SetActive(true);
@@ -824,8 +825,10 @@ namespace SharkGame
         {
             initialYPosition = _sharkRB.position.y;
 
+            DisableInput();
+
             // Check if the initial Y position is between -40 and -45
-            if (initialYPosition >= -45f && initialYPosition <= -40f)
+            if (initialYPosition >= -45f && initialYPosition <= -35f)
             {
                 // Add the offset of 10 to the Y position
                 initialYPosition += 10f;

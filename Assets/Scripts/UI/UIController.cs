@@ -87,6 +87,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private int _ammoMaxValue = 100;
     [SerializeField] private int currentAmmoValue;
 
+    public int CurrentAmmo { get { return currentAmmoValue; } }
+
     #endregion
 
     #region MonoBehaviour Methods
@@ -213,20 +215,31 @@ public class UIController : MonoBehaviour
         if (currentAmmoValue > 0)
         {
             currentAmmoValue -= _damageAmount;
-        }
-        _ammoSlider.value = (float)currentAmmoValue / _ammoMaxValue;
 
-        if (currentAmmoValue == 0)
-        {
-            SharkGameManager.Instance.SetGameOver();
+            // Prevent currentAmmoValue from going below zero
+            if (currentAmmoValue < 0)
+            {
+                currentAmmoValue = 0;
+            }
+
+            // Update the slider value safely
+            if (_ammoMaxValue > 0)
+            {
+                _ammoSlider.value = (float)currentAmmoValue / _ammoMaxValue;
+            }
+            else
+            {
+                _ammoSlider.value = 0; // Handle the case where ammo max value is zero
+            }
         }
     }
 
+
     internal void SetGameOver()
     {
+        SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.MissionFail);
         _GamePanel.SetActive(false);
         _gameOverPanel.SetActive(true);
-        SharkGameManager.Instance.SetGameOver();
     }
     #endregion
 }

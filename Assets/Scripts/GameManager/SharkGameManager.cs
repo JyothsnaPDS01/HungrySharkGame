@@ -268,6 +268,12 @@ namespace SharkGame
         internal void SetGameOver()
         {
             CurrentGameMode = SharkGameDataModel.GameMode.GameOver;
+            StartCoroutine(DelayGameOverUIPanel());
+        }
+
+        private IEnumerator DelayGameOverUIPanel()
+        {
+            yield return new WaitForSeconds(.25f);
 
             _playerSharkPrefab.GetComponent<Player>().StartDieAnimation();
 
@@ -275,9 +281,12 @@ namespace SharkGame
             _spawnManager.SetActive(false);
             destroyCount = 0;
 
-            UIController.Instance.SetGameOver();
             StopGameAudio();
             ObjectPooling.Instance.ClearFishPoolList();
+
+            yield return new WaitForSeconds(1f);
+
+            UIController.Instance.SetGameOver();
         }
         #endregion
 

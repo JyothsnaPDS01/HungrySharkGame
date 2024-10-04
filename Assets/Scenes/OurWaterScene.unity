@@ -700,17 +700,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33767147}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1990423597}
-  m_Father: {fileID: 61348368}
+  m_Father: {fileID: 1758106754}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 116}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 700, y: 370}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &34189545
@@ -1214,8 +1214,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 560, y: 50}
+  m_AnchoredPosition: {x: 14.1, y: 2}
+  m_SizeDelta: {x: 531.8036, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &51888377
 MonoBehaviour:
@@ -1545,8 +1545,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1461557759}
-  - {fileID: 33767148}
+  - {fileID: 1758106754}
   m_Father: {fileID: 965839646}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9109,7 +9108,7 @@ MonoBehaviour:
   sineAmplitude: 0.5
   sineFrequency: 4
   dierotationSpeed: 10
-  moveSpeed: 10
+  moveSpeed: 8
   totalFallDistance: 10
 --- !u!1 &376282391
 GameObject:
@@ -19359,6 +19358,11 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5730928481678905640, guid: 5b0a037e4c3b37f40834067138273ef3,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.2627451
+      objectReference: {fileID: 0}
     - target: {fileID: 6291904821092933497, guid: 5b0a037e4c3b37f40834067138273ef3,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
@@ -22978,6 +22982,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 965839646}
+  - component: {fileID: 965839647}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -23005,6 +23010,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &965839647
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965839645}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 23f0af56fad973d4faa372575548972d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &972655509
 GameObject:
   m_ObjectHideFlags: 0
@@ -33585,18 +33609,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461557758}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 209354577}
   - {fileID: 93404798}
-  m_Father: {fileID: 61348368}
+  m_Father: {fileID: 1758106754}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -18}
+  m_AnchoredPosition: {x: 0, y: 110.5}
   m_SizeDelta: {x: 1920, y: 370}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1461557760
@@ -44647,6 +44671,43 @@ Transform:
   m_Father: {fileID: 1003189579}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1758106753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1758106754}
+  m_Layer: 5
+  m_Name: FizzedPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1758106754
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758106753}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 1461557759}
+  - {fileID: 33767148}
+  m_Father: {fileID: 61348368}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -128.5}
+  m_SizeDelta: {x: 1920, y: 591}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1759199266
 GameObject:
   m_ObjectHideFlags: 0
@@ -46576,6 +46637,8 @@ MonoBehaviour:
     _audioClip: {fileID: 8300000, guid: 2af68ad7a8b1e7744aa27fcc2b2c9d7d, type: 3}
   - _soundType: 5
     _audioClip: {fileID: 8300000, guid: b8062357ec154cb4cbd3b1f2b53bdd21, type: 3}
+  - _soundType: 4
+    _audioClip: {fileID: 8300000, guid: af6554704a54fe143ad5dcaac9e05568, type: 3}
   _gameAudioSource: {fileID: 487335533}
 --- !u!1 &1827104868
 GameObject:
