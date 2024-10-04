@@ -4,7 +4,7 @@
       "levelNumber": 1,
       "targets": [
         {
-          "description": "Kill 10 Fishes",
+          "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
           "amount": 20
         }
@@ -21,18 +21,14 @@
           "quantity": 5
         }
       ],
-      "enemies": [
-        {
-          "bomb": "RedBomb"
-        }
-      ],
+      "enemies": [],
       "bufferAmount": 10
     },
     {
       "levelNumber": 2,
       "targets": [
         {
-          "description": "Eat 15 small fishes",
+          "description": "Eat 15 fishes",
           "targetType": "smallFishes",
           "amount": 15
         }
@@ -61,7 +57,7 @@
       "levelNumber": 3,
       "targets": [
         {
-          "description": "Eat 20 small Fishes",
+          "description": "Eat 20 Fishes",
           "targetType": "smallFishes",
           "amount": 20
         }
@@ -90,7 +86,7 @@
       "levelNumber": 4,
       "targets": [
         {
-          "description": "Eat 10 Escape Fishes",
+          "description": "Kill 10 Escape Fishes",
           "targetType": "EscapeFishes",
           "amount": 10
         }
@@ -121,7 +117,11 @@
           "quantity": 10
         }
       ],
-      "enemies": [],
+      "enemies": [
+        {
+          "bomb": "SharpBomb"
+        }
+      ],
       "bufferAmount": 10
     },
     {

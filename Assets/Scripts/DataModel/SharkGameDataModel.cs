@@ -118,7 +118,10 @@ namespace SharkGame.Models
             WaterSplash,
             MissionPassed,
             MissionFail,
-            Button
+            Button,
+            SharkSound,
+            BombSound,
+            MainThemeSound
         }
         [System.Serializable]
         public class SoundModel
@@ -141,6 +144,7 @@ namespace SharkGame.Models
         [System.Serializable]
         public class BombObject
         {
+            public Transform bombPosition;
             public BombType _bombType;
             public GameObject _bombObject;
         }

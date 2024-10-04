@@ -17,8 +17,6 @@ namespace SharkGame
         [Header("Spawn Point")]
         [SerializeField] private Transform _spawnPoint;
 
-        [Header("BombSpawn Position")]
-        [SerializeField] private Transform _bombSpawnPoint;
 
         [Header("Fish Settings")]
         [SerializeField] private float minSpawnDistanceBetweenFishes = 20f;
@@ -192,7 +190,8 @@ namespace SharkGame
             if(currentLevelData.enemies.Count > 0)
             {
                 GameObject _bombObject = SharkGameManager.Instance.BombObjectLists.Find(x => x._bombType == GetBombType(currentLevelData.enemies[0].bomb))._bombObject;
-                bombObject = Instantiate(_bombObject, _bombSpawnPoint);
+                Transform _bombSpawnPosition = SharkGameManager.Instance.BombObjectLists.Find(x => x._bombType == GetBombType(currentLevelData.enemies[0].bomb)).bombPosition;
+                bombObject = Instantiate(_bombObject, _bombSpawnPosition);
             }
         }
         SharkGameDataModel.BombType bombType;

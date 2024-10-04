@@ -61,6 +61,9 @@ public class UIController : MonoBehaviour
     [Header("GameOver Panel")]
     [SerializeField] private GameObject _gameOverPanel;
 
+    [Header("Hunt Complete Panel")]
+    [SerializeField] private GameObject _huntCompletePanel;
+
     [Header("Game UI Panel")]
     [SerializeField] private GameObject _GamePanel;
 
@@ -165,13 +168,16 @@ public class UIController : MonoBehaviour
         return _currentLevelData;
     }
 
-    internal void LoadNextLevel()
+    public void LoadNextLevel()
     {
+        SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
+
+        _missionPanel.SetActive(true);
+        _huntCompletePanel.SetActive(false);
+
         _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
-
-        //  ObjectPooling.Instance.SetPoolData(_currentLevelData.bufferAmount,_currentLevelData.smallObjects);
     }
 
     internal void EnableKillUI()
@@ -191,6 +197,14 @@ public class UIController : MonoBehaviour
     {
         _killImage.SetActive(false);
         _killImage.transform.DOScale(Vector3.zero, .2f);
+    }
+
+    internal void EnableHuntCompleteScreen()
+    {
+        _missionPanel.SetActive(false);
+        _huntCompletePanel.SetActive(true);
+
+        DisableKillUI();
     }
 
     internal void UpdatePlayerHealth(int _damageAmount)

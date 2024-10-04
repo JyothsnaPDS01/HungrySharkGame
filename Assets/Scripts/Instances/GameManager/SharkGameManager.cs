@@ -188,15 +188,19 @@ namespace SharkGame
         {
             _currentGameMode = SharkGameDataModel.GameMode.MissionMode;
 
-            UIController.Instance.EnableKillUI();
+            if (SpawnManager.Instance.BombObject != null)
+            {
+                Destroy(SpawnManager.Instance.BombObject);
+            }
 
+            UIController.Instance.EnableKillUI();
             
             StartCoroutine(DelayTheLevel());
         }
 
         private IEnumerator DelayTheLevel()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
 
             _sharkEatingCollision.GetComponent<SmallFishTrigger>().IsOnCoolDown = false;
             _playerSharkPrefab.SetActive(false);
@@ -214,13 +218,9 @@ namespace SharkGame
 
             UIController.Instance.SetObjectPool();
 
-            UIController.Instance.DisableKillUI();
+            UIController.Instance.EnableHuntCompleteScreen();
 
             yield return new WaitForSeconds(3f);
-
-            UIController.Instance.LoadNextLevel();
-
-            //yield return new WaitForSeconds(3f);
             
             _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
         }
