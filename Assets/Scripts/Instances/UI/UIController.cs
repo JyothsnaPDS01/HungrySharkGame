@@ -95,6 +95,8 @@ public class UIController : MonoBehaviour
 
     public int CurrentAmmo { get { return currentAmmoValue; } }
 
+    public int CurrentPlayerHealth { get { return currentHealth;  } }
+
     #endregion
 
     #region MonoBehaviour Methods
@@ -219,8 +221,8 @@ public class UIController : MonoBehaviour
         if (currentHealth > 0)
         {
             currentHealth -= _damageAmount;
+            _healthSlider.value = (float)currentHealth / _playerMaxHealth;
         }
-        _healthSlider.value = (float)currentHealth / _playerMaxHealth;
     }
 
     internal void MakeMaxHealth()
@@ -228,7 +230,7 @@ public class UIController : MonoBehaviour
         currentHealth = 100;
         _healthSlider.value = (float)currentHealth / _playerMaxHealth;
         SharkGameManager.Instance.PlayerHealthTimerRemaining = SharkGameManager.Instance._healthDuration;
-        SharkGameManager.Instance.StartTimer();
+        SharkGameManager.Instance.StartHealthTimer(SharkGameManager.Instance.PlayerHealthTimerRemaining);
     }
 
     internal void UpdateAmmoHealth(int _damageAmount)
@@ -261,6 +263,7 @@ public class UIController : MonoBehaviour
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.MissionFail);
         _GamePanel.SetActive(false);
         _gameOverPanel.SetActive(true);
+        _player.GetComponent<Player>().ShowDieState();
     }
     #endregion
 }

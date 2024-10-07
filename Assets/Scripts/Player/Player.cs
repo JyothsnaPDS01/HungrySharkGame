@@ -655,6 +655,7 @@ namespace SharkGame
                 if (UIController.Instance.CurrentAmmo > 0)
                 {
                     UIController.Instance.UpdateAmmoHealth(5);
+                    SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.BombSound);
                     TriggerShake();
                 }
                 else if (UIController.Instance.CurrentAmmo == 0)
@@ -801,6 +802,11 @@ namespace SharkGame
         {
             _sharkAnimator.SetBool("attack", true);
             SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.EatingShark);
+        }
+
+        internal void ShowDieState()
+        {
+            _sharkAnimator.SetTrigger("Die");
         }
 
         internal void BackToIdleAnimation()

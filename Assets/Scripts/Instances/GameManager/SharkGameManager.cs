@@ -78,6 +78,7 @@ namespace SharkGame
         public float PlayerHealthTimerRemaining
         {
             set { timeRemaining = value; }
+            get { return timeRemaining;  }
         }
 
         public int CurrentLevel
@@ -236,7 +237,7 @@ namespace SharkGame
             StartCoroutine(StartHealthTimer(_healthDuration));
         }
 
-        private IEnumerator StartHealthTimer(float duration)
+        public IEnumerator StartHealthTimer(float duration)
         {
             timeRemaining = duration;
 
@@ -256,8 +257,16 @@ namespace SharkGame
 
             if(timeRemaining == 0)
             {
-                UIController.Instance.UpdatePlayerHealth(1);
-                StartTimer();
+                if(UIController.Instance.CurrentPlayerHealth > 0)
+                {
+                    UIController.Instance.UpdatePlayerHealth(1);
+                    StartTimer();
+                }
+                else if(UIController.Instance.CurrentPlayerHealth == 0)
+                {
+                    SetGameOver();
+                }
+                
             }
         }
 

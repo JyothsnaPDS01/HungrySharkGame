@@ -34993,7 +34993,7 @@ MonoBehaviour:
     _bombType: 2
     _bombObject: {fileID: 2179648621744980639, guid: e3a48c76be1bfa646b45cf4df5a1dc8f,
       type: 3}
-  _healthDuration: 15
+  _healthDuration: 20
   _sharkEatingCollision: {fileID: 944446494}
   _sharkEatingPosition: {fileID: 1568978342}
   timeRemaining: 0
@@ -43926,7 +43926,7 @@ MonoBehaviour:
       bufferAmount: 10
     - levelNumber: 2
       targets:
-      - description: Eat 15 fishes
+      - description: Kill 20 Fishes
         targetType: smallFishes
         amount: 15
       smallObjects:
@@ -43943,7 +43943,7 @@ MonoBehaviour:
       bufferAmount: 1
     - levelNumber: 3
       targets:
-      - description: Eat 20 Fishes
+      - description: Kill 20 Fishes
         targetType: smallFishes
         amount: 20
       smallObjects:
@@ -43971,7 +43971,7 @@ MonoBehaviour:
       bufferAmount: 15
     - levelNumber: 5
       targets:
-      - description: Eat 10 Double Attack Fishes
+      - description: Kill 10 Double Attack Fishes
         targetType: DoubleAttack
         amount: 10
       smallObjects:
@@ -43983,7 +43983,7 @@ MonoBehaviour:
       bufferAmount: 10
     - levelNumber: 6
       targets:
-      - description: Eat 20 ZebraSoma Fishes
+      - description: Kill 20 ZebraSoma Fishes
         targetType: smallFishes
         amount: 20
       smallObjects:
@@ -43994,7 +43994,7 @@ MonoBehaviour:
       bufferAmount: 10
     - levelNumber: 7
       targets:
-      - description: Eat 20 Fishes
+      - description: Kill 20 Fishes
         targetType: smallFishes
         amount: 20
       smallObjects:
@@ -44009,7 +44009,7 @@ MonoBehaviour:
       bufferAmount: 10
     - levelNumber: 8
       targets:
-      - description: Eat 20 Fishes
+      - description: Kill 20 Fishes
         targetType: smallFishes
         amount: 20
       smallObjects:
@@ -44023,7 +44023,7 @@ MonoBehaviour:
       bufferAmount: 10
     - levelNumber: 9
       targets:
-      - description: Eat 15 Fishes
+      - description: Kill 15 Fishes
         targetType: smallFishes
         amount: 15
       smallObjects:
@@ -44037,7 +44037,7 @@ MonoBehaviour:
       bufferAmount: 10
     - levelNumber: 10
       targets:
-      - description: Eat 10 Fishes
+      - description: Kill 10 Fishes
         targetType: smallFishes
         amount: 15
       smallObjects:
@@ -44045,6 +44045,132 @@ MonoBehaviour:
         size: 1.2
         quantity: 10
       enemies: []
+      bufferAmount: 10
+    - levelNumber: 11
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: Chaetodon_Collare
+        size: 1.2
+        quantity: 10
+      enemies:
+      - bomb: SharpBomb
+      bufferAmount: 10
+    - levelNumber: 12
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: ZebraSoma
+        size: 1.2
+        quantity: 10
+      enemies: []
+      bufferAmount: 10
+    - levelNumber: 13
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: ZebraSoma_2
+        size: 1.2
+        quantity: 10
+      - name: Lyretail_Anthias
+        size: 1.2
+        quantity: 10
+      enemies:
+      - bomb: RedBomb
+      bufferAmount: 10
+    - levelNumber: 14
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: Chaetodon_Collare
+        size: 1.2
+        quantity: 10
+      - name: Cown_TriggerFish
+        size: 1.2
+        quantity: 10
+      enemies: []
+      bufferAmount: 10
+    - levelNumber: 15
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: ZebraSoma_2
+        size: 1.2
+        quantity: 10
+      enemies: []
+      bufferAmount: 10
+    - levelNumber: 16
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: ZebraSoma
+        size: 1.2
+        quantity: 10
+      enemies:
+      - bomb: TimerBomb
+      bufferAmount: 10
+    - levelNumber: 17
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: Chaetodon_Collare
+        size: 1.2
+        quantity: 10
+      - name: Lyretail_Anthias
+        size: 1.2
+        quantity: 10
+      enemies: []
+      bufferAmount: 10
+    - levelNumber: 18
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: ZebraSoma_2
+        size: 1.2
+        quantity: 10
+      enemies: []
+      bufferAmount: 10
+    - levelNumber: 19
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: ZebraSoma
+        size: 1.2
+        quantity: 10
+      enemies: []
+      bufferAmount: 10
+    - levelNumber: 20
+      targets:
+      - description: Kill 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: Chaetodon_Collare
+        size: 1.2
+        quantity: 10
+      - name: Lyretail_Anthias
+        size: 1.2
+        quantity: 10
+      enemies:
+      - bomb: RedBomb
       bufferAmount: 10
   _player: {fileID: 376064955}
   targetAmount: 0
