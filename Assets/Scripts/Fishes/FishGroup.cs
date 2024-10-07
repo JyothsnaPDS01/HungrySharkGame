@@ -49,27 +49,27 @@ namespace SharkGame
         {
             waypoints = waypointList;
             // Start movement logic based on the level
-            if (SharkGameManager.Instance.CurrentLevel == 1)
+            if (SharkGameManager.Instance.CurrentLevel == 1 || SharkGameManager.Instance.CurrentLevel == 12 || SharkGameManager.Instance.CurrentLevel == 16)
             {
                 StartCoroutine(MoveHorizontally());
             }
-            else if (SharkGameManager.Instance.CurrentLevel == 2)
+            else if (SharkGameManager.Instance.CurrentLevel == 2 || SharkGameManager.Instance.CurrentLevel == 11)
             {
                 StartCoroutine(MoveInSineWave());
             }
-            else if (SharkGameManager.Instance.CurrentLevel == 3 || SharkGameManager.Instance.CurrentLevel == 6)
+            else if (SharkGameManager.Instance.CurrentLevel == 3 || SharkGameManager.Instance.CurrentLevel == 6 || SharkGameManager.Instance.CurrentLevel == 17)
             {
                 StartCoroutine(MoveInCurvedSineWave());
             }
-            else if (SharkGameManager.Instance.CurrentLevel == 4)
+            else if (SharkGameManager.Instance.CurrentLevel == 4 || SharkGameManager.Instance.CurrentLevel == 18 )
             {
                 StartCoroutine(MoveInCircularPath());
             }
-            else if(SharkGameManager.Instance.CurrentLevel == 5)
+            else if(SharkGameManager.Instance.CurrentLevel == 5 || SharkGameManager.Instance.CurrentLevel == 20)
             {
                 StartCoroutine(EscapeFromPlayer(GameObject.Find("Player_Shark").transform));
             }
-            else if(SharkGameManager.Instance.CurrentLevel == 7)
+            else if(SharkGameManager.Instance.CurrentLevel == 7 || SharkGameManager.Instance.CurrentLevel == 13)
             {
                 if(this.isSineWave)
                 {
@@ -80,15 +80,15 @@ namespace SharkGame
                     StartCoroutine(MoveHorizontally());
                 }
             }
-            else if(SharkGameManager.Instance.CurrentLevel == 8)
+            else if(SharkGameManager.Instance.CurrentLevel == 8 || SharkGameManager.Instance.CurrentLevel == 19)
             {
                 StartCoroutine(MoveZigZag());
             }
-            else if(SharkGameManager.Instance.CurrentLevel == 9)
+            else if(SharkGameManager.Instance.CurrentLevel == 9 || SharkGameManager.Instance.CurrentLevel == 14)
             {
                 StartCoroutine(MoveFastAndSlow());
             }
-            else if(SharkGameManager.Instance.CurrentLevel == 10)
+            else if(SharkGameManager.Instance.CurrentLevel == 10 || SharkGameManager.Instance.CurrentLevel == 15)
             {
                 StartCoroutine(ReverseEscape(GameObject.Find("Player_Shark").transform));
             }

@@ -322,6 +322,11 @@
           "name": "Chaetodon_Collare",
           "size": 1.2,
           "quantity": 10
+        },
+        {
+          "name": "Cown_TriggerFish",
+          "size": 1.2,
+          "quantity": 10
         }
       ],
       "enemies": [],
