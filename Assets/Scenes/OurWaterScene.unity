@@ -21118,7 +21118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -15, y: 7}
+  m_AnchoredPosition: {x: -25, y: 7}
   m_SizeDelta: {x: 56, y: 96}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &877592058
@@ -42592,7 +42592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f579510d96ec944b187b8dbb66cd39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleAmount: 1.1
+  scaleAmount: 1
   defaultButton: {fileID: 74402680}
   singleplaybtn: {fileID: 0}
 --- !u!1 &1595493553
@@ -43911,7 +43911,7 @@ MonoBehaviour:
     levels:
     - levelNumber: 1
       targets:
-      - description: Kill 10 Fishes
+      - description: Kill 20 Fishes
         targetType: smallFishes
         amount: 20
       smallObjects:
@@ -43925,7 +43925,7 @@ MonoBehaviour:
       bufferAmount: 10
     - levelNumber: 2
       targets:
-      - description: Eat 15 small fishes
+      - description: Eat 15 fishes
         targetType: smallFishes
         amount: 15
       smallObjects:
@@ -43942,7 +43942,7 @@ MonoBehaviour:
       bufferAmount: 1
     - levelNumber: 3
       targets:
-      - description: Eat 20 small Fishes
+      - description: Eat 20 Fishes
         targetType: smallFishes
         amount: 20
       smallObjects:
@@ -43959,7 +43959,7 @@ MonoBehaviour:
       bufferAmount: 15
     - levelNumber: 4
       targets:
-      - description: Eat 10 Escape Fishes
+      - description: Kill 10 Escape Fishes
         targetType: EscapeFishes
         amount: 10
       smallObjects:
@@ -47898,6 +47898,8 @@ MonoBehaviour:
     _audioClip: {fileID: 8300000, guid: 99a2452371c48b641a4025cd748a461f, type: 3}
   - _soundType: 8
     _audioClip: {fileID: 8300000, guid: b0a0aaab75b774a45bf02aa03e148e53, type: 3}
+  - _soundType: 7
+    _audioClip: {fileID: 8300000, guid: fd31dab510ac6274dab824587b18a056, type: 3}
   _gameAudioSource: {fileID: 487335533}
 --- !u!1 &1827104868
 GameObject:
@@ -53252,7 +53254,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7, y: 5}
+  m_AnchoredPosition: {x: -30, y: 5}
   m_SizeDelta: {x: 328, y: 101}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2021866989
