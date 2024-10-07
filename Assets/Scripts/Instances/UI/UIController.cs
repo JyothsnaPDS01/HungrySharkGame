@@ -58,6 +58,9 @@ public class UIController : MonoBehaviour
     [Header("Level Panel")]
     [SerializeField] private GameObject _missionPanel;
 
+    [Header("Mission Panel Continue Button")]
+    [SerializeField] private GameObject _continueButton;
+
     [Header("GameOver Panel")]
     [SerializeField] private GameObject _gameOverPanel;
 
@@ -173,6 +176,8 @@ public class UIController : MonoBehaviour
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 
+        _continueButton.SetActive(true);
+
         _missionPanel.SetActive(true);
         _huntCompletePanel.SetActive(false);
 
@@ -184,6 +189,7 @@ public class UIController : MonoBehaviour
     internal void EnableKillUI()
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.MissionPassed);
+        _continueButton.SetActive(false);
 
         _missionPanel.SetActive(true);
         _GamePanel.SetActive(false);

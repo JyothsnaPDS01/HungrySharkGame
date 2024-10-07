@@ -18,6 +18,9 @@ namespace SharkGame
         [SerializeField] private SharkGameDataModel.SmallFishType _smallFishType;
 
         private bool isMovingRight = true; // Used for horizontal movement logic
+        private bool isMovingUp = true;
+        private float minY =-45f;
+        private float maxY = -20f;
         private float minX = -50f; // Left boundary
         private float maxX = 65f;  // Right boundary
 
@@ -77,6 +80,18 @@ namespace SharkGame
                     StartCoroutine(MoveHorizontally());
                 }
             }
+            else if(SharkGameManager.Instance.CurrentLevel == 8)
+            {
+                StartCoroutine(MoveZigZag());
+            }
+            else if(SharkGameManager.Instance.CurrentLevel == 9)
+            {
+                StartCoroutine(MoveFastAndSlow());
+            }
+            else if(SharkGameManager.Instance.CurrentLevel == 10)
+            {
+                StartCoroutine(ReverseEscape(GameObject.Find("Player_Shark").transform));
+            }
             else
             {
                 StartCoroutine(MoveThroughWaypoints(this));
@@ -86,6 +101,9 @@ namespace SharkGame
         // Horizontal movement for level 1
         private IEnumerator MoveHorizontally()
         {
+#if UNITY_EDITOR
+            Debug.LogError("MoveHorizontally");
+#endif
             while (true)
             {
                 // Ensure the fish swim animation plays for each small fish
@@ -119,6 +137,9 @@ namespace SharkGame
 
         private IEnumerator MoveInSineWave()
         {
+#if UNITY_EDITOR
+            Debug.LogError("MoveInSineWave");
+#endif
             float horizontalSpeed = moveSpeed;        // Speed for horizontal movement
             float verticalAmplitude = 1f;             // Amplitude for the vertical movement
             float verticalFrequency = 1f;             // Frequency for the vertical sine wave movement
@@ -165,6 +186,9 @@ namespace SharkGame
 
         private IEnumerator MoveInCurvedSineWave()
         {
+#if UNITY_EDITOR
+            Debug.LogError("MoveInCurvedSineWave");
+#endif
             float horizontalSpeed = moveSpeed;   // Increased speed for faster horizontal movement
             float verticalAmplitude = 0.5f;             // Smaller amplitude for a smoother curve
             float verticalFrequency = 2f;               // Higher frequency for more curves in the sine wave
@@ -211,6 +235,9 @@ namespace SharkGame
 
         private IEnumerator MoveInCircularPath()
         {
+#if UNITY_EDITOR
+            Debug.LogError("MoveInCircularPath");
+#endif
             float horizontalSpeed = moveSpeed;     // Increased speed for faster circular movement
             float radius = 1f;                     // Radius of the circular path
             float angle = 0f;                      // Track the angle for circular movement
@@ -258,6 +285,9 @@ namespace SharkGame
 
         private IEnumerator EscapeFromPlayer(Transform playerTransform)
         {
+#if UNITY_EDITOR
+            Debug.LogError("EscapeFromPlayer");
+#endif
             float escapeDistance = 1f;      // The distance the fish group should maintain from the player
             float escapeSpeed = moveSpeed;  // Speed of escape (faster than normal movement)
 
@@ -294,6 +324,147 @@ namespace SharkGame
             }
         }
 
+        private IEnumerator MoveZigZag()
+        {
+#if UNITY_EDITOR
+            Debug.LogError("MoveZigZag");
+#endif
+            while (true)
+            {
+                // Ensure the fish swim animation plays for each small fish
+                foreach (var item in smallFishes)
+                {
+                    item.PlaySwimAnimation();
+                }
+
+                // Determine the target X position (either maxX or minX based on direction)
+                float targetX = isMovingRight ? maxX : minX;
+
+                // Set the zigzag pattern by alternating Y positions between two values (e.g., maxY and minY)
+                float targetY = isMovingUp ? maxY : minY;
+
+                // Apply the appropriate rotation directly based on the direction (horizontal movement)
+                transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+
+                // Calculate the new target position including the zigzag pattern
+                Vector3 targetPosition = new Vector3(targetX, targetY, transform.position.z);
+
+                // Move the parent object (and therefore the fish group) towards the target position
+                while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                    yield return null;
+                }
+
+                // Switch direction after reaching the target position
+                isMovingRight = !isMovingRight; // Horizontal direction switch
+                isMovingUp = !isMovingUp; // Vertical direction switch for zigzag
+
+                yield return null; // Wait before reversing
+            }
+        }
+
+        public float fastSpeed = 1.5f;
+        public float slowSpeed = .5f;
+
+        private IEnumerator MoveFastAndSlow()
+        {
+#if UNITY_EDITOR
+            Debug.LogError("MoveFastAndSlow");
+#endif
+            while (true)
+            {
+                // Ensure the fish swim animation plays for each small fish
+                foreach (var item in smallFishes)
+                {
+                    item.PlaySwimAnimation();
+                }
+
+                // Determine the target X position (either maxX or minX based on direction)
+                float targetX = isMovingRight ? maxX : minX;
+
+                // Apply the appropriate rotation directly based on the direction (right or left)
+                transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+
+                // Calculate new position for the parent object
+                Vector3 targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
+
+                // Randomly determine if the movement will be fast or slow for this segment
+                bool isFast = Random.value > 0.5f;  // 50% chance of fast or slow movement
+                float currentMoveSpeed = isFast ? fastSpeed : slowSpeed;
+
+                // Move the parent object (and therefore the fish group) towards the target position
+                while (Mathf.Abs(transform.position.x - targetX) > 0.1f)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, currentMoveSpeed * Time.deltaTime);
+                    yield return null;
+                }
+
+                // Switch direction after reaching the target position
+                isMovingRight = !isMovingRight;
+
+                // Add a small delay between fast and slow movements to make it more dynamic
+                yield return new WaitForSeconds(isFast ? 0.5f : 1f);  // Shorter delay after fast movement, longer after slow
+            }
+        }
+
+        public Transform sharkTransform;  // Assign the player's shark transform here
+        public float approachSpeed = 3f;  // Speed at which fish approach the shark
+        public float escapeSpeed = 1.5f;    // Speed at which fish escape the shark
+        public float escapeThreshold = 5f; // Distance at which fish escape
+        public float escapeDistance = 10f; // Distance fish travel while escaping
+
+        private IEnumerator ReverseEscape(Transform sharkTransform)
+        {
+#if UNITY_EDITOR
+            Debug.LogError("ReverseEscape");
+#endif
+            while (true)
+            {
+                // Ensure the fish swim animation plays for each small fish
+                foreach (var item in smallFishes)
+                {
+                    item.PlaySwimAnimation();
+                }
+
+                // Calculate the distance between the fish group and the shark
+                float distanceToShark = Vector3.Distance(transform.position, sharkTransform.position);
+
+                // If the fish are moving towards the shark
+                if (distanceToShark > escapeThreshold)
+                {
+                    // Move towards the shark (bait movement)
+                    Vector3 targetPosition = sharkTransform.position;
+
+                    // Apply the appropriate rotation to face the shark
+                    transform.rotation = (targetPosition.x > transform.position.x) ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+
+                    // Move towards the shark
+                    while (Vector3.Distance(transform.position, sharkTransform.position) > escapeThreshold)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, sharkTransform.position, approachSpeed * Time.deltaTime);
+                        yield return null;
+                    }
+
+                    // Once the fish are close enough to the shark, escape in the opposite direction
+                    Vector3 escapeDirection = (transform.position - sharkTransform.position).normalized;
+                    Vector3 escapeTarget = transform.position + escapeDirection * escapeDistance;
+
+                    // Rotate the fish to face away from the shark
+                    transform.rotation = (escapeDirection.x > 0) ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+
+                    // Escape in the opposite direction
+                    while (Vector3.Distance(transform.position, escapeTarget) > 0.1f)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, escapeTarget, escapeSpeed * Time.deltaTime);
+                        yield return null;
+                    }
+                }
+
+                // Wait before repeating the escape behavior
+                yield return null;
+            }
+        }
 
 
 

@@ -28,7 +28,7 @@
       "levelNumber": 2,
       "targets": [
         {
-          "description": "Eat 15 fishes",
+          "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
           "amount": 15
         }
@@ -57,7 +57,7 @@
       "levelNumber": 3,
       "targets": [
         {
-          "description": "Eat 20 Fishes",
+          "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
           "amount": 20
         }
@@ -105,7 +105,7 @@
       "levelNumber": 5,
       "targets": [
         {
-          "description": "Eat 10 Double Attack Fishes",
+          "description": "Kill 10 Double Attack Fishes",
           "targetType": "DoubleAttack",
           "amount": 10
         }
@@ -128,7 +128,7 @@
       "levelNumber": 6,
       "targets": [
         {
-          "description": "Eat 20 ZebraSoma Fishes",
+          "description": "Kill 20 ZebraSoma Fishes",
           "targetType": "smallFishes",
           "amount": 20
         }
@@ -147,7 +147,7 @@
       "levelNumber": 7,
       "targets": [
         {
-          "description": "Eat 20 Fishes",
+          "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
           "amount": 20
         }
@@ -155,6 +155,294 @@
       "smallObjects": [
         {
           "name": "Cown_TriggerFish",
+          "size": 1.2,
+          "quantity": 10
+        },
+        {
+          "name": "Lyretail_Anthias",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [
+        {
+          "bomb": "RedBomb"
+        }
+      ],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 8,
+      "targets": [
+        {
+          "description": "Kill 20 Fishes",
+          "targetType": "smallFishes",
+          "amount": 20
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "ZebraSoma_2",
+          "size": 1.2,
+          "quantity": 10
+        },
+        {
+          "name": "Lyretail_Anthias",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 9,
+      "targets": [
+        {
+          "description": "Kill 15 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "Cown_TriggerFish",
+          "size": 1.2,
+          "quantity": 10
+        },
+        {
+          "name": "Mandarin_Fish",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 10,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "Mandarin_Fish",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 11,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "Chaetodon_Collare",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [
+        {
+          "bomb": "SharpBomb"
+        }
+      ],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 12,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "ZebraSoma",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 13,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "ZebraSoma_2",
+          "size": 1.2,
+          "quantity": 10
+        },
+        {
+          "name": "Lyretail_Anthias",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [
+        {
+          "bomb": "RedBomb"
+        }
+      ],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 14,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "Chaetodon_Collare",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 15,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "ZebraSoma_2",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 16,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "ZebraSoma",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [
+        {
+          "bomb": "TimerBomb"
+        }
+      ],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 17,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "Chaetodon_Collare",
+          "size": 1.2,
+          "quantity": 10
+        },
+        {
+          "name": "Lyretail_Anthias",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 18,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "ZebraSoma_2",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 19,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "ZebraSoma",
+          "size": 1.2,
+          "quantity": 10
+        }
+      ],
+      "enemies": [],
+      "bufferAmount": 10
+    },
+    {
+      "levelNumber": 20,
+      "targets": [
+        {
+          "description": "Kill 10 Fishes",
+          "targetType": "smallFishes",
+          "amount": 15
+        }
+      ],
+      "smallObjects": [
+        {
+          "name": "Chaetodon_Collare",
           "size": 1.2,
           "quantity": 10
         },

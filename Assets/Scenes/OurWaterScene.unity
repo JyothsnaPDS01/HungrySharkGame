@@ -2103,6 +2103,7 @@ MonoBehaviour:
   _killDescText: {fileID: 1916140726}
   _killImage: {fileID: 1434013938}
   _missionPanel: {fileID: 408380056}
+  _continueButton: {fileID: 2033079483}
   _gameOverPanel: {fileID: 965839645}
   _huntCompletePanel: {fileID: 1594734024}
   _GamePanel: {fileID: 1370008412}
@@ -44005,6 +44006,45 @@ MonoBehaviour:
         quantity: 10
       enemies:
       - bomb: RedBomb
+      bufferAmount: 10
+    - levelNumber: 8
+      targets:
+      - description: Eat 20 Fishes
+        targetType: smallFishes
+        amount: 20
+      smallObjects:
+      - name: ZebraSoma_2
+        size: 1.2
+        quantity: 10
+      - name: Lyretail_Anthias
+        size: 1.2
+        quantity: 10
+      enemies: []
+      bufferAmount: 10
+    - levelNumber: 9
+      targets:
+      - description: Eat 15 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: Cown_TriggerFish
+        size: 1.2
+        quantity: 10
+      - name: Mandarin_Fish
+        size: 1.2
+        quantity: 10
+      enemies: []
+      bufferAmount: 10
+    - levelNumber: 10
+      targets:
+      - description: Eat 10 Fishes
+        targetType: smallFishes
+        amount: 15
+      smallObjects:
+      - name: Mandarin_Fish
+        size: 1.2
+        quantity: 10
+      enemies: []
       bufferAmount: 10
   _player: {fileID: 376064955}
   targetAmount: 0
