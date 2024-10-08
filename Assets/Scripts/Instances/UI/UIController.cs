@@ -266,4 +266,31 @@ public class UIController : MonoBehaviour
         _player.GetComponent<Player>().ShowDieState();
     }
     #endregion
+
+    #region UI Button Actions
+
+    [Header("UI Screens")]
+    [SerializeField] private GameObject _selectionPanel;
+    [SerializeField] private GameObject _loadingPanel;
+
+    [Header("Duplicate Shark")]
+    [SerializeField] private GameObject _duplicateShark;
+    public void BiteButtonClick()
+    {
+        _selectionPanel.SetActive(false);
+        _duplicateShark.SetActive(true);
+        _loadingPanel.SetActive(true);
+
+        StartCoroutine(LoadTheGame());
+
+        IEnumerator LoadTheGame()
+        {
+            yield return new WaitForSeconds(1f);
+
+            _loadingPanel.SetActive(false);
+            _GamePanel.SetActive(true);
+            _missionPanel.SetActive(true);
+        }
+    }
+    #endregion
 }

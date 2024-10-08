@@ -409,10 +409,10 @@ namespace SharkGame
         }
 
         public Transform sharkTransform;  // Assign the player's shark transform here
-        public float approachSpeed = 3f;  // Speed at which fish approach the shark
-        public float escapeSpeed = 1.5f;    // Speed at which fish escape the shark
-        public float escapeThreshold = 5f; // Distance at which fish escape
-        public float escapeDistance = 10f; // Distance fish travel while escaping
+        public float approachSpeed = .5f;  // Speed at which fish approach the shark
+        public float escapeSpeed = .5f;    // Speed at which fish escape the shark
+        public float escapeThreshold = 1f; // Distance at which fish escape
+        public float escapeDistance = .5f; // Distance fish travel while escaping
 
         private IEnumerator ReverseEscape(Transform sharkTransform)
         {

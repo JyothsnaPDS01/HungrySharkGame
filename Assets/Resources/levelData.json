@@ -86,7 +86,7 @@
       "levelNumber": 4,
       "targets": [
         {
-          "description": "Kill 10 Escape Fishes",
+          "description": "Kill 10 Fishes",
           "targetType": "EscapeFishes",
           "amount": 10
         }
@@ -105,7 +105,7 @@
       "levelNumber": 5,
       "targets": [
         {
-          "description": "Kill 10 Double Attack Fishes",
+          "description": "Kill 10 Fishes",
           "targetType": "DoubleAttack",
           "amount": 10
         }
@@ -128,7 +128,7 @@
       "levelNumber": 6,
       "targets": [
         {
-          "description": "Kill 20 ZebraSoma Fishes",
+          "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
           "amount": 20
         }

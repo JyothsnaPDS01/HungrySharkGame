@@ -68,6 +68,7 @@ public class ButtonHighlighter : MonoBehaviour
         butt.transform.localScale = new Vector3(scaleAmount, scaleAmount, scaleAmount);
         if (butt.transform.tag == "Giveborder")
         {
+            Debug.Log("Button Name" + butt.gameObject);
             FindGameObjectInChildWithTag(butt.gameObject, "border").SetActive(true);
         }
         if (butt.GetComponent<Outline>() != null)

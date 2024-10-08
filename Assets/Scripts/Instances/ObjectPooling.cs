@@ -100,6 +100,9 @@ namespace SharkGame
 #endif
                 return null; // Handle the error as needed
             }
+
+            _fishPoolDictionary[_fishType].Enqueue(spawnedObject);
+
             return spawnedObject;
         }
         #endregion
@@ -129,6 +132,14 @@ namespace SharkGame
 
             // Deactivate the object
             obj.SetActive(false);
+            if (obj.transform.childCount > 0)
+            {
+                for (int i = 0; i < obj.transform.childCount; i++)
+                {
+                    Transform childObject = obj.transform.GetChild(i);
+                    childObject.gameObject.SetActive(true);
+                }
+            }
 
             // Enqueue back to the inactive pool
             _fishPoolDictionary[_fishType].Enqueue(obj);

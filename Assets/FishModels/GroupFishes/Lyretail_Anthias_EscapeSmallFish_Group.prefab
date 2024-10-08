@@ -69,10 +69,10 @@ MonoBehaviour:
   fastSpeed: 1.5
   slowSpeed: 0.5
   sharkTransform: {fileID: 0}
-  approachSpeed: 3
-  escapeSpeed: 8
-  escapeThreshold: 5
-  escapeDistance: 10
+  approachSpeed: 1
+  escapeSpeed: 0.5
+  escapeThreshold: 1
+  escapeDistance: 1
 --- !u!114 &-5451636572128154578
 MonoBehaviour:
   m_ObjectHideFlags: 0

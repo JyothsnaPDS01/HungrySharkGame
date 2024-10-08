@@ -65,6 +65,14 @@ MonoBehaviour:
   _smallFishType: 5
   capacity: 8
   destroyCount: 0
+  isSineWave: 0
+  fastSpeed: 1.5
+  slowSpeed: 0.5
+  sharkTransform: {fileID: 0}
+  approachSpeed: 1
+  escapeSpeed: 0.5
+  escapeThreshold: 1
+  escapeDistance: 1
 --- !u!114 &-1981203058932209993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,7 +618,7 @@ PrefabInstance:
     - target: {fileID: 319310617093801645, guid: a81a79ae87f03ac4c98a5cfda51685eb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.414
+      value: 0.47
       objectReference: {fileID: 0}
     - target: {fileID: 319310617093801645, guid: a81a79ae87f03ac4c98a5cfda51685eb,
         type: 3}
@@ -620,7 +628,7 @@ PrefabInstance:
     - target: {fileID: 319310617093801645, guid: a81a79ae87f03ac4c98a5cfda51685eb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.486
       objectReference: {fileID: 0}
     - target: {fileID: 319310617093801645, guid: a81a79ae87f03ac4c98a5cfda51685eb,
         type: 3}

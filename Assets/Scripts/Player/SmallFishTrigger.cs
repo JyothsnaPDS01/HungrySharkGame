@@ -165,8 +165,10 @@ namespace SharkGame
                 UIController.Instance.MakeMaxHealth();
 
                 UIController.Instance.UpdateKillAmount();
-                _fishObject.transform.parent.GetComponent<FishGroup>().UpdateDestroyCount(1, _fishObject);
-
+                if (_fishObject.transform.parent.GetComponent<FishGroup>() != null)
+                {
+                    _fishObject.transform.parent.GetComponent<FishGroup>().UpdateDestroyCount(1, _fishObject);
+                }
                 if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
                 {
                     _fishObject.transform.parent = null; // Remove from the shark's mouth

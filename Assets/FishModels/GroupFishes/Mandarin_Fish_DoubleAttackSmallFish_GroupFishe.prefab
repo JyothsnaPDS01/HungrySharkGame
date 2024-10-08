@@ -64,6 +64,13 @@ MonoBehaviour:
   capacity: 7
   destroyCount: 0
   isSineWave: 0
+  fastSpeed: 1.5
+  slowSpeed: 0.5
+  sharkTransform: {fileID: 0}
+  approachSpeed: 1
+  escapeSpeed: 0.5
+  escapeThreshold: 1
+  escapeDistance: 1
 --- !u!114 &1702684482781581625
 MonoBehaviour:
   m_ObjectHideFlags: 0

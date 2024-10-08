@@ -87,6 +87,8 @@ namespace SharkGame
                         {
                             GameObject fish = ObjectPooling.Instance.SpawnFromPool(GetRandomSmallFishType(), spawnPosition, Quaternion.identity);
 
+                            
+
                             if (fish != null)
                             {
                                 activeFishes.Add(fish); // Track spawned fish

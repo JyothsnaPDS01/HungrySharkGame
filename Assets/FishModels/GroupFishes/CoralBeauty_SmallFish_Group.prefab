@@ -65,6 +65,14 @@ MonoBehaviour:
   _smallFishType: 4
   capacity: 8
   destroyCount: 0
+  isSineWave: 0
+  fastSpeed: 1.5
+  slowSpeed: 0.5
+  sharkTransform: {fileID: 0}
+  approachSpeed: 1
+  escapeSpeed: 0.5
+  escapeThreshold: 1
+  escapeDistance: 1
 --- !u!114 &4087554712567910250
 MonoBehaviour:
   m_ObjectHideFlags: 0
