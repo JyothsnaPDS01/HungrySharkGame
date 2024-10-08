@@ -18,7 +18,6 @@ namespace SharkGame
 
         private bool isSplashing = false; // Flag to track if splashing
 
-
         private Quaternion targetRotation;  // The target rotation based on input
         private bool isMoving;              // Whether the shark is currently moving
         private bool isTransitioning = false; // To manage transition state
@@ -39,8 +38,8 @@ namespace SharkGame
 
         [SerializeField] private bool isInputEnabled = true; // Flag to enable or disable input
 
-        [Header("Running BG Plane")]
-        [SerializeField] private GameObject _bgPlane;
+        [Header("Shark Type")]
+        [SerializeField] private SharkGameDataModel.SharkType _sharkType;
 
         public bool InitialMovement
         {
@@ -91,8 +90,6 @@ namespace SharkGame
 
         // Store the direction where the wall is detected
         [SerializeField] private SharkGameDataModel.SharkDirection blockedDirection = SharkGameDataModel.SharkDirection.None;
-
-        [SerializeField] private GameObject _waterSurface;
 
         void FixedUpdate()
         {
@@ -449,13 +446,21 @@ namespace SharkGame
             // Stop the transition movement
             _sharkRB.velocity = Vector3.zero;
         }
+        Quaternion _targetRotation;
 
         private IEnumerator InitialSharkMovement()
         {
             Debug.Log("Coming to InitialSharkMovement");
             float elapsedTime = 0f;
             Quaternion initialRotation = _sharkRB.rotation;
-            Quaternion _targetRotation = Quaternion.Euler(90, 90, -90);
+            if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+            {
+                _targetRotation = Quaternion.Euler(90, 90, -90);
+            }
+            else if(_sharkType == SharkGameDataModel.SharkType.LemonShark)
+            {
+                _targetRotation = Quaternion.Euler(0, 0, 180);
+            }
 
             Vector3 initialPosition = _sharkRB.position;
             Vector3 targetPosition = initialPosition + new Vector3(0, -30f, 0);
@@ -479,7 +484,7 @@ namespace SharkGame
             _sharkRB.MoveRotation(_targetRotation);
 
             GameObject.Find("Main Camera").GetComponent<CameraFollow>().smoothSpeed = 0.0015625f;
-            _waterSurface.SetActive(false);
+            GameObject.Find("Water Surface").SetActive(false);
 
             // Mark the initial movement as completed
             initialMovementCompleted = true;
@@ -514,12 +519,22 @@ namespace SharkGame
                 _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
 
                 isMoving = true; 
+
+                if(_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    _sharkAnimator.SetFloat("sharkAmount", .25f);
+                }
             }
             else
             {
                 // Stop the shark's movement if no input is detected
                 _sharkRB.velocity = Vector3.zero;
                 isMoving = false;
+
+                if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    _sharkAnimator.SetFloat("sharkAmount", 0f);
+                }
             }
         }
 
@@ -665,7 +680,7 @@ namespace SharkGame
             }
         }
 
-        public Camera mainCamera;
+       
 
         // Shake parameters
         public float shakeDuration = 0.5f;   // How long the camera will shake
@@ -678,6 +693,7 @@ namespace SharkGame
         // Call this function to trigger the shake
         public void TriggerShake()
         {
+            Camera mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
             if (mainCamera != null)
             {
                 // Shake the camera
@@ -800,18 +816,41 @@ namespace SharkGame
 
         internal void PlayEatAnimation()
         {
-            _sharkAnimator.SetBool("attack", true);
+            if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+            {
+                _sharkAnimator.SetBool("attack", true);
+            }
+            else if(_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+            {
+                _sharkAnimator.SetFloat("sharkAmount", .5f);
+            }
             SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.EatingShark);
         }
 
         internal void ShowDieState()
         {
-            _sharkAnimator.SetTrigger("Die");
+            if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+            {
+                _sharkAnimator.SetTrigger("Die");
+            }
+            else if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+            {
+                _sharkAnimator.SetFloat("sharkAmount", 1f);
+            }
+            
         }
 
         internal void BackToIdleAnimation()
         {
-            _sharkAnimator.SetBool("attack", false);
+            if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+            {
+                _sharkAnimator.SetBool("attack", false);
+            }
+            else if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+            {
+                _sharkAnimator.SetFloat("sharkAmount", 0f);
+            }
+
         }
         #endregion
 

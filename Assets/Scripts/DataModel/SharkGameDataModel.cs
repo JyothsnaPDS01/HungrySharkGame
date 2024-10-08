@@ -36,6 +36,7 @@ namespace SharkGame.Models
             Cown_TriggerFish
         }
 
+        #region PoolClass
         [System.Serializable]
         public class FishPool
         {
@@ -43,6 +44,7 @@ namespace SharkGame.Models
             public int _capacity;
             public GameObject _fishObject;
         }
+        #endregion
 
         [System.Serializable]
         public class SmallFishes
@@ -51,14 +53,19 @@ namespace SharkGame.Models
             public GameObject _fishObject;
         }
 
+        #region SharkTypes
         [System.Serializable]
-        public enum SmallFishFiniteState
+        public enum SharkType
         {
-            Movement,
-            Die,
-            ReBorn,
-            Escape
+            GeneralShark,
+            LemonShark,
+            LeopardShark,
+            SandShark,
+            WhaleShark,
+            TigerShark
         }
+        #endregion
+
 
         #region Level Config
         [System.Serializable]

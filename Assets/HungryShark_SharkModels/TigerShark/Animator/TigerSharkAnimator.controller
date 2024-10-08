@@ -10,8 +10,8 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: 9000452273589132271}
-    m_Position: {x: 484.80768, y: 317.8846, z: 0}
+    m_State: {fileID: 8906859656101306634}
+    m_Position: {x: 300, y: -110, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -21,7 +21,58 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 9000452273589132271}
+  m_DefaultState: {fileID: 8906859656101306634}
+--- !u!206 &-2898250129193309061
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Blend Tree
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: -9108393583153159675, guid: 4f9f748d90f8bcd409909f1f6c288b29,
+      type: 3}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: sharkAmount
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 3187627682855250025, guid: 4f9f748d90f8bcd409909f1f6c288b29,
+      type: 3}
+    m_Threshold: 0.25
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: sharkAmount
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -8222959487547499608, guid: 4f9f748d90f8bcd409909f1f6c288b29,
+      type: 3}
+    m_Threshold: 0.5
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: sharkAmount
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -4630339522487117836, guid: 4f9f748d90f8bcd409909f1f6c288b29,
+      type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: sharkAmount
+    m_Mirror: 0
+  m_BlendParameter: sharkAmount
+  m_BlendParameterY: Blend
+  m_MinThreshold: 0
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 0
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -30,7 +81,13 @@ AnimatorController:
   m_PrefabAsset: {fileID: 0}
   m_Name: TigerSharkAnimator
   serializedVersion: 5
-  m_AnimatorParameters: []
+  m_AnimatorParameters:
+  - m_Name: sharkAmount
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -44,14 +101,14 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &9000452273589132271
+--- !u!1102 &8906859656101306634
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Movement
+  m_Name: Blend Tree
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -64,8 +121,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 3187627682855250025, guid: 4f9f748d90f8bcd409909f1f6c288b29,
-    type: 3}
+  m_Motion: {fileID: -2898250129193309061}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

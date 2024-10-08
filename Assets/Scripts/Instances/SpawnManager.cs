@@ -154,22 +154,6 @@ namespace SharkGame
             }
         }
 
-        internal void PushBackObjectsToPool()
-        {
-            if (_spawnPoint.childCount > 0)
-            {
-                for (int i = 0; i < _spawnPoint.childCount; i++)
-                {
-                    Transform childObject = _spawnPoint.GetChild(i);
-                    if (childObject.gameObject.activeInHierarchy)
-                    {
-                        childObject.gameObject.SetActive(false);
-                        childObject.GetComponent<BackToPool>().PushBackToPool();
-                    }
-                }
-            }
-            activeFishes.Clear();
-        }
 
         internal void ClearActiveFishList()
         {
@@ -178,6 +162,18 @@ namespace SharkGame
                 if (item != null)
                 {
                     item.GetComponent<FishGroup>().FishGroupDestroyCount = 0;
+
+                    if(item.transform.childCount > 0)
+                    {
+                        for (int i = 0; i < item.transform.childCount; i++)
+                        {
+                            Transform childObject = item.transform.GetChild(i);
+                            if (childObject.gameObject.activeInHierarchy)
+                            {
+                                childObject.gameObject.SetActive(false);
+                            }
+                        }
+                    }
                     item.GetComponent<BackToPool>().PushBackToPool();
                 }
             }
