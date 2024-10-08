@@ -590,23 +590,51 @@ namespace SharkGame
             // Define rotation based on input direction
             if (verticalInput > 0 && horizontalInput == 0)  // Up
             {
-                targetRotation = Quaternion.Euler(-90, 0, -180);
+                if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    targetRotation = Quaternion.Euler(-90, 0, -180);
+                }
+                else if (_sharkType == SharkGameDataModel.SharkType.LemonShark)
+                {
+                    targetRotation = Quaternion.Euler(180 , 0, 180);
+                }
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Up;
             }
             else if (verticalInput < 0 && horizontalInput == 0)  // Down
             {
-                targetRotation = Quaternion.Euler(90, 90, -90);
+                if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    targetRotation = Quaternion.Euler(90, 90, -90);
+                }
+                else if (_sharkType == SharkGameDataModel.SharkType.LemonShark)
+                {
+                    targetRotation = Quaternion.Euler(0, 0, 180);
+                }
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Down;
             }
             else if (horizontalInput < 0 && verticalInput == 0)  // Left
             {
-                targetRotation = Quaternion.Euler(0, -90, 0);
+                if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    targetRotation = Quaternion.Euler(0, -90, 0);
+                }
+                else if (_sharkType == SharkGameDataModel.SharkType.LemonShark)
+                {
+                    targetRotation = Quaternion.Euler(90, 0, 90);
+                }
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Left;
             }
             else if (horizontalInput > 0 && verticalInput == 0)  // Right
             {
-                targetRotation = Quaternion.Euler(0, 90, 0);
-                _currentSharkDirection = SharkGameDataModel.SharkDirection.Right;
+                if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    targetRotation = Quaternion.Euler(0, 90, 0);
+                }
+                else if (_sharkType == SharkGameDataModel.SharkType.LemonShark)
+                {
+                    targetRotation = Quaternion.Euler(90, 0, -90);
+                }
+                    _currentSharkDirection = SharkGameDataModel.SharkDirection.Right;
             }
             else if (horizontalInput != 0 && verticalInput != 0)
             {
@@ -822,7 +850,7 @@ namespace SharkGame
             }
             else if(_sharkType != SharkGameDataModel.SharkType.GeneralShark)
             {
-                _sharkAnimator.SetFloat("sharkAmount", .5f);
+                _sharkAnimator.SetBool("attack", true);
             }
             SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.EatingShark);
         }
@@ -848,7 +876,7 @@ namespace SharkGame
             }
             else if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
             {
-                _sharkAnimator.SetFloat("sharkAmount", 0f);
+                _sharkAnimator.SetBool("attack", false);
             }
 
         }
