@@ -34,6 +34,9 @@ namespace SharkGame
         [SerializeField] private List<SharkGameDataModel.SoundModel> _soundsList;
         [Header("Audio Source")]
         [SerializeField] private AudioSource _gameAudioSource;
+
+        [Header("Game Audio Source")]
+        [SerializeField] private AudioSource _inGameAudioSource;
         #endregion
         public void PlayAudioClip(SharkGameDataModel.Sound _sound)
         {
@@ -48,6 +51,24 @@ namespace SharkGame
         }
 
         private IEnumerator PlayTheAudioTillLength(AudioClip _clip)
+        {
+            yield return new WaitForSeconds(_clip.length);
+        }
+
+        public void PlayGameAudioClip(SharkGameDataModel.Sound _sound, bool isLoop)
+        {
+#if UNITY_EDITOR
+            Debug.LogError("Watersplash" + _sound);
+#endif
+
+            _inGameAudioSource.clip = _soundsList.Find(x => x._soundType == _sound)._audioClip;
+            _inGameAudioSource.Play();
+            _inGameAudioSource.loop = isLoop;
+
+            StartCoroutine(PlayTheGameAudioTillLength(_inGameAudioSource.clip));
+        }
+
+        private IEnumerator PlayTheGameAudioTillLength(AudioClip _clip)
         {
             yield return new WaitForSeconds(_clip.length);
         }

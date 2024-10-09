@@ -128,7 +128,8 @@ namespace SharkGame.Models
             Button,
             SharkSound,
             BombSound,
-            MainThemeSound
+            MainThemeSound,
+            UnderWaterSound
         }
         [System.Serializable]
         public class SoundModel

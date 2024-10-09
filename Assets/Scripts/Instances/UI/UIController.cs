@@ -183,6 +183,8 @@ public class UIController : MonoBehaviour
         _missionPanel.SetActive(true);
         _huntCompletePanel.SetActive(false);
 
+        SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
+
         _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
@@ -211,6 +213,7 @@ public class UIController : MonoBehaviour
     internal void EnableHuntCompleteScreen()
     {
         _missionPanel.SetActive(false);
+        SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
         _huntCompletePanel.SetActive(true);
 
         DisableKillUI();
@@ -283,6 +286,8 @@ public class UIController : MonoBehaviour
         _duplicateShark.SetActive(false);
         _loadingPanel.SetActive(true);
 
+        SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
+
         StartCoroutine(LoadTheGame());
 
         IEnumerator LoadTheGame()
@@ -292,6 +297,7 @@ public class UIController : MonoBehaviour
             _loadingPanel.SetActive(false);
             _gameUIPanel.SetActive(true);
             _gameUIPanel.transform.DOScale(Vector3.one, .5f);
+            SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
             _missionPanel.SetActive(true);
         }
     }
@@ -301,12 +307,15 @@ public class UIController : MonoBehaviour
 
     public void SubscriptionButtonClick()
     {
+        SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
         _subscriptionPage.SetActive(false);
         _mainMenuPanel.SetActive(true);
     }
 
     public void PlayButtonClick()
     {
+        SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
+
         _mainMenuPanel.SetActive(false);
         _duplicateShark.SetActive(true);
         _selectionPanel.SetActive(true);

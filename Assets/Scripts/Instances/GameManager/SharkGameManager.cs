@@ -154,7 +154,7 @@ namespace SharkGame
         #region Public Methods
         internal void PlayGameAudio()
         {
-            _underWaterAudio.Play();
+            SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.UnderWaterSound, true);
         }
 
         internal void InitializePlayer()
