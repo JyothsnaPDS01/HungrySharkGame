@@ -273,24 +273,44 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _selectionPanel;
     [SerializeField] private GameObject _loadingPanel;
 
+    [SerializeField] private GameObject _gameUIPanel;
+
     [Header("Duplicate Shark")]
     [SerializeField] private GameObject _duplicateShark;
     public void BiteButtonClick()
     {
         _selectionPanel.SetActive(false);
-        _duplicateShark.SetActive(true);
+        _duplicateShark.SetActive(false);
         _loadingPanel.SetActive(true);
 
         StartCoroutine(LoadTheGame());
 
         IEnumerator LoadTheGame()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
 
             _loadingPanel.SetActive(false);
-            _GamePanel.SetActive(true);
+            _gameUIPanel.SetActive(true);
+            _gameUIPanel.transform.DOScale(Vector3.one, .5f);
             _missionPanel.SetActive(true);
         }
     }
+
+    [SerializeField] private GameObject _subscriptionPage;
+    [SerializeField] private GameObject _mainMenuPanel;
+
+    public void SubscriptionButtonClick()
+    {
+        _subscriptionPage.SetActive(false);
+        _mainMenuPanel.SetActive(true);
+    }
+
+    public void PlayButtonClick()
+    {
+        _mainMenuPanel.SetActive(false);
+        _duplicateShark.SetActive(true);
+        _selectionPanel.SetActive(true);
+    }
+
     #endregion
 }
