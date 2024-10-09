@@ -67,10 +67,15 @@ public class UIController : MonoBehaviour
 
     [Header("Hunt Complete Panel")]
     [SerializeField] private GameObject _huntCompletePanel;
+    [SerializeField] private GameObject _rayImage;
 
     [Header("Hunt Complete Panel Coins TMP")]
     [SerializeField] private TextMeshProUGUI _bonusAmountTMP;
     [SerializeField] private Text _coinsTMP;
+
+    [Header("Game Pause Panel")]
+    [SerializeField] private GameObject _gamePausePanel;
+    [SerializeField] private GameObject _gamePauseAnimationPanel;
 
     [Header("Game UI Panel")]
     [SerializeField] private GameObject _GamePanel;
@@ -117,6 +122,17 @@ public class UIController : MonoBehaviour
         currentAmmoValue = _ammoMaxValue;
         _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
         LoadInitialLevel();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            _gamePausePanel.SetActive(true);
+            _gamePauseAnimationPanel.transform.DOScale(Vector3.one, 1f);
+            SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
+            SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+        }
     }
     #endregion
 
@@ -221,9 +237,10 @@ public class UIController : MonoBehaviour
 
     IEnumerator DelayToLoadNextPanel()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         _missionPanel.SetActive(true);
         _huntCompletePanel.SetActive(false);
+        _rayImage.transform.DOKill();
 
         SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
 
@@ -261,6 +278,11 @@ public class UIController : MonoBehaviour
         _coinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
         SharkGameManager.Instance.CurrentCoins += _dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel);
         _huntCompletePanel.SetActive(true);
+
+        // Rotate the object from 0 to -360 on the Z-axis and loop back to 0
+        _rayImage.transform.DORotate(new Vector3(0, 0, -360), 5f, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Yoyo) // Infinite loop between 0 and -360
+            .SetEase(Ease.Linear);
 
         DisableKillUI();
     }
@@ -306,6 +328,19 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void QuitButtonClick()
+    {
+        _gameUIPanel.SetActive(false);
+        _subscriptionPage.SetActive(true);
+    }
+
+    public void ResumeButtonClick()
+    {
+        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
+        SharkGameManager.Instance.PlayGameAudio();
+        _gamePausePanel.SetActive(false);
+        _gameUIPanel.SetActive(true);
+    }
 
     internal void SetGameOver()
     {

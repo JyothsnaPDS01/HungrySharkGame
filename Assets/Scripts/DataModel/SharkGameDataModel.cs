@@ -117,10 +117,10 @@ namespace SharkGame.Models
         public enum GameMode
         {
             None,
-            Pause,
+            GamePause,
             GameOver,
             GameStart,
-            MissionMode
+            MissionMode,
         }
         #endregion
 
