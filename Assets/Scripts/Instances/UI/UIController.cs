@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using SharkGame.Models;
 using SharkGame;
 using DG.Tweening;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
@@ -67,13 +68,22 @@ public class UIController : MonoBehaviour
     [Header("Hunt Complete Panel")]
     [SerializeField] private GameObject _huntCompletePanel;
 
+    [Header("Hunt Complete Panel Coins TMP")]
+    [SerializeField] private TextMeshProUGUI _bonusAmountTMP;
+    [SerializeField] private Text _coinsTMP;
+
     [Header("Game UI Panel")]
     [SerializeField] private GameObject _GamePanel;
+    [Header("InGame Coins Panel")]
+    [SerializeField] private Text _inGameCoinsTMP;
 
     [SerializeField] private SharkGameDataModel.LevelConfig levelConfig;
 
     [Header("Data Load Manager")]
     [SerializeField] private DataLoadManager _dataLoadManager;
+
+    [Header("CoinSpawnManager")]
+    [SerializeField] private CoinSpawnManager _coinSpawnManager;
 
     [Header("Player Reference")]
     [SerializeField] private GameObject _player;
@@ -95,7 +105,7 @@ public class UIController : MonoBehaviour
 
     public int CurrentAmmo { get { return currentAmmoValue; } }
 
-    public int CurrentPlayerHealth { get { return currentHealth;  } }
+    public int CurrentPlayerHealth { get { return currentHealth; } }
 
     #endregion
 
@@ -105,6 +115,7 @@ public class UIController : MonoBehaviour
         levelConfig = _dataLoadManager.GetLevelConfig();
         currentHealth = _playerMaxHealth;
         currentAmmoValue = _ammoMaxValue;
+        _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
         LoadInitialLevel();
     }
     #endregion
@@ -180,6 +191,37 @@ public class UIController : MonoBehaviour
 
         _continueButton.SetActive(true);
 
+        _coinSpawnManager.SpawnCoins();
+
+        _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+
+        StartCoroutine(IncrementNumber(SharkGameManager.Instance.CurrentCoins - _dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel), SharkGameManager.Instance.CurrentCoins, 1f));
+
+        StartCoroutine(DelayToLoadNextPanel());
+    }
+
+    // Coroutine to animate the number
+    private IEnumerator IncrementNumber(int startValue, int endValue, float duration)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            // Calculate the current value using Lerp
+            int currentValue = Mathf.RoundToInt(Mathf.Lerp(startValue, endValue, elapsedTime / duration));
+            // Update the UI Text
+            _coinsTMP.text = currentValue.ToString();
+            yield return null; // Wait for the next frame
+        }
+
+        // Make sure the final value is set
+        _coinsTMP.text = endValue.ToString();
+    }
+
+    IEnumerator DelayToLoadNextPanel()
+    {
+        yield return new WaitForSeconds(5f);
         _missionPanel.SetActive(true);
         _huntCompletePanel.SetActive(false);
 
@@ -214,6 +256,10 @@ public class UIController : MonoBehaviour
     {
         _missionPanel.SetActive(false);
         SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+
+        _bonusAmountTMP.text = "+" + " " +_dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel).ToString();
+        _coinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+        SharkGameManager.Instance.CurrentCoins += _dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel);
         _huntCompletePanel.SetActive(true);
 
         DisableKillUI();

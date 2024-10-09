@@ -59,4 +59,9 @@ public class DataLoadManager : MonoBehaviour
         }
         return targetAmount;
     }
+
+    public int GetCoinsAmount(int levelNumber)
+    {
+        return _levelConfig.levels[levelNumber - 1].rewardCoins.amount;
+    }
 }

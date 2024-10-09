@@ -22,7 +22,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 2,
@@ -51,7 +55,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 1
+      "bufferAmount": 1,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 3,
@@ -80,7 +88,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 15
+      "bufferAmount": 15,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 4,
@@ -99,7 +111,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 15
+      "bufferAmount": 15,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 5,
@@ -122,7 +138,11 @@
           "bomb": "SharpBomb"
         }
       ],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 6,
@@ -141,7 +161,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 7,
@@ -169,7 +193,11 @@
           "bomb": "RedBomb"
         }
       ],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 8,
@@ -193,7 +221,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 9,
@@ -217,7 +249,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 10,
@@ -236,7 +272,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 11,
@@ -259,7 +299,11 @@
           "bomb": "SharpBomb"
         }
       ],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 12,
@@ -278,7 +322,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 13,
@@ -306,7 +354,11 @@
           "bomb": "RedBomb"
         }
       ],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 14,
@@ -330,7 +382,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 15,
@@ -349,7 +405,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 16,
@@ -372,7 +432,11 @@
           "bomb": "TimerBomb"
         }
       ],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 17,
@@ -396,7 +460,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 18,
@@ -415,7 +483,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 19,
@@ -434,7 +506,11 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     },
     {
       "levelNumber": 20,
@@ -462,7 +538,11 @@
           "bomb": "RedBomb"
         }
       ],
-      "bufferAmount": 10
+      "bufferAmount": 10,
+      "rewardCoins": {
+        "description": "Earn 10 Coins",
+        "amount": 5
+      }
     }
   ]
 }

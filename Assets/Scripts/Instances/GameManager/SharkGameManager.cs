@@ -113,6 +113,14 @@ namespace SharkGame
         {
             get { return bombPrefabsList; }
         }
+        [Header("Current Player coins")]
+        [SerializeField] private int currentCoins = 0;
+
+        public int CurrentCoins
+        {
+            get { return currentCoins; }
+            set { currentCoins = value; }
+        }
         #endregion
 
         #region MonoBehaviour Methods

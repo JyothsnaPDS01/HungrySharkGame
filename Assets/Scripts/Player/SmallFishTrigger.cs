@@ -77,6 +77,8 @@ namespace SharkGame
                     Debug.Log("Finding the small fishes");
 #endif
                     GameObject fishObject = fishCollider.gameObject;
+                    // Trigger shark attack animation
+                    _player.GetComponent<Player>().PlayEatAnimation();
                     StartCoroutine(BringSmallFishesNearToPlayer(fishObject));
                     yield return null; // Yield after each fish to avoid performance spikes
                 }
@@ -100,6 +102,8 @@ namespace SharkGame
 #endif
                 if (!isOnCooldown) // Check if the shark is not on cooldown
                 {
+                    // Trigger shark attack animation
+                    _player.GetComponent<Player>().PlayEatAnimation();
                     StartCoroutine(DeactiveSmallFishAndPushBackToPool(other.gameObject));
                 }
             }
@@ -114,9 +118,6 @@ namespace SharkGame
             // Move the fish to the shark's mouth position
             _fishObject.transform.position = _eatingPosition.position;
             RotatePlayerTowards(_fishObject.transform);
-
-            // Trigger shark attack animation
-            _player.GetComponent<Player>().PlayEatAnimation();
 
             // Play blood effect
             _player.GetComponent<Player>().EnableBloodEffect();
@@ -219,8 +220,7 @@ namespace SharkGame
             _fishObject.transform.position = _eatingPosition.position;
             RotatePlayerTowards(_fishObject.transform);
 
-            // Trigger shark attack animation
-            _player.GetComponent<Player>().PlayEatAnimation();
+           
             // Play blood effect
             _player.GetComponent<Player>().EnableBloodEffect();
 

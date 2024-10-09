@@ -2466,10 +2466,14 @@ MonoBehaviour:
   _continueButton: {fileID: 2033079483}
   _gameOverPanel: {fileID: 965839645}
   _huntCompletePanel: {fileID: 1594734024}
+  _bonusAmountTMP: {fileID: 1825453942}
+  _coinsTMP: {fileID: 753086489}
   _GamePanel: {fileID: 1370008412}
+  _inGameCoinsTMP: {fileID: 931872178}
   levelConfig:
     levels: []
   _dataLoadManager: {fileID: 1643601654}
+  _coinSpawnManager: {fileID: 1320509460}
   _player: {fileID: 376064955}
   _killAmountTMP: {fileID: 189603760}
   _healthSlider: {fileID: 86504872}
@@ -11868,7 +11872,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 991766262}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -18856,7 +18860,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: -40.33, z: 0}
+  m_LocalPosition: {x: 2, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 850391842}
@@ -20782,7 +20786,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331231797}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 47.4, y: -52.5, z: 42.9}
+  m_LocalPosition: {x: 47.4, y: -54, z: 42.9}
   m_LocalScale: {x: 14.526347, y: 14.545258, z: 14.545255}
   m_Children:
   - {fileID: 1800236632}
@@ -26875,6 +26879,7 @@ RectTransform:
   m_Children:
   - {fileID: 1927173349}
   - {fileID: 173241442}
+  - {fileID: 1229130199}
   m_Father: {fileID: 1370008413}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -28529,7 +28534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &408380057
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28880,6 +28885,84 @@ Transform:
   m_Father: {fileID: 168374724}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &425352837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 425352838}
+  - component: {fileID: 425352839}
+  - component: {fileID: 425352840}
+  m_Layer: 5
+  m_Name: BonusPointsPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &425352838
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425352837}
+  m_LocalRotation: {x: -0.0061078123, y: 0.005312103, z: 0.050924417, w: 0.99866974}
+  m_LocalPosition: {x: 0, y: 0, z: -1.4646595}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1825453941}
+  - {fileID: 2056463506}
+  m_Father: {fileID: 991766262}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: -0.73, y: 0.572, z: 5.8350005}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -110.68384, y: 55.25482}
+  m_SizeDelta: {x: 350.4, y: 137}
+  m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &425352839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425352837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 20
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+--- !u!114 &425352840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425352837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
 --- !u!1 &427995580
 GameObject:
   m_ObjectHideFlags: 0
@@ -29043,7 +29126,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -2.2, y: -53.999878}
+  m_AnchoredPosition: {x: -2.2, y: -53.999756}
   m_SizeDelta: {x: 688, y: 308}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &433975590
@@ -34608,7 +34691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &451701733
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45794,7 +45877,7 @@ GameObject:
   - component: {fileID: 688765703}
   - component: {fileID: 688765702}
   m_Layer: 5
-  m_Name: +100Image
+  m_Name: CoinImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45807,17 +45890,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688765700}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0000000017753334, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 991766262}
-  m_RootOrder: 4
+  m_Father: {fileID: 2056463506}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -190, y: 42}
-  m_SizeDelta: {x: 300, y: 137}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 40, y: 0}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &688765702
 MonoBehaviour:
@@ -45838,7 +45921,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ec19e562fd18cc44a919d64f8497674b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9b29c88377630ef43a77e5ea7f541bfc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -46464,7 +46547,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725028442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 57.2, y: -52.5, z: 49.6}
+  m_LocalPosition: {x: 57.2, y: -55, z: 49.6}
   m_LocalScale: {x: 14.526347, y: 14.545258, z: 14.545255}
   m_Children:
   - {fileID: 1491536720}
@@ -47532,6 +47615,84 @@ Transform:
   m_Father: {fileID: 448244151}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &753086487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 753086488}
+  - component: {fileID: 753086490}
+  - component: {fileID: 753086489}
+  m_Layer: 5
+  m_Name: CoinsAmountTMP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &753086488
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753086487}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 768991229}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 40, y: 0}
+  m_SizeDelta: {x: 210, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &753086489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753086487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 4513a763652fc4d44a4bca74374b381b, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &753086490
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753086487}
+  m_CullTransparentMesh: 0
 --- !u!1 &753797200
 GameObject:
   m_ObjectHideFlags: 0
@@ -48259,9 +48420,11 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 753086488}
+  - {fileID: 1776253412}
   m_Father: {fileID: 991766262}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -52652,7 +52815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &902587110
 RectTransform:
   m_ObjectHideFlags: 0
@@ -53358,6 +53521,84 @@ Transform:
   m_Father: {fileID: 383211133}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &931872176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 931872177}
+  - component: {fileID: 931872179}
+  - component: {fileID: 931872178}
+  m_Layer: 5
+  m_Name: CoinsTMP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &931872177
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931872176}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1703840350}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 17.4, y: -3.58}
+  m_SizeDelta: {x: 183.4375, y: 42.328125}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &931872178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931872176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 4513a763652fc4d44a4bca74374b381b, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &931872179
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931872176}
+  m_CullTransparentMesh: 0
 --- !u!1 &933440862
 GameObject:
   m_ObjectHideFlags: 0
@@ -54109,7 +54350,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948386994}
   m_LocalRotation: {x: -0.5086287, y: 0.32980737, z: 0.30383697, w: 0.7349878}
-  m_LocalPosition: {x: -81.259796, y: -43.774685, z: 61.106796}
+  m_LocalPosition: {x: -81.259796, y: -47.2, z: 61.106796}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 543450652373008541}
@@ -55817,9 +56058,9 @@ RectTransform:
   - {fileID: 110375034}
   - {fileID: 1045979379}
   - {fileID: 1551060562}
-  - {fileID: 688765701}
   - {fileID: 222951537}
   - {fileID: 768991229}
+  - {fileID: 425352838}
   m_Father: {fileID: 664197918}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -67612,6 +67853,42 @@ Transform:
   m_Father: {fileID: 713632292}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1229130198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1229130199}
+  m_Layer: 5
+  m_Name: CoinPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1229130199
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229130198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1703840350}
+  m_Father: {fileID: 370845854}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 15, y: -130}
+  m_SizeDelta: {x: 400, y: 100}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1 &1229596305
 GameObject:
   m_ObjectHideFlags: 0
@@ -68267,7 +68544,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1253928963
 RectTransform:
   m_ObjectHideFlags: 0
@@ -70265,8 +70542,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1320509459}
+  - component: {fileID: 1320509460}
   m_Layer: 0
-  m_Name: SpawnPoint
+  m_Name: CoinSpawnManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70286,6 +70564,26 @@ Transform:
   m_Father: {fileID: 526852143}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1320509460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320509458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16260d058472ebf458f9332ec366c3a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinPrefab: {fileID: 5473353664031790583, guid: 137ef6fd88c473b4c98dc20024cfb433,
+    type: 3}
+  coinParent: {fileID: 2056463506}
+  coinStartPosition: {fileID: 2056463506}
+  coinEndPosition: {fileID: 1776253412}
+  coinAmount: 5
+  coinDelay: 0.1
+  moveEase: 20
 --- !u!1 &1322256459
 GameObject:
   m_ObjectHideFlags: 0
@@ -70320,7 +70618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -9, y: 41.999878}
+  m_AnchoredPosition: {x: -9, y: 41.999756}
   m_SizeDelta: {x: 892, y: 740}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1322256461
@@ -74712,7 +75010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1465757742
 Transform:
   m_ObjectHideFlags: 0
@@ -74950,6 +75248,7 @@ MonoBehaviour:
   _sharkEatingCollision: {fileID: 944446494}
   _sharkEatingPosition: {fileID: 1568978342}
   timeRemaining: 0
+  currentCoins: 0
 --- !u!1 &1473021182
 GameObject:
   m_ObjectHideFlags: 0
@@ -88293,7 +88592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1594734025
 RectTransform:
   m_ObjectHideFlags: 0
@@ -89892,6 +90191,9 @@ MonoBehaviour:
         quantity: 5
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 2
       targets:
       - description: Kill 20 Fishes
@@ -89909,6 +90211,9 @@ MonoBehaviour:
         quantity: 5
       enemies: []
       bufferAmount: 1
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 3
       targets:
       - description: Kill 20 Fishes
@@ -89926,6 +90231,9 @@ MonoBehaviour:
         quantity: 5
       enemies: []
       bufferAmount: 15
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 4
       targets:
       - description: Kill 10 Fishes
@@ -89937,6 +90245,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 15
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 5
       targets:
       - description: Kill 10 Fishes
@@ -89949,6 +90260,9 @@ MonoBehaviour:
       enemies:
       - bomb: SharpBomb
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 6
       targets:
       - description: Kill 20 Fishes
@@ -89960,6 +90274,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 7
       targets:
       - description: Kill 20 Fishes
@@ -89975,6 +90292,9 @@ MonoBehaviour:
       enemies:
       - bomb: RedBomb
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 8
       targets:
       - description: Kill 20 Fishes
@@ -89989,6 +90309,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 9
       targets:
       - description: Kill 15 Fishes
@@ -90003,6 +90326,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 10
       targets:
       - description: Kill 10 Fishes
@@ -90014,6 +90340,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 11
       targets:
       - description: Kill 10 Fishes
@@ -90026,6 +90355,9 @@ MonoBehaviour:
       enemies:
       - bomb: SharpBomb
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 12
       targets:
       - description: Kill 10 Fishes
@@ -90037,6 +90369,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 13
       targets:
       - description: Kill 10 Fishes
@@ -90052,6 +90387,9 @@ MonoBehaviour:
       enemies:
       - bomb: RedBomb
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 14
       targets:
       - description: Kill 10 Fishes
@@ -90066,6 +90404,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 15
       targets:
       - description: Kill 10 Fishes
@@ -90077,6 +90418,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 16
       targets:
       - description: Kill 10 Fishes
@@ -90089,6 +90433,9 @@ MonoBehaviour:
       enemies:
       - bomb: TimerBomb
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 17
       targets:
       - description: Kill 10 Fishes
@@ -90103,6 +90450,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 18
       targets:
       - description: Kill 10 Fishes
@@ -90114,6 +90464,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 19
       targets:
       - description: Kill 10 Fishes
@@ -90125,6 +90478,9 @@ MonoBehaviour:
         quantity: 10
       enemies: []
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
     - levelNumber: 20
       targets:
       - description: Kill 10 Fishes
@@ -90140,6 +90496,9 @@ MonoBehaviour:
       enemies:
       - bomb: RedBomb
       bufferAmount: 10
+      rewardCoins:
+        description: Earn 10 Coins
+        amount: 5
   _player: {fileID: 376064955}
   targetAmount: 0
 --- !u!1 &1643978614
@@ -91128,6 +91487,81 @@ Transform:
   m_Father: {fileID: 305314224}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1703840349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1703840350}
+  - component: {fileID: 1703840352}
+  - component: {fileID: 1703840351}
+  m_Layer: 5
+  m_Name: CoinPanelImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1703840350
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703840349}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 931872177}
+  m_Father: {fileID: 1229130199}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1703840351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703840349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 262ab02ff9cb2df44b30443803b7b8c1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1703840352
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703840349}
+  m_CullTransparentMesh: 0
 --- !u!1 &1704102559
 GameObject:
   m_ObjectHideFlags: 0
@@ -98359,6 +98793,41 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1776253411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1776253412}
+  m_Layer: 5
+  m_Name: CoinEndPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1776253412
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776253411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 768991229}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -107.1, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1776811418
 GameObject:
   m_ObjectHideFlags: 0
@@ -104900,6 +105369,155 @@ Transform:
   m_Father: {fileID: 1914416296}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1825453940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1825453941}
+  - component: {fileID: 1825453943}
+  - component: {fileID: 1825453942}
+  - component: {fileID: 1825453944}
+  m_Layer: 5
+  m_Name: BonusAmountTMP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1825453941
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825453940}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 425352838}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 230.4, y: -68.5}
+  m_SizeDelta: {x: 230.4, y: 137}
+  m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &1825453942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825453940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: +100
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 23a29c5ef66c07847b1d02a55f3c28a2, type: 2}
+  m_sharedMaterial: {fileID: 3031581935127916805, guid: 23a29c5ef66c07847b1d02a55f3c28a2,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 1
+  m_colorMode: 2
+  m_fontColorGradient:
+    topLeft: {r: 0.98823535, g: 0.56078434, b: 0.015686275, a: 1}
+    topRight: {r: 0.98823535, g: 0.56078434, b: 0.015686275, a: 1}
+    bottomLeft: {r: 1, g: 0.8705883, b: 0.03137255, a: 1}
+    bottomRight: {r: 1, g: 0.8705883, b: 0.03137255, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 100
+  m_fontSizeBase: 100
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1825453943
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825453940}
+  m_CullTransparentMesh: 0
+--- !u!114 &1825453944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825453940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
 --- !u!1 &1825932308
 GameObject:
   m_ObjectHideFlags: 0
@@ -112866,6 +113484,42 @@ Transform:
   m_Father: {fileID: 34189546}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2056463505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2056463506}
+  m_Layer: 5
+  m_Name: CoinParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2056463506
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056463505}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 688765701}
+  m_Father: {fileID: 425352838}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 300.4, y: -68.5}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2057440603
 GameObject:
   m_ObjectHideFlags: 0

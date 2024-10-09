@@ -76,6 +76,7 @@ namespace SharkGame.Models
             public List<SmallObject> smallObjects ;
             public List<Bomb> enemies ;
             public int bufferAmount;
+            public RewardCoins rewardCoins;
         }
         [System.Serializable]
         public class LevelConfig
@@ -101,6 +102,13 @@ namespace SharkGame.Models
         public class Bomb
         {
             public string bomb;
+        }
+
+        [System.Serializable]
+        public class RewardCoins
+        {
+            public string description;
+            public int amount;
         }
         #endregion
 
