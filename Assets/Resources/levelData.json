@@ -22,7 +22,7 @@
         }
       ],
       "enemies": [],
-      "bufferAmount": 10,
+      "bufferAmount": 5,
       "rewardCoins": {
         "description": "Earn 10 Coins",
         "amount": 5
