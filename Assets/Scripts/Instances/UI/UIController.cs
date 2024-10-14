@@ -68,6 +68,7 @@ public class UIController : MonoBehaviour
     [Header("Hunt Complete Panel")]
     [SerializeField] private GameObject _huntCompletePanel;
     [SerializeField] private GameObject _rayImage;
+    [SerializeField] private Button _huntPanelContinueButton;
 
     [Header("Hunt Complete Panel Coins TMP")]
     [SerializeField] private TextMeshProUGUI _bonusAmountTMP;
@@ -203,6 +204,8 @@ public class UIController : MonoBehaviour
 
     public void LoadNextLevel()
     {
+        _huntPanelContinueButton.interactable = false;
+
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 
         _continueButton.SetActive(true);
@@ -271,6 +274,7 @@ public class UIController : MonoBehaviour
 
     internal void EnableHuntCompleteScreen()
     {
+        _huntPanelContinueButton.interactable = true;
         _missionPanel.SetActive(false);
         SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
 
