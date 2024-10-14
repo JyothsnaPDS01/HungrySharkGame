@@ -2,11 +2,16 @@ using System.Collections;
 using UnityEngine;
 using SharkGame.Models;
 using DG.Tweening;
+using System;
+using UnityEngine.Events;
 
 namespace SharkGame
 {
     public class Player : MonoBehaviour
     {
+        #region Events
+        public event Action<Vector3, bool> OnSharkMove;  // Event to notify shark movement
+        #endregion
         #region Private Variables
         [SerializeField] private float _sharkSpeed = 2f;
         [SerializeField] private float rotationSpeed = 1f; // Speed of rotation
@@ -511,12 +516,22 @@ namespace SharkGame
                 targetPosition.z = _sharkRB.position.z;
 
                 // Clamp the Y position within specified bounds
-                targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
+                targetPosition.y = Mathf.Clamp(targetPosition.y, -35f, -20f);
 
                 targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
 
                 // Move the shark smoothly to the new position
                 _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
+
+                // Trigger the shark movement event
+                if(horizontalInput > 0)
+                {
+                    OnSharkMove?.Invoke(targetPosition, true);
+                }
+                else if(horizontalInput < 0)
+                {
+                    OnSharkMove?.Invoke(targetPosition, false);
+                }
 
                 isMoving = true; 
 
