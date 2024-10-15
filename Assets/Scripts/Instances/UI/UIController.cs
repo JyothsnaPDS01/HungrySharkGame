@@ -46,6 +46,8 @@ public class UIController : MonoBehaviour
         {
             Destroy(gameObject); // Destroy duplicate instance
         }
+
+        DisbaleInGameParticleEffects();
     }
     #endregion
 
@@ -109,6 +111,24 @@ public class UIController : MonoBehaviour
     [SerializeField] private int _ammoMaxValue = 100;
     [SerializeField] private int currentAmmoValue;
 
+    [Header("Water Surface")]
+    [SerializeField] private GameObject _waterSurface;
+
+    [Header("In Game Particle Effects")]
+    [SerializeField] private List<GameObject> _particleEffectLists;
+
+    [Header("Main Camera")]
+    [SerializeField] private Transform _mainCamera;
+
+    [Header("SharkSelection Main Camera Position")]
+    [SerializeField] private Vector3 _sharkSelectionMainCameraPosition;
+
+    [Header("InGame Camera Position")]
+    [SerializeField] private Vector3 _inGameMainCameraPosition;
+
+    [Header("Player Shark Original Position")]
+    [SerializeField] private Vector3 _playerSharkOriginalPosition;
+
     public int CurrentAmmo { get { return currentAmmoValue; } }
 
     public int CurrentPlayerHealth { get { return currentHealth; } }
@@ -127,12 +147,15 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
         {
-            _gamePausePanel.SetActive(true);
-            _gamePauseAnimationPanel.transform.DOScale(Vector3.one, 1f);
-            SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
-            SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _gamePausePanel.SetActive(true);
+                _gamePauseAnimationPanel.transform.DOScale(Vector3.one, 1f);
+                SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
+                SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+            }
         }
     }
     #endregion
@@ -334,8 +357,14 @@ public class UIController : MonoBehaviour
 
     public void QuitButtonClick()
     {
+        _player.SetActive(false);
         _gameUIPanel.SetActive(false);
         _subscriptionPage.SetActive(true);
+        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.MissionMode;
+        _mainCamera.gameObject.GetComponent<CameraFollow>().enabled = false;
+        _mainCamera.transform.position = _sharkSelectionMainCameraPosition;
+        _gamePausePanel.SetActive(false);
+        _player.transform.position = _playerSharkOriginalPosition;
     }
 
     public void ResumeButtonClick()
@@ -352,6 +381,22 @@ public class UIController : MonoBehaviour
         _GamePanel.SetActive(false);
         _gameOverPanel.SetActive(true);
         _player.GetComponent<Player>().ShowDieState();
+    }
+
+    private void EnableInGameParticleEffects()
+    {
+        foreach(var item in _particleEffectLists)
+        {
+            item.SetActive(true);
+        }
+    }
+
+    private void DisbaleInGameParticleEffects()
+    {
+        foreach (var item in _particleEffectLists)
+        {
+            item.SetActive(false);
+        }
     }
     #endregion
 
@@ -377,7 +422,15 @@ public class UIController : MonoBehaviour
 
         IEnumerator LoadTheGame()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
+
+            _waterSurface.SetActive(true);
+            EnableInGameParticleEffects();
+            _mainCamera.gameObject.GetComponent<CameraFollow>().enabled = true;
+            _mainCamera.transform.position = _inGameMainCameraPosition;
+            _player.SetActive(true);
+
+            yield return new WaitForSeconds(1f);
 
             _loadingPanel.SetActive(false);
             _gameUIPanel.SetActive(true);
@@ -386,7 +439,7 @@ public class UIController : MonoBehaviour
             _missionPanel.SetActive(true);
         }
     }
-
+    [Header("UI Panels")]
     [SerializeField] private GameObject _subscriptionPage;
     [SerializeField] private GameObject _mainMenuPanel;
 
@@ -404,6 +457,7 @@ public class UIController : MonoBehaviour
         _mainMenuPanel.SetActive(false);
         _duplicateShark.SetActive(true);
         _selectionPanel.SetActive(true);
+        _mainCamera.transform.position = _sharkSelectionMainCameraPosition;
     }
 
     #endregion

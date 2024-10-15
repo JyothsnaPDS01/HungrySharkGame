@@ -284,14 +284,17 @@ namespace SharkGame
         {
             if (transitionCompleted || !isTransitioning)
             {
-                HandleMovement();
-                HandleRotation();
-
-                if (Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0))
+                if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
                 {
+                    HandleMovement();
+                    HandleRotation();
+
+                    if (Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0))
+                    {
 #if UNITY_EDITOR
 #endif
-                  //  MoveSharkForward();
+                        //  MoveSharkForward();
+                    }
                 }
             }
         }
