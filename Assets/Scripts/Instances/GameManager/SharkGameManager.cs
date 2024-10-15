@@ -168,7 +168,14 @@ namespace SharkGame
         internal void InitializePlayer()
         {
             _playerSharkPrefab.SetActive(true);
-            if(_currentLevel == 1) _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
+            if (!UIController.Instance.quitButtonClicked)
+            {
+                if (_currentLevel == 1) _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
+            }
+            else if(UIController.Instance.quitButtonClicked)
+            {
+                _playerSharkPrefab.GetComponent<Player>().GameSequence();
+            }
             _playerSharkPrefab.GetComponent<Player>().DisableBloodEffect();
             if (_currentLevel == 2) _sharkEatingCollision.GetComponent<SmallFishTrigger>().DetectionRadius = 1.5f;
             else if (_currentLevel == 3) _sharkEatingCollision.GetComponent<SmallFishTrigger>().DetectionRadius = 2f;
@@ -267,7 +274,7 @@ namespace SharkGame
             {
                 if(UIController.Instance.CurrentPlayerHealth > 0)
                 {
-                    UIController.Instance.UpdatePlayerHealth(1);
+                    UIController.Instance.UpdatePlayerHealth(4);
                     StartTimer();
                 }
                 else if(UIController.Instance.CurrentPlayerHealth == 0)
@@ -304,6 +311,18 @@ namespace SharkGame
             yield return new WaitForSeconds(1f);
 
             UIController.Instance.SetGameOver();
+        }
+
+        internal void ResetGame()
+        {
+            PlayerPrefs.SetInt("CurrentLevel", 1);
+            PlayerPrefs.Save();
+            _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
+            _spawnManager.SetActive(false);
+            destroyCount = 0;
+
+            ObjectPooling.Instance.ClearFishPoolList();
+
         }
         #endregion
 

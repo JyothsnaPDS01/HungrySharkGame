@@ -21,7 +21,11 @@
           "quantity": 5
         }
       ],
-      "enemies": [],
+      "enemies": [
+        {
+          "bomb": "RedBomb"
+        }
+      ],
       "bufferAmount": 5,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -54,7 +58,11 @@
           "quantity": 5
         }
       ],
-      "enemies": [],
+      "enemies": [
+        {
+          "bomb": "TimerBomb"
+        }
+      ],
       "bufferAmount": 1,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -87,7 +95,11 @@
           "quantity": 5
         }
       ],
-      "enemies": [],
+      "enemies": [
+        {
+          "bomb": "SharpBomb"
+        }
+      ],
       "bufferAmount": 15,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -110,7 +122,11 @@
           "quantity": 10
         }
       ],
-      "enemies": [],
+     "enemies": [
+        {
+          "bomb": "TimerBomb"
+        }
+      ],
       "bufferAmount": 15,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -160,7 +176,11 @@
           "quantity": 10
         }
       ],
-      "enemies": [],
+      "enemies": [
+        {
+          "bomb": "RedBomb"
+        }
+      ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -220,7 +240,11 @@
           "quantity": 10
         }
       ],
-      "enemies": [],
+      "enemies": [
+        {
+          "bomb": "TimerBomb"
+        }
+      ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -248,7 +272,11 @@
           "quantity": 10
         }
       ],
-      "enemies": [],
+     "enemies": [
+        {
+          "bomb": "RedBomb"
+        }
+      ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -271,7 +299,11 @@
           "quantity": 10
         }
       ],
-      "enemies": [],
+      "enemies": [
+        {
+          "bomb": "TimerBomb"
+        }
+      ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -351,7 +383,7 @@
       ],
       "enemies": [
         {
-          "bomb": "RedBomb"
+          "bomb": "SharpBomb"
         }
       ],
       "bufferAmount": 10,
@@ -404,7 +436,11 @@
           "quantity": 10
         }
       ],
-      "enemies": [],
+      "enemies": [
+        {
+          "bomb": "TimerBomb"
+        }
+      ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -505,7 +541,11 @@
           "quantity": 10
         }
       ],
-      "enemies": [],
+      "enemies": [
+        {
+          "bomb": "RedBomb"
+        }
+      ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
@@ -535,7 +575,7 @@
       ],
       "enemies": [
         {
-          "bomb": "RedBomb"
+          "bomb": "TimerBomb"
         }
       ],
       "bufferAmount": 10,

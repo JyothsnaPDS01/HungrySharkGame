@@ -38,6 +38,11 @@ namespace SharkGame
         [Header("Game Audio Source")]
         [SerializeField] private AudioSource _inGameAudioSource;
         #endregion
+
+        private void Start()
+        {
+            PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+        }
         public void PlayAudioClip(SharkGameDataModel.Sound _sound)
         {
 #if UNITY_EDITOR
@@ -60,7 +65,10 @@ namespace SharkGame
 #if UNITY_EDITOR
             Debug.LogError("Watersplash" + _sound);
 #endif
-
+            if (UIController.Instance.quitButtonClicked)
+            {
+                _inGameAudioSource.gameObject.GetComponent<AudioSource>().enabled = true;
+            }
             _inGameAudioSource.clip = _soundsList.Find(x => x._soundType == _sound)._audioClip;
             _inGameAudioSource.Play();
             _inGameAudioSource.loop = isLoop;
@@ -71,6 +79,11 @@ namespace SharkGame
         private IEnumerator PlayTheGameAudioTillLength(AudioClip _clip)
         {
             yield return new WaitForSeconds(_clip.length);
+        }
+
+        internal void OnQuitGame()
+        {
+            PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
         }
     }
 }

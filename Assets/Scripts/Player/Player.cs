@@ -41,6 +41,8 @@ namespace SharkGame
         [Header("Shark Type")]
         [SerializeField] private SharkGameDataModel.SharkType _sharkType;
 
+        [Header("CameraFollow Object")]
+        [SerializeField] private GameObject _cameraFollow;
         public bool InitialMovement
         {
             get
@@ -53,8 +55,16 @@ namespace SharkGame
         #endregion
 
         #region Events
+
+        internal void GameSequence()
+        {
+            Debug.LogError("GameSequence");
+            StartCoroutine(SharkMovementInitial());
+        }
         internal void StartGameStartSequence()
         {
+            Debug.LogError("StartGameStartSequence");
+
             // Start the initial shark movement sequence
             StartCoroutine(InitialSharkMovement());
 
@@ -480,6 +490,50 @@ namespace SharkGame
 
                 elapsedTime += Time.deltaTime;
                 yield return new WaitForFixedUpdate();
+            }
+
+            // Ensure final position and rotation are set correctly
+            _sharkRB.MovePosition(targetPosition);
+            _sharkRB.MoveRotation(_targetRotation);
+
+           GameObject.Find("Main Camera").GetComponent<CameraFollow>().smoothSpeed = 0.0015625f;
+            GameObject.Find("Water Surface").SetActive(false);
+
+            // Mark the initial movement as completed
+            initialMovementCompleted = true;
+
+            SharkGameManager.Instance.StartTimer();
+        }
+
+        private IEnumerator SharkMovementInitial()
+        {
+            Debug.Log("Coming to InitialSharkMovement");
+            float elapsedTime = 0f;
+            Quaternion initialRotation = _sharkRB.rotation;
+            if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+            {
+                _targetRotation = Quaternion.Euler(90, 90, -90);
+            }
+            else if (_sharkType == SharkGameDataModel.SharkType.LemonShark)
+            {
+                _targetRotation = Quaternion.Euler(0, 0, 180);
+            }
+
+            Vector3 initialPosition = _sharkRB.position;
+            Vector3 targetPosition = initialPosition + new Vector3(0, -30f, 0);
+
+            SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.WaterSplash);
+
+            while (elapsedTime < 3f)
+            {
+                float t = elapsedTime / 1f;
+
+                // Move and rotate the shark smoothly
+                _sharkRB.MovePosition(Vector3.Lerp(initialPosition, targetPosition, t));
+                _sharkRB.MoveRotation(Quaternion.Slerp(initialRotation, _targetRotation, t));
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
             }
 
             // Ensure final position and rotation are set correctly
@@ -957,6 +1011,21 @@ namespace SharkGame
 
             isDying = false;
 
+        }
+
+        public void ResetPlayer()
+        {
+            // Reset Rigidbody velocities to prevent unintended movement
+            _sharkRB.velocity = Vector3.zero;
+            _sharkRB.angularVelocity = Vector3.zero;
+
+            // Ensure Rigidbody is not influenced by gravity
+            _sharkRB.useGravity = false;
+
+            // Optional: Freeze unnecessary axes if needed
+            _sharkRB.constraints = RigidbodyConstraints.None;
+
+            _sharkRB.interpolation = RigidbodyInterpolation.None;
         }
         #endregion
     }

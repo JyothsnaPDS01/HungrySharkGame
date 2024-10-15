@@ -54,7 +54,7 @@ namespace SharkGame
             {
                 Debug.Log("CallSpawnFishesFrequently");
                 StartCoroutine(CallSpawnFishesFrequently());
-
+                Debug.LogError("HandleGameMode SPawnmanager");
                 SpawnLevelBomb();
             }
         }
@@ -184,6 +184,7 @@ namespace SharkGame
 
         public void SpawnLevelBomb()
         {
+            Debug.LogError("SpawnLevelBomb");
             SharkGameDataModel.Level currentLevelData = UIController.Instance.GetCurrentLevelData();
             if(currentLevelData.enemies.Count > 0)
             {

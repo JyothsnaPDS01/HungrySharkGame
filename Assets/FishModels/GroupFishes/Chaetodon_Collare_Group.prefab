@@ -63,7 +63,7 @@ MonoBehaviour:
   - {fileID: 6083437983665540157}
   - {fileID: 6083437983962412027}
   - {fileID: 6083437982776957864}
-  moveSpeed: 1
+  moveSpeed: 0.5
   _smallFishType: 2
   capacity: 9
   destroyCount: 0

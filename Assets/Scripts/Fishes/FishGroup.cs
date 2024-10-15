@@ -191,7 +191,7 @@ namespace SharkGame
 #endif
             float horizontalSpeed = moveSpeed;   // Increased speed for faster horizontal movement
             float verticalAmplitude = 0.5f;             // Smaller amplitude for a smoother curve
-            float verticalFrequency = 2f;               // Higher frequency for more curves in the sine wave
+            float verticalFrequency = .5f;               // Higher frequency for more curves in the sine wave
             float time = 0f;                            // Track time to simulate wave motion
 
             // Capture the initial Y position to keep the sine wave motion centered around it

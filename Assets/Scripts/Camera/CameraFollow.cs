@@ -15,6 +15,7 @@ namespace SharkGame
 
         private bool isFollowing = false;
 
+
         #region Events
         private void OnEnable()
         {
@@ -23,10 +24,10 @@ namespace SharkGame
 
         private void OnDisable()
         {
-            SharkGameManager.Instance.OnGameModeChanged += HandleGameMode;
+            SharkGameManager.Instance.OnGameModeChanged -= HandleGameMode;
         }
 
-        private void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
+        public void HandleGameMode(SharkGameDataModel.GameMode currentGameMode)
         {
             if(currentGameMode == SharkGameDataModel.GameMode.GameStart)
             {
@@ -63,8 +64,8 @@ namespace SharkGame
                     // Smoothly interpolate between the camera's current position and the desired position
                     Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothSpeed);
 
-                    // Set the camera's position to the smoothed position
-                    transform.position = smoothedPosition;
+                // Set the camera's position to the smoothed position
+                transform.position = smoothedPosition;
 
             }
         }
