@@ -175,6 +175,7 @@ namespace SharkGame
             else if(UIController.Instance.quitButtonClicked)
             {
                 _playerSharkPrefab.GetComponent<Player>().GameSequence();
+                UIController.Instance.quitButtonClicked = false;
             }
             _playerSharkPrefab.GetComponent<Player>().DisableBloodEffect();
             if (_currentLevel == 2) _sharkEatingCollision.GetComponent<SmallFishTrigger>().DetectionRadius = 1.5f;
@@ -204,11 +205,6 @@ namespace SharkGame
         {
             _currentGameMode = SharkGameDataModel.GameMode.MissionMode;
 
-            if (SpawnManager.Instance.BombObject != null)
-            {
-                Destroy(SpawnManager.Instance.BombObject);
-            }
-
             UIController.Instance.EnableKillUI();
             
             StartCoroutine(DelayTheLevel());
@@ -216,7 +212,7 @@ namespace SharkGame
 
         private IEnumerator DelayTheLevel()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(4f);
 
             _sharkEatingCollision.GetComponent<SmallFishTrigger>().IsOnCoolDown = false;
             _playerSharkPrefab.SetActive(false);

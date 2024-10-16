@@ -135,11 +135,38 @@ public class UIController : MonoBehaviour
 
     [Header("Duplicate Camera")]
     [SerializeField] private GameObject _duplicateCamera;
+
+    [Header("Running BGs")]
+    [SerializeField] private List<GameObject> _runningBgList;
+
+    [Header("Running BG sprites")]
+    [SerializeField] private List<Sprite> _runningBgSpriteList;
+
+    [Header("Plane Material")]
+    [SerializeField] private GameObject _planeRandomColorChanger;
+
+    [Header("Shark Selection BG")]
+    [SerializeField] private GameObject _sharkSelectionBGPlane;
+
+    [Header("Duplicate Sharks")]
+    [SerializeField] private List<GameObject> _duplicateSharks;
+
+    [Header("HealthPanels")]
+    [SerializeField] private List<GameObject> _sharkHealthUIPanels;
+
+    [Header("UnderEnvironment Objects Panel")]
+    [SerializeField] private GameObject _underWaterEnvironmentPanel;
+
     public int CurrentAmmo { get { return currentAmmoValue; } }
 
     public int CurrentPlayerHealth { get { return currentHealth; } }
 
     public bool quitButtonClicked;
+
+    [Header("Current Shark Index")]
+    [SerializeField] private int currentSharkIndex = 0;
+
+    public int CurrentSharkIndex { get { return currentSharkIndex; } }
 
     #endregion
 
@@ -151,6 +178,13 @@ public class UIController : MonoBehaviour
         currentAmmoValue = _ammoMaxValue;
         _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
         LoadInitialLevel();
+
+        for(int i=0;i<_runningBgList.Count;i++)
+        {
+            _runningBgList[i].GetComponent<SpriteRenderer>().sprite = _runningBgSpriteList[0];
+        }
+
+        _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
     }
 
     private void Update()
@@ -263,6 +297,13 @@ public class UIController : MonoBehaviour
         _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
         _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
+
+        for (int i = 0; i < _runningBgList.Count; i++)
+        {
+            _runningBgList[i].GetComponent<SpriteRenderer>().sprite = _runningBgSpriteList[SharkGameManager.Instance.CurrentLevel % _runningBgSpriteList.Count];
+        }
+        _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
+        
     }
 
     // Coroutine to animate the number
@@ -296,7 +337,7 @@ public class UIController : MonoBehaviour
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
         _killImage.SetActive(true);
 
-        _killImage.transform.DOScale(Vector3.one, .5f);
+        _killImage.transform.DOScale(Vector3.one, 1f);
     }
 
     internal void DisableKillUI()
@@ -416,7 +457,7 @@ public class UIController : MonoBehaviour
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
         SharkGameManager.Instance.PlayGameAudio();
         _gamePausePanel.SetActive(false);
-        _gameUIPanel.SetActive(true);
+        _GamePanel.SetActive(true);
     }
 
     internal void SetGameOver()
@@ -457,7 +498,7 @@ public class UIController : MonoBehaviour
     public void BiteButtonClick()
     {
         _selectionPanel.SetActive(false);
-        _duplicateShark.SetActive(false);
+        //_duplicateShark.SetActive(false);
         _loadingPanel.SetActive(true);
 
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
@@ -492,10 +533,11 @@ public class UIController : MonoBehaviour
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 
         _mainMenuPanel.SetActive(false);
-        _duplicateShark.SetActive(true);
+        //_duplicateShark.SetActive(true);
         _selectionPanel.SetActive(true);
-        //_mainCamera.transform.position = _sharkSelectionMainCameraPosition;
-
+        _sharkSelectionBGPlane.SetActive(true);
+        _underWaterEnvironmentPanel.SetActive(true);
+        _duplicateSharks[currentSharkIndex].SetActive(true);
         _duplicateCamera.SetActive(true);
     }
 
@@ -504,6 +546,8 @@ public class UIController : MonoBehaviour
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
         _subscriptionPage.SetActive(false);
         _mainMenuPanel.SetActive(true);
+        _sharkSelectionBGPlane.SetActive(false);
+        _underWaterEnvironmentPanel.SetActive(false);
     }
 
     public void SetMainCameraOriginalPosition()
@@ -515,6 +559,79 @@ public class UIController : MonoBehaviour
     public void CameraFollowCallHandleMode()
     {
         _cameraFollow.GetComponent<CameraFollow>().HandleGameMode(SharkGameManager.Instance.CurrentGameMode);
+    }
+
+    [Header("Selection Panels Right/Left Buttons")]
+    [SerializeField] private Button rightButton;
+    [SerializeField] private Button leftButton;
+
+    [Header("Selection Bite Panel")]
+    [SerializeField] private GameObject _bitePanel;
+    [SerializeField] private Button _biteButton;
+    [Header("Selection Purchase Panel")]
+    [SerializeField] private GameObject _purchasePanel;
+    [SerializeField] private Button _purchaseButton;
+
+    public void RightArrowClick()
+    {
+        if (currentSharkIndex < _duplicateSharks.Capacity -1)
+        {
+            Debug.LogError("RightArrowClick");
+            _duplicateSharks[currentSharkIndex].SetActive(false);
+            currentSharkIndex += 1;
+            _duplicateSharks[currentSharkIndex].SetActive(true);
+            _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
+            leftButton.interactable = true;
+            _purchasePanel.SetActive(true);
+            _bitePanel.SetActive(false);
+
+
+            Navigation _LeftButton = leftButton.navigation;
+            _LeftButton.selectOnDown = _purchaseButton;
+            leftButton.navigation = _LeftButton;
+
+            Navigation _Right = rightButton.navigation;
+            _Right.selectOnDown = _purchaseButton;
+            rightButton.navigation = _Right;
+
+        }
+    }
+
+    public void LeftArrowClick()
+    {
+        if (currentSharkIndex > 0)
+        {
+            rightButton.interactable = true;
+            _duplicateSharks[currentSharkIndex].SetActive(false);
+            currentSharkIndex -= 1;
+            _duplicateSharks[currentSharkIndex].SetActive(true);
+            _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
+            _purchasePanel.SetActive(true);
+            _bitePanel.SetActive(false);
+
+            Navigation _LeftButton = leftButton.navigation;
+            _LeftButton.selectOnDown = _purchaseButton;
+            leftButton.navigation = _LeftButton;
+
+            Navigation _Right = rightButton.navigation;
+            _Right.selectOnDown = _purchaseButton;
+            rightButton.navigation = _Right;
+
+        }
+        if (currentSharkIndex == 0)
+        {
+            _bitePanel.SetActive(true);
+            _purchasePanel.SetActive(false);
+
+            Navigation _LeftButton = leftButton.navigation;
+            _LeftButton.selectOnDown = _biteButton;
+            leftButton.navigation = _LeftButton;
+
+            Navigation _Right = rightButton.navigation;
+            _Right.selectOnDown = _biteButton;
+            rightButton.navigation = _Right;
+
+        }
     }
     #endregion
 }

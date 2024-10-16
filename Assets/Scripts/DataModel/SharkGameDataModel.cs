@@ -166,5 +166,20 @@ namespace SharkGame.Models
             public GameObject _bombObject;
         }
         #endregion
+
+        #region Screens/Panels
+        [System.Serializable]
+        public enum Screens
+        {
+            None,
+            SubscriptionPanel,
+            MainMenuScreen,
+            LoadingPanel,
+            SelectionPanel,
+            MissionPanel,
+            GamePausePanel,
+            InGamePanel
+        }
+        #endregion
     }
 }

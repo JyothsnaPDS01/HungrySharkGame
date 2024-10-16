@@ -59,15 +59,16 @@ namespace SharkGame
             }
             else if (SharkGameManager.Instance.CurrentLevel == 3 || SharkGameManager.Instance.CurrentLevel == 6 || SharkGameManager.Instance.CurrentLevel == 17)
             {
-                StartCoroutine(MoveInCurvedSineWave());
+                StartCoroutine(MoveInCurvedSineWave(50f));
             }
             else if (SharkGameManager.Instance.CurrentLevel == 4 || SharkGameManager.Instance.CurrentLevel == 18 )
             {
-                StartCoroutine(MoveInCircularPath());
+                //StartCoroutine(MoveInCircularPath());
+                StartCoroutine(MoveInParabolicArc(50f));
             }
             else if(SharkGameManager.Instance.CurrentLevel == 5 || SharkGameManager.Instance.CurrentLevel == 20)
             {
-                StartCoroutine(EscapeFromPlayer(GameObject.Find("Player_Shark").transform));
+                StartCoroutine(ReverseEscape(GameObject.Find("Player_Shark").transform));
             }
             else if(SharkGameManager.Instance.CurrentLevel == 7 || SharkGameManager.Instance.CurrentLevel == 13)
             {
@@ -91,10 +92,6 @@ namespace SharkGame
             else if(SharkGameManager.Instance.CurrentLevel == 10 || SharkGameManager.Instance.CurrentLevel == 15)
             {
                 StartCoroutine(ReverseEscape(GameObject.Find("Player_Shark").transform));
-            }
-            else
-            {
-                StartCoroutine(MoveThroughWaypoints(this));
             }
         }
 
@@ -184,15 +181,54 @@ namespace SharkGame
             }
         }
 
-        private IEnumerator MoveInCurvedSineWave()
+        private IEnumerator MoveInParabolicArc(float duration)
+        {
+            float horizontalSpeed = moveSpeed;
+            float arcHeight = 1f;  // Peak height of the arc
+
+            float startX = transform.position.x;
+            float targetX = isMovingRight ? maxX : minX;
+
+            float initialY = transform.position.y;
+
+            // Apply the appropriate rotation based on the direction
+            transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+
+            while (true)
+            {
+                float elapsedTime = 0f;
+
+                while (elapsedTime < duration)
+                {
+                    float t = elapsedTime / duration;
+                    float newX = Mathf.Lerp(startX, targetX, t);
+
+                    // Calculate a parabolic arc
+                    float arcOffset = Mathf.Sin(t * Mathf.PI) * arcHeight; // Creates the arc effect
+                    float newY = initialY + arcOffset;
+
+                    transform.position = new Vector3(newX, newY, transform.position.z);
+
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
+
+                // Switch direction
+                isMovingRight = !isMovingRight;
+
+                yield return null;
+            }
+        }
+
+
+        private IEnumerator MoveInCurvedSineWave(float duration)
         {
 #if UNITY_EDITOR
             Debug.LogError("MoveInCurvedSineWave");
 #endif
-            float horizontalSpeed = moveSpeed;   // Increased speed for faster horizontal movement
-            float verticalAmplitude = 0.5f;             // Smaller amplitude for a smoother curve
-            float verticalFrequency = .5f;               // Higher frequency for more curves in the sine wave
-            float time = 0f;                            // Track time to simulate wave motion
+            float horizontalSpeed = moveSpeed;   // Speed for horizontal movement
+            float verticalAmplitude = 0.5f;      // Amplitude for sine wave motion (vertical movement)
+            float verticalFrequency = 0.5f;      // Frequency of sine wave (how many waves per second)
 
             // Capture the initial Y position to keep the sine wave motion centered around it
             float initialY = transform.position.y;
@@ -200,84 +236,167 @@ namespace SharkGame
             while (true)
             {
                 // Ensure the fish swim animation plays for each small fish
-                foreach (var item in smallFishes)
+                foreach (var fish in smallFishes)
                 {
-                    item.PlaySwimAnimation();
+                    fish.GetComponent<Animator>()?.SetTrigger("Swim"); // Assuming there's an Animator for each fish
                 }
 
-                // Determine the target X position (either maxX or minX based on direction)
+                // Determine the starting and target X position (based on the current direction)
+                float startX = transform.position.x;
                 float targetX = isMovingRight ? maxX : minX;
 
                 // Apply the appropriate rotation based on the direction
                 transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
 
-                // Start moving the fish group horizontally while applying a smoother sine wave for vertical movement
-                while (Mathf.Abs(transform.position.x - targetX) > 0.1f)
-                {
-                    // Calculate the new X and Y positions
-                    float newX = Mathf.MoveTowards(transform.position.x, targetX, horizontalSpeed * Time.deltaTime);
-                    float newY = Mathf.Sin(time * verticalFrequency) * verticalAmplitude + initialY; // Smoother, gentler curve
+                float elapsedTime = 0f;
 
-                    // Update the position with both horizontal and sine wave vertical motion
+                // Move the fish for the specified duration
+                while (elapsedTime < duration)
+                {
+                    // Calculate how far along the movement is based on the elapsed time
+                    float t = elapsedTime / duration;
+
+                    // Interpolate X position between startX and targetX
+                    float newX = Mathf.Lerp(startX, targetX, t);
+
+                    // Calculate the Y position using sine wave
+                    float newY = Mathf.Sin(t * Mathf.PI * 2f * verticalFrequency) * verticalAmplitude + initialY;
+
+                    // Update the fish position with the new calculated values
                     transform.position = new Vector3(newX, newY, transform.position.z);
 
-                    time += Time.deltaTime * 2; // Increase time faster to simulate faster sine wave motion
+                    // Increase the elapsed time by Time.deltaTime to make the movement frame-rate independent
+                    elapsedTime += Time.deltaTime;
 
+                    // Wait for the next frame
                     yield return null;
                 }
 
-                // Switch direction after reaching the target position
+                // Switch the movement direction after reaching the target X position
                 isMovingRight = !isMovingRight;
 
-                yield return null; // Small delay before switching direction
+                // Wait for one frame before restarting the movement in the opposite direction
+                yield return null;
             }
         }
+
 
         private IEnumerator MoveInCircularPath()
         {
 #if UNITY_EDITOR
             Debug.LogError("MoveInCircularPath");
 #endif
-            float horizontalSpeed = moveSpeed;     // Increased speed for faster circular movement
-            float radius = 1f;                     // Radius of the circular path
-            float angle = 0f;                      // Track the angle for circular movement
-            Vector3 centerPosition = transform.position; // Central point of the circular movement
+            float radius = 1f;                              // Radius of the circular path
+            float angle = 0f;                               // Track the angle for circular movement
+            float horizontalSpeed = moveSpeed;              // Speed for circular movement
+            float horizontalMoveDistance = 2f;              // Distance to move horizontally after circle
+            float duration = 0.5f;                          // Custom duration value
+            Vector3 centerPosition = transform.position;    // Central point of the circular movement
 
             while (true)
             {
-                // Ensure the fish swim animation plays for each small fish
-                foreach (var item in smallFishes)
+                // Circular movement
+                while (angle < 360f)
                 {
-                    item.PlaySwimAnimation();
+                    // Ensure the fish swim animation plays for each small fish
+                    foreach (var item in smallFishes)
+                    {
+                        item.PlaySwimAnimation();
+                    }
+
+                    // Calculate the next position based on the circular movement formula
+                    float newX = centerPosition.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
+                    float newY = centerPosition.y + Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
+                    Vector3 newPosition = new Vector3(newX, newY, transform.position.z);
+
+                    // Calculate the direction from the current position to the next position
+                    Vector3 direction = newPosition - transform.position;
+
+                    // Apply rotation to face the direction of movement
+                    if (direction != Vector3.zero)
+                    {
+                        float angleToTarget = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                        transform.rotation = Quaternion.Euler(0f, angleToTarget, 0f);
+                    }
+
+                    // Update the position to simulate circular movement
+                    transform.position = newPosition;
+
+                    // Increase the angle based on duration (instead of Time.deltaTime)
+                    angle += duration * horizontalSpeed;
+
+                    yield return null;
                 }
 
-                // Calculate the next position based on the circular movement formula
-                float newX = centerPosition.x + Mathf.Cos(angle) * radius;
-                float newY = centerPosition.y + Mathf.Sin(angle) * radius;
-                Vector3 newPosition = new Vector3(newX, newY, transform.position.z);
+                // Reset the angle after completing the circle
+                angle = 0f;
 
-                // Calculate the direction from the current position to the next position
-                Vector3 direction = newPosition - transform.position;
+                // Horizontal movement
+                Vector3 startPosition = transform.position;
+                Vector3 targetPosition = startPosition + new Vector3(horizontalMoveDistance, 0, 0); // Move horizontally to the right
 
-                // Apply rotation to face the direction of movement
-                if (direction != Vector3.zero)
+                float elapsedTime = 0f;
+                while (elapsedTime < duration)
                 {
-                    float angleToTarget = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                    transform.rotation = Quaternion.Euler(0f, angleToTarget, 0f);
+                    // Lerp for smooth horizontal movement
+                    transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
+
+                    elapsedTime += duration; // Use custom duration instead of Time.deltaTime
+
+                    yield return null;
                 }
 
-                // Update the position to simulate circular movement
-                transform.position = newPosition;
+                // After horizontal movement, update centerPosition for the next circle
+                centerPosition = transform.position;
 
-                // Increase the angle over time to continue the circular motion
-                angle += Time.deltaTime * horizontalSpeed;
+                // Small delay before repeating
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
 
-                // Reset the angle to avoid overflow
-                if (angle >= 360f)
+        private IEnumerator MoveInZigZag(float duration)
+        {
+#if UNITY_EDITOR
+            Debug.LogError("MoveInZigZag");
+#endif
+            float horizontalSpeed = moveSpeed * 0.5f; // Halve the speed for slower movement
+            float verticalAmplitude = 1f;
+            float zigzagFrequency = 1f;
+
+            float initialY = transform.position.y;
+
+            while (true)
+            {
+                foreach (var fish in smallFishes)
                 {
-                    angle = 0f;
+                    fish.GetComponent<Animator>()?.SetTrigger("Swim");
                 }
 
+                float startX = transform.position.x;
+                float targetX = isMovingRight ? maxX : minX;
+
+                transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+
+                float elapsedTime = 0f;
+
+                while (elapsedTime < duration)
+                {
+                    float t = elapsedTime / duration;
+                    float newX = Mathf.Lerp(startX, targetX, t);
+
+                    // Zig-zag movement
+                    float zigZagOffset = Mathf.PingPong(t * zigzagFrequency, verticalAmplitude) - (verticalAmplitude / 2f);
+                    float newY = initialY + zigZagOffset;
+
+                    transform.position = new Vector3(newX, newY, transform.position.z);
+
+                    // Increase elapsed time based on a smaller fraction for slower movement
+                    elapsedTime += Time.deltaTime * 0.5f; // Slower increment
+
+                    yield return null;
+                }
+
+                isMovingRight = !isMovingRight;
                 yield return null;
             }
         }

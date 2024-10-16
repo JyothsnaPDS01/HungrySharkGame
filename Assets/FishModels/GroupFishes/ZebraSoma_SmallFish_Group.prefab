@@ -70,7 +70,7 @@ MonoBehaviour:
   slowSpeed: 0.5
   sharkTransform: {fileID: 0}
   approachSpeed: 1
-  escapeSpeed: 0.5
+  escapeSpeed: 1.5
   escapeThreshold: 1
   escapeDistance: 1
 --- !u!114 &-1981203058932209993

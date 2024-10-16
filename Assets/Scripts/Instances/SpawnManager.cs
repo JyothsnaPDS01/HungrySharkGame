@@ -55,6 +55,13 @@ namespace SharkGame
                 Debug.Log("CallSpawnFishesFrequently");
                 StartCoroutine(CallSpawnFishesFrequently());
                 Debug.LogError("HandleGameMode SPawnmanager");
+                if (SharkGameManager.Instance.CurrentLevel > 1)
+                {
+                    if (bombObject != null)
+                    {
+                        Destroy(bombObject);
+                    }
+                }
                 SpawnLevelBomb();
             }
         }
