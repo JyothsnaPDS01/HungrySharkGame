@@ -748,21 +748,32 @@ namespace SharkGame
                 // Start the cooldown to avoid jerky movements
                 StartCoroutine(CollisionCooldown());
             }
-
+         
 
             if (collision.gameObject.CompareTag("Bomb"))
             {
                 if (UIController.Instance.CurrentAmmo > 0)
                 {
+                    SharkGameDataModel.BombType bombType = collision.gameObject.GetComponent<BombScript>().GetBombType();
                     UIController.Instance.UpdateAmmoHealth(5);
                     SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.BombSound);
                     TriggerShake();
+                    Destroy(collision.gameObject);
+
+                    StartCoroutine(SpawnAfterDelay(bombType));
                 }
                 else if (UIController.Instance.CurrentAmmo == 0)
                 {
                     SharkGameManager.Instance.SetGameOver();
                 }
             }
+        }
+
+        IEnumerator SpawnAfterDelay(SharkGameDataModel.BombType bombType)
+        {
+            Debug.LogError("SpawnAfterDelay");
+            yield return new WaitForSeconds(3f);
+            SpawnManager.Instance.RespawnBomb(bombType);
         }
 
        

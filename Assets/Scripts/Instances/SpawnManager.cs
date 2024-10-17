@@ -24,6 +24,17 @@ namespace SharkGame
 
         [SerializeField] private List<GameObject> activeFishes = new List<GameObject>(); // Active fish tracking
 
+        [Header("Bomb Spawn Positions")]
+        [SerializeField] private List<Transform> bombSpawnPoints;
+
+        public List<Transform> BombSpawnPoints
+        {
+            get
+            {
+                return bombSpawnPoints;
+            }
+        }
+
         private GameObject bombObject;
 
         public GameObject BombObject { get { return bombObject; } }
@@ -195,11 +206,31 @@ namespace SharkGame
             SharkGameDataModel.Level currentLevelData = UIController.Instance.GetCurrentLevelData();
             if(currentLevelData.enemies.Count > 0)
             {
-                GameObject _bombObject = SharkGameManager.Instance.BombObjectLists.Find(x => x._bombType == GetBombType(currentLevelData.enemies[0].bomb))._bombObject;
-                Transform _bombSpawnPosition = SharkGameManager.Instance.BombObjectLists.Find(x => x._bombType == GetBombType(currentLevelData.enemies[0].bomb)).bombPosition;
-                bombObject = Instantiate(_bombObject, _bombSpawnPosition);
+                for(int i=0;i< currentLevelData.enemies.Capacity;i++)
+                {
+                    GameObject _bombObject = SharkGameManager.Instance.BombObjectLists.Find(x => x._bombType == GetBombType(currentLevelData.enemies[i].bomb))._bombObject;
+                    Instantiate(_bombObject, bombSpawnPoints[i]);
+                }
             }
         }
+
+        public void RespawnBomb(SharkGameDataModel.BombType _bombType)
+        {
+            Debug.LogError("RespawnBomb");
+            Debug.LogError("BombType" + _bombType);
+            GameObject bomb = SharkGameManager.Instance.BombObjectLists.Find(x => x._bombType == _bombType)._bombObject;
+            Debug.LogError("BombObject" + bomb.name);
+            foreach(var item in bombSpawnPoints)
+            {
+                if(item.childCount == 0)
+                {
+                    Instantiate(bomb, item);
+                    break;
+                }
+            }
+            
+        }
+
         SharkGameDataModel.BombType bombType;
         private SharkGameDataModel.BombType GetBombType(string bombName)
         {

@@ -61,6 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAmount: 0.5
   moveSpeed: 0.5
+  _bombType: 1
 --- !u!1001 &50348465544210652
 PrefabInstance:
   m_ObjectHideFlags: 0

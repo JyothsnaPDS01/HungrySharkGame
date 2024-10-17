@@ -155,13 +155,13 @@ namespace SharkGame.Models
             None,
             RedBomb,
             TimerBomb,
-            SharpBomb
+            SharpBomb,
+            WaterBomb
         }
 
         [System.Serializable]
         public class BombObject
         {
-            public Transform bombPosition;
             public BombType _bombType;
             public GameObject _bombObject;
         }

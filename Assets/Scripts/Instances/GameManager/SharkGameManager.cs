@@ -205,9 +205,19 @@ namespace SharkGame
         {
             _currentGameMode = SharkGameDataModel.GameMode.MissionMode;
 
+            foreach(var item in SpawnManager.Instance.BombSpawnPoints)
+            {
+                if(item.childCount > 0)
+                {
+                    GameObject obj = item.GetChild(0).gameObject;
+                    Destroy(obj);
+                }
+            }
+
             UIController.Instance.EnableKillUI();
             
             StartCoroutine(DelayTheLevel());
+           
         }
 
         private IEnumerator DelayTheLevel()

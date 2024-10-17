@@ -157,6 +157,9 @@ public class UIController : MonoBehaviour
     [Header("UnderEnvironment Objects Panel")]
     [SerializeField] private GameObject _underWaterEnvironmentPanel;
 
+    [Header("SharkSelection Coins UI")]
+    [SerializeField] private Text _sharkSelectionCoinsTMP;
+
     public int CurrentAmmo { get { return currentAmmoValue; } }
 
     public int CurrentPlayerHealth { get { return currentHealth; } }
@@ -177,6 +180,7 @@ public class UIController : MonoBehaviour
         currentHealth = _playerMaxHealth;
         currentAmmoValue = _ammoMaxValue;
         _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+        _sharkSelectionCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
         LoadInitialLevel();
 
         for(int i=0;i<_runningBgList.Count;i++)
@@ -285,6 +289,7 @@ public class UIController : MonoBehaviour
         _huntPanelContinueButton.interactable = false;
 
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
+        _sharkSelectionCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
 
         _continueButton.SetActive(true);
 
@@ -303,7 +308,9 @@ public class UIController : MonoBehaviour
             _runningBgList[i].GetComponent<SpriteRenderer>().sprite = _runningBgSpriteList[SharkGameManager.Instance.CurrentLevel % _runningBgSpriteList.Count];
         }
         _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
-        
+
+        MakeMaxHealth();
+        MakeMaxAmmo();
     }
 
     // Coroutine to animate the number
@@ -325,7 +332,6 @@ public class UIController : MonoBehaviour
         _coinsTMP.text = endValue.ToString();
     }
 
-
     internal void EnableKillUI()
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.MissionPassed);
@@ -335,9 +341,16 @@ public class UIController : MonoBehaviour
         _GamePanel.SetActive(false);
 
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
-        _killImage.SetActive(true);
 
-        _killImage.transform.DOScale(Vector3.one, 1f);
+        StartCoroutine(WaitForTheAnimation());
+
+        IEnumerator WaitForTheAnimation()
+        {
+            yield return new WaitForSeconds(1f);
+            _killImage.SetActive(true);
+            _killImage.transform.DOScale(Vector3.one, 2f);
+        }
+       
     }
 
     internal void DisableKillUI()
@@ -358,7 +371,7 @@ public class UIController : MonoBehaviour
         _huntCompletePanel.SetActive(true);
 
         // Rotate the object from 0 to -360 on the Z-axis and loop back to 0
-        _rayImage.transform.DORotate(new Vector3(0, 0, -360), 5f, RotateMode.FastBeyond360)
+        _rayImage.transform.DORotate(new Vector3(0, 0, -360), 20f, RotateMode.FastBeyond360)
             .SetLoops(-1, LoopType.Yoyo) // Infinite loop between 0 and -360
             .SetEase(Ease.Linear);
 
@@ -397,6 +410,12 @@ public class UIController : MonoBehaviour
         _healthSlider.value = (float)currentHealth / _playerMaxHealth;
         SharkGameManager.Instance.PlayerHealthTimerRemaining = SharkGameManager.Instance._healthDuration;
         SharkGameManager.Instance.StartHealthTimer(SharkGameManager.Instance.PlayerHealthTimerRemaining);
+    }
+
+    internal void MakeMaxAmmo()
+    {
+        currentAmmoValue = 100;
+        _ammoSlider.value = (float)currentAmmoValue / _ammoMaxValue;
     }
 
     internal void UpdateAmmoHealth(int _damageAmount)
@@ -498,8 +517,13 @@ public class UIController : MonoBehaviour
     public void BiteButtonClick()
     {
         _selectionPanel.SetActive(false);
-        //_duplicateShark.SetActive(false);
         _loadingPanel.SetActive(true);
+        _sharkSelectionBGPlane.SetActive(false);
+
+        foreach(var item in _duplicateSharks)
+        {
+            item.SetActive(false);
+        }
 
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SharkGame.Models;
 
 namespace SharkGame
 {
@@ -12,6 +13,9 @@ namespace SharkGame
 
         private float originalY;        // Starting Y position of the object
         private bool movingUp = true;   // Direction flag
+
+        [SerializeField] private SharkGameDataModel.BombType _bombType;
+        private Transform _spawnPosition;
         #endregion
 
         #region MonoBehaviour Methods
@@ -46,6 +50,25 @@ namespace SharkGame
 
             transform.position = position; // Apply the new position
         }
+        #endregion
+
+        public SharkGameDataModel.BombType GetBombType()
+        {
+            return _bombType;
+        }
+
+        public void SetPosition(Transform position)
+        {
+            _spawnPosition = position;
+        }
+
+        public Transform GetSpawnPosition()
+        {
+            return _spawnPosition;
+        }
+
+        #region Collision
+
         #endregion
     }
 }
