@@ -660,7 +660,6 @@ namespace SharkGame
                 // Return the entire fish group to the pool
                 Debug.LogError("Pool Object after group size meet" + this.gameObject.name);
 #endif
-                SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.SharkSound);
                 ObjectPooling.Instance.ReturnToPool(this.gameObject, _smallFishType);
 
                 // Reset the destroy count

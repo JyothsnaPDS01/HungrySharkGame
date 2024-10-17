@@ -75,6 +75,9 @@ namespace SharkGame
         [Header("Time Remaining")]
         [SerializeField] private float timeRemaining;
 
+        [Header("Player Shark Original Position")]
+        [SerializeField] private Vector3 _playerSharkOriginalPosition;
+
         public float PlayerHealthTimerRemaining
         {
             set { timeRemaining = value; }
@@ -137,6 +140,8 @@ namespace SharkGame
                 Destroy(gameObject); // Destroy duplicate instance
             }
         }
+
+       
         #endregion
 
         #region GameMode
@@ -171,6 +176,11 @@ namespace SharkGame
             if (!UIController.Instance.quitButtonClicked)
             {
                 if (_currentLevel == 1) _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
+                else
+                {
+                    _playerSharkPrefab.GetComponent<Player>().GameSequence();
+                }
+                _playerSharkPrefab.GetComponent<Player>().EnableInput();
             }
             else if(UIController.Instance.quitButtonClicked)
             {
@@ -205,19 +215,11 @@ namespace SharkGame
         {
             _currentGameMode = SharkGameDataModel.GameMode.MissionMode;
 
-            foreach(var item in SpawnManager.Instance.BombSpawnPoints)
-            {
-                if(item.childCount > 0)
-                {
-                    GameObject obj = item.GetChild(0).gameObject;
-                    Destroy(obj);
-                }
-            }
+            UIController.Instance.DestroyBombs();
 
             UIController.Instance.EnableKillUI();
             
             StartCoroutine(DelayTheLevel());
-           
         }
 
         private IEnumerator DelayTheLevel()
@@ -225,13 +227,8 @@ namespace SharkGame
             yield return new WaitForSeconds(4f);
 
             _sharkEatingCollision.GetComponent<SmallFishTrigger>().IsOnCoolDown = false;
-            _playerSharkPrefab.SetActive(false);
-            _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
-            _spawnManager.SetActive(false);
-            destroyCount = 0;
 
-            StopGameAudio();
-            ObjectPooling.Instance.ClearFishPoolList();
+            ResetPlayerAndObjectPooling();
 
             _currentLevel = _currentLevel + 1;
             PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
@@ -328,7 +325,25 @@ namespace SharkGame
             destroyCount = 0;
 
             ObjectPooling.Instance.ClearFishPoolList();
+        }
+        #endregion
 
+        #region ResetPlayerPosition & ObjectPooling
+
+        //This is the common method to set the player position and Set the items back to pool
+        internal void ResetPlayerAndObjectPooling()
+        {
+            _playerSharkPrefab.SetActive(false);
+
+            _playerSharkPrefab.transform.position = _playerSharkOriginalPosition;
+            _playerSharkPrefab.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
+            _spawnManager.SetActive(false);
+            destroyCount = 0;
+
+            StopGameAudio();
+            ObjectPooling.Instance.ClearFishPoolList();
         }
         #endregion
 

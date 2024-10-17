@@ -282,7 +282,6 @@ namespace SharkGame
                 if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
                 {
                     _fishObject.transform.parent = null; // Remove from the shark's mouth
-                    ObjectPooling.Instance.ClearFishPoolList();
                     yield return new WaitForSeconds(1f);
                     SharkGameManager.Instance.LoadNextLevel();
                 }

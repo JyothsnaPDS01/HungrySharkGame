@@ -49,6 +49,7 @@ public class UIController : MonoBehaviour
 
         DisbaleInGameParticleEffects();
     }
+ 
     #endregion
 
     #region Private Variables
@@ -191,6 +192,8 @@ public class UIController : MonoBehaviour
         }
 
         _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
+
+        StartCoroutine(PlaySharkSoundRepeatedly());
     }
 
     private void Update()
@@ -208,6 +211,24 @@ public class UIController : MonoBehaviour
         }
     }
     #endregion
+
+    private IEnumerator PlaySharkSoundRepeatedly()
+    {
+        while (true)
+        {
+            if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
+                SoundManager.Instance.PlaySharkAudioClip(SharkGameDataModel.Sound.SharkSound);
+
+                yield return new WaitForSeconds(5f);
+            }
+            else
+            {
+                // If not in GameStart mode, pause and check again after a short delay
+                yield return null;
+            }
+        }
+    }
 
     #region Button Actions
     public void LevelButtonClick()
@@ -234,6 +255,7 @@ public class UIController : MonoBehaviour
         _killAmountTMP.text = "0 /" + _currentLevelData.targets[0].amount.ToString();
 
         _GamePanel.SetActive(true);
+        _inGameLevelNumberTMP.text = "Level :" + " " + SharkGameManager.Instance.CurrentLevel.ToString();
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
         SharkGameManager.Instance.PlayGameAudio();
         SharkGameManager.Instance.InitializePlayer();
@@ -422,34 +444,23 @@ public class UIController : MonoBehaviour
 
     internal void UpdateAmmoHealth(int _damageAmount)
     {
-        if (currentAmmoValue > 0)
+        if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
         {
-            currentAmmoValue -= _damageAmount;
-
-            // Prevent currentAmmoValue from going below zero
-            if (currentAmmoValue < 0)
+            if (currentAmmoValue > 0)
             {
-                currentAmmoValue = 0;
-            }
+                currentAmmoValue -= _damageAmount;
 
-            // Update the slider value safely
-            if (_ammoMaxValue > 0)
-            {
                 _ammoSlider.value = (float)currentAmmoValue / _ammoMaxValue;
             }
-            else
+            if (currentAmmoValue == 0)
             {
-                _ammoSlider.value = 0; // Handle the case where ammo max value is zero
+                SharkGameManager.Instance.SetGameOver();
             }
         }
     }
 
     public void QuitButtonClick()
     {
-        if (SpawnManager.Instance.BombObject != null)
-        {
-            Destroy(SpawnManager.Instance.BombObject);
-        }
         _player.SetActive(false);
         _gamePausePanel.SetActive(false);
         _subscriptionPage.SetActive(true);
@@ -458,7 +469,6 @@ public class UIController : MonoBehaviour
         _player.transform.rotation = Quaternion.Euler(0, 0, 0);
         _mainCamera.gameObject.GetComponent<CameraFollow>().smoothSpeed = 0.075f;
         quitButtonClicked = true;
-
 
         _player.GetComponent<Player>().ResetPlayer();
         ResetGameData();
@@ -477,6 +487,7 @@ public class UIController : MonoBehaviour
     {
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
         SharkGameManager.Instance.PlayGameAudio();
+        _inGameLevelNumberTMP.text = "Level :" + " " + SharkGameManager.Instance.CurrentLevel.ToString();
         _gamePausePanel.SetActive(false);
         _GamePanel.SetActive(true);
     }
@@ -486,6 +497,7 @@ public class UIController : MonoBehaviour
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.MissionFail);
         _GamePanel.SetActive(false);
         _gameOverPanel.SetActive(true);
+        DestroyBombs();
         _player.GetComponent<Player>().ShowDieState();
     }
 
@@ -522,6 +534,7 @@ public class UIController : MonoBehaviour
         _selectionPanel.SetActive(false);
         _loadingPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(false);
+        _underWaterEnvironmentPanel.SetActive(true);
 
         foreach(var item in _duplicateSharks)
         {
@@ -564,7 +577,7 @@ public class UIController : MonoBehaviour
         _mainMenuPanel.SetActive(false);
         _selectionPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(true);
-        _underWaterEnvironmentPanel.SetActive(true);
+        _underWaterEnvironmentPanel.SetActive(false);
         _duplicateSharks[currentSharkIndex].SetActive(true);
         _duplicateCamera.SetActive(true);
         _portalImage.transform.DOKill();
@@ -593,7 +606,6 @@ public class UIController : MonoBehaviour
 
     public void SetMainCameraOriginalPosition()
     {
-        //_mainCamera.transform.position = _inGameMainCameraPosition;
         _duplicateCamera.SetActive(false);
     }
 
@@ -612,6 +624,9 @@ public class UIController : MonoBehaviour
     [Header("Selection Purchase Panel")]
     [SerializeField] private GameObject _purchasePanel;
     [SerializeField] private Button _purchaseButton;
+
+    [Header("InGame Level Number Reference")]
+    [SerializeField] private Text _inGameLevelNumberTMP;
 
     public void RightArrowClick()
     {
@@ -677,6 +692,10 @@ public class UIController : MonoBehaviour
 
     public void LevelFailContinueButtonClick()
     {
+        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.MissionMode;
+
+        SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+
         _gameOverPanel.SetActive(false);
         _selectionPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(true);
@@ -684,8 +703,23 @@ public class UIController : MonoBehaviour
         _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
 
         _player.GetComponent<Player>().ResetSharkIdleState();
-        _player.transform.position = _playerSharkOriginalPosition;
-        _player.transform.rotation = Quaternion.Euler(0, 0, 0);
+       
+        _underWaterEnvironmentPanel.SetActive(false);
+        _duplicateCamera.SetActive(true);
+
+        SharkGameManager.Instance.ResetPlayerAndObjectPooling();
+    }
+
+    internal void DestroyBombs()
+    {
+        foreach (var item in SpawnManager.Instance.BombSpawnPoints)
+        {
+            if (item.childCount > 0)
+            {
+                GameObject obj = item.GetChild(0).gameObject;
+                Destroy(obj);
+            }
+        }
     }
     #endregion
 }

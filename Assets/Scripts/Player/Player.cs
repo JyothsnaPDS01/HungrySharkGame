@@ -762,10 +762,10 @@ namespace SharkGame
 
                     StartCoroutine(SpawnAfterDelay(bombType));
                 }
-                else if (UIController.Instance.CurrentAmmo == 0)
-                {
-                    SharkGameManager.Instance.SetGameOver();
-                }
+                //else if (UIController.Instance.CurrentAmmo == 0)
+                //{
+                    //SharkGameManager.Instance.SetGameOver();
+                //}
             }
         }
 
