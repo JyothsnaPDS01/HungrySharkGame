@@ -755,7 +755,7 @@ namespace SharkGame
                 if (UIController.Instance.CurrentAmmo > 0)
                 {
                     SharkGameDataModel.BombType bombType = collision.gameObject.GetComponent<BombScript>().GetBombType();
-                    UIController.Instance.UpdateAmmoHealth(5);
+                    UIController.Instance.UpdateAmmoHealth(25);
                     SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.BombSound);
                     TriggerShake();
                     Destroy(collision.gameObject);
@@ -927,13 +927,12 @@ namespace SharkGame
         {
             if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
             {
-                _sharkAnimator.SetTrigger("Die");
+                _sharkAnimator.SetBool("sharkDie", true);
             }
             else if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
             {
                 _sharkAnimator.SetFloat("sharkAmount", 1f);
             }
-            
         }
 
         internal void BackToIdleAnimation()
@@ -947,6 +946,11 @@ namespace SharkGame
                 _sharkAnimator.SetBool("attack", false);
             }
 
+        }
+
+        internal void ResetSharkIdleState()
+        {
+            _sharkAnimator.SetBool("sharkDie", false);
         }
         #endregion
 

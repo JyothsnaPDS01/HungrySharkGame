@@ -280,7 +280,7 @@ namespace SharkGame
             {
                 if(UIController.Instance.CurrentPlayerHealth > 0)
                 {
-                    UIController.Instance.UpdatePlayerHealth(4);
+                    UIController.Instance.UpdatePlayerHealth(10);
                     StartTimer();
                 }
                 else if(UIController.Instance.CurrentPlayerHealth == 0)

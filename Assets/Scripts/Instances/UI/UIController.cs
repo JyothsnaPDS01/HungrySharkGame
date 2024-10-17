@@ -129,7 +129,6 @@ public class UIController : MonoBehaviour
     [Header("Player Shark Original Position")]
     [SerializeField] private Vector3 _playerSharkOriginalPosition;
 
-
     [Header("Camera Follow")]
     [SerializeField] private GameObject _cameraFollow;
 
@@ -156,6 +155,9 @@ public class UIController : MonoBehaviour
 
     [Header("UnderEnvironment Objects Panel")]
     [SerializeField] private GameObject _underWaterEnvironmentPanel;
+
+    [Header("Main Menu Portal Image Reference")]
+    [SerializeField] private Image _portalImage;
 
     [Header("SharkSelection Coins UI")]
     [SerializeField] private Text _sharkSelectionCoinsTMP;
@@ -516,6 +518,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _duplicateShark;
     public void BiteButtonClick()
     {
+        currentSharkIndex = 0;
         _selectionPanel.SetActive(false);
         _loadingPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(false);
@@ -550,6 +553,8 @@ public class UIController : MonoBehaviour
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
         _subscriptionPage.SetActive(false);
         _mainMenuPanel.SetActive(true);
+
+        StartCoroutine(RotatePortalImage());
     }
 
     public void PlayButtonClick()
@@ -557,12 +562,12 @@ public class UIController : MonoBehaviour
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 
         _mainMenuPanel.SetActive(false);
-        //_duplicateShark.SetActive(true);
         _selectionPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(true);
         _underWaterEnvironmentPanel.SetActive(true);
         _duplicateSharks[currentSharkIndex].SetActive(true);
         _duplicateCamera.SetActive(true);
+        _portalImage.transform.DOKill();
     }
 
     public void SubscriptionContinueButtonClick()
@@ -572,6 +577,18 @@ public class UIController : MonoBehaviour
         _mainMenuPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(false);
         _underWaterEnvironmentPanel.SetActive(false);
+
+        StartCoroutine(RotatePortalImage());
+    }
+
+    private IEnumerator RotatePortalImage()
+    {
+        Debug.LogError("RotatePortalImage");
+        yield return new WaitForSeconds(2f);
+        // Rotate the object from 0 to -360 on the Z-axis and loop back to 0
+        _portalImage.transform.DORotate(new Vector3(0, 0, -360), 20f, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Yoyo) // Infinite loop between 0 and -360
+            .SetEase(Ease.Linear);
     }
 
     public void SetMainCameraOriginalPosition()
@@ -656,6 +673,19 @@ public class UIController : MonoBehaviour
             rightButton.navigation = _Right;
 
         }
+    }
+
+    public void LevelFailContinueButtonClick()
+    {
+        _gameOverPanel.SetActive(false);
+        _selectionPanel.SetActive(true);
+        _sharkSelectionBGPlane.SetActive(true);
+        _duplicateSharks[currentSharkIndex].SetActive(true);
+        _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
+
+        _player.GetComponent<Player>().ResetSharkIdleState();
+        _player.transform.position = _playerSharkOriginalPosition;
+        _player.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
     #endregion
 }
