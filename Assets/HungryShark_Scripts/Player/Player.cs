@@ -49,6 +49,10 @@ namespace SharkGame
             {
                 return initialMovementCompleted;
             }
+            set
+            {
+                initialMovementCompleted = value;
+            }
         }
 
         public SharkGameDataModel.SharkDirection CurrentSharkDirection { get { return _currentSharkDirection; } }
@@ -502,6 +506,8 @@ namespace SharkGame
             // Mark the initial movement as completed
             initialMovementCompleted = true;
 
+            EnableInput();
+
             SharkGameManager.Instance.StartTimer();
         }
 
@@ -545,6 +551,8 @@ namespace SharkGame
 
             // Mark the initial movement as completed
             initialMovementCompleted = true;
+
+
 
             SharkGameManager.Instance.StartTimer();
         }

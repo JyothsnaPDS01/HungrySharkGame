@@ -174,6 +174,11 @@ public class UIController : MonoBehaviour
 
     public int CurrentSharkIndex { get { return currentSharkIndex; } }
 
+    [Header("Current Screen")]
+    private SharkGameDataModel.Screen currentScreen;
+
+    public SharkGameDataModel.Screen CurrentScreen {  get { return currentScreen; } set { currentScreen = value; } }
+
     #endregion
 
     #region MonoBehaviour Methods
@@ -185,6 +190,8 @@ public class UIController : MonoBehaviour
         _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
         _sharkSelectionCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
         LoadInitialLevel();
+
+        currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
 
         for(int i=0;i<_runningBgList.Count;i++)
         {
@@ -207,6 +214,23 @@ public class UIController : MonoBehaviour
                 _GamePanel.SetActive(false);
                 SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
                 SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+            }
+        }
+        else if(currentScreen == SharkGameDataModel.Screen.SelectionPanel)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _mainMenuPanel.SetActive(true);
+                _selectionPanel.SetActive(false);
+                currentSharkIndex = 0;
+                foreach(var item in _duplicateSharks)
+                {
+                    item.SetActive(false);
+                }
+                _bitePanel.SetActive(true);
+                _purchasePanel.SetActive(false);
+                ResetAllSharkHealthUIPanels();
+                currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
             }
         }
     }
@@ -235,6 +259,9 @@ public class UIController : MonoBehaviour
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 
+        MakeMaxAmmo();
+        MakeMaxHealth();
+
 #if UNITY_EDITOR
         Debug.LogError("LevelButtonClick");
 #endif
@@ -251,6 +278,8 @@ public class UIController : MonoBehaviour
         yield return new WaitForSeconds(.5f);
 
         _missionPanel.SetActive(false);
+
+        currentScreen = SharkGameDataModel.Screen.InGamePanel;
 
         _killAmountTMP.text = "0 /" + _currentLevelData.targets[0].amount.ToString();
 
@@ -321,6 +350,8 @@ public class UIController : MonoBehaviour
         _huntCompletePanel.SetActive(false);
         _rayImage.transform.DOKill();
 
+        currentScreen = SharkGameDataModel.Screen.MissionPanel;
+
         SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
 
         _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
@@ -363,6 +394,8 @@ public class UIController : MonoBehaviour
 
         _missionPanel.SetActive(true);
         _GamePanel.SetActive(false);
+        currentScreen = SharkGameDataModel.Screen.MissionPanel;
+
 
         _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
 
@@ -387,6 +420,8 @@ public class UIController : MonoBehaviour
     {
         _huntPanelContinueButton.interactable = true;
         _missionPanel.SetActive(false);
+        currentScreen = SharkGameDataModel.Screen.HuntCompletePanel;
+
         SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
 
         _bonusAmountTMP.text = "+" + " " +_dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel).ToString();
@@ -421,13 +456,15 @@ public class UIController : MonoBehaviour
 
     internal void UpdatePlayerHealth(int _damageAmount)
     {
-        if (currentHealth > 0)
+        if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
         {
-            currentHealth -= _damageAmount;
-            _healthSlider.value = (float)currentHealth / _playerMaxHealth;
+            if (currentHealth > 0)
+            {
+                currentHealth -= _damageAmount;
+                _healthSlider.value = (float)currentHealth / _playerMaxHealth;
+            }
         }
     }
-
     internal void MakeMaxHealth()
     {
         currentHealth = 100;
@@ -536,7 +573,9 @@ public class UIController : MonoBehaviour
         _sharkSelectionBGPlane.SetActive(false);
         _underWaterEnvironmentPanel.SetActive(true);
 
-        foreach(var item in _duplicateSharks)
+        currentScreen = SharkGameDataModel.Screen.LoadingPanel;
+
+        foreach (var item in _duplicateSharks)
         {
             item.SetActive(false);
         }
@@ -555,6 +594,7 @@ public class UIController : MonoBehaviour
             SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
             LoadLevelData();
             _missionPanel.SetActive(true);
+            currentScreen = SharkGameDataModel.Screen.MissionPanel;
         }
     }
     [Header("UI Panels")]
@@ -566,6 +606,7 @@ public class UIController : MonoBehaviour
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
         _subscriptionPage.SetActive(false);
         _mainMenuPanel.SetActive(true);
+        currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
 
         StartCoroutine(RotatePortalImage());
     }
@@ -581,6 +622,7 @@ public class UIController : MonoBehaviour
         _duplicateSharks[currentSharkIndex].SetActive(true);
         _duplicateCamera.SetActive(true);
         _portalImage.transform.DOKill();
+        currentScreen = SharkGameDataModel.Screen.SelectionPanel;
     }
 
     public void SubscriptionContinueButtonClick()
@@ -590,7 +632,7 @@ public class UIController : MonoBehaviour
         _mainMenuPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(false);
         _underWaterEnvironmentPanel.SetActive(false);
-
+        currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
         StartCoroutine(RotatePortalImage());
     }
 
@@ -636,6 +678,7 @@ public class UIController : MonoBehaviour
             _duplicateSharks[currentSharkIndex].SetActive(false);
             currentSharkIndex += 1;
             _duplicateSharks[currentSharkIndex].SetActive(true);
+            ResetAllSharkHealthUIPanels();
             _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
             leftButton.interactable = true;
             _purchasePanel.SetActive(true);
@@ -661,6 +704,7 @@ public class UIController : MonoBehaviour
             _duplicateSharks[currentSharkIndex].SetActive(false);
             currentSharkIndex -= 1;
             _duplicateSharks[currentSharkIndex].SetActive(true);
+            ResetAllSharkHealthUIPanels();
             _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
             _purchasePanel.SetActive(true);
             _bitePanel.SetActive(false);
@@ -690,6 +734,13 @@ public class UIController : MonoBehaviour
         }
     }
 
+    private void ResetAllSharkHealthUIPanels()
+    {
+        foreach(var item in _sharkHealthUIPanels)
+        {
+            item.SetActive(false);
+        }
+    }
     public void LevelFailContinueButtonClick()
     {
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.MissionMode;

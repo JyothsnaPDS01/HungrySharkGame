@@ -169,7 +169,7 @@ namespace SharkGame.Models
 
         #region Screens/Panels
         [System.Serializable]
-        public enum Screens
+        public enum Screen
         {
             None,
             SubscriptionPanel,
@@ -178,7 +178,8 @@ namespace SharkGame.Models
             SelectionPanel,
             MissionPanel,
             GamePausePanel,
-            InGamePanel
+            InGamePanel,
+            HuntCompletePanel
         }
         #endregion
     }

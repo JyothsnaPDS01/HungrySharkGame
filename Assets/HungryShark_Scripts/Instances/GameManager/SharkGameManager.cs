@@ -175,12 +175,7 @@ namespace SharkGame
             _playerSharkPrefab.SetActive(true);
             if (!UIController.Instance.quitButtonClicked)
             {
-                if (_currentLevel == 1) _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
-                else
-                {
-                    _playerSharkPrefab.GetComponent<Player>().GameSequence();
-                }
-                _playerSharkPrefab.GetComponent<Player>().EnableInput();
+                _playerSharkPrefab.GetComponent<Player>().StartGameStartSequence();
             }
             else if(UIController.Instance.quitButtonClicked)
             {
@@ -252,7 +247,8 @@ namespace SharkGame
         #region Health Timer
         internal void StartTimer()
         {
-            StartCoroutine(StartHealthTimer(_healthDuration));
+            if(CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+                StartCoroutine(StartHealthTimer(_healthDuration));
         }
 
         public IEnumerator StartHealthTimer(float duration)
@@ -334,6 +330,7 @@ namespace SharkGame
         internal void ResetPlayerAndObjectPooling()
         {
             _playerSharkPrefab.SetActive(false);
+            _playerSharkPrefab.GetComponent<Player>().InitialMovement = false;
 
             _playerSharkPrefab.transform.position = _playerSharkOriginalPosition;
             _playerSharkPrefab.transform.rotation = Quaternion.Euler(0, 0, 0);
