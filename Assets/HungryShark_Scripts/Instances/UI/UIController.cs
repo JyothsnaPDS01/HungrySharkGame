@@ -537,7 +537,6 @@ public class UIController : MonoBehaviour
     internal void SetGameOver()
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.MissionFail);
-       // DestroyBombs();
         _GamePanel.SetActive(false);
         _gameOverPanel.SetActive(true);
         _player.GetComponent<Player>().ShowDieState();
@@ -788,6 +787,7 @@ public class UIController : MonoBehaviour
             if (item.childCount > 0)
             {
                 GameObject obj = item.GetChild(0).gameObject;
+                Debug.LogError("Object Name " + obj.name);
                 Destroy(obj);
             }
         }

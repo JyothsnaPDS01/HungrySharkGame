@@ -273,11 +273,9 @@ namespace SharkGame
             {
                 if(UIController.Instance.CurrentPlayerHealth > 0)
                 {
-                    UIController.Instance.UpdatePlayerHealth(50);
+                    UIController.Instance.UpdatePlayerHealth(10);
                     StartTimer();
                 }
-                
-                
             }
         }
 
@@ -296,6 +294,7 @@ namespace SharkGame
             yield return null;
 
             _playerSharkPrefab.GetComponent<Player>().StartDieAnimation();
+            UIController.Instance.DestroyBombs();
 
             _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
             _spawnManager.SetActive(false);

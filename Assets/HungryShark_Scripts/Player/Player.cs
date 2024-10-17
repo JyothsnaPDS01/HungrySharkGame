@@ -806,10 +806,6 @@ namespace SharkGame
                 // Set the particle effect active
                 _particleEffect.SetActive(true);
 
-                // Scale the particle effect from (0,0,0) to (5.5,1,5.5) using DOScale
-                _particleEffect.transform.localScale = Vector3.zero; // Start at scale (0,0,0)
-                _particleEffect.transform.DOScale(new Vector3(5.5f, 1f, 5.5f), .5f); // Tween to scale (5.5, 1, 5.5)
-
                 // Deactivate the particle effect after the shake duration
                 StartCoroutine(DeactiveTheParticleEffect());
 
@@ -817,7 +813,6 @@ namespace SharkGame
                 {
                     yield return new WaitForSeconds(shakeDuration);
                     _particleEffect.SetActive(false);
-                    _particleEffect.transform.localScale = Vector3.zero; // Reset scale after deactivation
                 }
             }
         }
