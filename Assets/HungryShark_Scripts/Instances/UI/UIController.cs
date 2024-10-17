@@ -568,6 +568,9 @@ public class UIController : MonoBehaviour
     public void BiteButtonClick()
     {
         currentSharkIndex = 0;
+        _bitePanel.SetActive(true);
+        _purchasePanel.SetActive(false);
+        ResetAllSharkHealthUIPanels();
         _selectionPanel.SetActive(false);
         _loadingPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(false);
