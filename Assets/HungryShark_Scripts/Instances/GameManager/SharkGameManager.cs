@@ -273,13 +273,10 @@ namespace SharkGame
             {
                 if(UIController.Instance.CurrentPlayerHealth > 0)
                 {
-                    UIController.Instance.UpdatePlayerHealth(10);
+                    UIController.Instance.UpdatePlayerHealth(50);
                     StartTimer();
                 }
-                else if(UIController.Instance.CurrentPlayerHealth == 0)
-                {
-                    SetGameOver();
-                }
+                
                 
             }
         }
@@ -296,7 +293,7 @@ namespace SharkGame
 
         private IEnumerator DelayGameOverUIPanel()
         {
-            yield return new WaitForSeconds(.25f);
+            yield return null;
 
             _playerSharkPrefab.GetComponent<Player>().StartDieAnimation();
 

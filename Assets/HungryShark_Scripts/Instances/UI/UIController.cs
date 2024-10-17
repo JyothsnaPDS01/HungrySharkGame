@@ -244,7 +244,7 @@ public class UIController : MonoBehaviour
             {
                 SoundManager.Instance.PlaySharkAudioClip(SharkGameDataModel.Sound.SharkSound);
 
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(15f);
             }
             else
             {
@@ -463,6 +463,11 @@ public class UIController : MonoBehaviour
                 currentHealth -= _damageAmount;
                 _healthSlider.value = (float)currentHealth / _playerMaxHealth;
             }
+
+            if (currentHealth == 0)
+            {
+                SharkGameManager.Instance.SetGameOver();
+            }
         }
     }
     internal void MakeMaxHealth()
@@ -532,9 +537,9 @@ public class UIController : MonoBehaviour
     internal void SetGameOver()
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.MissionFail);
+       // DestroyBombs();
         _GamePanel.SetActive(false);
         _gameOverPanel.SetActive(true);
-        DestroyBombs();
         _player.GetComponent<Player>().ShowDieState();
     }
 
@@ -575,6 +580,16 @@ public class UIController : MonoBehaviour
         _loadingPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(false);
         _underWaterEnvironmentPanel.SetActive(true);
+
+        Navigation _LeftButton = leftButton.navigation;
+        _LeftButton.selectOnDown = _biteButton;
+        leftButton.navigation = _LeftButton;
+
+        Navigation _Right = rightButton.navigation;
+        _Right.selectOnDown = _biteButton;
+        rightButton.navigation = _Right;
+
+        _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
 
         currentScreen = SharkGameDataModel.Screen.LoadingPanel;
 
@@ -619,6 +634,7 @@ public class UIController : MonoBehaviour
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 
         _mainMenuPanel.SetActive(false);
+        DisbaleInGameParticleEffects();
         _selectionPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(true);
         _underWaterEnvironmentPanel.SetActive(false);
@@ -751,6 +767,7 @@ public class UIController : MonoBehaviour
         SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
 
         _gameOverPanel.SetActive(false);
+        DisbaleInGameParticleEffects();
         _selectionPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(true);
         _duplicateSharks[currentSharkIndex].SetActive(true);
