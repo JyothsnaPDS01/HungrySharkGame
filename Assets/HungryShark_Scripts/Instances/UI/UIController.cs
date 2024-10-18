@@ -163,6 +163,8 @@ public class UIController : MonoBehaviour
     [Header("SharkSelection Coins UI")]
     [SerializeField] private Text _sharkSelectionCoinsTMP;
 
+    private bool mainMenuPanelOpened = false;
+
     public int CurrentAmmo { get { return currentAmmoValue; } }
 
     public int CurrentPlayerHealth { get { return currentHealth; } }
@@ -171,6 +173,9 @@ public class UIController : MonoBehaviour
 
     [Header("Current Shark Index")]
     [SerializeField] private int currentSharkIndex = 0;
+
+    [Header("Splash Screen Panel")]
+    [SerializeField] private GameObject _splashScreen;
 
     public int CurrentSharkIndex { get { return currentSharkIndex; } }
 
@@ -201,6 +206,8 @@ public class UIController : MonoBehaviour
         _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
 
         StartCoroutine(PlaySharkSoundRepeatedly());
+
+        StartCoroutine(EnableTheSubscriptionPanel());
     }
 
     private void Update()
@@ -252,6 +259,14 @@ public class UIController : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    private IEnumerator EnableTheSubscriptionPanel()
+    {
+        yield return new WaitForSeconds(4f);
+        _subscriptionPage.SetActive(true);
+        _splashScreen.SetActive(false);
+        currentScreen = SharkGameDataModel.Screen.SelectionPanel;
     }
 
     #region Button Actions
@@ -599,20 +614,9 @@ public class UIController : MonoBehaviour
 
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 
-        StartCoroutine(LoadTheGame());
+        EnableUnLockAllSharksPanel();
 
-        IEnumerator LoadTheGame()
-        {
-            yield return new WaitForSeconds(2f);
-
-            _loadingPanel.SetActive(false);
-            _gameUIPanel.SetActive(true);
-            _gameUIPanel.transform.DOScale(Vector3.one, .5f);
-            SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
-            LoadLevelData();
-            _missionPanel.SetActive(true);
-            currentScreen = SharkGameDataModel.Screen.MissionPanel;
-        }
+        
     }
     [Header("UI Panels")]
     [SerializeField] private GameObject _subscriptionPage;
@@ -625,13 +629,13 @@ public class UIController : MonoBehaviour
         _mainMenuPanel.SetActive(true);
         currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
 
-        StartCoroutine(RotatePortalImage());
+        //StartCoroutine(RotatePortalImage());
     }
 
     public void PlayButtonClick()
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
-
+        mainMenuPanelOpened = true;
         _mainMenuPanel.SetActive(false);
         DisbaleInGameParticleEffects();
         _selectionPanel.SetActive(true);
@@ -647,22 +651,39 @@ public class UIController : MonoBehaviour
     {
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
         _subscriptionPage.SetActive(false);
-        _mainMenuPanel.SetActive(true);
-        _sharkSelectionBGPlane.SetActive(false);
-        _underWaterEnvironmentPanel.SetActive(false);
-        currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
-        StartCoroutine(RotatePortalImage());
+
+        if(mainMenuPanelOpened)
+        {
+            _sharkSelectionBGPlane.SetActive(true);
+            _selectionPanel.SetActive(true);
+            currentScreen = SharkGameDataModel.Screen.SelectionPanel;
+            _duplicateSharks[currentSharkIndex].SetActive(true);
+            ResetAllSharkHealthUIPanels();
+            _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
+            _duplicateCamera.SetActive(true);
+            _underWaterEnvironmentPanel.SetActive(false);
+            DisbaleInGameParticleEffects();
+        }
+        else if(!mainMenuPanelOpened)
+        {
+            _mainMenuPanel.SetActive(true);
+            _sharkSelectionBGPlane.SetActive(false);
+            _underWaterEnvironmentPanel.SetActive(false);
+            currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
+        }
+        
+        //StartCoroutine(RotatePortalImage());
     }
 
-    private IEnumerator RotatePortalImage()
-    {
-        Debug.LogError("RotatePortalImage");
-        yield return new WaitForSeconds(2f);
-        // Rotate the object from 0 to -360 on the Z-axis and loop back to 0
-        _portalImage.transform.DORotate(new Vector3(0, 0, -360), 20f, RotateMode.FastBeyond360)
-            .SetLoops(-1, LoopType.Yoyo) // Infinite loop between 0 and -360
-            .SetEase(Ease.Linear);
-    }
+    //private IEnumerator RotatePortalImage()
+    //{
+    //    Debug.LogError("RotatePortalImage");
+    //    yield return new WaitForSeconds(2f);
+    //    // Rotate the object from 0 to -360 on the Z-axis and loop back to 0
+    //    _portalImage.transform.DORotate(new Vector3(0, 0, -360), 20f, RotateMode.FastBeyond360)
+    //        .SetLoops(-1, LoopType.Yoyo) // Infinite loop between 0 and -360
+    //        .SetEase(Ease.Linear);
+    //}
 
     public void SetMainCameraOriginalPosition()
     {
@@ -685,8 +706,14 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _purchasePanel;
     [SerializeField] private Button _purchaseButton;
 
+    [Header("Unlock All Sharks")]
+    [SerializeField] private GameObject _unlockAllSharksPanel;
+
     [Header("InGame Level Number Reference")]
     [SerializeField] private Text _inGameLevelNumberTMP;
+
+    [Header("5Pack Shark Panel")]
+    [SerializeField] private GameObject _5PackSharkUIPanel;
 
     public void RightArrowClick()
     {
@@ -780,6 +807,55 @@ public class UIController : MonoBehaviour
         SharkGameManager.Instance.ResetPlayerAndObjectPooling();
     }
 
+    public void FivePackSharkButtonClick()
+    {
+        _mainMenuPanel.SetActive(false);
+        _5PackSharkUIPanel.SetActive(true);
+        currentScreen = SharkGameDataModel.Screen.FivePackSharkPanel;
+    }
+
+    public void FivePackSharkContinueButtonClick()
+    {
+        _5PackSharkUIPanel.SetActive(false);
+        _selectionPanel.SetActive(true);
+        currentScreen = SharkGameDataModel.Screen.SelectionPanel;
+        _duplicateCamera.SetActive(true);
+        _sharkSelectionBGPlane.SetActive(true);
+        _duplicateSharks[CurrentSharkIndex].SetActive(true);
+        ResetAllSharkHealthUIPanels();
+        _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
+    }
+
+    public void EnableUnlockFullGamePanel()
+    {
+
+    }
+
+    public void EnableUnLockAllSharksPanel()
+    {
+        _unlockAllSharksPanel.SetActive(true);
+        currentScreen = SharkGameDataModel.Screen.UnlockAllSharksPanel;
+    }
+
+    public void UnlockAllSharksContinueButtonClick()
+    {
+        _unlockAllSharksPanel.SetActive(false);
+        StartCoroutine(LoadTheGame());
+
+        IEnumerator LoadTheGame()
+        {
+            yield return new WaitForSeconds(2f);
+
+            _loadingPanel.SetActive(false);
+            _gameUIPanel.SetActive(true);
+            _gameUIPanel.transform.DOScale(Vector3.one, .5f);
+            SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
+            LoadLevelData();
+            _missionPanel.SetActive(true);
+            currentScreen = SharkGameDataModel.Screen.MissionPanel;
+        }
+    }
+
     internal void DestroyBombs()
     {
         foreach (var item in SpawnManager.Instance.BombSpawnPoints)
@@ -792,5 +868,21 @@ public class UIController : MonoBehaviour
             }
         }
     }
+
+    #region SocialMedia Button Clicks
+    public void InstagramButtonClick()
+    {
+        Application.OpenURL("https://www.instagram.com/playdgamestudio?igsh=MXo5ZXozcWczaTFp");
+    }
+
+    public void FaceBookButtonClick()
+    {
+        Application.OpenURL("https://www.facebook.com/share/Ai7qr96nkoFczQ45/");
+    }
+    public void LinkedInButtonClick()
+    {
+        Application.OpenURL("https://www.linkedin.com/company/playd-game-studio/");
+    }
+    #endregion 
     #endregion
 }

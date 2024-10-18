@@ -179,7 +179,10 @@ namespace SharkGame.Models
             MissionPanel,
             GamePausePanel,
             InGamePanel,
-            HuntCompletePanel
+            HuntCompletePanel,
+            FivePackSharkPanel,
+            UnlockAllSharksPanel,
+            SplashScreen
         }
         #endregion
     }
