@@ -53,6 +53,9 @@ namespace SharkGame
             }
         }
 
+        private float fishCooldownTime = 0.0005208332f; // Cooldown time between detecting fishes
+        private bool isInCooldown = false;     // To track if the shark is in cooldown
+
         private IEnumerator CheckNearbyFishesAtIntervals()
         {
             while (true) // This loop will keep running indefinitely
@@ -71,19 +74,117 @@ namespace SharkGame
 
             foreach (Collider fishCollider in nearbyFishes)
             {
+                if (isInCooldown)
+                {
+                    yield return null; // Skip this fish if in cooldown
+                }
+
                 if (fishCollider.CompareTag("SmallFish"))
                 {
 #if UNITY_EDITOR
                     Debug.Log("Finding the small fishes");
 #endif
                     GameObject fishObject = fishCollider.gameObject;
+
                     // Trigger shark attack animation
                     _player.GetComponent<Player>().PlayEatAnimation();
+
+                    // Start moving the fish to the shark's mouth
                     StartCoroutine(BringSmallFishesNearToPlayer(fishObject));
-                    yield return null; // Yield after each fish to avoid performance spikes
+
+                    // Start the cooldown timer to prevent immediate detection of another fish
+                    isInCooldown = true;
+                    yield return new WaitForSeconds(fishCooldownTime);
+                    isInCooldown = false;
                 }
+
+                yield return null; // Yield after each fish to avoid performance spikes
             }
         }
+
+        private IEnumerator BringSmallFishesNearToPlayer(GameObject _fishObject)
+        {
+            // Move the fish to the shark's mouth position
+            _fishObject.transform.position = _eatingPosition.position;
+            RotatePlayerTowards(_fishObject.transform);
+
+            // Play blood effect
+            _player.GetComponent<Player>().EnableBloodEffect();
+
+            Debug.Log("BringSmallFishesNearToPlayer");
+            Vector3 initialPosition = _sharkRigidBody.position;
+            Vector3 targetPosition = _fishObject.transform.position;
+
+            // Calculate the new position using Lerp
+            Vector3 newPosition = Vector3.Lerp(_sharkRigidBody.position, targetPosition, .25f * Time.deltaTime);
+
+            // Move the shark's Rigidbody to the new position
+            _sharkRigidBody.MovePosition(newPosition);
+
+            if (_fishObject.tag == "DoubleAttackSmallFish")
+            {
+                yield return new WaitForSeconds(.1f);
+
+                _player.GetComponent<Player>().PlayEatAnimation();
+
+                // Play blood effect
+                _player.GetComponent<Player>().EnableBloodEffect();
+
+                SharkGameManager.Instance.DestroyCount += 1;
+                UIController.Instance.MakeMaxHealth();
+                UIController.Instance.UpdateKillAmount();
+
+                if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
+                {
+                    _fishObject.transform.parent = null; // Remove from the shark's mouth
+                    ObjectPooling.Instance.ClearFishPoolList();
+                    yield return new WaitForSeconds(1f);
+                    SharkGameManager.Instance.LoadNextLevel();
+                }
+
+                yield return new WaitForSeconds(.7f);
+
+                // Mark the fish as dead and reset its state
+                SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
+
+                // Return fish to the pool
+                ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
+
+                yield return new WaitForSeconds(1f);
+
+                // Reset shark attack animation and disable blood effect
+                _player.GetComponent<Player>().BackToIdleAnimation();
+                _player.GetComponent<Player>().DisableBloodEffect();
+            }
+            else
+            {
+                SharkGameManager.Instance.DestroyCount += 1;
+                UIController.Instance.UpdateKillAmount();
+                UIController.Instance.MakeMaxHealth();
+
+                if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
+                {
+                    _fishObject.transform.parent = null; // Remove from the shark's mouth
+                    yield return new WaitForSeconds(1f);
+                    SharkGameManager.Instance.LoadNextLevel();
+                }
+
+                yield return new WaitForSeconds(.25f);
+
+                // Mark the fish as dead and reset its state
+                SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
+
+                // Return fish to the pool
+                ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
+
+                yield return new WaitForSeconds(1f);
+
+                // Reset shark attack animation and disable blood effect
+                _player.GetComponent<Player>().BackToIdleAnimation();
+                _player.GetComponent<Player>().DisableBloodEffect();
+            }
+        }
+
 
         [SerializeField] private float cooldownDuration = 0.02083333f; // Cooldown duration in seconds
         [SerializeField] private bool isOnCooldown = false; // Flag to check if the shark is on cooldown
@@ -211,96 +312,6 @@ namespace SharkGame
 
             // Apply the rotation to the Rigidbody
             _sharkRigidBody.MoveRotation(smoothedRotation);
-        }
-
-
-        private IEnumerator BringSmallFishesNearToPlayer(GameObject _fishObject)
-        {
-            // Move the fish to the shark's mouth position
-            _fishObject.transform.position = _eatingPosition.position;
-            RotatePlayerTowards(_fishObject.transform);
-
-           
-            // Play blood effect
-            _player.GetComponent<Player>().EnableBloodEffect();
-
-            Debug.Log("BringSmallFishesNearToPlayer");
-            Vector3 initialPosition = _sharkRigidBody.position;
-            Vector3 targetPosition = _fishObject.transform.position;
-
-            // Calculate the new position using Lerp
-            Vector3 newPosition = Vector3.Lerp(_sharkRigidBody.position, targetPosition, .25f * Time.deltaTime);
-
-            // Move the shark's Rigidbody to the new position
-            _sharkRigidBody.MovePosition(newPosition);
-
-            if(_fishObject.tag == "DoubleAttackSmallFish")
-            {
-                yield return new WaitForSeconds(.1f);
-
-                _player.GetComponent<Player>().PlayEatAnimation();
-
-                // Play blood effect
-                _player.GetComponent<Player>().EnableBloodEffect();
-
-                SharkGameManager.Instance.DestroyCount += 1;
-
-                UIController.Instance.MakeMaxHealth();
-
-                UIController.Instance.UpdateKillAmount();
-
-                if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
-                {
-                    _fishObject.transform.parent = null; // Remove from the shark's mouth
-                    ObjectPooling.Instance.ClearFishPoolList();
-                    yield return new WaitForSeconds(1f);
-                    SharkGameManager.Instance.LoadNextLevel();
-                }
-
-                yield return new WaitForSeconds(.7f);
-
-                // Mark the fish as dead and reset its state
-                SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
-
-                // Return fish to the pool
-                ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
-
-                yield return new WaitForSeconds(1f);
-
-                // Reset shark attack animation and disable blood effect
-                _player.GetComponent<Player>().BackToIdleAnimation();
-                _player.GetComponent<Player>().DisableBloodEffect();
-            }
-            else
-            {
-                SharkGameManager.Instance.DestroyCount += 1;
-
-                UIController.Instance.UpdateKillAmount();
-
-                UIController.Instance.MakeMaxHealth();
-
-                if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
-                {
-                    _fishObject.transform.parent = null; // Remove from the shark's mouth
-                    yield return new WaitForSeconds(1f);
-                    SharkGameManager.Instance.LoadNextLevel();
-                }
-
-                yield return new WaitForSeconds(.25f);
-
-                // Mark the fish as dead and reset its state
-                SharkGameDataModel.SmallFishType fishType = _fishObject.GetComponent<SmallFish>()._smallFishType;
-
-                // Return fish to the pool
-                ObjectPooling.Instance.ReturnToPool(_fishObject, fishType);
-
-                yield return new WaitForSeconds(1f);
-
-                // Reset shark attack animation and disable blood effect
-                _player.GetComponent<Player>().BackToIdleAnimation();
-                _player.GetComponent<Player>().DisableBloodEffect();
-            }
-          
         }
 
         public IEnumerator SmallFishNearToSharkCoroutine(GameObject _fishObject)

@@ -47,6 +47,11 @@ ModelImporter:
     second: LeopardShark|Action.002
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LeopardShark
+    second: {fileID: 2100000, guid: fd95d2733ecc0354f88455192aa939eb, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: LeopardShark_baseColor
@@ -539,7 +544,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.003
+    globalScale: 0.3
     rootMotionBoneName: LeopardShark_0
     hasTranslationDoF: 0
     hasExtraRoot: 0

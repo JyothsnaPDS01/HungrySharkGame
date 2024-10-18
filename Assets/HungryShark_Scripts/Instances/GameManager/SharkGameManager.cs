@@ -300,7 +300,7 @@ namespace SharkGame
             _spawnManager.SetActive(false);
             destroyCount = 0;
 
-            StopGameAudio();
+         //   StopGameAudio();
             ObjectPooling.Instance.ClearFishPoolList();
 
             yield return new WaitForSeconds(1f);
@@ -335,7 +335,7 @@ namespace SharkGame
             _spawnManager.SetActive(false);
             destroyCount = 0;
 
-            StopGameAudio();
+            // StopGameAudio();
             ObjectPooling.Instance.ClearFishPoolList();
         }
         #endregion

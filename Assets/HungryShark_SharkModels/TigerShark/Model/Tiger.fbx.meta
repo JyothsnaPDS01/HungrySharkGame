@@ -50,6 +50,11 @@ ModelImporter:
     second: Die
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TigerShark
+    second: {fileID: 2100000, guid: 68a611f1627e3c4418f94b97a9d44f42, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: TigerShark_baseColor
@@ -571,7 +576,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.001
+    globalScale: 0.1
     rootMotionBoneName: TigerShark_0
     hasTranslationDoF: 0
     hasExtraRoot: 0

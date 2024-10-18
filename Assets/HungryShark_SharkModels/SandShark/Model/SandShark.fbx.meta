@@ -96,6 +96,11 @@ ModelImporter:
     second: Die
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SandShark.001
+    second: {fileID: 2100000, guid: 1f2e071ca7aadea41b693c7330c0f920, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: SandShark_baseColor

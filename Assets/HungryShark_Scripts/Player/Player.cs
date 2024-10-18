@@ -770,10 +770,6 @@ namespace SharkGame
 
                     StartCoroutine(SpawnAfterDelay(bombType));
                 }
-                //else if (UIController.Instance.CurrentAmmo == 0)
-                //{
-                    //SharkGameManager.Instance.SetGameOver();
-                //}
             }
         }
 
@@ -787,9 +783,9 @@ namespace SharkGame
        
 
         // Shake parameters
-        public float shakeDuration = 0.5f;   // How long the camera will shake
-        public float shakeStrength = 1f;     // How intense the shaking is
-        public int shakeVibrato = 10;        // How many times it shakes in the given duration
+        public float shakeDuration = 1.5f;   // How long the camera will shake
+        public float shakeStrength = 50f;     // How intense the shaking is
+        public int shakeVibrato = 20;        // How many times it shakes in the given duration
         public float randomness = 90f;       // How random the shaking is
 
         public GameObject _particleEffect;

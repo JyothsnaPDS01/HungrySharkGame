@@ -156,7 +156,8 @@ namespace SharkGame.Models
             RedBomb,
             TimerBomb,
             SharpBomb,
-            WaterBomb
+            WaterBomb,
+            RustBomb
         }
 
         [System.Serializable]
@@ -182,7 +183,8 @@ namespace SharkGame.Models
             HuntCompletePanel,
             FivePackSharkPanel,
             UnlockAllSharksPanel,
-            SplashScreen
+            SplashScreen,
+            UnlockFullGamePanel
         }
         #endregion
     }

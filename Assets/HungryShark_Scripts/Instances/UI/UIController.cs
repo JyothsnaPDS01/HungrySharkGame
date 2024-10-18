@@ -163,7 +163,7 @@ public class UIController : MonoBehaviour
     [Header("SharkSelection Coins UI")]
     [SerializeField] private Text _sharkSelectionCoinsTMP;
 
-    private bool mainMenuPanelOpened = false;
+    [SerializeField] private bool mainMenuPanelOpened = false;
 
     public int CurrentAmmo { get { return currentAmmoValue; } }
 
@@ -180,9 +180,17 @@ public class UIController : MonoBehaviour
     public int CurrentSharkIndex { get { return currentSharkIndex; } }
 
     [Header("Current Screen")]
-    private SharkGameDataModel.Screen currentScreen;
+    [SerializeField] private SharkGameDataModel.Screen currentScreen;
 
     public SharkGameDataModel.Screen CurrentScreen {  get { return currentScreen; } set { currentScreen = value; } }
+
+    [SerializeField] private SharkGameDataModel.Screen previousScreen = SharkGameDataModel.Screen.None;
+
+    [Header("Current Screen")]
+    [SerializeField] private int screenIndexCount = 0;
+
+    [Header("Unlock Full Game Panel")]
+    [SerializeField] private GameObject _unlockFullGamePanel;
 
     #endregion
 
@@ -240,6 +248,15 @@ public class UIController : MonoBehaviour
                 currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
             }
         }
+        else if(currentScreen == SharkGameDataModel.Screen.UnlockFullGamePanel)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _subscriptionPage.SetActive(false);
+                currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+            }
+        }
+
     }
     #endregion
 
@@ -361,23 +378,33 @@ public class UIController : MonoBehaviour
 
         _continueButton.SetActive(true);
 
-        _missionPanel.SetActive(true);
         _huntCompletePanel.SetActive(false);
         _rayImage.transform.DOKill();
 
-        currentScreen = SharkGameDataModel.Screen.MissionPanel;
-
-        SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
-
-        _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
-        _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
-        _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
-
-        for (int i = 0; i < _runningBgList.Count; i++)
+        if (SharkGameManager.Instance.CurrentLevel != 6)
         {
-            _runningBgList[i].GetComponent<SpriteRenderer>().sprite = _runningBgSpriteList[SharkGameManager.Instance.CurrentLevel % _runningBgSpriteList.Count];
+            _missionPanel.SetActive(true);
+
+            currentScreen = SharkGameDataModel.Screen.MissionPanel;
+
+            SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
+
+            _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
+            _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
+            _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
+
+            for (int i = 0; i < _runningBgList.Count; i++)
+            {
+                _runningBgList[i].GetComponent<SpriteRenderer>().sprite = _runningBgSpriteList[SharkGameManager.Instance.CurrentLevel % _runningBgSpriteList.Count];
+            }
+            _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
         }
-        _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
+
+        if(SharkGameManager.Instance.CurrentLevel == 6)
+        {
+            _unlockFullGamePanel.SetActive(true);
+            CurrentScreen = SharkGameDataModel.Screen.UnlockFullGamePanel;
+        }
 
         MakeMaxHealth();
         MakeMaxAmmo();
@@ -521,6 +548,7 @@ public class UIController : MonoBehaviour
         _player.SetActive(false);
         _gamePausePanel.SetActive(false);
         _subscriptionPage.SetActive(true);
+        DestroyBombs();
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.MissionMode;
         _player.transform.position = _playerSharkOriginalPosition;
         _player.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -591,7 +619,7 @@ public class UIController : MonoBehaviour
         _purchasePanel.SetActive(false);
         ResetAllSharkHealthUIPanels();
         _selectionPanel.SetActive(false);
-        _loadingPanel.SetActive(true);
+        if(!quitButtonClicked) _loadingPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(false);
         _underWaterEnvironmentPanel.SetActive(true);
 
@@ -614,9 +642,27 @@ public class UIController : MonoBehaviour
 
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 
-        EnableUnLockAllSharksPanel();
+        if (previousScreen == SharkGameDataModel.Screen.FivePackSharkPanel)
+        {
+            EnableUnLockAllSharksPanel();
+            previousScreen = SharkGameDataModel.Screen.None;
+        }
+        else if (previousScreen == SharkGameDataModel.Screen.None)
+        {
+            if (screenIndexCount % 2 == 0)
+            {
+                EnableUnLockAllSharksPanel();
+            }
+            else if(screenIndexCount % 2 == 1)
+            {
+                _5PackSharkUIPanel.SetActive(true);
+                _selectionPanel.SetActive(false);
+                currentSharkIndex = 0;
+            }
+            screenIndexCount++;
+        }
 
-        
+
     }
     [Header("UI Panels")]
     [SerializeField] private GameObject _subscriptionPage;
@@ -811,24 +857,49 @@ public class UIController : MonoBehaviour
     {
         _mainMenuPanel.SetActive(false);
         _5PackSharkUIPanel.SetActive(true);
+        mainMenuPanelOpened = true;
         currentScreen = SharkGameDataModel.Screen.FivePackSharkPanel;
+        previousScreen = SharkGameDataModel.Screen.FivePackSharkPanel;
     }
 
     public void FivePackSharkContinueButtonClick()
     {
         _5PackSharkUIPanel.SetActive(false);
-        _selectionPanel.SetActive(true);
-        currentScreen = SharkGameDataModel.Screen.SelectionPanel;
-        _duplicateCamera.SetActive(true);
-        _sharkSelectionBGPlane.SetActive(true);
-        _duplicateSharks[CurrentSharkIndex].SetActive(true);
-        ResetAllSharkHealthUIPanels();
-        _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
+        if (previousScreen == SharkGameDataModel.Screen.FivePackSharkPanel)
+        {
+            _selectionPanel.SetActive(true);
+            currentScreen = SharkGameDataModel.Screen.SelectionPanel;
+            _duplicateCamera.SetActive(true);
+            _sharkSelectionBGPlane.SetActive(true);
+            _duplicateSharks[CurrentSharkIndex].SetActive(true);
+            ResetAllSharkHealthUIPanels();
+            _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
+        }
+        else if (previousScreen == SharkGameDataModel.Screen.None)
+        {
+            _loadingPanel.SetActive(true);
+            StartCoroutine(LoadTheGame());
+
+            IEnumerator LoadTheGame()
+            {
+                yield return new WaitForSeconds(2f);
+
+                _loadingPanel.SetActive(false);
+                _gameUIPanel.SetActive(true);
+                _gameUIPanel.transform.DOScale(Vector3.one, .5f);
+                SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
+                LoadLevelData();
+                _missionPanel.SetActive(true);
+                currentScreen = SharkGameDataModel.Screen.MissionPanel;
+            }
+        }
     }
 
-    public void EnableUnlockFullGamePanel()
+    public void UnlockFullGameContinueButtonClick()
     {
-
+        _unlockFullGamePanel.SetActive(false);
+        _subscriptionPage.SetActive(true);
+        CurrentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
     }
 
     public void EnableUnLockAllSharksPanel()
@@ -840,6 +911,8 @@ public class UIController : MonoBehaviour
     public void UnlockAllSharksContinueButtonClick()
     {
         _unlockAllSharksPanel.SetActive(false);
+
+        if (quitButtonClicked) _loadingPanel.SetActive(true);
         StartCoroutine(LoadTheGame());
 
         IEnumerator LoadTheGame()

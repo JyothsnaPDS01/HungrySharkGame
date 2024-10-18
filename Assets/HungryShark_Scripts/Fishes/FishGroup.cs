@@ -63,12 +63,13 @@ namespace SharkGame
             }
             else if (SharkGameManager.Instance.CurrentLevel == 4 || SharkGameManager.Instance.CurrentLevel == 18 )
             {
-                //StartCoroutine(MoveInCircularPath());
                 StartCoroutine(MoveInParabolicArc(50f));
             }
             else if(SharkGameManager.Instance.CurrentLevel == 5 || SharkGameManager.Instance.CurrentLevel == 20)
             {
-                StartCoroutine(ReverseEscape(GameObject.Find("Player_Shark").transform));
+                StartCoroutine(MoveFastAndSlow());
+
+                StartCoroutine(MoveZigZag());
             }
             else if(SharkGameManager.Instance.CurrentLevel == 7 || SharkGameManager.Instance.CurrentLevel == 13)
             {
@@ -91,7 +92,7 @@ namespace SharkGame
             }
             else if(SharkGameManager.Instance.CurrentLevel == 10 || SharkGameManager.Instance.CurrentLevel == 15)
             {
-                StartCoroutine(ReverseEscape(GameObject.Find("Player_Shark").transform));
+                StartCoroutine(MoveFastAndSlow());
             }
         }
 
@@ -131,6 +132,63 @@ namespace SharkGame
                 yield return null; // Wait before reversing
             }
         }
+
+        private IEnumerator EscapeFishes()
+        {
+            float escapeThreshold = 2f;
+#if UNITY_EDITOR
+            Debug.LogError("MoveHorizontally");
+#endif
+            while (true)
+            {
+                // Ensure the fish swim animation plays for each small fish
+                foreach (var item in smallFishes)
+                {
+                    item.PlaySwimAnimation();
+                }
+
+                // Determine the target X position (either maxX or minX based on direction)
+                float targetX = isMovingRight ? maxX : minX;
+
+                // Apply the appropriate rotation directly based on the direction
+                transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+
+                // Calculate new position for the parent object
+                Vector3 targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
+
+                // Move the parent object (and therefore the fish group) towards the target position
+                while (Mathf.Abs(transform.position.x - targetX) > 0.1f)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                    yield return null;
+                }
+
+                // Check distance to the player (shark)
+                float distanceToShark = Vector3.Distance(transform.position, GameObject.Find("Player_Shark").transform.position); // Assuming sharkTransform is defined
+
+                // If the shark is close, move forward 0.5f
+                if (distanceToShark < escapeThreshold) // Use your defined escapeThreshold
+                {
+                    Vector3 escapeDirection = transform.right * (isMovingRight ? 1 : -1); // Determine escape direction
+
+                    // Move forward by 0.5f
+                    float escapeDistance = 1f;
+                    float elapsed = 0f;
+                    while (elapsed < escapeDistance / moveSpeed)
+                    {
+                        transform.position += escapeDirection * moveSpeed * Time.deltaTime;
+                        elapsed += Time.deltaTime;
+                        yield return null;
+                    }
+                }
+
+                // Switch direction after reaching the target position
+                isMovingRight = !isMovingRight;
+
+                yield return null; // Wait before reversing
+            }
+        }
+
 
         private IEnumerator MoveInSineWave()
         {
@@ -186,39 +244,62 @@ namespace SharkGame
             float horizontalSpeed = moveSpeed;
             float arcHeight = 1f;  // Peak height of the arc
 
-            float startX = transform.position.x;
-            float targetX = isMovingRight ? maxX : minX;
-
+            // Capture the initial Y position to keep the arc centered around it
             float initialY = transform.position.y;
 
-            // Apply the appropriate rotation based on the direction
-            transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
+            // Keep track of the fish's X position independently
+            float currentX = transform.position.x;
 
             while (true)
             {
-                float elapsedTime = 0f;
-
-                while (elapsedTime < duration)
+                foreach (var item in smallFishes)
                 {
-                    float t = elapsedTime / duration;
-                    float newX = Mathf.Lerp(startX, targetX, t);
+                    item.PlaySwimAnimation();
+                }
+                // Apply the appropriate rotation based on the direction
+                transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
 
-                    // Calculate a parabolic arc
-                    float arcOffset = Mathf.Sin(t * Mathf.PI) * arcHeight; // Creates the arc effect
+                // Determine the direction the fish is moving in
+                float targetX = isMovingRight ? maxX : minX;
+
+                // Move the fish based on its speed, maintaining constant speed
+                while (isMovingRight ? currentX < maxX : currentX > minX)
+                {
+                    // Update current X position based on direction and speed
+                    currentX += (isMovingRight ? 1 : -1) * horizontalSpeed * Time.deltaTime;
+
+                    // Calculate the 't' value based on the current position relative to the target
+                    float t = Mathf.InverseLerp(isMovingRight ? minX : maxX, isMovingRight ? maxX : minX, currentX);
+
+                    // Calculate the Y position using a parabolic arc
+                    float arcOffset = Mathf.Sin(t * Mathf.PI) * arcHeight;  // Creates the parabolic arc
                     float newY = initialY + arcOffset;
 
-                    transform.position = new Vector3(newX, newY, transform.position.z);
+                    // Update the fish's position
+                    transform.position = new Vector3(currentX, newY, transform.position.z);
 
-                    elapsedTime += Time.deltaTime;
+                    // Early direction switch if getting close to maxX or minX
+                    if (isMovingRight && currentX >= maxX - 1f)
+                    {
+                        isMovingRight = false;
+                        break; // Switch direction early
+                    }
+                    else if (!isMovingRight && currentX <= minX + 1f)
+                    {
+                        isMovingRight = true;
+                        break; // Switch direction early
+                    }
+
+                    // Wait for the next frame
                     yield return null;
                 }
 
-                // Switch direction
-                isMovingRight = !isMovingRight;
-
+                // Wait for one frame before restarting the movement in the opposite direction
                 yield return null;
             }
         }
+
+
 
 
         private IEnumerator MoveInCurvedSineWave(float duration)
@@ -233,52 +314,46 @@ namespace SharkGame
             // Capture the initial Y position to keep the sine wave motion centered around it
             float initialY = transform.position.y;
 
+            // Keep track of the fish's X position independently from duration
+            float currentX = transform.position.x;
+
             while (true)
             {
                 // Ensure the fish swim animation plays for each small fish
-                foreach (var fish in smallFishes)
+                foreach (var item in smallFishes)
                 {
-                    fish.GetComponent<Animator>()?.SetTrigger("Swim"); // Assuming there's an Animator for each fish
+                    item.PlaySwimAnimation();
                 }
 
-                // Determine the starting and target X position (based on the current direction)
-                float startX = transform.position.x;
+                // Determine the direction based on whether the fish is moving right or left
                 float targetX = isMovingRight ? maxX : minX;
-
-                // Apply the appropriate rotation based on the direction
                 transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
 
-                float elapsedTime = 0f;
-
-                // Move the fish for the specified duration
-                while (elapsedTime < duration)
+                // Move the fish based on its speed, keeping the speed constant
+                while (isMovingRight ? currentX < maxX : currentX > minX)
                 {
-                    // Calculate how far along the movement is based on the elapsed time
-                    float t = elapsedTime / duration;
+                    // Update current X position based on direction and speed
+                    currentX += (isMovingRight ? 1 : -1) * horizontalSpeed * Time.deltaTime;
 
-                    // Interpolate X position between startX and targetX
-                    float newX = Mathf.Lerp(startX, targetX, t);
-
-                    // Calculate the Y position using sine wave
-                    float newY = Mathf.Sin(t * Mathf.PI * 2f * verticalFrequency) * verticalAmplitude + initialY;
+                    // Calculate the Y position using a sine wave
+                    float newY = Mathf.Sin((currentX / maxX) * Mathf.PI * 2f * verticalFrequency) * verticalAmplitude + initialY;
 
                     // Update the fish position with the new calculated values
-                    transform.position = new Vector3(newX, newY, transform.position.z);
-
-                    // Increase the elapsed time by Time.deltaTime to make the movement frame-rate independent
-                    elapsedTime += Time.deltaTime;
+                    transform.position = new Vector3(currentX, newY, transform.position.z);
 
                     // Wait for the next frame
                     yield return null;
                 }
 
-                // Switch the movement direction after reaching the target X position
+                // Switch the direction once the fish reaches the boundary
                 isMovingRight = !isMovingRight;
 
                 // Wait for one frame before restarting the movement in the opposite direction
                 yield return null;
             }
         }
+
+
 
 
         private IEnumerator MoveInCircularPath()
@@ -367,9 +442,9 @@ namespace SharkGame
 
             while (true)
             {
-                foreach (var fish in smallFishes)
+                foreach (var item in smallFishes)
                 {
-                    fish.GetComponent<Animator>()?.SetTrigger("Swim");
+                    item.PlaySwimAnimation();
                 }
 
                 float startX = transform.position.x;
@@ -527,65 +602,7 @@ namespace SharkGame
             }
         }
 
-        public Transform sharkTransform;  // Assign the player's shark transform here
-        public float approachSpeed = .5f;  // Speed at which fish approach the shark
-        public float escapeSpeed = .5f;    // Speed at which fish escape the shark
-        public float escapeThreshold = 1f; // Distance at which fish escape
-        public float escapeDistance = .5f; // Distance fish travel while escaping
-
-        private IEnumerator ReverseEscape(Transform sharkTransform)
-        {
-#if UNITY_EDITOR
-            Debug.LogError("ReverseEscape");
-#endif
-            while (true)
-            {
-                // Ensure the fish swim animation plays for each small fish
-                foreach (var item in smallFishes)
-                {
-                    item.PlaySwimAnimation();
-                }
-
-                // Calculate the distance between the fish group and the shark
-                float distanceToShark = Vector3.Distance(transform.position, sharkTransform.position);
-
-                // If the fish are moving towards the shark
-                if (distanceToShark > escapeThreshold)
-                {
-                    // Move towards the shark (bait movement)
-                    Vector3 targetPosition = sharkTransform.position;
-
-                    // Apply the appropriate rotation to face the shark
-                    transform.rotation = (targetPosition.x > transform.position.x) ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
-
-                    // Move towards the shark
-                    while (Vector3.Distance(transform.position, sharkTransform.position) > escapeThreshold)
-                    {
-                        transform.position = Vector3.MoveTowards(transform.position, sharkTransform.position, approachSpeed * Time.deltaTime);
-                        yield return null;
-                    }
-
-                    // Once the fish are close enough to the shark, escape in the opposite direction
-                    Vector3 escapeDirection = (transform.position - sharkTransform.position).normalized;
-                    Vector3 escapeTarget = transform.position + escapeDirection * escapeDistance;
-
-                    // Rotate the fish to face away from the shark
-                    transform.rotation = (escapeDirection.x > 0) ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
-
-                    // Escape in the opposite direction
-                    while (Vector3.Distance(transform.position, escapeTarget) > 0.1f)
-                    {
-                        transform.position = Vector3.MoveTowards(transform.position, escapeTarget, escapeSpeed * Time.deltaTime);
-                        yield return null;
-                    }
-                }
-
-                // Wait before repeating the escape behavior
-                yield return null;
-            }
-        }
-
-
+       
 
         // Move along waypoints for other levels
         private IEnumerator MoveThroughWaypoints(FishGroup fish)

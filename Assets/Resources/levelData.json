@@ -33,12 +33,15 @@
         },
         {
           "bomb": "WaterBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 5,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -47,7 +50,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 20
         }
       ],
       "smallObjects": [
@@ -76,12 +79,15 @@
         },
         {
           "bomb": "TimerBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 1,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 100
       }
     },
     {
@@ -119,12 +125,15 @@
         },
         {
           "bomb": "TimerBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 15,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 80
       }
     },
     {
@@ -157,7 +166,7 @@
       "bufferAmount": 15,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 60
       }
     },
     {
@@ -187,13 +196,13 @@
           "bomb": "TimerBomb"
         },
         {
-          "bomb": "WaterBomb"
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 90
       }
     },
     {
@@ -224,12 +233,15 @@
         },
         {
           "bomb": "WaterBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -265,12 +277,15 @@
         },
         {
           "bomb": "WaterBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -311,7 +326,7 @@
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -347,12 +362,15 @@
         },
         {
           "bomb": "WaterBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -383,12 +401,15 @@
         },
         {
           "bomb": "WaterBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -446,12 +467,15 @@
         },
         {
           "bomb": "WaterBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -483,7 +507,7 @@
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -519,12 +543,15 @@
         },
         {
           "bomb": "WaterBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -560,7 +587,7 @@
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -591,6 +618,9 @@
         },
         {
           "bomb": "WaterBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 10,
@@ -637,7 +667,7 @@
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -668,6 +698,9 @@
         },
         {
           "bomb": "WaterBomb"
+        },
+        {
+          "bomb": "RustBomb"
         }
       ],
       "bufferAmount": 10,
@@ -709,7 +742,7 @@
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     },
     {
@@ -750,7 +783,7 @@
       "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
-        "amount": 5
+        "amount": 50
       }
     }
   ]

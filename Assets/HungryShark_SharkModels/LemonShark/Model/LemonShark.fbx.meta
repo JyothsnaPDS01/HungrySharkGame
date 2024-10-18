@@ -59,6 +59,11 @@ ModelImporter:
     second: Attack1
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LemonShark
+    second: {fileID: 2100000, guid: dd43b3af510260b4598e4d52adc88f78, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: LemonShark_baseColor
