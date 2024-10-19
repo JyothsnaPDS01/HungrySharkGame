@@ -297,7 +297,14 @@ namespace SharkGame
         {
             yield return null;
 
-            _playerSharkPrefab.GetComponent<Player>().StartDieAnimation();
+            if (_playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.GeneralShark)
+            {
+                _playerSharkPrefab.GetComponent<Player>().StartDieAnimation();
+            }
+            else if (_playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.WhaleShark)
+            {
+                _playerSharkPrefab.GetComponent<Player>().UnlockSharkStartDieAnimation();
+            }
             UIController.Instance.DestroyBombs();
 
             _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();

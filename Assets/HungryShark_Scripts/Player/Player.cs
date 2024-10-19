@@ -479,6 +479,11 @@ namespace SharkGame
                 _targetRotation = Quaternion.Euler(0, 0, 180);
             }
 
+            else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+            {
+                _targetRotation = Quaternion.Euler(90, 0, 0);
+            }
+
             Vector3 initialPosition = _sharkRB.position;
             Vector3 targetPosition = initialPosition + new Vector3(0, -30f, 0);
 
@@ -523,6 +528,10 @@ namespace SharkGame
             else if (_sharkType == SharkGameDataModel.SharkType.LemonShark)
             {
                 _targetRotation = Quaternion.Euler(0, 0, 180);
+            }
+            else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+            {
+                _targetRotation = Quaternion.Euler(90, 0, 0);
             }
 
             Vector3 initialPosition = _sharkRB.position;
@@ -663,6 +672,10 @@ namespace SharkGame
                 {
                     targetRotation = Quaternion.Euler(180 , 0, 180);
                 }
+                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                {
+                    targetRotation = Quaternion.Euler(280, 0, 0);
+                }
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Up;
             }
             else if (verticalInput < 0 && horizontalInput == 0)  // Down
@@ -674,6 +687,10 @@ namespace SharkGame
                 else if (_sharkType == SharkGameDataModel.SharkType.LemonShark)
                 {
                     targetRotation = Quaternion.Euler(0, 0, 180);
+                }
+                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                {
+                    targetRotation = Quaternion.Euler(90, 0, 0);
                 }
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Down;
             }
@@ -687,6 +704,10 @@ namespace SharkGame
                 {
                     targetRotation = Quaternion.Euler(90, 0, 90);
                 }
+                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                {
+                    targetRotation = Quaternion.Euler(0, -90, 0);
+                }
                 _currentSharkDirection = SharkGameDataModel.SharkDirection.Left;
             }
             else if (horizontalInput > 0 && verticalInput == 0)  // Right
@@ -699,28 +720,60 @@ namespace SharkGame
                 {
                     targetRotation = Quaternion.Euler(90, 0, -90);
                 }
-                    _currentSharkDirection = SharkGameDataModel.SharkDirection.Right;
+                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                {
+                    targetRotation = Quaternion.Euler(0, 90, 0);
+                }
+                _currentSharkDirection = SharkGameDataModel.SharkDirection.Right;
             }
             else if (horizontalInput != 0 && verticalInput != 0)
             {
                 if (horizontalInput > 0 && verticalInput > 0)  // Up-Right Diagonal
                 {
-                    targetRotation = Quaternion.Euler(-25, 110, 50);
+                    if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+                    {
+                        targetRotation = Quaternion.Euler(-25, 110, 50);
+                    }
+                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                    {
+                        targetRotation = Quaternion.Euler(-50, 90, 60);
+                    }
                     _currentSharkDirection = SharkGameDataModel.SharkDirection.UpRight;
                 }
                 else if (horizontalInput > 0 && verticalInput < 0)  // Down-Right Diagonal
                 {
-                    targetRotation = Quaternion.Euler(60, -250, -70);
+                    if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+                    {
+                        targetRotation = Quaternion.Euler(60, -250, -70);
+                    }
+                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                    {
+                        targetRotation = Quaternion.Euler(35, 90, -80);
+                    }
                     _currentSharkDirection = SharkGameDataModel.SharkDirection.DownRight;
                 }
                 else if (horizontalInput < 0 && verticalInput > 0)  // Up-Left Diagonal
                 {
-                    targetRotation = Quaternion.Euler(230, 30, 130);
+                    if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+                    {
+                        targetRotation = Quaternion.Euler(230, 30, 130);
+                    }
+                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                    {
+                        targetRotation = Quaternion.Euler(-50, -90, 120);
+                    }
                     _currentSharkDirection = SharkGameDataModel.SharkDirection.UpLeft;
                 }
                 else if (horizontalInput < 0 && verticalInput < 0)  // Down-Left Diagonal
                 {
-                    targetRotation = Quaternion.Euler(50, -90, 80);
+                    if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
+                    {
+                        targetRotation = Quaternion.Euler(50, -90, 80);
+                    }
+                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                    {
+                        targetRotation = Quaternion.Euler(50, -90, 120);
+                    }
                     _currentSharkDirection = SharkGameDataModel.SharkDirection.DownLeft;
                 }
             }
@@ -749,11 +802,6 @@ namespace SharkGame
                 targetRotation = GetTargetRotation();
                 isGrounded = true;
                 blockedDirection = _currentSharkDirection;
-
-                // Optional: You can rotate the shark here if needed
-                // StartCoroutine(RotateToTargetRotation(targetRotation));
-
-                // Start the cooldown to avoid jerky movements
                 StartCoroutine(CollisionCooldown());
             }
          
@@ -813,6 +861,10 @@ namespace SharkGame
             }
         }
 
+        internal SharkGameDataModel.SharkType GetSharkType()
+        {
+            return _sharkType;
+        }
 
         private IEnumerator CollisionCooldown()
         {
@@ -928,10 +980,10 @@ namespace SharkGame
             {
                 _sharkAnimator.SetBool("sharkDie", true);
             }
-            else if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
-            {
-                _sharkAnimator.SetFloat("sharkAmount", 1f);
-            }
+            //else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+            //{
+            //    _sharkAnimator.SetBool("sharkDie", true);
+            //}
         }
 
         internal void BackToIdleAnimation()
@@ -1015,6 +1067,84 @@ namespace SharkGame
 
                 // Increase the distance moved down smoothly
                 currentDistanceMoved += moveSpeed * Time.deltaTime;
+
+                yield return null; // Wait for the next frame
+            }
+
+            // Ensure the shark reaches the exact destination using Rigidbody
+            Vector3 finalPosition = new Vector3(transform.position.x, initialYPosition - totalFallDistance, transform.position.z);
+            _sharkRB.MovePosition(finalPosition);
+
+            isDying = false;
+
+        }
+
+
+        public void UnlockSharkStartDieAnimation()
+        {
+            initialYPosition = _sharkRB.position.y;
+
+            DisableInput();
+
+            // Check if the initial Y position is between -40 and -45
+            if (initialYPosition >= -45f && initialYPosition <= -35f)
+            {
+                // Add the offset of 10 to the Y position
+                initialYPosition += 10f;
+            }
+
+            Debug.LogError("StartDieAnimation");
+
+            _sharkAnimator.SetBool("sharkDie", true);
+
+            if (!isDying)
+            {
+                StartCoroutine(UnlockSharkDieAnimation());
+            }
+        }
+
+        IEnumerator UnlockSharkDieAnimation()
+        {
+            isDying = true;
+            currentDistanceMoved = 0f;  // Reset the distance moved
+
+            // Blend with the animation duration (e.g., 1 second)
+            float animationBlendTime = 1f;
+            float elapsedTime = 0f;
+
+            while (currentDistanceMoved < totalFallDistance)
+            {
+                // Let the animation run for 'animationBlendTime' seconds, blending the movement.
+                if (elapsedTime < animationBlendTime)
+                {
+                    elapsedTime += Time.deltaTime;
+                }
+                else
+                {
+                    // After the animation plays, start applying the custom movement and rotation
+                    float sineWaveOffset = Mathf.Sin(Time.time * sineFrequency) * sineAmplitude;
+                    float newYPosition = initialYPosition - currentDistanceMoved + sineWaveOffset;
+
+                    // Move the shark using Rigidbody (MovePosition)
+                    Vector3 newPosition = new Vector3(transform.position.x, newYPosition, transform.position.z);
+                    _sharkRB.MovePosition(newPosition);
+
+                    // Get current Z-axis rotation
+                    float currentZRotation = _sharkRB.rotation.eulerAngles.z;
+
+                    // Calculate the new Z-axis rotation, clamped between 180 and 260 degrees
+                    float newZRotation = Mathf.Clamp(currentZRotation + (dierotationSpeed * Time.deltaTime), 180f, 260f);
+
+                    // Apply the X-axis rotation based on the sine wave for wobble effect
+                    float newXRotation = Mathf.Sin(Time.time * sineFrequency) * 10f;  // Adjust '10f' for how much the X-axis rotates
+
+                    // Apply the new rotation using Rigidbody (MoveRotation)
+                    Quaternion newRotation = Quaternion.Euler(newXRotation, 0, newZRotation);
+                    _sharkRB.MoveRotation(newRotation);
+
+                    // Increase the distance moved down smoothly
+                    currentDistanceMoved += moveSpeed * Time.deltaTime;
+                }
 
                 yield return null; // Wait for the next frame
             }

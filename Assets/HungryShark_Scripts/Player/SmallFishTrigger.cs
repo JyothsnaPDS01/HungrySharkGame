@@ -267,9 +267,12 @@ namespace SharkGame
                 UIController.Instance.MakeMaxHealth();
 
                 UIController.Instance.UpdateKillAmount();
-                if (_fishObject.transform.parent.GetComponent<FishGroup>() != null)
+                if (_fishObject.transform.parent.gameObject.activeInHierarchy)
                 {
-                    _fishObject.transform.parent.GetComponent<FishGroup>().UpdateDestroyCount(1, _fishObject);
+                    if (_fishObject.transform.parent.GetComponent<FishGroup>() != null)
+                    {
+                        _fishObject.transform.parent.GetComponent<FishGroup>().UpdateDestroyCount(1, _fishObject);
+                    }
                 }
                 if (SharkGameManager.Instance.DestroyCount == SharkGameManager.Instance.CurrentLevelTargetAmount)
                 {
