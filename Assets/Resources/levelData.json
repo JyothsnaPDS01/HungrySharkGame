@@ -6,7 +6,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 1
         }
       ],
       "smallObjects": [
@@ -50,7 +50,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 1
         }
       ],
       "smallObjects": [
@@ -96,7 +96,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 1
         }
       ],
       "smallObjects": [
@@ -142,7 +142,7 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "EscapeFishes",
-          "amount": 10
+          "amount": 1
         }
       ],
       "smallObjects": [
@@ -175,7 +175,7 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "DoubleAttack",
-          "amount": 10
+          "amount": 1
         }
       ],
       "smallObjects": [
@@ -211,7 +211,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 1
         }
       ],
       "smallObjects": [

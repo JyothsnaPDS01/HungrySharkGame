@@ -90,6 +90,10 @@ namespace SharkGame
             {
                 return _currentLevel;
             }
+            set
+            {
+                _currentLevel = value;
+            }
         }
 
         public int CurrentLevelTargetAmount
@@ -310,8 +314,10 @@ namespace SharkGame
 
         internal void ResetGame()
         {
+            Debug.LogError("ResetGame");
             PlayerPrefs.SetInt("CurrentLevel", 1);
             PlayerPrefs.Save();
+            Debug.LogError("CurrentLevel" + PlayerPrefs.GetInt("CurrentLevel"));
             _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
             _spawnManager.SetActive(false);
             destroyCount = 0;

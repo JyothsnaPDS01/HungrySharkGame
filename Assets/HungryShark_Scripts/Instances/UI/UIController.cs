@@ -192,6 +192,8 @@ public class UIController : MonoBehaviour
     [Header("Unlock Full Game Panel")]
     [SerializeField] private GameObject _unlockFullGamePanel;
 
+    private bool isFullGamePurchased = false;
+
     #endregion
 
     #region MonoBehaviour Methods
@@ -252,8 +254,11 @@ public class UIController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                _subscriptionPage.SetActive(false);
+                _unlockFullGamePanel.SetActive(false);
+                _subscriptionPage.SetActive(true);
                 currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+                SharkGameManager.Instance.ResetGame();
+                SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
             }
         }
 
@@ -381,7 +386,7 @@ public class UIController : MonoBehaviour
         _huntCompletePanel.SetActive(false);
         _rayImage.transform.DOKill();
 
-        if (SharkGameManager.Instance.CurrentLevel != 6)
+        if (SharkGameManager.Instance.CurrentLevel != 5)
         {
             _missionPanel.SetActive(true);
 
@@ -400,10 +405,32 @@ public class UIController : MonoBehaviour
             _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
         }
 
-        if(SharkGameManager.Instance.CurrentLevel == 6)
+        if(SharkGameManager.Instance.CurrentLevel == 5)
         {
-            _unlockFullGamePanel.SetActive(true);
-            CurrentScreen = SharkGameDataModel.Screen.UnlockFullGamePanel;
+            if(!isFullGamePurchased)
+            {
+                _unlockFullGamePanel.SetActive(true);
+                CurrentScreen = SharkGameDataModel.Screen.UnlockFullGamePanel;
+            }
+            else if(isFullGamePurchased)
+            {
+                _missionPanel.SetActive(true);
+
+                currentScreen = SharkGameDataModel.Screen.MissionPanel;
+
+                SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
+
+                _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
+                _levelNumberTMP.text = "Level Number : " + _currentLevelData.levelNumber.ToString();
+                _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
+
+                for (int i = 0; i < _runningBgList.Count; i++)
+                {
+                    _runningBgList[i].GetComponent<SpriteRenderer>().sprite = _runningBgSpriteList[SharkGameManager.Instance.CurrentLevel % _runningBgSpriteList.Count];
+                }
+                _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
+            }
+          
         }
 
         MakeMaxHealth();
@@ -674,8 +701,6 @@ public class UIController : MonoBehaviour
         _subscriptionPage.SetActive(false);
         _mainMenuPanel.SetActive(true);
         currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
-
-        //StartCoroutine(RotatePortalImage());
     }
 
     public void PlayButtonClick()
@@ -717,19 +742,7 @@ public class UIController : MonoBehaviour
             _underWaterEnvironmentPanel.SetActive(false);
             currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
         }
-        
-        //StartCoroutine(RotatePortalImage());
     }
-
-    //private IEnumerator RotatePortalImage()
-    //{
-    //    Debug.LogError("RotatePortalImage");
-    //    yield return new WaitForSeconds(2f);
-    //    // Rotate the object from 0 to -360 on the Z-axis and loop back to 0
-    //    _portalImage.transform.DORotate(new Vector3(0, 0, -360), 20f, RotateMode.FastBeyond360)
-    //        .SetLoops(-1, LoopType.Yoyo) // Infinite loop between 0 and -360
-    //        .SetEase(Ease.Linear);
-    //}
 
     public void SetMainCameraOriginalPosition()
     {
@@ -900,6 +913,9 @@ public class UIController : MonoBehaviour
         _unlockFullGamePanel.SetActive(false);
         _subscriptionPage.SetActive(true);
         CurrentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+        SharkGameManager.Instance.ResetGame();
+        SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
+        isFullGamePurchased = true;
     }
 
     public void EnableUnLockAllSharksPanel()
