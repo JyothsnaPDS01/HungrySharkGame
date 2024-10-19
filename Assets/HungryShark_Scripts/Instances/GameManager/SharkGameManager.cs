@@ -301,7 +301,8 @@ namespace SharkGame
             {
                 _playerSharkPrefab.GetComponent<Player>().StartDieAnimation();
             }
-            else if (_playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.WhaleShark)
+            else if (_playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.WhaleShark ||
+                _playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.TigerShark)
             {
                 _playerSharkPrefab.GetComponent<Player>().UnlockSharkStartDieAnimation();
             }

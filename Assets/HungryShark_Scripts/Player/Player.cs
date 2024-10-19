@@ -272,15 +272,6 @@ namespace SharkGame
             return verticalInput > 0 && Mathf.Approximately(horizontalInput, 0);
         }
 
-        void StartParabolicJump()
-        {
-#if UNITY_EDITOR
-            Debug.LogError("Starting parabolic jump.");
-#endif
-            isParabolicJumping = true;
-            StartCoroutine(HandleParabolicJump());
-        }
-
         void StartSmoothTransitionIfNecessary()
         {
             if ((Mathf.Approximately(horizontalInput, 0) && Mathf.Approximately(verticalInput, 0) || IsUpKeyPressed()) && !transitionCompleted)
@@ -324,61 +315,6 @@ namespace SharkGame
                 Vector3 forwardMovement = transform.forward * forwardSpeed * Time.fixedDeltaTime;
                 _sharkRB.MovePosition(_sharkRB.position + forwardMovement);
             }
-        }
-        // Assuming rotationSpeed is defined somewhere in your class
-      
-
-        private IEnumerator HandleParabolicJump()
-        {
-            float elapsedTime = 0f;
-            float duration = 1f; // Duration for the parabolic jump
-
-            Vector3 initialPosition = _sharkRB.position;
-            Quaternion initialRotation = _sharkRB.rotation; // Save the initial rotation
-
-            // Define the peak height of the parabolic jump
-            float peakHeight = 3f; // Adjust this value to control the height of the jump
-
-            // Define the target position for the end of the jump
-            Vector3 targetPosition = new Vector3(_sharkRB.position.x, -0.155f, _sharkRB.position.z); // The landing point at water level
-
-            // Define the target rotation for the end of the jump
-            Quaternion targetRotation = Quaternion.Euler(-90, 0, -180);
-
-            while (elapsedTime < duration)
-            {
-                // Normalize elapsed time to a value between 0 and 1
-                float t = elapsedTime / duration;
-
-                // Calculate the parabolic Y position using the quadratic equation
-                float yPosition = Mathf.Lerp(initialPosition.y, targetPosition.y, t) + (4 * peakHeight * t * (1 - t));
-
-                // Combine the new Y position with linearly interpolated X and Z positions
-                Vector3 newPosition = new Vector3(
-                    Mathf.Lerp(initialPosition.x, targetPosition.x, t),
-                    yPosition,
-                    Mathf.Lerp(initialPosition.z, targetPosition.z, t)
-                );
-
-                // Smoothly rotate the shark
-                Quaternion newRotation = Quaternion.Slerp(initialRotation, targetRotation, t);
-
-                // Move and rotate the shark smoothly to the new position and rotation
-                _sharkRB.MovePosition(newPosition);
-                _sharkRB.MoveRotation(newRotation);
-
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-           
-            // Ensure the shark reaches the final target position and rotation
-            _sharkRB.MovePosition(targetPosition);
-            _sharkRB.MoveRotation(targetRotation);
-
-            // Stop any residual velocity
-            _sharkRB.velocity = Vector3.zero;
-            // Reset the flag to allow input after the jump
-            isParabolicJumping = false;
         }
 
         private void StartSmoothTransition()
@@ -479,7 +415,7 @@ namespace SharkGame
                 _targetRotation = Quaternion.Euler(0, 0, 180);
             }
 
-            else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+            else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark|| _sharkType == SharkGameDataModel.SharkType.TigerShark)
             {
                 _targetRotation = Quaternion.Euler(90, 0, 0);
             }
@@ -529,7 +465,7 @@ namespace SharkGame
             {
                 _targetRotation = Quaternion.Euler(0, 0, 180);
             }
-            else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+            else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark)
             {
                 _targetRotation = Quaternion.Euler(90, 0, 0);
             }
@@ -672,7 +608,7 @@ namespace SharkGame
                 {
                     targetRotation = Quaternion.Euler(180 , 0, 180);
                 }
-                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark)
                 {
                     targetRotation = Quaternion.Euler(280, 0, 0);
                 }
@@ -688,7 +624,7 @@ namespace SharkGame
                 {
                     targetRotation = Quaternion.Euler(0, 0, 180);
                 }
-                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark)
                 {
                     targetRotation = Quaternion.Euler(90, 0, 0);
                 }
@@ -704,7 +640,7 @@ namespace SharkGame
                 {
                     targetRotation = Quaternion.Euler(90, 0, 90);
                 }
-                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark)
                 {
                     targetRotation = Quaternion.Euler(0, -90, 0);
                 }
@@ -720,7 +656,7 @@ namespace SharkGame
                 {
                     targetRotation = Quaternion.Euler(90, 0, -90);
                 }
-                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark)
                 {
                     targetRotation = Quaternion.Euler(0, 90, 0);
                 }
@@ -734,9 +670,9 @@ namespace SharkGame
                     {
                         targetRotation = Quaternion.Euler(-25, 110, 50);
                     }
-                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark)
                     {
-                        targetRotation = Quaternion.Euler(-50, 90, 60);
+                        targetRotation = Quaternion.Euler(-50, 90, 80);
                     }
                     _currentSharkDirection = SharkGameDataModel.SharkDirection.UpRight;
                 }
@@ -746,7 +682,7 @@ namespace SharkGame
                     {
                         targetRotation = Quaternion.Euler(60, -250, -70);
                     }
-                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark)
                     {
                         targetRotation = Quaternion.Euler(35, 90, -80);
                     }
@@ -758,7 +694,7 @@ namespace SharkGame
                     {
                         targetRotation = Quaternion.Euler(230, 30, 130);
                     }
-                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark)
                     {
                         targetRotation = Quaternion.Euler(-50, -90, 120);
                     }
@@ -770,7 +706,7 @@ namespace SharkGame
                     {
                         targetRotation = Quaternion.Euler(50, -90, 80);
                     }
-                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark)
+                    else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark)
                     {
                         targetRotation = Quaternion.Euler(50, -90, 120);
                     }
@@ -942,13 +878,6 @@ namespace SharkGame
                 // Reset grounded flag when leaving the ground
                 isGrounded = false;
             }
-        }
-
-        private bool IsSmallFishNearToPlayer()
-        {
-            float detectionRadius = .5f;
-            Collider[] nearbyFishes = Physics.OverlapSphere(_sharkMouthPosition.position, detectionRadius, wallLayer);
-            return nearbyFishes.Length > 0; // Returns true if any fish are detected nearby
         }
 
         internal void EnableBloodEffect()
