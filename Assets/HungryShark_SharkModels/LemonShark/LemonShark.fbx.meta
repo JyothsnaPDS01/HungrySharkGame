@@ -1,0 +1,139 @@
+fileFormatVersion: 2
+guid: db17326108b07804399536500f86362e
+ModelImporter:
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      74: 4397692672129543565
+    second: LemonSharkRig|LemonSharkRig|LemonSharkRig|WhaleSharkRig|WhaleSh
+  - first:
+      74: -8709969906012154774
+    second: LemonShark|LemonSharkRig|LemonSharkRig|WhaleSharkRig|WhaleShark
+  - first:
+      74: -521753107005498028
+    second: Root|LemonSharkRig|LemonSharkRig|WhaleSharkRig|WhaleSharkRig|Wh
+  - first:
+      74: -4491984648266854886
+    second: Sketchfab_model|LemonSharkRig|LemonSharkRig|WhaleSharkRig|Whale
+  - first:
+      74: 1377583632236882335
+    second: LemonSharkRig|Action.004
+  - first:
+      74: 6314558431520857064
+    second: LemonSharkRig|LemonSharkRig|LemonSharkRig|LemonSharkRig|WhaleSharkRig|WhaleSh
+  - first:
+      74: -4941314206014622237
+    second: LemonShark|Action.004
+  - first:
+      74: 5610377219933342926
+    second: Root|Action.004
+  - first:
+      74: -7412629416586315164
+    second: LEMON SHARK|Action.004
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LemonShark
+    second: {fileID: 2100000, guid: 0ba8305287827b143bc9cfcc5e230fdd, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: LemonShark_baseColor
+    second: {fileID: 2800000, guid: eb7487a0b6d6d6847baecd9ac88210f7, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: LemonShark_normal
+    second: {fileID: 2800000, guid: 4911aa1b7f3c45e46a209b2c4954da2d, type: 3}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

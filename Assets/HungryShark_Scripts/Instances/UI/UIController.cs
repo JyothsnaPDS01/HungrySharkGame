@@ -49,7 +49,7 @@ public class UIController : MonoBehaviour
 
         DisbaleInGameParticleEffects();
     }
- 
+
     #endregion
 
     #region Private Variables
@@ -182,7 +182,7 @@ public class UIController : MonoBehaviour
     [Header("Current Screen")]
     [SerializeField] private SharkGameDataModel.Screen currentScreen;
 
-    public SharkGameDataModel.Screen CurrentScreen {  get { return currentScreen; } set { currentScreen = value; } }
+    public SharkGameDataModel.Screen CurrentScreen { get { return currentScreen; } set { currentScreen = value; } }
 
     [SerializeField] private SharkGameDataModel.Screen previousScreen = SharkGameDataModel.Screen.None;
 
@@ -193,6 +193,23 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _unlockFullGamePanel;
 
     private bool isFullGamePurchased = false;
+
+    private bool isTutorialEnabled = true;
+
+    [Header("TutorialSharkDirection")]
+    [SerializeField] private SharkGameDataModel.TutorialSharkDirections tutorialSharkDirection = SharkGameDataModel.TutorialSharkDirections.None;
+
+    public SharkGameDataModel.TutorialSharkDirections TutorialSharkDirection { get { return tutorialSharkDirection;  } }
+
+    public bool IsTutorialEnabled
+    {
+        get { return isTutorialEnabled; }
+    }
+
+    [Header("Tutorial Panel UI sprites References")]
+    [SerializeField] private List<SharkGameDataModel.TutorialDirecionSprite> _remoteDirectionImages;
+    [SerializeField] private GameObject _remoteImage;
+    [SerializeField] private GameObject _tutorialPanel;
 
     #endregion
 
@@ -208,7 +225,7 @@ public class UIController : MonoBehaviour
 
         currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
 
-        for(int i=0;i<_runningBgList.Count;i++)
+        for (int i = 0; i < _runningBgList.Count; i++)
         {
             _runningBgList[i].GetComponent<SpriteRenderer>().sprite = _runningBgSpriteList[0];
         }
@@ -233,14 +250,14 @@ public class UIController : MonoBehaviour
                 SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
             }
         }
-        else if(currentScreen == SharkGameDataModel.Screen.SelectionPanel)
+        else if (currentScreen == SharkGameDataModel.Screen.SelectionPanel)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 _mainMenuPanel.SetActive(true);
                 _selectionPanel.SetActive(false);
                 currentSharkIndex = 0;
-                foreach(var item in _duplicateSharks)
+                foreach (var item in _duplicateSharks)
                 {
                     item.SetActive(false);
                 }
@@ -250,7 +267,7 @@ public class UIController : MonoBehaviour
                 currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
             }
         }
-        else if(currentScreen == SharkGameDataModel.Screen.UnlockFullGamePanel)
+        else if (currentScreen == SharkGameDataModel.Screen.UnlockFullGamePanel)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -325,6 +342,36 @@ public class UIController : MonoBehaviour
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
         SharkGameManager.Instance.PlayGameAudio();
         SharkGameManager.Instance.InitializePlayer();
+        //SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.Tutorial;
+       
+    }
+    GameObject _directionImage;
+    public void EnableTutorial()
+    {
+        _tutorialPanel.SetActive(true);
+        _remoteImage.transform.DOScale(Vector3.one, 1f);
+        isTutorialEnabled = true;
+        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.Tutorial;
+        tutorialSharkDirection = SharkGameDataModel.TutorialSharkDirections.Down;
+        _directionImage = _remoteDirectionImages.Find(x => x._direction == tutorialSharkDirection)._directionImage;
+        _directionImage.SetActive(true);
+        _directionImage.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 1f).SetLoops(-1);
+    }
+
+    public void ChangeDirection(SharkGameDataModel.TutorialSharkDirections _nextDirection)
+    {
+        _remoteImage.transform.DOScale(Vector3.one, 1f);
+        tutorialSharkDirection = _nextDirection;
+        _directionImage = _remoteDirectionImages.Find(x => x._direction == _nextDirection)._directionImage;
+        _directionImage.SetActive(true);
+        _directionImage.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 1f).SetLoops(-1);
+    }
+
+    public void TutorialInputPressed()
+    {
+        _remoteImage.SetActive(false);
+        _directionImage.transform.DOKill();
+        _directionImage.SetActive(false);
     }
 
 

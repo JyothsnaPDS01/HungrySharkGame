@@ -66,7 +66,6 @@ namespace SharkGame.Models
         }
         #endregion
 
-
         #region Level Config
         [System.Serializable]
         public class Level
@@ -121,6 +120,7 @@ namespace SharkGame.Models
             GameOver,
             GameStart,
             MissionMode,
+            Tutorial
         }
         #endregion
 
@@ -184,8 +184,29 @@ namespace SharkGame.Models
             FivePackSharkPanel,
             UnlockAllSharksPanel,
             SplashScreen,
-            UnlockFullGamePanel
+            UnlockFullGamePanel,
+            TutorialPanel
         }
+        #endregion
+
+        #region Tutorial Directions
+        [System.Serializable]
+        public enum TutorialSharkDirections
+        {
+            None,
+            Left,
+            Right,
+            Down,
+            Up
+        }
+
+        [System.Serializable]
+        public class TutorialDirecionSprite
+        {
+            public GameObject _directionImage;
+            public TutorialSharkDirections _direction;
+        }
+             
         #endregion
     }
 }
