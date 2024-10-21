@@ -591,10 +591,9 @@ namespace SharkGame
                         {
                             _sharkAnimator.SetFloat("sharkAmount", .25f);
                         }
-
-                        UIController.Instance.ChangeDirection(SharkGameDataModel.TutorialSharkDirections.Up);
+                        StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.Up));
+                        //UIController.Instance.ChangeDirection(SharkGameDataModel.TutorialSharkDirections.Up);
                     }
-
                 }
 
                 else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Up)
@@ -626,7 +625,9 @@ namespace SharkGame
                             _sharkAnimator.SetFloat("sharkAmount", .25f);
                         }
 
-                        UIController.Instance.ChangeDirection(SharkGameDataModel.TutorialSharkDirections.Left);
+                        //UIController.Instance.ChangeDirection(SharkGameDataModel.TutorialSharkDirections.Left);
+                        StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.Left));
+
                     }
 
                 }
@@ -660,7 +661,7 @@ namespace SharkGame
                             _sharkAnimator.SetFloat("sharkAmount", .25f);
                         }
 
-                        UIController.Instance.ChangeDirection(SharkGameDataModel.TutorialSharkDirections.Right);
+                        StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.Right));
                     }
 
                 }
@@ -693,14 +694,25 @@ namespace SharkGame
                         {
                             _sharkAnimator.SetFloat("sharkAmount", .25f);
                         }
-
-                       // UIController.Instance.ChangeDirection(SharkGameDataModel.TutorialSharkDirections.Left);
+                        StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.None));
                     }
 
                 }
             }
         }
 
+        IEnumerator DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections _updatedDirection)
+        {
+            yield return new WaitForSeconds(.5f);
+            if (_updatedDirection != SharkGameDataModel.TutorialSharkDirections.None)
+            {
+                UIController.Instance.ChangeDirection(_updatedDirection);
+            }
+            else if(_updatedDirection == SharkGameDataModel.TutorialSharkDirections.None)
+            {
+                UIController.Instance.EndDirectionTutorial();
+            }
+        }
 
         private SharkGameDataModel.SharkDirection GetInputDirection()
         {

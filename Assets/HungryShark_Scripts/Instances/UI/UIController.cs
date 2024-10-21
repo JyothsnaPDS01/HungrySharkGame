@@ -381,6 +381,11 @@ public class UIController : MonoBehaviour
         _directionInfo.SetActive(false);
     }
 
+    public void EndDirectionTutorial()
+    {
+        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
+    }
+
 
     public void UpdateKillAmount()
     {
