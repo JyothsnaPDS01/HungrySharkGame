@@ -302,8 +302,12 @@ namespace SharkGame
                 _playerSharkPrefab.GetComponent<Player>().StartDieAnimation();
             }
             else if (_playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.WhaleShark ||
-                _playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.TigerShark)
+                _playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.TigerShark ||
+                _playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.LemonShark ||
+                _playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.SandShark ||
+                _playerSharkPrefab.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.LeopardShark)
             {
+                _playerSharkPrefab.GetComponent<Player>().UnlockSharkDieAnimationTrigger();
                 _playerSharkPrefab.GetComponent<Player>().UnlockSharkStartDieAnimation();
             }
             UIController.Instance.DestroyBombs();

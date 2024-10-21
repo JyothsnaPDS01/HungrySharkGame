@@ -194,7 +194,8 @@ public class UIController : MonoBehaviour
 
     private bool isFullGamePurchased = false;
 
-    private bool isTutorialEnabled = true;
+    [Header("IsTutorialEnabled")]
+    [SerializeField] private bool isTutorialEnabled = true;
 
     [Header("TutorialSharkDirection")]
     [SerializeField] private SharkGameDataModel.TutorialSharkDirections tutorialSharkDirection = SharkGameDataModel.TutorialSharkDirections.None;
@@ -210,6 +211,15 @@ public class UIController : MonoBehaviour
     [SerializeField] private List<SharkGameDataModel.TutorialDirecionSprite> _remoteDirectionImages;
     [SerializeField] private GameObject _remoteImage;
     [SerializeField] private GameObject _tutorialPanel;
+
+    [SerializeField] private GameObject _heathInfo;
+    [SerializeField] private GameObject _healthArrow;
+    [SerializeField] private GameObject _ammoInfo;
+    [SerializeField] private GameObject _ammoArrow;
+    [SerializeField] private GameObject _targetInfo;
+    [SerializeField] private GameObject _targetArrow;
+
+    [SerializeField] private Animator _targetPanelAnimator;
 
     #endregion
 
@@ -302,7 +312,7 @@ public class UIController : MonoBehaviour
 
     private IEnumerator EnableTheSubscriptionPanel()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         _subscriptionPage.SetActive(true);
         _splashScreen.SetActive(false);
         currentScreen = SharkGameDataModel.Screen.SelectionPanel;
@@ -349,16 +359,17 @@ public class UIController : MonoBehaviour
     GameObject _directionInfo;
     public void EnableTutorial()
     {
-        _tutorialPanel.SetActive(true);
-        _remoteImage.transform.DOScale(Vector3.one, 1f);
-        isTutorialEnabled = true;
-        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.Tutorial;
-        tutorialSharkDirection = SharkGameDataModel.TutorialSharkDirections.Down;
-        _directionImage = _remoteDirectionImages.Find(x => x._direction == tutorialSharkDirection)._directionImage;
-        _directionImage.SetActive(true);
-        _directionInfo = _remoteDirectionImages.Find(x => x._direction == tutorialSharkDirection)._directionInfo;
-        _directionInfo.SetActive(true);
-        _directionImage.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 1f).SetLoops(-1);
+         _tutorialPanel.SetActive(true);
+            _remoteImage.transform.DOScale(Vector3.one, 1f);
+            isTutorialEnabled = true;
+            SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.Tutorial;
+            tutorialSharkDirection = SharkGameDataModel.TutorialSharkDirections.Down;
+            _directionImage = _remoteDirectionImages.Find(x => x._direction == tutorialSharkDirection)._directionImage;
+            _directionImage.SetActive(true);
+            _directionInfo = _remoteDirectionImages.Find(x => x._direction == tutorialSharkDirection)._directionInfo;
+            _directionInfo.SetActive(true);
+            _directionImage.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 1f).SetLoops(-1);
+       
     }
 
     public void ChangeDirection(SharkGameDataModel.TutorialSharkDirections _nextDirection)
@@ -383,6 +394,26 @@ public class UIController : MonoBehaviour
 
     public void EndDirectionTutorial()
     {
+        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameHold;
+        StartCoroutine(AnimateTutorialUI());
+    }
+    IEnumerator AnimateTutorialUI()
+    {
+        yield return new WaitForSeconds(.5f);
+        _targetPanelAnimator.SetBool("ammo", true);
+        yield return new WaitForSeconds(28f);
+        //_targetPanelAnimator.SetBool("ammo", false);
+        //yield return new WaitForSeconds(.5f);
+        //_targetPanelAnimator.SetBool("health", true);
+        //yield return new WaitForSeconds(3f);
+        //_targetPanelAnimator.SetBool("health", false);
+        //yield return new WaitForSeconds(.5f);
+        //_targetPanelAnimator.SetBool("target", true);
+        //yield return new WaitForSeconds(3f);
+        //_targetPanelAnimator.SetBool("target", false);
+        //yield return new WaitForSeconds(.5f);
+        _tutorialPanel.SetActive(false);
+        isTutorialEnabled = false;
         SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
     }
 

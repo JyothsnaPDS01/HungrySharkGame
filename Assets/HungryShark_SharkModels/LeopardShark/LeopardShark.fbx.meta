@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5f6721d19b8ccc0408e2b28609a43e71
+guid: 95c1bc90d1208954d889fb4ca46c313f
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
@@ -9,6 +9,12 @@ ModelImporter:
   - first:
       74: 5414490534771693905
     second: Swim
+  - first:
+      74: 2530875414512321751
+    second: Eat
+  - first:
+      74: -4630339522487117836
+    second: Die
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -19,12 +25,12 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: LeopardShark_baseColor
-    second: {fileID: 2800000, guid: c64c2276c653d6241a76ef53f4ce44fc, type: 3}
+    second: {fileID: 2800000, guid: 9e9f9c19e0bfb1144a743d1cb439d513, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: LeopardShark_normal
-    second: {fileID: 2800000, guid: 8b7c7286ef2ad604fb8441614d84d397, type: 3}
+    second: {fileID: 2800000, guid: 591a5933daa29324ea5bf908ecc0c206, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -57,7 +63,7 @@ ModelImporter:
       takeName: LeopardSharkRig|LeopardSharkRig|LeopardSharkRig|LeopardSharkRig|LeopardSharkRig
       internalID: 0
       firstFrame: 0
-      lastFrame: 183
+      lastFrame: 241
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -85,8 +91,37 @@ ModelImporter:
       name: Swim
       takeName: LeopardSharkRig|LeopardSharkRig|LeopardSharkRig|LeopardSharkRig|LeopardSharkRig
       internalID: 0
-      firstFrame: 0
-      lastFrame: 183
+      firstFrame: 189
+      lastFrame: 241
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Eat
+      takeName: LeopardSharkRig|LeopardSharkRig|LeopardSharkRig|LeopardSharkRig|LeopardSharkRig
+      internalID: 0
+      firstFrame: 164
+      lastFrame: 180
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -95,12 +130,41 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Die
+      takeName: LeopardSharkRig|LeopardSharkRig|LeopardSharkRig|LeopardSharkRig|LeopardSharkRig
+      internalID: 0
+      firstFrame: 24
+      lastFrame: 46
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -113,7 +177,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.25
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -160,7 +224,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.25
     rootMotionBoneName: LeopardShark_0
     hasTranslationDoF: 0
     hasExtraRoot: 0

@@ -53,7 +53,7 @@ namespace SharkGame
             }
         }
 
-        private float fishCooldownTime = 0.0005208332f; // Cooldown time between detecting fishes
+        private float fishCooldownTime = 0.0001041666f; // Cooldown time between detecting fishes
         private bool isInCooldown = false;     // To track if the shark is in cooldown
 
         private IEnumerator CheckNearbyFishesAtIntervals()

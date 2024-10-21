@@ -120,7 +120,8 @@ namespace SharkGame.Models
             GameOver,
             GameStart,
             MissionMode,
-            Tutorial
+            Tutorial,
+            GameHold
         }
         #endregion
 
