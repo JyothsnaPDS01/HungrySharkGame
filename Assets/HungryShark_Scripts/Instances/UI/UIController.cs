@@ -346,6 +346,7 @@ public class UIController : MonoBehaviour
        
     }
     GameObject _directionImage;
+    GameObject _directionInfo;
     public void EnableTutorial()
     {
         _tutorialPanel.SetActive(true);
@@ -355,15 +356,20 @@ public class UIController : MonoBehaviour
         tutorialSharkDirection = SharkGameDataModel.TutorialSharkDirections.Down;
         _directionImage = _remoteDirectionImages.Find(x => x._direction == tutorialSharkDirection)._directionImage;
         _directionImage.SetActive(true);
+        _directionInfo = _remoteDirectionImages.Find(x => x._direction == tutorialSharkDirection)._directionInfo;
+        _directionInfo.SetActive(true);
         _directionImage.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 1f).SetLoops(-1);
     }
 
     public void ChangeDirection(SharkGameDataModel.TutorialSharkDirections _nextDirection)
     {
+        _remoteImage.SetActive(true);
         _remoteImage.transform.DOScale(Vector3.one, 1f);
         tutorialSharkDirection = _nextDirection;
         _directionImage = _remoteDirectionImages.Find(x => x._direction == _nextDirection)._directionImage;
         _directionImage.SetActive(true);
+        _directionInfo = _remoteDirectionImages.Find(x => x._direction == _nextDirection)._directionInfo;
+        _directionInfo.SetActive(true);
         _directionImage.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 1f).SetLoops(-1);
     }
 
@@ -372,6 +378,7 @@ public class UIController : MonoBehaviour
         _remoteImage.SetActive(false);
         _directionImage.transform.DOKill();
         _directionImage.SetActive(false);
+        _directionInfo.SetActive(false);
     }
 
 
