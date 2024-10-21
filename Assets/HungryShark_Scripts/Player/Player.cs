@@ -548,6 +548,8 @@ namespace SharkGame
                     _sharkRB.velocity = Vector3.zero;
                     isMoving = false;
 
+                    UIController.Instance.UpdatePlayerHealth(1);
+
                     if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
                     {
                         _sharkAnimator.SetFloat("sharkAmount", 0f);
