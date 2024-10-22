@@ -80,6 +80,8 @@ namespace SharkGame
 
         [Header("Main Camera")]
         [SerializeField] private CameraFollow _mainCameraFollow;
+
+       
         public float PlayerHealthTimerRemaining
         {
             set { timeRemaining = value; }
@@ -199,7 +201,7 @@ namespace SharkGame
             }
             _playerSharkPrefab.GetComponent<Player>().DisableBloodEffect();
             if (_currentLevel == 2) _sharkEatingCollision.DetectionRadius = 1.5f;
-            else if (_currentLevel == 3) _sharkEatingCollision.DetectionRadius = 2f;
+            else if (_currentLevel >= 3) _sharkEatingCollision.DetectionRadius = 2f;
             _spawnManager.SetActive(true);
             _objectPooling.GetComponent<ObjectPooling>().HandleGameMode(CurrentGameMode);
             _spawnManager.GetComponent<SpawnManager>().HandleGameMode(CurrentGameMode);

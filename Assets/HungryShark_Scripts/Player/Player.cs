@@ -454,9 +454,9 @@ namespace SharkGame
 
             SharkGameManager.Instance.StartTimer();
 
-            //if (!UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
+            if (!UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
 
-            if (UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
+            //if (UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
         }
 
         private IEnumerator SharkMovementInitial()

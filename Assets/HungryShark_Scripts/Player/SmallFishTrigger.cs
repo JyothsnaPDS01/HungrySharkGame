@@ -53,9 +53,6 @@ namespace SharkGame
             }
         }
 
-        private float fishCooldownTime = 0.0001041666f; // Cooldown time between detecting fishes
-        private bool isInCooldown = false;     // To track if the shark is in cooldown
-
         private IEnumerator CheckNearbyFishesAtIntervals()
         {
             while (true) // This loop will keep running indefinitely
@@ -74,11 +71,6 @@ namespace SharkGame
 
             foreach (Collider fishCollider in nearbyFishes)
             {
-                if (isInCooldown)
-                {
-                    yield return null; // Skip this fish if in cooldown
-                }
-
                 if (fishCollider.CompareTag("SmallFish"))
                 {
 #if UNITY_EDITOR
@@ -99,11 +91,6 @@ namespace SharkGame
 
                     // Start moving the fish to the shark's mouth
                     StartCoroutine(BringSmallFishesNearToPlayer(fishObject));
-
-                    // Start the cooldown timer to prevent immediate detection of another fish
-                    isInCooldown = true;
-                    yield return new WaitForSeconds(fishCooldownTime);
-                    isInCooldown = false;
                 }
 
                 yield return null; // Yield after each fish to avoid performance spikes

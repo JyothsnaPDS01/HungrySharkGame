@@ -151,6 +151,12 @@ public class UIController : MonoBehaviour
     [Header("Duplicate Sharks")]
     [SerializeField] private List<GameObject> _duplicateSharks;
 
+    [Header("Shark Title Image Reference")]
+    [SerializeField] private Image _sharkTitleIM;
+
+    [Header("Shark Titles")]
+    [SerializeField] private List<Sprite> _sharkTitles;
+
     [Header("HealthPanels")]
     [SerializeField] private List<GameObject> _sharkHealthUIPanels;
 
@@ -205,6 +211,15 @@ public class UIController : MonoBehaviour
     [Header("Duplicate Shark InitialPosition")]
     [SerializeField] private float _duplicateSharkXValue;
 
+    [Header("Mute Button")]
+    [SerializeField] private Image muteIM;
+    [Header("isMuted")]
+    [SerializeField] private bool isMuted = false;
+
+    [Header("Mute Sprite")]
+    [SerializeField] private Sprite _muteSprite;
+    [SerializeField] private Sprite _unMuteSprite;
+
     public bool IsTutorialEnabled
     {
         get { return isTutorialEnabled; }
@@ -248,7 +263,8 @@ public class UIController : MonoBehaviour
         StartCoroutine(PlaySharkSoundRepeatedly());
 
         StartCoroutine(EnableTheSubscriptionPanel());
-    }
+        isMuted = false;
+}
 
     private void Update()
     {
@@ -295,11 +311,29 @@ public class UIController : MonoBehaviour
 
         else if(currentScreen == SharkGameDataModel.Screen.FivePackSharkPanel)
         {
-            if(Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                _5PackSharkUIPanel.SetActive(false);
-                _mainMenuPanel.SetActive(true);
-                currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
+                if (!quitButtonClicked)
+                {
+                    _5PackSharkUIPanel.SetActive(false);
+                    _mainMenuPanel.SetActive(true);
+                    currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
+                }
+                else
+                {
+                    _5PackSharkUIPanel.SetActive(false);
+                    EnableLoadingScreen();
+                }
+            }
+        }
+
+
+        else if(currentScreen == SharkGameDataModel.Screen.UnlockAllSharksPanel)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _unlockAllSharksPanel.SetActive(false);
+                EnableLoadingScreen();
             }
         }
 
@@ -738,7 +772,7 @@ public class UIController : MonoBehaviour
         _purchasePanel.SetActive(false);
         ResetAllSharkHealthUIPanels();
         _selectionPanel.SetActive(false);
-        if(!quitButtonClicked) _loadingPanel.SetActive(true);
+        //if(!quitButtonClicked) _loadingPanel.SetActive(true);
         _sharkSelectionBGPlane.SetActive(false);
         _underWaterEnvironmentPanel.SetActive(true);
 
@@ -778,6 +812,7 @@ public class UIController : MonoBehaviour
                 _5PackSharkUIPanel.SetActive(true);
                 _selectionPanel.SetActive(false);
                 currentSharkIndex = 0;
+                currentScreen = SharkGameDataModel.Screen.FivePackSharkPanel;
             }
             screenIndexCount++;
         }
@@ -808,6 +843,7 @@ public class UIController : MonoBehaviour
         _underWaterEnvironmentPanel.SetActive(false);
         _duplicateSharks[currentSharkIndex].SetActive(true);
         _duplicateCamera.SetActive(true);
+        _sharkTitleIM.sprite = _sharkTitles[currentSharkIndex];
         _portalImage.transform.DOKill();
         currentScreen = SharkGameDataModel.Screen.SelectionPanel;
         _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
@@ -878,6 +914,7 @@ public class UIController : MonoBehaviour
             _duplicateSharks[currentSharkIndex].transform.position = new Vector3(_duplicateSharkXValue, _duplicateSharks[currentSharkIndex].transform.position.y, _duplicateSharks[currentSharkIndex].transform.position.z);
             currentSharkIndex += 1;
             _duplicateSharks[currentSharkIndex].SetActive(true);
+            _sharkTitleIM.sprite = _sharkTitles[currentSharkIndex];
             ResetAllSharkHealthUIPanels();
             _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
             leftButton.interactable = true;
@@ -904,9 +941,10 @@ public class UIController : MonoBehaviour
             _duplicateSharks[currentSharkIndex].SetActive(false);
             _duplicateSharks[currentSharkIndex].transform.position = new Vector3(_duplicateSharkXValue, _duplicateSharks[currentSharkIndex].transform.position.y, _duplicateSharks[currentSharkIndex].transform.position.z);
             currentSharkIndex -= 1;
-            _duplicateSharks[currentSharkIndex].SetActive(true);
             ResetAllSharkHealthUIPanels();
             _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
+            _duplicateSharks[currentSharkIndex].SetActive(true);
+            _sharkTitleIM.sprite = _sharkTitles[currentSharkIndex];
             _purchasePanel.SetActive(true);
             _bitePanel.SetActive(false);
 
@@ -1021,11 +1059,32 @@ public class UIController : MonoBehaviour
         currentScreen = SharkGameDataModel.Screen.UnlockAllSharksPanel;
     }
 
+    public void EnableLoadingScreen()
+    {
+        _loadingPanel.SetActive(true);
+        currentScreen = SharkGameDataModel.Screen.LoadingPanel;
+
+        StartCoroutine(LoadTheGame());
+
+        IEnumerator LoadTheGame()
+        {
+            yield return new WaitForSeconds(2f);
+
+            _loadingPanel.SetActive(false);
+            _gameUIPanel.SetActive(true);
+            _gameUIPanel.transform.DOScale(Vector3.one, .5f);
+            SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
+            LoadLevelData();
+            _missionPanel.SetActive(true);
+            currentScreen = SharkGameDataModel.Screen.MissionPanel;
+        }
+    }
+
     public void UnlockAllSharksContinueButtonClick()
     {
         _unlockAllSharksPanel.SetActive(false);
 
-        if (quitButtonClicked) _loadingPanel.SetActive(true);
+        _loadingPanel.SetActive(true);
         StartCoroutine(LoadTheGame());
 
         IEnumerator LoadTheGame()
@@ -1058,6 +1117,20 @@ public class UIController : MonoBehaviour
     public void SetPlayer(GameObject _playerObject)
     {
         _player = _playerObject;
+    }
+
+    public void MuteButtonClick()
+    {
+        if(isMuted)
+        {
+            muteIM.sprite = _muteSprite;
+        }
+        else
+        {
+            muteIM.sprite = _unMuteSprite;
+        }
+        isMuted = !isMuted;
+        SoundManager.Instance.MuteSounds(isMuted);
     }
   
     #endregion

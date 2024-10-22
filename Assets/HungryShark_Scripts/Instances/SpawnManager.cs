@@ -209,7 +209,10 @@ namespace SharkGame
                 for(int i=0;i< currentLevelData.enemies.Capacity;i++)
                 {
                     GameObject _bombObject = SharkGameManager.Instance.BombObjectLists.Find(x => x._bombType == GetBombType(currentLevelData.enemies[i].bomb))._bombObject;
-                    Instantiate(_bombObject, bombSpawnPoints[i]);
+                    if (bombSpawnPoints[i].childCount == 0)
+                    {
+                        Instantiate(_bombObject, bombSpawnPoints[i]);
+                    }
                 }
             }
         }

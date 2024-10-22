@@ -105,5 +105,12 @@ namespace SharkGame
         {
             yield return new WaitForSeconds(_clip.length);
         }
+
+        public void MuteSounds(bool isMuted)
+        {
+            _inGameAudioSource.mute = isMuted;
+            _sharkSoundAudioSource.mute = isMuted;
+            _gameAudioSource.mute = isMuted;
+        }
     }
 }
