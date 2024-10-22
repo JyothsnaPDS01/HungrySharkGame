@@ -67,7 +67,7 @@ namespace SharkGame
             }
             else if(SharkGameManager.Instance.CurrentLevel == 5 || SharkGameManager.Instance.CurrentLevel == 20)
             {
-                StartCoroutine(MoveFastAndSlow());
+                //StartCoroutine(MoveFastAndSlow());
 
                 StartCoroutine(MoveZigZag());
             }

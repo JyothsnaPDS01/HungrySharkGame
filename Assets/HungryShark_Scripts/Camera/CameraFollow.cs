@@ -9,8 +9,6 @@ namespace SharkGame
         public Vector3 offset;             // The offset from the target position
         public float smoothSpeed = 0.125f; // Speed at which the camera smooths to its position
 
-        public Player _playerShark;
-
         private Vector3 velocity = Vector3.zero; // Velocity for smoothing
 
         private bool isFollowing = false;

@@ -86,8 +86,16 @@ namespace SharkGame
 #endif
                     GameObject fishObject = fishCollider.gameObject;
 
-                    // Trigger shark attack animation
-                    _player.GetComponent<Player>().PlayEatAnimation();
+                    if (_player.GetComponent<Player>().GetSharkType() != SharkGameDataModel.SharkType.GeneralShark)
+                    {
+                        // Trigger shark attack animation
+                        _player.GetComponent<Player>().PlayLoopEatAnimation();
+                    }
+                    else if (_player.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.GeneralShark)
+                    {
+                        // Trigger shark attack animation
+                        _player.GetComponent<Player>().PlayEatAnimation();
+                    }
 
                     // Start moving the fish to the shark's mouth
                     StartCoroutine(BringSmallFishesNearToPlayer(fishObject));
@@ -152,8 +160,18 @@ namespace SharkGame
 
                 yield return new WaitForSeconds(1f);
 
-                // Reset shark attack animation and disable blood effect
-                _player.GetComponent<Player>().BackToIdleAnimation();
+
+                if (_player.GetComponent<Player>().GetSharkType() != SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    // Reset shark attack animation and disable blood effect
+                    _player.GetComponent<Player>().BackToIdleStateFromLoopEatAnimation();
+                }
+                else if(_player.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    // Reset shark attack animation and disable blood effect
+                    _player.GetComponent<Player>().BackToIdleAnimation();
+                }
+                   
                 _player.GetComponent<Player>().DisableBloodEffect();
             }
             else
@@ -179,8 +197,16 @@ namespace SharkGame
 
                 yield return new WaitForSeconds(1f);
 
-                // Reset shark attack animation and disable blood effect
-                _player.GetComponent<Player>().BackToIdleAnimation();
+                if (_player.GetComponent<Player>().GetSharkType() != SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    // Reset shark attack animation and disable blood effect
+                    _player.GetComponent<Player>().BackToIdleStateFromLoopEatAnimation();
+                }
+                else if (_player.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.GeneralShark)
+                {
+                    // Reset shark attack animation and disable blood effect
+                    _player.GetComponent<Player>().BackToIdleAnimation();
+                }
                 _player.GetComponent<Player>().DisableBloodEffect();
             }
         }

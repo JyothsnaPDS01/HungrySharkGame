@@ -208,7 +208,14 @@ namespace SharkGame.Models
             public TutorialSharkDirections _direction;
             public GameObject _directionInfo;
         }
-             
         #endregion
+
+        [System.Serializable]
+        public class SharkPrefabsWithSmallFishTriggerClass
+        {
+            public int _sharkIndex;
+            public GameObject _playerObject;
+            public SmallFishTrigger _smallFishTrigger;
+        }
     }
 }

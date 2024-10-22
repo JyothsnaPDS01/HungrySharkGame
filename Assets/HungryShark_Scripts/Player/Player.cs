@@ -454,7 +454,9 @@ namespace SharkGame
 
             SharkGameManager.Instance.StartTimer();
 
-            if(!UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
+            //if (!UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
+
+            if (UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
         }
 
         private IEnumerator SharkMovementInitial()
@@ -502,8 +504,6 @@ namespace SharkGame
             // Mark the initial movement as completed
             initialMovementCompleted = true;
 
-
-
             SharkGameManager.Instance.StartTimer();
         }
 
@@ -548,7 +548,7 @@ namespace SharkGame
                     _sharkRB.velocity = Vector3.zero;
                     isMoving = false;
 
-                    UIController.Instance.UpdatePlayerHealth(1);
+                    //UIController.Instance.UpdatePlayerHealth(1);
 
                     if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
                     {
@@ -829,7 +829,8 @@ namespace SharkGame
                     else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark || _sharkType == SharkGameDataModel.SharkType.LemonShark
                         || _sharkType == SharkGameDataModel.SharkType.SandShark || _sharkType == SharkGameDataModel.SharkType.LeopardShark)
                     {
-                        targetRotation = Quaternion.Euler(-50, 90, -80);
+                        //targetRotation = Quaternion.Euler(-50, 90, -80);
+                        targetRotation = Quaternion.Euler(240, -50, -120);
                     }
                     _currentSharkDirection = SharkGameDataModel.SharkDirection.UpRight;
                 }
@@ -855,7 +856,8 @@ namespace SharkGame
                     else if (_sharkType == SharkGameDataModel.SharkType.WhaleShark || _sharkType == SharkGameDataModel.SharkType.TigerShark || _sharkType == SharkGameDataModel.SharkType.LemonShark
                         || _sharkType == SharkGameDataModel.SharkType.SandShark || _sharkType == SharkGameDataModel.SharkType.LeopardShark)
                     {
-                        targetRotation = Quaternion.Euler(-50, -90, 120);
+                        //targetRotation = Quaternion.Euler(-50, -90, 120);
+                        targetRotation = Quaternion.Euler(-50, 260, -80);
                     }
                     _currentSharkDirection = SharkGameDataModel.SharkDirection.UpLeft;
                 }
@@ -1062,6 +1064,11 @@ namespace SharkGame
             SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.EatingShark);
         }
 
+        internal void PlayLoopEatAnimation()
+        {
+            _sharkAnimator.SetBool("attackLoop", true);
+        }
+
         internal void ShowDieState()
         {
             if (_sharkType == SharkGameDataModel.SharkType.GeneralShark)
@@ -1085,7 +1092,11 @@ namespace SharkGame
             {
                 _sharkAnimator.SetBool("attack", false);
             }
+        }
 
+        internal void BackToIdleStateFromLoopEatAnimation()
+        {
+            _sharkAnimator.SetBool("attackLoop", false);
         }
 
         internal void ResetSharkIdleState()

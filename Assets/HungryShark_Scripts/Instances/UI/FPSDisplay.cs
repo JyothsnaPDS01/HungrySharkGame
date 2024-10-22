@@ -4,7 +4,7 @@ using TMPro;
 
 public class FPSDisplay : MonoBehaviour
 {
-    public TextMeshProUGUI fpsText; // Optional: A UI Text element to display FPS
+    public Text fpsText; // Optional: A UI Text element to display FPS
 
     private float deltaTime = 0.0f;
 

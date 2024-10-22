@@ -67,10 +67,7 @@ namespace SharkGame
         [SerializeField] public float _healthDuration;
 
         [Header("SharkEating Collision")]
-        [SerializeField] private GameObject _sharkEatingCollision;
-
-        [Header("Shark Eating Position")]
-        [SerializeField] private GameObject _sharkEatingPosition;
+        [SerializeField] private SmallFishTrigger _sharkEatingCollision;
 
         [Header("Time Remaining")]
         [SerializeField] private float timeRemaining;
@@ -78,6 +75,11 @@ namespace SharkGame
         [Header("Player Shark Original Position")]
         [SerializeField] private Vector3 _playerSharkOriginalPosition;
 
+        [Header("Player Sharks List")]
+        [SerializeField] private List<SharkGameDataModel.SharkPrefabsWithSmallFishTriggerClass> _playerSharksList;
+
+        [Header("Main Camera")]
+        [SerializeField] private CameraFollow _mainCameraFollow;
         public float PlayerHealthTimerRemaining
         {
             set { timeRemaining = value; }
@@ -145,7 +147,16 @@ namespace SharkGame
             }
         }
 
-       
+        private void Start()
+        {
+            // Set target frame rate to 60 FPS for smooth performance
+            Application.targetFrameRate = 60;
+
+            // Optionally, disable VSync for better control over frame rate
+            QualitySettings.vSyncCount = 0;
+        }
+
+
         #endregion
 
         #region GameMode
@@ -187,8 +198,8 @@ namespace SharkGame
                 UIController.Instance.quitButtonClicked = false;
             }
             _playerSharkPrefab.GetComponent<Player>().DisableBloodEffect();
-            if (_currentLevel == 2) _sharkEatingCollision.GetComponent<SmallFishTrigger>().DetectionRadius = 1.5f;
-            else if (_currentLevel == 3) _sharkEatingCollision.GetComponent<SmallFishTrigger>().DetectionRadius = 2f;
+            if (_currentLevel == 2) _sharkEatingCollision.DetectionRadius = 1.5f;
+            else if (_currentLevel == 3) _sharkEatingCollision.DetectionRadius = 2f;
             _spawnManager.SetActive(true);
             _objectPooling.GetComponent<ObjectPooling>().HandleGameMode(CurrentGameMode);
             _spawnManager.GetComponent<SpawnManager>().HandleGameMode(CurrentGameMode);
@@ -225,7 +236,7 @@ namespace SharkGame
         {
             yield return new WaitForSeconds(4f);
 
-            _sharkEatingCollision.GetComponent<SmallFishTrigger>().IsOnCoolDown = false;
+            _sharkEatingCollision.IsOnCoolDown = false;
 
             ResetPlayerAndObjectPooling();
 
@@ -358,6 +369,19 @@ namespace SharkGame
         }
         #endregion
 
+
+        public void SelectedPlayer(int _selectedIndex)
+        {
+            Debug.LogError("SelectedPlayer Index" + _selectedIndex);
+
+            int _sharkSelectedIndex = _playerSharksList.FindIndex(x => x._sharkIndex == _selectedIndex);
+            _playerSharkPrefab = _playerSharksList[_sharkSelectedIndex]._playerObject;
+            _sharkEatingCollision = _playerSharksList[_sharkSelectedIndex]._smallFishTrigger;
+
+            _mainCameraFollow.targetRigidbody = _playerSharkPrefab.GetComponent<Rigidbody>();
+
+            UIController.Instance.SetPlayer(_playerSharkPrefab);
+        }
 
         #endregion
     }
