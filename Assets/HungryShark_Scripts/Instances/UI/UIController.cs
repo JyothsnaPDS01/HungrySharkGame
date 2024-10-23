@@ -249,6 +249,7 @@ public class UIController : MonoBehaviour
         currentAmmoValue = _ammoMaxValue;
         _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
         _sharkSelectionCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+
         LoadInitialLevel();
 
         currentScreen = SharkGameDataModel.Screen.SplashScreen;
@@ -315,9 +316,18 @@ public class UIController : MonoBehaviour
             {
                 if (!quitButtonClicked)
                 {
-                    _5PackSharkUIPanel.SetActive(false);
-                    _mainMenuPanel.SetActive(true);
-                    currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
+                    if (SharkGameManager.Instance.IsLevelFail)
+                    {
+                        _5PackSharkUIPanel.SetActive(false);
+                        SharkGameManager.Instance.IsLevelFail = false;
+                        EnableLoadingScreen();
+                    }
+                    else
+                    {
+                        _5PackSharkUIPanel.SetActive(false);
+                        _mainMenuPanel.SetActive(true);
+                        currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
+                    }
                 }
                 else
                 {
@@ -622,6 +632,10 @@ public class UIController : MonoBehaviour
         _bonusAmountTMP.text = "+" + " " +_dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel).ToString();
         _coinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
         SharkGameManager.Instance.CurrentCoins += _dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel);
+
+        PlayerPrefs.SetInt("CurrentCoins", SharkGameManager.Instance.CurrentCoins);
+        PlayerPrefs.Save();
+
         _huntCompletePanel.SetActive(true);
 
         // Rotate the object from 0 to -360 on the Z-axis and loop back to 0
@@ -716,6 +730,7 @@ public class UIController : MonoBehaviour
     {
         _killAmountTMP.text = "0 /" + "0";
         _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+        GameObject.Find("Water Surface").SetActive(true);
 
         SharkGameManager.Instance.ResetGame();
     }
@@ -1123,11 +1138,11 @@ public class UIController : MonoBehaviour
     {
         if(isMuted)
         {
-            muteIM.sprite = _muteSprite;
+            muteIM.sprite = _unMuteSprite;
         }
         else
         {
-            muteIM.sprite = _unMuteSprite;
+            muteIM.sprite = _muteSprite;
         }
         isMuted = !isMuted;
         SoundManager.Instance.MuteSounds(isMuted);

@@ -36,9 +36,6 @@ namespace SharkGame
         [Header("Shark Game Mode")]
         [SerializeField] private SharkGameDataModel.GameMode _currentGameMode;
 
-        [Header("UnderWaterAudio")]
-        [SerializeField] private AudioSource _underWaterAudio;
-
         [Header("Player Shark Prefab")]
         [SerializeField] private GameObject _playerSharkPrefab;
 
@@ -125,13 +122,18 @@ namespace SharkGame
             get { return bombPrefabsList; }
         }
         [Header("Current Player coins")]
-        [SerializeField] private int currentCoins = 0;
+        [SerializeField] private int currentCoins;
 
         public int CurrentCoins
         {
             get { return currentCoins; }
             set { currentCoins = value; }
         }
+
+        [Header("Level Fail")]
+        [SerializeField] private bool isLevelFail;
+
+        public bool IsLevelFail {  get { return isLevelFail; } set { isLevelFail = value; } }
         #endregion
 
         #region MonoBehaviour Methods
@@ -211,16 +213,31 @@ namespace SharkGame
         {
             _currentGameMode = SharkGameDataModel.GameMode.MissionMode;
 
-            PlayerPrefs.SetInt("CurrentLevel", 1);
-            PlayerPrefs.Save();
+            if (PlayerPrefs.HasKey("CurrentLevel"))
+            {
+                // The key "CurrentLevel" exists, you can retrieve its value safely.
+                _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
+            }
+            else
+            {
+                // The key "CurrentLevel" doesn't exist, you can set it to a default value.
+                PlayerPrefs.SetInt("CurrentLevel", 1);
+                PlayerPrefs.Save();
+                _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
+            }
 
-            _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
+            if(PlayerPrefs.HasKey("CurrentCoins"))
+            {
+                CurrentCoins = PlayerPrefs.GetInt("CurrentCoins");
+            }
+            else
+            {
+                PlayerPrefs.SetInt("CurrentCoins", 0);
+                PlayerPrefs.Save();
+                CurrentCoins = PlayerPrefs.GetInt("CurrentCoins");
+            }
+
             _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
-        }
-
-        private void StopGameAudio()
-        {
-            _underWaterAudio.Stop();
         }
 
         internal void LoadNextLevel()
@@ -304,6 +321,7 @@ namespace SharkGame
         {
             CurrentGameMode = SharkGameDataModel.GameMode.GameOver;
             StartCoroutine(DelayGameOverUIPanel());
+            IsLevelFail = true;
         }
 
         private IEnumerator DelayGameOverUIPanel()
@@ -335,6 +353,8 @@ namespace SharkGame
             yield return new WaitForSeconds(1f);
 
             UIController.Instance.SetGameOver();
+
+
         }
 
         internal void ResetGame()
@@ -379,6 +399,7 @@ namespace SharkGame
             int _sharkSelectedIndex = _playerSharksList.FindIndex(x => x._sharkIndex == _selectedIndex);
             _playerSharkPrefab = _playerSharksList[_sharkSelectedIndex]._playerObject;
             _sharkEatingCollision = _playerSharksList[_sharkSelectedIndex]._smallFishTrigger;
+            _playerSharkPrefab.GetComponent<Player>().EnableInput();
 
             _mainCameraFollow.targetRigidbody = _playerSharkPrefab.GetComponent<Rigidbody>();
 

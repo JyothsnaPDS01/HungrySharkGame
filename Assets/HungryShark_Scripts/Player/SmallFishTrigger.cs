@@ -78,12 +78,12 @@ namespace SharkGame
 #endif
                     GameObject fishObject = fishCollider.gameObject;
 
-                    if (_player.GetComponent<Player>().GetSharkType() != SharkGameDataModel.SharkType.GeneralShark)
+                    if (_player.GetComponent<Player>().GetSharkType() != SharkGameDataModel.SharkType.GeneralShark && _player.GetComponent<Player>().GetSharkType() != SharkGameDataModel.SharkType.WhaleShark)
                     {
                         // Trigger shark attack animation
                         _player.GetComponent<Player>().PlayLoopEatAnimation();
                     }
-                    else if (_player.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.GeneralShark)
+                    else if (_player.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.GeneralShark && _player.GetComponent<Player>().GetSharkType() == SharkGameDataModel.SharkType.WhaleShark)
                     {
                         // Trigger shark attack animation
                         _player.GetComponent<Player>().PlayEatAnimation();
