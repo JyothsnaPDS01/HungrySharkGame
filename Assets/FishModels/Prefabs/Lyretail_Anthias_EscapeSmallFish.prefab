@@ -64,10 +64,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.08
-  m_Height: 0.52
+  m_Radius: 0.12
+  m_Height: 0.6
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: -0.04}
+  m_Center: {x: 0, y: 0, z: -0.05}
 --- !u!114 &2321932629325896675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea2559480d66a6479948806fca59186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 0.5
   _fishAnimator: {fileID: 2321932629325896673}
   _smallFishType: 6
   isMovingRight: 0

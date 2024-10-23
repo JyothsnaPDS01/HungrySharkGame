@@ -602,7 +602,7 @@ public class UIController : MonoBehaviour
         currentScreen = SharkGameDataModel.Screen.MissionPanel;
 
 
-        _targetDescTMP.text = _currentLevelData.targets[0].description.ToString();
+        _targetDescTMP.text = _currentLevelData.targets[0].targetDescription.ToString();
 
         StartCoroutine(WaitForTheAnimation());
 
@@ -730,7 +730,6 @@ public class UIController : MonoBehaviour
     {
         _killAmountTMP.text = "0 /" + "0";
         _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
-        GameObject.Find("Water Surface").SetActive(true);
 
         SharkGameManager.Instance.ResetGame();
     }

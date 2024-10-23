@@ -6,7 +6,8 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 20,
+          "targetDescription": "Killed 20 Fishes"
         }
       ],
       "smallObjects": [
@@ -50,7 +51,8 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 20,
+          "targetDescription": "Killed 20 Fishes"
         }
       ],
       "smallObjects": [
@@ -96,7 +98,8 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 20,
+          "targetDescription": "Killed 20 Fishes"
         }
       ],
       "smallObjects": [
@@ -142,7 +145,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "EscapeFishes",
-          "amount": 10
+          "amount": 10,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -163,7 +167,7 @@
           "bomb": "TimerBomb"
         }
       ],
-      "bufferAmount": 15,
+      "bufferAmount": 10,
       "rewardCoins": {
         "description": "Earn 10 Coins",
         "amount": 60
@@ -175,7 +179,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "DoubleAttack",
-          "amount": 10
+          "amount": 10,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -211,7 +216,8 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 20,
+          "targetDescription": "Killed 20 Fishes"
         }
       ],
       "smallObjects": [
@@ -250,7 +256,8 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 20,
+          "targetDescription": "Killed 20 Fishes"
         }
       ],
       "smallObjects": [
@@ -294,7 +301,8 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 20
+          "amount": 20,
+          "targetDescription": "Killed 20 Fishes"
         }
       ],
       "smallObjects": [
@@ -335,7 +343,8 @@
         {
           "description": "Kill 15 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 15 Fishes"
         }
       ],
       "smallObjects": [
@@ -379,7 +388,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 10,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -418,7 +428,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 10,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -445,7 +456,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -484,7 +496,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -516,7 +529,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -560,7 +574,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -596,7 +611,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -635,7 +651,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -676,7 +693,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -715,7 +733,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
@@ -751,7 +770,8 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15
+          "amount": 15,
+          "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [

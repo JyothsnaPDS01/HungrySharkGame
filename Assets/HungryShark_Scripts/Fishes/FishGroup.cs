@@ -49,11 +49,11 @@ namespace SharkGame
         {
             waypoints = waypointList;
             // Start movement logic based on the level
-            if (SharkGameManager.Instance.CurrentLevel == 1 || SharkGameManager.Instance.CurrentLevel == 12 || SharkGameManager.Instance.CurrentLevel == 16)
+            if (SharkGameManager.Instance.CurrentLevel == 1  || SharkGameManager.Instance.CurrentLevel == 16)
             {
                 StartCoroutine(MoveHorizontally());
             }
-            else if (SharkGameManager.Instance.CurrentLevel == 2 || SharkGameManager.Instance.CurrentLevel == 11)
+            else if (SharkGameManager.Instance.CurrentLevel == 2 || SharkGameManager.Instance.CurrentLevel == 11 || SharkGameManager.Instance.CurrentLevel == 12)
             {
                 StartCoroutine(MoveInSineWave());
             }
@@ -67,8 +67,6 @@ namespace SharkGame
             }
             else if(SharkGameManager.Instance.CurrentLevel == 5 || SharkGameManager.Instance.CurrentLevel == 20)
             {
-                //StartCoroutine(MoveFastAndSlow());
-
                 StartCoroutine(MoveZigZag());
             }
             else if(SharkGameManager.Instance.CurrentLevel == 7 || SharkGameManager.Instance.CurrentLevel == 13)
@@ -92,7 +90,7 @@ namespace SharkGame
             }
             else if(SharkGameManager.Instance.CurrentLevel == 10 || SharkGameManager.Instance.CurrentLevel == 15)
             {
-                StartCoroutine(MoveFastAndSlow());
+                StartCoroutine(MoveInSineWave());
             }
         }
 
@@ -247,26 +245,21 @@ namespace SharkGame
             // Capture the initial Y position to keep the arc centered around it
             float initialY = transform.position.y;
 
-            // Keep track of the fish's X position independently
-            float currentX = transform.position.x;
-
             while (true)
             {
                 foreach (var item in smallFishes)
                 {
                     item.PlaySwimAnimation();
                 }
+
                 // Apply the appropriate rotation based on the direction
                 transform.rotation = isMovingRight ? Quaternion.Euler(0, 90f, 0f) : Quaternion.Euler(0, -90f, 0f);
 
-                // Determine the direction the fish is moving in
-                float targetX = isMovingRight ? maxX : minX;
-
                 // Move the fish based on its speed, maintaining constant speed
-                while (isMovingRight ? currentX < maxX : currentX > minX)
+                while (isMovingRight ? transform.position.x < maxX : transform.position.x > minX)
                 {
-                    // Update current X position based on direction and speed
-                    currentX += (isMovingRight ? 1 : -1) * horizontalSpeed * Time.deltaTime;
+                    // Update the X position based on the direction and speed
+                    float currentX = transform.position.x + (isMovingRight ? 1 : -1) * horizontalSpeed * Time.deltaTime;
 
                     // Calculate the 't' value based on the current position relative to the target
                     float t = Mathf.InverseLerp(isMovingRight ? minX : maxX, isMovingRight ? maxX : minX, currentX);
@@ -278,26 +271,22 @@ namespace SharkGame
                     // Update the fish's position
                     transform.position = new Vector3(currentX, newY, transform.position.z);
 
-                    // Early direction switch if getting close to maxX or minX
-                    if (isMovingRight && currentX >= maxX - 1f)
-                    {
-                        isMovingRight = false;
-                        break; // Switch direction early
-                    }
-                    else if (!isMovingRight && currentX <= minX + 1f)
-                    {
-                        isMovingRight = true;
-                        break; // Switch direction early
-                    }
-
                     // Wait for the next frame
                     yield return null;
                 }
 
-                // Wait for one frame before restarting the movement in the opposite direction
+                // Once the fish reaches the boundary, switch direction
+                isMovingRight = !isMovingRight;
+
+                // Snap the fish back to the boundary to avoid overshooting
+                float boundaryX = isMovingRight ? minX : maxX;
+                transform.position = new Vector3(boundaryX, transform.position.y, transform.position.z);
+
+                // Wait for the next frame before restarting movement in the opposite direction
                 yield return null;
             }
         }
+
 
 
 

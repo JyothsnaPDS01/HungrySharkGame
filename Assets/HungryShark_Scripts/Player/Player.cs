@@ -446,7 +446,11 @@ namespace SharkGame
             _sharkRB.MoveRotation(_targetRotation);
 
            GameObject.Find("Main Camera").GetComponent<CameraFollow>().smoothSpeed = 0.0015625f;
-           GameObject.Find("Water Surface").SetActive(false);
+
+            if (GameObject.Find("Water Surface").activeInHierarchy)
+            {
+                GameObject.Find("Water Surface").SetActive(false);
+            }
 
             // Mark the initial movement as completed
             initialMovementCompleted = true;

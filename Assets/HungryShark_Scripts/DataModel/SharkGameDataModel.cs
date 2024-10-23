@@ -95,6 +95,7 @@ namespace SharkGame.Models
             public string description ;
             public string targetType ;
             public int amount ;
+            public string targetDescription;
         }
 
         [System.Serializable]
