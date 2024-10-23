@@ -6,6 +6,7 @@ using SharkGame.Models;
 using SharkGame;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.Purchasing;
 
 public class UIController : MonoBehaviour
 {
@@ -171,6 +172,8 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private bool mainMenuPanelOpened = false;
 
+    [Header("IAP Shark")]
+    [SerializeField] private IAPButton sharks_Buy;
     public int CurrentAmmo { get { return currentAmmoValue; } }
 
     public int CurrentPlayerHealth { get { return currentHealth; } }
@@ -724,6 +727,10 @@ public class UIController : MonoBehaviour
 
         _player.GetComponent<Player>().ResetPlayer();
         ResetGameData();
+
+
+       
+
     }
 
     private void ResetGameData()
@@ -921,7 +928,7 @@ public class UIController : MonoBehaviour
 
     public void RightArrowClick()
     {
-        if (currentSharkIndex < _duplicateSharks.Capacity -1)
+        if (currentSharkIndex < _duplicateSharks.Capacity - 1)
         {
             Debug.LogError("RightArrowClick");
             _duplicateSharks[currentSharkIndex].SetActive(false);
@@ -944,6 +951,8 @@ public class UIController : MonoBehaviour
             _Right.selectOnDown = _purchaseButton;
             rightButton.navigation = _Right;
 
+            sharks_Buy.GetComponent<IAPButton>().productId = "angryhungryshark_shark" + (CurrentSharkIndex + 1).ToString();
+
         }
     }
 
@@ -954,6 +963,9 @@ public class UIController : MonoBehaviour
             rightButton.interactable = true;
             _duplicateSharks[currentSharkIndex].SetActive(false);
             _duplicateSharks[currentSharkIndex].transform.position = new Vector3(_duplicateSharkXValue, _duplicateSharks[currentSharkIndex].transform.position.y, _duplicateSharks[currentSharkIndex].transform.position.z);
+
+            sharks_Buy.GetComponent<IAPButton>().productId = "angryhungryshark_shark" + (CurrentSharkIndex).ToString();
+
             currentSharkIndex -= 1;
             ResetAllSharkHealthUIPanels();
             _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
@@ -984,9 +996,43 @@ public class UIController : MonoBehaviour
             _Right.selectOnDown = _biteButton;
             rightButton.navigation = _Right;
 
+          //
+
         }
     }
+    //for any subscription
 
+    #region IAP Buttons
+    public void Subscribe_ANY()
+    {
+        //unlock full game
+        //unlock all sharks
+    }
+    //unlock shark
+    public void Unlock_IndividualShark()
+    {
+        PlayerPrefs.SetInt("Shark" + currentSharkIndex, 1);
+    }
+    //unlock all sharks
+    public void Unlock_AllSharks()
+    {
+        for(int i=1;i<_duplicateSharks.Count;i++)
+        {
+            PlayerPrefs.SetInt("Shark" + i, 1);
+        }
+    }
+    //unlock full game
+    public void Buy_FullGame()
+    {
+        PlayerPrefs.SetInt("BuyFullGame", 1);
+    }
+
+    //Unlock 5Pack Sharks
+    public void Unlock_SpecialPackSharks()
+    {
+
+    }
+    #endregion
     private void ResetAllSharkHealthUIPanels()
     {
         foreach(var item in _sharkHealthUIPanels)
