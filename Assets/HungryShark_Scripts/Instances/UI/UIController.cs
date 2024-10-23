@@ -223,6 +223,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private Sprite _muteSprite;
     [SerializeField] private Sprite _unMuteSprite;
 
+    [Header("Three Pack Sharks")]
+    [SerializeField] private GameObject _threePackSharks;
+
     public bool IsTutorialEnabled
     {
         get { return isTutorialEnabled; }
@@ -268,7 +271,7 @@ public class UIController : MonoBehaviour
 
         StartCoroutine(EnableTheSubscriptionPanel());
         isMuted = false;
-}
+    }
 
     private void Update()
     {
@@ -313,7 +316,7 @@ public class UIController : MonoBehaviour
             }
         }
 
-        else if(currentScreen == SharkGameDataModel.Screen.FivePackSharkPanel)
+        else if(currentScreen == SharkGameDataModel.Screen.ThreePackSharkPanel)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -321,20 +324,20 @@ public class UIController : MonoBehaviour
                 {
                     if (SharkGameManager.Instance.IsLevelFail)
                     {
-                        _5PackSharkUIPanel.SetActive(false);
+                        _3PackSharkUIPanel.SetActive(false);
                         SharkGameManager.Instance.IsLevelFail = false;
                         EnableLoadingScreen();
                     }
                     else
                     {
-                        _5PackSharkUIPanel.SetActive(false);
+                        _3PackSharkUIPanel.SetActive(false);
                         _mainMenuPanel.SetActive(true);
                         currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
                     }
                 }
                 else
                 {
-                    _5PackSharkUIPanel.SetActive(false);
+                    _3PackSharkUIPanel.SetActive(false);
                     EnableLoadingScreen();
                 }
             }
@@ -544,14 +547,9 @@ public class UIController : MonoBehaviour
             _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
         }
 
-        if(SharkGameManager.Instance.CurrentLevel == 5)
+        if (SharkGameManager.Instance.CurrentLevel == 5)
         {
-            if(!isFullGamePurchased)
-            {
-                _unlockFullGamePanel.SetActive(true);
-                CurrentScreen = SharkGameDataModel.Screen.UnlockFullGamePanel;
-            }
-            else if(isFullGamePurchased)
+            if (PlayerPrefs.HasKey("BuyFullGame"))
             {
                 _missionPanel.SetActive(true);
 
@@ -569,7 +567,11 @@ public class UIController : MonoBehaviour
                 }
                 _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
             }
-          
+            else if (!PlayerPrefs.HasKey("BuyFullGame"))
+            {
+                _unlockFullGamePanel.SetActive(true);
+                CurrentScreen = SharkGameDataModel.Screen.UnlockFullGamePanel;
+            }
         }
 
         MakeMaxHealth();
@@ -727,10 +729,6 @@ public class UIController : MonoBehaviour
 
         _player.GetComponent<Player>().ResetPlayer();
         ResetGameData();
-
-
-       
-
     }
 
     private void ResetGameData()
@@ -817,7 +815,7 @@ public class UIController : MonoBehaviour
 
         SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
 
-        if (previousScreen == SharkGameDataModel.Screen.FivePackSharkPanel)
+        if (previousScreen == SharkGameDataModel.Screen.ThreePackSharkPanel)
         {
             EnableUnLockAllSharksPanel();
             previousScreen = SharkGameDataModel.Screen.None;
@@ -826,14 +824,46 @@ public class UIController : MonoBehaviour
         {
             if (screenIndexCount % 2 == 0)
             {
-                EnableUnLockAllSharksPanel();
+                if (PlayerPrefs.HasKey("UnlockAllSharks"))
+                {
+                    if (PlayerPrefs.GetInt("UnlockAllSharks") == 1)
+                    {
+                        EnableLoadingScreen();
+                    }
+                }
+                else
+                {
+                    EnableUnLockAllSharksPanel();
+                }
             }
             else if(screenIndexCount % 2 == 1)
             {
-                _5PackSharkUIPanel.SetActive(true);
-                _selectionPanel.SetActive(false);
-                currentSharkIndex = 0;
-                currentScreen = SharkGameDataModel.Screen.FivePackSharkPanel;
+                if (PlayerPrefs.HasKey("UnlockAllSharks"))
+                {
+                    if (PlayerPrefs.GetInt("UnlockAllSharks") == 1)
+                    {
+                        EnableLoadingScreen();
+                    }
+                }
+                else
+                {
+                    if(PlayerPrefs.HasKey("Unlock_SpecialPack"))
+                    {
+                        if(PlayerPrefs.GetInt("Unlock_SpecialPack") == 1)
+                        {
+                            EnableLoadingScreen();
+                        }
+                    }
+                    else
+                    {
+                        _3PackSharkUIPanel.SetActive(true);
+                        _selectionPanel.SetActive(false);
+                        currentSharkIndex = 0;
+                        currentScreen = SharkGameDataModel.Screen.ThreePackSharkPanel;
+                    }
+                   
+                }
+                
             }
             screenIndexCount++;
         }
@@ -924,63 +954,113 @@ public class UIController : MonoBehaviour
     [SerializeField] private Text _inGameLevelNumberTMP;
 
     [Header("5Pack Shark Panel")]
-    [SerializeField] private GameObject _5PackSharkUIPanel;
+    [SerializeField] private GameObject _3PackSharkUIPanel;
 
     public void RightArrowClick()
     {
+        _purchaseButton.transform.GetChild(0).gameObject.SetActive(false);
+        _biteButton.transform.GetChild(0).gameObject.SetActive(false);
+
         if (currentSharkIndex < _duplicateSharks.Capacity - 1)
         {
             Debug.LogError("RightArrowClick");
             _duplicateSharks[currentSharkIndex].SetActive(false);
             _duplicateSharks[currentSharkIndex].transform.position = new Vector3(_duplicateSharkXValue, _duplicateSharks[currentSharkIndex].transform.position.y, _duplicateSharks[currentSharkIndex].transform.position.z);
+
+            if (PlayerPrefs.HasKey("Shark" + (currentSharkIndex + 1)))
+            {
+                Debug.LogError("Playerpref condition" + ("Shark" + (currentSharkIndex + 1)));
+                int _sharkIAPValue = PlayerPrefs.GetInt("Shark" + (currentSharkIndex + 1));
+                if (_sharkIAPValue == 1)
+                {
+                    _purchasePanel.SetActive(false);
+                    _bitePanel.SetActive(true);
+
+                    Navigation _LeftButton = leftButton.navigation;
+                    _LeftButton.selectOnDown = _biteButton;
+                    leftButton.navigation = _LeftButton;
+
+                    Navigation _Right = rightButton.navigation;
+                    _Right.selectOnDown = _biteButton;
+                    rightButton.navigation = _Right;
+                }
+            }
+            else if (!PlayerPrefs.HasKey("Shark" + (currentSharkIndex + 1)))
+            {
+
+                Debug.LogError("else case oin shark");
+                _purchasePanel.SetActive(true);
+                _bitePanel.SetActive(false);
+
+                Navigation _LeftButton = leftButton.navigation;
+                _LeftButton.selectOnDown = _purchaseButton;
+                leftButton.navigation = _LeftButton;
+
+                Navigation _Right = rightButton.navigation;
+                _Right.selectOnDown = _purchaseButton;
+                rightButton.navigation = _Right;
+            }
+
             currentSharkIndex += 1;
             _duplicateSharks[currentSharkIndex].SetActive(true);
             _sharkTitleIM.sprite = _sharkTitles[currentSharkIndex];
             ResetAllSharkHealthUIPanels();
             _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
             leftButton.interactable = true;
-            _purchasePanel.SetActive(true);
-            _bitePanel.SetActive(false);
-
-
-            Navigation _LeftButton = leftButton.navigation;
-            _LeftButton.selectOnDown = _purchaseButton;
-            leftButton.navigation = _LeftButton;
-
-            Navigation _Right = rightButton.navigation;
-            _Right.selectOnDown = _purchaseButton;
-            rightButton.navigation = _Right;
 
             sharks_Buy.GetComponent<IAPButton>().productId = "angryhungryshark_shark" + (CurrentSharkIndex + 1).ToString();
-
         }
     }
 
     public void LeftArrowClick()
     {
+
+        _purchaseButton.transform.GetChild(0).gameObject.SetActive(false);
+        _biteButton.transform.GetChild(0).gameObject.SetActive(false);
+
         if (currentSharkIndex > 0)
         {
+
             rightButton.interactable = true;
             _duplicateSharks[currentSharkIndex].SetActive(false);
             _duplicateSharks[currentSharkIndex].transform.position = new Vector3(_duplicateSharkXValue, _duplicateSharks[currentSharkIndex].transform.position.y, _duplicateSharks[currentSharkIndex].transform.position.z);
 
             sharks_Buy.GetComponent<IAPButton>().productId = "angryhungryshark_shark" + (CurrentSharkIndex).ToString();
 
+
             currentSharkIndex -= 1;
             ResetAllSharkHealthUIPanels();
             _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
             _duplicateSharks[currentSharkIndex].SetActive(true);
             _sharkTitleIM.sprite = _sharkTitles[currentSharkIndex];
-            _purchasePanel.SetActive(true);
-            _bitePanel.SetActive(false);
 
-            Navigation _LeftButton = leftButton.navigation;
-            _LeftButton.selectOnDown = _purchaseButton;
-            leftButton.navigation = _LeftButton;
+            if (PlayerPrefs.HasKey("Shark" + (currentSharkIndex)))
+            {
+                Debug.LogError("Playerpref condition" + ("Shark" + (currentSharkIndex)));
+                int _sharkIAPValue = PlayerPrefs.GetInt("Shark" + (currentSharkIndex));
+                if (_sharkIAPValue == 1)
+                {
+                    _purchasePanel.SetActive(false);
+                    _bitePanel.SetActive(true);
+                }
+            }
+            else if (!PlayerPrefs.HasKey("Shark" + (currentSharkIndex)))
+            {
 
-            Navigation _Right = rightButton.navigation;
-            _Right.selectOnDown = _purchaseButton;
-            rightButton.navigation = _Right;
+                Debug.LogError("else case oin shark");
+                _purchasePanel.SetActive(true);
+                _bitePanel.SetActive(false);
+
+                Navigation _LeftButton = leftButton.navigation;
+                _LeftButton.selectOnDown = _purchaseButton;
+                leftButton.navigation = _LeftButton;
+
+                Navigation _Right = rightButton.navigation;
+                _Right.selectOnDown = _purchaseButton;
+                rightButton.navigation = _Right;
+
+            }
+
 
         }
         if (currentSharkIndex == 0)
@@ -995,9 +1075,6 @@ public class UIController : MonoBehaviour
             Navigation _Right = rightButton.navigation;
             _Right.selectOnDown = _biteButton;
             rightButton.navigation = _Right;
-
-          //
-
         }
     }
     //for any subscription
@@ -1007,11 +1084,39 @@ public class UIController : MonoBehaviour
     {
         //unlock full game
         //unlock all sharks
+
+        Unlock_AllSharks();
+        Buy_FullGame();
     }
     //unlock shark
     public void Unlock_IndividualShark()
     {
+        Debug.Log("currentSharkIndex" + currentSharkIndex);
+
         PlayerPrefs.SetInt("Shark" + currentSharkIndex, 1);
+
+        PlayerPrefs.Save();
+
+        StartCoroutine(DelayTheButtons());
+
+        IEnumerator DelayTheButtons()
+        {
+            yield return new WaitForSeconds(1f);
+
+            _purchasePanel.SetActive(false);
+            _bitePanel.SetActive(true);
+
+            Navigation _LeftButton = leftButton.navigation;
+            _LeftButton.selectOnDown = _biteButton;
+            leftButton.navigation = _LeftButton;
+
+            Navigation _Right = rightButton.navigation;
+            _Right.selectOnDown = _biteButton;
+            rightButton.navigation = _Right;
+
+            _purchaseButton.transform.GetChild(0).gameObject.SetActive(false);
+            _biteButton.transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
     //unlock all sharks
     public void Unlock_AllSharks()
@@ -1020,17 +1125,34 @@ public class UIController : MonoBehaviour
         {
             PlayerPrefs.SetInt("Shark" + i, 1);
         }
+
+        PlayerPrefs.SetInt("UnlockAllSharks", 1);
+        PlayerPrefs.Save();
     }
     //unlock full game
     public void Buy_FullGame()
     {
         PlayerPrefs.SetInt("BuyFullGame", 1);
+
+        _subscriptionPage.SetActive(true);
+        CurrentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+        SharkGameManager.Instance.ResetGame();
+        SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
     }
+
 
     //Unlock 5Pack Sharks
     public void Unlock_SpecialPackSharks()
     {
+        for (int i = 1; i < 4 ; i++)
+        {
+            PlayerPrefs.SetInt("Shark" + i, 1);
+        }
 
+        PlayerPrefs.SetInt("Unlock_SpecialPack", 1);
+        PlayerPrefs.Save();
+
+        _threePackSharks.SetActive(false);
     }
     #endregion
     private void ResetAllSharkHealthUIPanels()
@@ -1064,16 +1186,16 @@ public class UIController : MonoBehaviour
     public void FivePackSharkButtonClick()
     {
         _mainMenuPanel.SetActive(false);
-        _5PackSharkUIPanel.SetActive(true);
+        _3PackSharkUIPanel.SetActive(true);
         mainMenuPanelOpened = true;
-        currentScreen = SharkGameDataModel.Screen.FivePackSharkPanel;
-        previousScreen = SharkGameDataModel.Screen.FivePackSharkPanel;
+        currentScreen = SharkGameDataModel.Screen.ThreePackSharkPanel;
+        previousScreen = SharkGameDataModel.Screen.ThreePackSharkPanel;
     }
 
     public void FivePackSharkContinueButtonClick()
     {
-        _5PackSharkUIPanel.SetActive(false);
-        if (previousScreen == SharkGameDataModel.Screen.FivePackSharkPanel)
+        _3PackSharkUIPanel.SetActive(false);
+        if (previousScreen == SharkGameDataModel.Screen.ThreePackSharkPanel)
         {
             _selectionPanel.SetActive(true);
             currentScreen = SharkGameDataModel.Screen.SelectionPanel;

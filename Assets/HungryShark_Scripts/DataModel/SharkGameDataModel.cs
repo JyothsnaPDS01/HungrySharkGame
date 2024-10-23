@@ -183,7 +183,7 @@ namespace SharkGame.Models
             GamePausePanel,
             InGamePanel,
             HuntCompletePanel,
-            FivePackSharkPanel,
+            ThreePackSharkPanel,
             UnlockAllSharksPanel,
             SplashScreen,
             UnlockFullGamePanel,
