@@ -154,7 +154,7 @@ namespace SharkGame
         private void Start()
         {
             // Set target frame rate to 60 FPS for smooth performance
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 30;
 
             // Optionally, disable VSync for better control over frame rate
             QualitySettings.vSyncCount = 0;
