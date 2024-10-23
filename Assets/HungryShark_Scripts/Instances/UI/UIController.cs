@@ -1134,10 +1134,18 @@ public class UIController : MonoBehaviour
     {
         PlayerPrefs.SetInt("BuyFullGame", 1);
 
-        _subscriptionPage.SetActive(true);
-        CurrentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
-        SharkGameManager.Instance.ResetGame();
-        SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
+        StartCoroutine(DelayTheSubscription());
+
+        IEnumerator DelayTheSubscription()
+        {
+            yield return new WaitForSeconds(1f);
+            _unlockFullGamePanel.SetActive(false);
+            _subscriptionPage.SetActive(true);
+            CurrentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+            SharkGameManager.Instance.ResetGame();
+            SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
+        }
+        
     }
 
 
