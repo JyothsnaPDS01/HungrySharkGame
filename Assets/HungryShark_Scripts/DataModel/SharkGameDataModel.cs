@@ -187,7 +187,8 @@ namespace SharkGame.Models
             UnlockAllSharksPanel,
             SplashScreen,
             UnlockFullGamePanel,
-            TutorialPanel
+            TutorialPanel,
+            FivePackSharkPanel
         }
         #endregion
 
