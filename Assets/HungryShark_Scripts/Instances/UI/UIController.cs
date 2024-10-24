@@ -811,6 +811,11 @@ namespace SharkGame
         [SerializeField] private GameObject _selectionPanel;
         [SerializeField] private GameObject _loadingPanel;
 
+        [Header("Loading Panel sections")]
+        [SerializeField] private GameObject _loadingPanelForTV;
+        [SerializeField] private GameObject _loadingPanelForTab;
+        [SerializeField] private GameObject _loadingPanelForPC;
+
         [SerializeField] private GameObject _gameUIPanel;
 
         [Header("Duplicate Shark")]
@@ -1076,21 +1081,7 @@ namespace SharkGame
             }
             else if (previousScreen == SharkGameDataModel.Screen.None)
             {
-                _loadingPanel.SetActive(true);
-                StartCoroutine(LoadTheGame());
-
-                IEnumerator LoadTheGame()
-                {
-                    yield return new WaitForSeconds(2f);
-
-                    _loadingPanel.SetActive(false);
-                    _gameUIPanel.SetActive(true);
-                    _gameUIPanel.transform.DOScale(Vector3.one, .5f);
-                    SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
-                    LoadLevelData();
-                    _missionPanel.SetActive(true);
-                    currentScreen = SharkGameDataModel.Screen.MissionPanel;
-                }
+                EnableLoadingScreen();
             }
         }
 
@@ -1112,6 +1103,29 @@ namespace SharkGame
 
         public void EnableLoadingScreen()
         {
+            DeactiveAllLoadingSubPanels();
+
+            if(AndroidTV.IsAndroidOrFireTv())
+            {
+                _loadingPanelForTV.SetActive(true);
+            }
+            else
+            {
+                string devicename = SystemInfo.deviceModel.ToString();
+                devicename.Trim();
+                devicename.ToLower();
+                if (devicename.Contains("Subsystem"))
+                {
+                    //pc input
+                    _loadingPanelForPC.SetActive(true);
+                }
+                else
+                {
+                    //tab
+                    _loadingPanelForTab.SetActive(true);
+                }
+            }
+
             _loadingPanel.SetActive(true);
             currentScreen = SharkGameDataModel.Screen.LoadingPanel;
 
@@ -1131,25 +1145,18 @@ namespace SharkGame
             }
         }
 
+        private void DeactiveAllLoadingSubPanels()
+        {
+            _loadingPanelForPC.SetActive(false);
+            _loadingPanelForTab.SetActive(false);
+            _loadingPanelForTV.SetActive(false);
+        }
+
         public void UnlockAllSharksContinueButtonClick()
         {
             _unlockAllSharksPanel.SetActive(false);
 
-            _loadingPanel.SetActive(true);
-            StartCoroutine(LoadTheGame());
-
-            IEnumerator LoadTheGame()
-            {
-                yield return new WaitForSeconds(2f);
-
-                _loadingPanel.SetActive(false);
-                _gameUIPanel.SetActive(true);
-                _gameUIPanel.transform.DOScale(Vector3.one, .5f);
-                SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MissionPassed, false);
-                LoadLevelData();
-                _missionPanel.SetActive(true);
-                currentScreen = SharkGameDataModel.Screen.MissionPanel;
-            }
+            EnableLoadingScreen();
         }
 
         internal void DestroyBombs()
