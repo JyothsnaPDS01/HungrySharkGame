@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using SharkGame.Models;
 using DG.Tweening;
+using Script;
 
 namespace SharkGame
 {
@@ -56,6 +57,9 @@ namespace SharkGame
         }
 
         public SharkGameDataModel.SharkDirection CurrentSharkDirection { get { return _currentSharkDirection; } }
+
+        [Header("Variable Joystick")]
+        [SerializeField] public VariableJoystick variableJoystick;
         #endregion
 
         #region Events
@@ -109,7 +113,16 @@ namespace SharkGame
         {
             if (!IsReady()) return;
 
-            DetectInput(); // Always check for input
+            if(AndroidTV.IsAndroidOrFireTv())
+            {
+                DetectInput(); // Always check for input
+            }
+
+            else
+            {
+                DetectTabInput();
+            }
+          
 
             if (isParabolicJumping || isTransitioning) return;
 
@@ -239,6 +252,12 @@ namespace SharkGame
         {
             horizontalInput = Input.GetAxis("Horizontal");
             verticalInput = Input.GetAxis("Vertical");
+        }
+
+        void DetectTabInput()
+        {
+            horizontalInput = variableJoystick.Horizontal;
+            verticalInput = variableJoystick.Vertical;
         }
 
         void HandleSurfaceInteraction()
@@ -455,13 +474,13 @@ namespace SharkGame
             // Mark the initial movement as completed
             initialMovementCompleted = true;
 
+            //if (!UIController.Instance.IsTutorialEnabled) EnableInput();
+
             EnableInput();
 
             SharkGameManager.Instance.StartTimer();
 
-            if (!UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
-
-            //if (UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
+           // if (UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
         }
 
         private IEnumerator SharkMovementInitial()
@@ -517,8 +536,8 @@ namespace SharkGame
             if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart || SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameHold)
             {
                 // Read input values
-                float horizontalInput = Input.GetAxis("Horizontal");
-                float verticalInput = Input.GetAxis("Vertical");
+                //float horizontalInput = Input.GetAxis("Horizontal");
+                //float verticalInput = Input.GetAxis("Vertical");
 
                 const float smallThreshold = 0.05f; // Adjusted to accommodate fluctuations
                 const float yTargetValue = -0.155f; // Target Y value for surface interactions
@@ -564,8 +583,8 @@ namespace SharkGame
             else if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.Tutorial)
             {
                 Debug.LogError("Tutorial");
-                float horizontalInput = Input.GetAxis("Horizontal");
-                float verticalInput = Input.GetAxis("Vertical");
+                //float horizontalInput = Input.GetAxis("Horizontal");
+                //float verticalInput = Input.GetAxis("Vertical");
 
                 if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Down)
                 {
@@ -764,8 +783,8 @@ namespace SharkGame
             if (!isMoving)
                 return;
 
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
+            //float horizontalInput = Input.GetAxis("Horizontal");
+            //float verticalInput = Input.GetAxis("Vertical");
 
             // Define rotation based on input direction
             if (verticalInput > 0 && horizontalInput == 0)  // Up

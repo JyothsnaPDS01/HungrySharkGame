@@ -399,7 +399,7 @@ namespace SharkGame
             int _sharkSelectedIndex = _playerSharksList.FindIndex(x => x._sharkIndex == _selectedIndex);
             _playerSharkPrefab = _playerSharksList[_sharkSelectedIndex]._playerObject;
             _sharkEatingCollision = _playerSharksList[_sharkSelectedIndex]._smallFishTrigger;
-            _playerSharkPrefab.GetComponent<Player>().EnableInput();
+            if(!UIController.Instance.IsTutorialEnabled) _playerSharkPrefab.GetComponent<Player>().EnableInput();
 
             _mainCameraFollow.targetRigidbody = _playerSharkPrefab.GetComponent<Rigidbody>();
 
