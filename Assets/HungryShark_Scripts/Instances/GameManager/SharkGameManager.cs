@@ -226,11 +226,7 @@ namespace SharkGame
                 _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
             }
 
-            if(PlayerPrefs.HasKey("CurrentCoins"))
-            {
-                CurrentCoins = PlayerPrefs.GetInt("CurrentCoins");
-            }
-            else
+            if(!PlayerPrefs.HasKey("CurrentCoins"))
             {
                 PlayerPrefs.SetInt("CurrentCoins", 0);
                 PlayerPrefs.Save();

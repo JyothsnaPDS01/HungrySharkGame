@@ -252,6 +252,12 @@ namespace SharkGame
             levelConfig = _dataLoadManager.GetLevelConfig();
             currentHealth = _playerMaxHealth;
             currentAmmoValue = _ammoMaxValue;
+
+            if (PlayerPrefs.HasKey("CurrentCoins"))
+            {
+                SharkGameManager.Instance.CurrentCoins = PlayerPrefs.GetInt("CurrentCoins");
+            }
+
             _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
             _sharkSelectionCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
 
