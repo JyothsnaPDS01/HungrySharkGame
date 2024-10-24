@@ -203,7 +203,7 @@ namespace SharkGame
         private bool isFullGamePurchased = false;
 
         [Header("IsTutorialEnabled")]
-        [SerializeField] private bool isTutorialEnabled = true;
+        [SerializeField] private int isTutorialEnabled;
 
         [Header("TutorialSharkDirection")]
         [SerializeField] private SharkGameDataModel.TutorialSharkDirections tutorialSharkDirection = SharkGameDataModel.TutorialSharkDirections.None;
@@ -222,7 +222,7 @@ namespace SharkGame
         [SerializeField] private Sprite _muteSprite;
         [SerializeField] private Sprite _unMuteSprite;
 
-        public bool IsTutorialEnabled
+        public int IsTutorialEnabled
         {
             get { return isTutorialEnabled; }
         }
@@ -238,6 +238,10 @@ namespace SharkGame
         [SerializeField] private GameObject _ammoArrow;
         [SerializeField] private GameObject _targetInfo;
         [SerializeField] private GameObject _targetArrow;
+
+        [Header("Tab Tutorial UI")]
+        [SerializeField] private GameObject _tabJoystickImage;
+        [SerializeField] private Image _joystickInnerCircle;
 
         [SerializeField] private Animator _targetPanelAnimator;
 
@@ -285,6 +289,16 @@ namespace SharkGame
             {
                 //joystick enable avtadi
                 //
+            }
+            if(PlayerPrefs.HasKey("isTutorialEnabled"))
+            {
+                isTutorialEnabled = PlayerPrefs.GetInt("isTutorialEnabled");
+            }
+            else
+            {
+                PlayerPrefs.SetInt("isTutorialEnabled", 1);
+                isTutorialEnabled = PlayerPrefs.GetInt("isTutorialEnabled");
+                PlayerPrefs.Save();
             }
 
         }
@@ -445,7 +459,11 @@ namespace SharkGame
             {
                 _tutorialPanel.SetActive(true);
                 _remoteImage.transform.DOScale(Vector3.one, 1f);
-                isTutorialEnabled = true;
+
+                PlayerPrefs.SetInt("isTutorialEnabled", 0);
+                isTutorialEnabled = PlayerPrefs.GetInt("isTutorialEnabled");
+                PlayerPrefs.Save();
+
                 SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.Tutorial;
                 tutorialSharkDirection = SharkGameDataModel.TutorialSharkDirections.Down;
                 _directionImage = _remoteDirectionImages.Find(x => x._direction == tutorialSharkDirection)._directionImage;
@@ -498,7 +516,7 @@ namespace SharkGame
             _targetPanelAnimator.SetBool("ammo", true);
             yield return new WaitForSeconds(18f);
             _tutorialPanel.SetActive(false);
-            isTutorialEnabled = false;
+            //isTutorialEnabled = false;
             SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
             GameObject.Find("Player_Shark").GetComponent<Player>().enabled = true;
         }
@@ -562,7 +580,7 @@ namespace SharkGame
             _huntCompletePanel.SetActive(false);
             _rayImage.transform.DOKill();
 
-            if (SharkGameManager.Instance.CurrentLevel != 5)
+            if (SharkGameManager.Instance.CurrentLevel != 5 && !SharkGameManager.Instance.LoadTheGameFromStart)
             {
                 _missionPanel.SetActive(true);
 
@@ -607,6 +625,14 @@ namespace SharkGame
                     _planeRandomColorChanger.GetComponent<RandomColorChanger>().UpdatePlaneMaterial();
                 }
 
+            }
+
+            if(SharkGameManager.Instance.LoadTheGameFromStart)
+            {
+                ResetGameData();
+                _subscriptionPage.SetActive(true);
+                currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+                SharkGameManager.Instance.LoadTheGameFromStart = false;
             }
 
             MakeMaxHealth();
@@ -669,9 +695,11 @@ namespace SharkGame
 
             SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
 
-            _bonusAmountTMP.text = "+" + " " + _dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel).ToString();
-            _coinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
-            SharkGameManager.Instance.CurrentCoins += _dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel);
+            Debug.LogError("CoinS aMOUNT" + _dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel).ToString());
+
+                _bonusAmountTMP.text = "+" + " " + _dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel).ToString();
+                _coinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+                SharkGameManager.Instance.CurrentCoins += _dataLoadManager.GetCoinsAmount(SharkGameManager.Instance.CurrentLevel);
 
             PlayerPrefs.SetInt("CurrentCoins", SharkGameManager.Instance.CurrentCoins);
             PlayerPrefs.Save();

@@ -122,7 +122,7 @@ namespace SharkGame
             {
                 DetectTabInput();
             }
-          
+
 
             if (isParabolicJumping || isTransitioning) return;
 
@@ -309,8 +309,7 @@ namespace SharkGame
         {
             if (transitionCompleted || !isTransitioning)
             {
-                //if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
-                //{
+                
                     HandleMovement();
                     HandleRotation();
 
@@ -474,13 +473,20 @@ namespace SharkGame
             // Mark the initial movement as completed
             initialMovementCompleted = true;
 
-            //if (!UIController.Instance.IsTutorialEnabled) EnableInput();
+            if (UIController.Instance.IsTutorialEnabled == 0) EnableInput();
 
-            EnableInput();
+            //EnableInput();
 
             SharkGameManager.Instance.StartTimer();
 
-           // if (UIController.Instance.IsTutorialEnabled) UIController.Instance.EnableTutorial();
+            if (UIController.Instance.IsTutorialEnabled == 1)
+            {
+                if(AndroidTV.IsAndroidOrFireTv())
+                {
+                    Debug.LogError("AndroidtV");
+                    UIController.Instance.EnableTutorial();
+                }
+            }
         }
 
         private IEnumerator SharkMovementInitial()
@@ -582,145 +588,142 @@ namespace SharkGame
             }
             else if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.Tutorial)
             {
-                Debug.LogError("Tutorial");
-                //float horizontalInput = Input.GetAxis("Horizontal");
-                //float verticalInput = Input.GetAxis("Vertical");
-
-                if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Down)
+                if (AndroidTV.IsAndroidOrFireTv())
                 {
-                    Debug.LogError("Tutorial is Down");
-                    // Read input values
-
-                    if (horizontalInput == 0 && verticalInput < 0)
+                    if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Down)
                     {
-                        UIController.Instance.TutorialInputPressed();
+                        Debug.LogError("Tutorial is Down");
+                        // Read input values
 
-                        Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-                        Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
-
-                        // Maintain the current Z position
-                        targetPosition.z = _sharkRB.position.z;
-
-                        // Clamp the Y position within specified bounds
-                        targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
-
-                        targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
-
-                        // Move the shark smoothly to the new position
-                        _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
-
-                        isMoving = true;
-
-                        if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                        if (horizontalInput == 0 && verticalInput < 0)
                         {
-                            _sharkAnimator.SetFloat("sharkAmount", .25f);
+                            UIController.Instance.TutorialInputPressed();
+
+                            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
+                            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
+
+                            // Maintain the current Z position
+                            targetPosition.z = _sharkRB.position.z;
+
+                            // Clamp the Y position within specified bounds
+                            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
+
+                            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
+
+                            // Move the shark smoothly to the new position
+                            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
+
+                            isMoving = true;
+
+                            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                            {
+                                _sharkAnimator.SetFloat("sharkAmount", .25f);
+                            }
+                            StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.Up));
                         }
-                        StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.Up));
-                        //UIController.Instance.ChangeDirection(SharkGameDataModel.TutorialSharkDirections.Up);
                     }
-                }
 
-                else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Up)
-                {
-                    Debug.LogError("Tutorial is Down");
-                    // Read input values
-                    if (horizontalInput == 0 && verticalInput > 0)
+                    else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Up)
                     {
-                        UIController.Instance.TutorialInputPressed();
-
-                        Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-                        Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
-
-                        // Maintain the current Z position
-                        targetPosition.z = _sharkRB.position.z;
-
-                        // Clamp the Y position within specified bounds
-                        targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
-
-                        targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
-
-                        // Move the shark smoothly to the new position
-                        _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
-
-                        isMoving = true;
-
-                        if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                        Debug.LogError("Tutorial is Down");
+                        // Read input values
+                        if (horizontalInput == 0 && verticalInput > 0)
                         {
-                            _sharkAnimator.SetFloat("sharkAmount", .25f);
-                        }
+                            UIController.Instance.TutorialInputPressed();
 
-                        //UIController.Instance.ChangeDirection(SharkGameDataModel.TutorialSharkDirections.Left);
-                        StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.Left));
+                            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
+                            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
+
+                            // Maintain the current Z position
+                            targetPosition.z = _sharkRB.position.z;
+
+                            // Clamp the Y position within specified bounds
+                            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
+
+                            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
+
+                            // Move the shark smoothly to the new position
+                            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
+
+                            isMoving = true;
+
+                            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                            {
+                                _sharkAnimator.SetFloat("sharkAmount", .25f);
+                            }
+
+                            StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.Left));
+
+                        }
 
                     }
 
-                }
-
-                else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Left)
-                {
-                    Debug.LogError("Tutorial is Down");
-                    // Read input values
-                    if (horizontalInput < 0 && verticalInput  ==  0)
+                    else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Left)
                     {
-                        UIController.Instance.TutorialInputPressed();
-
-                        Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-                        Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
-
-                        // Maintain the current Z position
-                        targetPosition.z = _sharkRB.position.z;
-
-                        // Clamp the Y position within specified bounds
-                        targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
-
-                        targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
-
-                        // Move the shark smoothly to the new position
-                        _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
-
-                        isMoving = true;
-
-                        if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                        Debug.LogError("Tutorial is Down");
+                        // Read input values
+                        if (horizontalInput < 0 && verticalInput == 0)
                         {
-                            _sharkAnimator.SetFloat("sharkAmount", .25f);
+                            UIController.Instance.TutorialInputPressed();
+
+                            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
+                            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
+
+                            // Maintain the current Z position
+                            targetPosition.z = _sharkRB.position.z;
+
+                            // Clamp the Y position within specified bounds
+                            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
+
+                            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
+
+                            // Move the shark smoothly to the new position
+                            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
+
+                            isMoving = true;
+
+                            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                            {
+                                _sharkAnimator.SetFloat("sharkAmount", .25f);
+                            }
+
+                            StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.Right));
                         }
 
-                        StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.Right));
                     }
 
-                }
-
-                else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Right)
-                {
-                    Debug.LogError("Tutorial is Down");
-                    // Read input values
-                    if (horizontalInput > 0 && verticalInput == 0)
+                    else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Right)
                     {
-                        UIController.Instance.TutorialInputPressed();
-
-                        Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-                        Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
-
-                        // Maintain the current Z position
-                        targetPosition.z = _sharkRB.position.z;
-
-                        // Clamp the Y position within specified bounds
-                        targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
-
-                        targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
-
-                        // Move the shark smoothly to the new position
-                        _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
-
-                        isMoving = true;
-
-                        if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                        Debug.LogError("Tutorial is Down");
+                        // Read input values
+                        if (horizontalInput > 0 && verticalInput == 0)
                         {
-                            _sharkAnimator.SetFloat("sharkAmount", .25f);
-                        }
-                        StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.None));
-                    }
+                            UIController.Instance.TutorialInputPressed();
 
+                            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
+                            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
+
+                            // Maintain the current Z position
+                            targetPosition.z = _sharkRB.position.z;
+
+                            // Clamp the Y position within specified bounds
+                            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
+
+                            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
+
+                            // Move the shark smoothly to the new position
+                            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
+
+                            isMoving = true;
+
+                            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                            {
+                                _sharkAnimator.SetFloat("sharkAmount", .25f);
+                            }
+                            StartCoroutine(DelayTheChangingInput(SharkGameDataModel.TutorialSharkDirections.None));
+                        }
+
+                    }
                 }
             }
         }

@@ -6,7 +6,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 10,
+          "amount": 20,
           "targetDescription": "Killed 20 Fishes"
         }
       ],
@@ -51,7 +51,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 10,
+          "amount": 20,
           "targetDescription": "Killed 20 Fishes"
         }
       ],
@@ -98,7 +98,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 10,
+          "amount": 20,
           "targetDescription": "Killed 20 Fishes"
         }
       ],
@@ -216,7 +216,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 10,
+          "amount": 20,
           "targetDescription": "Killed 20 Fishes"
         }
       ],
@@ -256,7 +256,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 10,
+          "amount": 20,
           "targetDescription": "Killed 20 Fishes"
         }
       ],
@@ -301,7 +301,7 @@
         {
           "description": "Kill 20 Fishes",
           "targetType": "smallFishes",
-          "amount": 10,
+          "amount": 20,
           "targetDescription": "Killed 20 Fishes"
         }
       ],
@@ -343,7 +343,7 @@
         {
           "description": "Kill 15 Fishes",
           "targetType": "smallFishes",
-          "amount": 10,
+          "amount": 15,
           "targetDescription": "Killed 15 Fishes"
         }
       ],
@@ -462,7 +462,7 @@
       ],
       "smallObjects": [
         {
-          "name": "Chaetodon_Collare",
+          "name": "Cown_TriggerFish",
           "size": 1.2,
           "quantity": 10
         }
@@ -739,7 +739,7 @@
       ],
       "smallObjects": [
         {
-          "name": "Chaetodon_Collare",
+          "name": "Lyretail_Anthias",
           "size": 1.2,
           "quantity": 10
         }
@@ -770,7 +770,7 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 10,
+          "amount": 1,
           "targetDescription": "Killed 10 Fishes"
         }
       ],

@@ -247,6 +247,9 @@ namespace SharkGame
             StartCoroutine(DelayTheLevel());
         }
 
+        private bool _loadTheGameFromStart;
+
+        public bool LoadTheGameFromStart { get { return _loadTheGameFromStart;  } set { _loadTheGameFromStart = value; } }
         private IEnumerator DelayTheLevel()
         {
             yield return new WaitForSeconds(4f);
@@ -255,18 +258,28 @@ namespace SharkGame
 
             ResetPlayerAndObjectPooling();
 
-            _currentLevel = _currentLevel + 1;
-            PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
-            PlayerPrefs.Save();
-            UIController.Instance.SetCurrentLevelConfig();
+            if(_currentLevel <= 19)
+            {
+                _currentLevel = _currentLevel + 1;
 
-            UIController.Instance.SetObjectPool();
+                PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
+                PlayerPrefs.Save();
+                UIController.Instance.SetCurrentLevelConfig();
 
-            UIController.Instance.EnableHuntCompleteScreen();
+                UIController.Instance.SetObjectPool();
 
-            yield return new WaitForSeconds(3f);
-            
-            _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
+                UIController.Instance.EnableHuntCompleteScreen();
+
+                yield return new WaitForSeconds(3f);
+
+                _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
+            }
+
+            else if (_currentLevel == 20)
+            {
+                UIController.Instance.EnableHuntCompleteScreen();
+                _loadTheGameFromStart = true;
+            }
         }
 
         internal GameObject GetSmallFishPrefab(SharkGameDataModel.SmallFishType _smallFishType)
@@ -349,8 +362,6 @@ namespace SharkGame
             yield return new WaitForSeconds(1f);
 
             UIController.Instance.SetGameOver();
-
-
         }
 
         internal void ResetGame()
@@ -359,6 +370,9 @@ namespace SharkGame
             PlayerPrefs.SetInt("CurrentLevel", 1);
             PlayerPrefs.Save();
             Debug.LogError("CurrentLevel" + PlayerPrefs.GetInt("CurrentLevel"));
+
+            _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
+
             _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
             _spawnManager.SetActive(false);
             destroyCount = 0;
@@ -395,7 +409,7 @@ namespace SharkGame
             int _sharkSelectedIndex = _playerSharksList.FindIndex(x => x._sharkIndex == _selectedIndex);
             _playerSharkPrefab = _playerSharksList[_sharkSelectedIndex]._playerObject;
             _sharkEatingCollision = _playerSharksList[_sharkSelectedIndex]._smallFishTrigger;
-            if(!UIController.Instance.IsTutorialEnabled) _playerSharkPrefab.GetComponent<Player>().EnableInput();
+            if(UIController.Instance.IsTutorialEnabled == 1) _playerSharkPrefab.GetComponent<Player>().EnableInput();
 
             _mainCameraFollow.targetRigidbody = _playerSharkPrefab.GetComponent<Rigidbody>();
 
