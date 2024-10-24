@@ -234,6 +234,8 @@ namespace SharkGame
             }
 
             _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
+
+            Debug.Log("TargetAmount" + _targetAmount);
         }
 
         internal void LoadNextLevel()

@@ -50,7 +50,7 @@ public class DataLoadManager : MonoBehaviour
     public int targetAmount = 0;
     public int GetTargetAmount(int levelNumber)
     {
-        foreach (var item in _levelConfig.levels[_levelConfig.levels.Capacity - 1].targets)
+        foreach (var item in _levelConfig.levels[levelNumber-1].targets)
         {
             targetAmount += item.amount;
         }

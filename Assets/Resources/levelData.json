@@ -770,7 +770,7 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 1,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
