@@ -214,11 +214,15 @@ namespace SharkGame
 #if UNITY_EDITOR
                 Debug.Log("Small fish enters");
 #endif
-                if (!isOnCooldown) // Check if the shark is not on cooldown
+                if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
                 {
-                    // Trigger shark attack animation
-                    _player.GetComponent<Player>().PlayEatAnimation();
-                    StartCoroutine(DeactiveSmallFishAndPushBackToPool(other.gameObject));
+                    if (!isOnCooldown) // Check if the shark is not on cooldown
+                    {
+                        // Trigger shark attack animation
+                        _player.GetComponent<Player>().PlayEatAnimation();
+                    
+                        StartCoroutine(DeactiveSmallFishAndPushBackToPool(other.gameObject));
+                    }
                 }
             }
         }

@@ -50,15 +50,16 @@ public class DataLoadManager : MonoBehaviour
     public int targetAmount = 0;
     public int GetTargetAmount(int levelNumber)
     {
-        foreach(var item in _levelConfig.levels[levelNumber - 1].targets)
+        foreach (var item in _levelConfig.levels[levelNumber-1].targets)
         {
             targetAmount += item.amount;
         }
         return targetAmount;
     }
 
-    public int GetCoinsAmount(int levelNumber)
+    public int GetCoinsAmount(int _levelNumber)
     {
-        return _levelConfig.levels[levelNumber - 1].rewardCoins.amount;
+        if (_levelNumber <= 0) return 0;
+        return _levelConfig.levels.Find(x => x.levelNumber == (_levelNumber-1)).rewardCoins.amount;
     }
 }

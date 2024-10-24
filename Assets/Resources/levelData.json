@@ -456,13 +456,13 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
         {
-          "name": "ZebraSoma",
+          "name": "Cown_TriggerFish",
           "size": 1.2,
           "quantity": 10
         }
@@ -496,7 +496,7 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
@@ -529,7 +529,7 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
@@ -574,13 +574,13 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
         {
-          "name": "ZebraSoma_2",
+          "name": "Chaetodon_Collare",
           "size": 1.2,
           "quantity": 10
         }
@@ -611,13 +611,13 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
         {
-          "name": "ZebraSoma",
+          "name": "Chaetodon_Collare",
           "size": 1.2,
           "quantity": 10
         }
@@ -651,7 +651,7 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
@@ -693,13 +693,13 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
         {
-          "name": "ZebraSoma_2",
+          "name": "Cown_TriggerFish",
           "size": 1.2,
           "quantity": 10
         }
@@ -733,13 +733,13 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
       "smallObjects": [
         {
-          "name": "ZebraSoma",
+          "name": "Lyretail_Anthias",
           "size": 1.2,
           "quantity": 10
         }
@@ -770,7 +770,7 @@
         {
           "description": "Kill 10 Fishes",
           "targetType": "smallFishes",
-          "amount": 15,
+          "amount": 10,
           "targetDescription": "Killed 10 Fishes"
         }
       ],
