@@ -8,6 +8,8 @@ using TMPro;
 using Script;
 using UnityEngine.Purchasing;
 using System;
+using UnityEngine.EventSystems;
+
 
 namespace SharkGame
 {
@@ -275,6 +277,12 @@ namespace SharkGame
 
         [SerializeField] private GameObject _okayButton;
 
+        [Header("Shark Selection Coins Panel")]
+        [SerializeField] private GameObject _unlockSharksCoinButtonPanel;
+        [SerializeField] private GameObject _unlockSharkCoinPopupPanel;
+        [SerializeField] private GameObject _unlockSharkCoinPopupUIPanel;
+        [SerializeField] private Text _unlockSharkpopUpTMP;
+
 
         #endregion
 
@@ -288,6 +296,7 @@ namespace SharkGame
             if (PlayerPrefs.HasKey("CurrentCoins"))
             {
                 SharkGameManager.Instance.CurrentCoins = PlayerPrefs.GetInt("CurrentCoins");
+                Debug.LogError("CurrentCoins" + PlayerPrefs.GetInt("CurrentCoins"));
             }
 
             if(PlayerPrefs.HasKey("CurrentGems"))
@@ -329,9 +338,6 @@ namespace SharkGame
             dayValue = PlayerPrefs.GetInt("DayValue");
 
             Debug.LogError("DayValue" + dayValue);
-
-
-          
 
             SetDailyRewardButtonInteractions();
 
@@ -375,12 +381,12 @@ namespace SharkGame
                     _unlockFullGamePanel.SetActive(false);
                     _subscriptionPage.SetActive(true);
                     currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
-                    SharkGameManager.Instance.ResetGame();
+                    SharkGameManager.Instance.ResetGameFromStartingLevel();
                     SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
                 }
             }
 
-            else if (currentScreen == SharkGameDataModel.Screen.FivePackSharkPanel)
+            else if (currentScreen == SharkGameDataModel.Screen.ThreePackSharkPanel)
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
@@ -415,6 +421,12 @@ namespace SharkGame
                     _unlockAllSharksPanel.SetActive(false);
                     EnableLoadingScreen();
                 }
+            }
+
+            else if(_huntCompletePanel.activeInHierarchy && _gamePausePanel.activeInHierarchy)
+            {
+                _gamePausePanel.SetActive(false);
+                currentScreen = SharkGameDataModel.Screen.HuntCompletePanel;
             }
 
         }
@@ -557,7 +569,10 @@ namespace SharkGame
 
         public void UpdateKillAmount()
         {
-            _killAmountTMP.text = SharkGameManager.Instance.DestroyCount + " / " + _currentLevelData.targets[0].amount.ToString();
+            if (SharkGameManager.Instance.DestroyCount <= _currentLevelData.targets[0].amount)
+            {
+                _killAmountTMP.text = SharkGameManager.Instance.DestroyCount + " / " + _currentLevelData.targets[0].amount.ToString();
+            }
         }
 
         public void SetCurrentLevelConfig()
@@ -612,6 +627,25 @@ namespace SharkGame
 
             _huntCompletePanel.SetActive(false);
             _rayImage.transform.DOKill();
+
+            Debug.LogError("CurrentCoins" + SharkGameManager.Instance.CurrentCoins);
+
+            if(SharkGameManager.Instance.CurrentCoins >= 2000)
+            {
+                SharkGameManager.Instance.CurrentCoins -= 2000;
+                PlayerPrefs.SetInt("CurrentCoins", SharkGameManager.Instance.CurrentCoins);
+                PlayerPrefs.Save();
+
+                _sharkSelectionCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+                _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+
+                if(!PlayerPrefs.HasKey("Shark" + unlockSharkIndexCounter))
+                {
+                    PlayerPrefs.SetInt("Shark" + unlockSharkIndexCounter, 1);
+                    PlayerPrefs.Save();
+                    Debug.LogError("Playerprefs" + PlayerPrefs.GetInt("Shark" + unlockSharkIndexCounter));
+                }
+            }
 
             if (SharkGameManager.Instance.CurrentLevel != 5 && !SharkGameManager.Instance.LoadTheGameFromStart)
             {
@@ -827,7 +861,7 @@ namespace SharkGame
             _killAmountTMP.text = "0 /" + "0";
             _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
 
-            SharkGameManager.Instance.ResetGame();
+            SharkGameManager.Instance.ResetLevelFromCurrentLevel();
         }
 
         public void ResumeButtonClick()
@@ -1092,6 +1126,42 @@ namespace SharkGame
                     rightButton.navigation = _Right;
                 }
                 currentSharkIndex += 1;
+                if (currentSharkIndex == 1)
+                {
+                    if (!PlayerPrefs.HasKey("Shark" + unlockSharkIndexCounter))
+                    {
+                        Debug.LogError("No PlayerPref");
+                        if (SharkGameManager.Instance.CurrentCoins >= 2000)
+                        {
+                            _unlockSharksCoinButtonPanel.SetActive(false);
+
+                            _purchasePanel.SetActive(false);
+                            _bitePanel.SetActive(true);
+
+                            Navigation _LeftButton = leftButton.navigation;
+                            _LeftButton.selectOnDown = _biteButton;
+                            leftButton.navigation = _LeftButton;
+                            Navigation _Right = rightButton.navigation;
+                            _Right.selectOnDown = _biteButton;
+                            rightButton.navigation = _Right;
+
+                        }
+                        else if (SharkGameManager.Instance.CurrentCoins < 2000)
+                        {
+                            _unlockSharksCoinButtonPanel.SetActive(true);
+                            Debug.Log("Coins LESS THAN 2000");
+                        }
+                    }
+                    else if (PlayerPrefs.HasKey("Shark" + unlockSharkIndexCounter))
+                    {
+                         _unlockSharksCoinButtonPanel.SetActive(false);
+                    }
+                }
+
+                else
+                {
+                    _unlockSharksCoinButtonPanel.SetActive(false);
+                }
                 _duplicateSharks[currentSharkIndex].SetActive(true);
                 _sharkTitleIM.sprite = _sharkTitles[currentSharkIndex];
                 ResetAllSharkHealthUIPanels();
@@ -1138,6 +1208,22 @@ namespace SharkGame
                     _Right.selectOnDown = _purchaseButton;
                     rightButton.navigation = _Right;
                 }
+
+                if(currentSharkIndex == 1)
+                {
+                    if(!PlayerPrefs.HasKey("Shark" + unlockSharkIndexCounter))
+                    {
+                        _unlockSharksCoinButtonPanel.SetActive(true);
+                    }
+                    else
+                    {
+                        _unlockSharksCoinButtonPanel.SetActive(false);
+                    }
+                }
+                else
+                {
+                    _unlockSharksCoinButtonPanel.SetActive(false);
+                }
             }
             if (currentSharkIndex == 0)
             {
@@ -1149,6 +1235,27 @@ namespace SharkGame
                 Navigation _Right = rightButton.navigation;
                 _Right.selectOnDown = _biteButton;
                 rightButton.navigation = _Right;
+            }
+        }
+
+        public void UnlockSharkWithCoins()
+        {
+            if (SharkGameManager.Instance.CurrentCoins <= 2000)
+            {
+                _unlockSharkCoinPopupPanel.SetActive(true);
+                _unlockSharkCoinPopupUIPanel.transform.DOScale(Vector3.one, 1f);
+                _unlockSharkpopUpTMP.text = "Need" + " " + (2000 - SharkGameManager.Instance.CurrentCoins) +" "+"Coins More";
+            }
+        }
+        public void CoinsPopUpOkayButtonClick()
+        {
+            _unlockSharkCoinPopupPanel.SetActive(false);
+            _unlockSharkCoinPopupUIPanel.transform.localScale = Vector3.zero;
+
+            if(currentScreen == SharkGameDataModel.Screen.SelectionPanel)
+            {
+                _selectionPanel.GetComponent<ButtonHighlighter>().HighlightButton(rightButton);
+                EventSystem.current.SetSelectedGameObject(rightButton.gameObject);
             }
         }
 
@@ -1171,6 +1278,7 @@ namespace SharkGame
                 rightButton.navigation = _Right;
                 _purchaseButton.transform.GetChild(0).gameObject.SetActive(false);
                 _biteButton.transform.GetChild(0).gameObject.SetActive(true);
+                _unlockSharksCoinButtonPanel.SetActive(false);
             }
         }
 
@@ -1195,7 +1303,7 @@ namespace SharkGame
                 _unlockFullGamePanel.SetActive(false);
                 _subscriptionPage.SetActive(true);
                 CurrentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
-                SharkGameManager.Instance.ResetGame();
+                SharkGameManager.Instance.ResetGameFromStartingLevel();
                 SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
             }
         }
@@ -1253,8 +1361,8 @@ namespace SharkGame
             _mainMenuPanel.SetActive(false);
             _5PackSharkUIPanel.SetActive(true);
             mainMenuPanelOpened = true;
-            currentScreen = SharkGameDataModel.Screen.FivePackSharkPanel;
-            previousScreen = SharkGameDataModel.Screen.FivePackSharkPanel;
+            currentScreen = SharkGameDataModel.Screen.ThreePackSharkPanel;
+            previousScreen = SharkGameDataModel.Screen.ThreePackSharkPanel;
         }
 
         public void FivePackSharkContinueButtonClick()
@@ -1281,7 +1389,7 @@ namespace SharkGame
             _unlockFullGamePanel.SetActive(false);
             _subscriptionPage.SetActive(true);
             CurrentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
-            SharkGameManager.Instance.ResetGame();
+            SharkGameManager.Instance.ResetGameFromStartingLevel();
             SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
             isFullGamePurchased = true;
         }
@@ -1397,6 +1505,7 @@ namespace SharkGame
             else
             {
                 _mainMenuPanel.SetActive(true);
+                _threePackSharks.SetActive(false);
                 currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
             }
           

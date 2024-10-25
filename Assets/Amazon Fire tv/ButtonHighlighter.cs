@@ -62,7 +62,7 @@ public class ButtonHighlighter : MonoBehaviour
         }
         return null;
     }
-    void HighlightButton(Button butt)
+    public void HighlightButton(Button butt)
     {
         butt.transform.localScale = new Vector3(scaleAmount, scaleAmount, scaleAmount);
         if (butt.transform.tag == "Giveborder")

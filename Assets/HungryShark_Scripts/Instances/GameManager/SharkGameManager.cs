@@ -130,10 +130,18 @@ namespace SharkGame
             set { currentCoins = value; }
         }
 
+        [Header("Current Player Gems")]
+        [SerializeField] private int currentGems;
+
+        public int CurrentGems {  get { return currentGems;  } set { currentGems = value; } }
+
         [Header("Level Fail")]
         [SerializeField] private bool isLevelFail;
 
         public bool IsLevelFail {  get { return isLevelFail; } set { isLevelFail = value; } }
+
+        [Header("DailyRewardData")]
+        [SerializeField] private List<SharkGameDataModel.DailyRewardData> _dailyRewardData;
         #endregion
 
         #region MonoBehaviour Methods
@@ -231,6 +239,12 @@ namespace SharkGame
                 PlayerPrefs.SetInt("CurrentCoins", 0);
                 PlayerPrefs.Save();
                 CurrentCoins = PlayerPrefs.GetInt("CurrentCoins");
+            }
+
+            if(!PlayerPrefs.HasKey("CurrentGems"))
+            {
+                PlayerPrefs.SetInt("CurrentGems", 0);
+                currentGems = PlayerPrefs.GetInt("CurrentGems");
             }
 
             _targetAmount = UIController.Instance.GetTargetAmount(CurrentLevel);
@@ -366,13 +380,26 @@ namespace SharkGame
             UIController.Instance.SetGameOver();
         }
 
-        internal void ResetGame()
+        internal void ResetGameFromStartingLevel()
         {
             Debug.LogError("ResetGame");
-            PlayerPrefs.SetInt("CurrentLevel", 1);
-            PlayerPrefs.Save();
-            Debug.LogError("CurrentLevel" + PlayerPrefs.GetInt("CurrentLevel"));
 
+            
+                PlayerPrefs.SetInt("CurrentLevel", 1);
+                PlayerPrefs.Save();
+                Debug.LogError("CurrentLevel" + PlayerPrefs.GetInt("CurrentLevel"));
+                _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
+            
+
+            _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
+            _spawnManager.SetActive(false);
+            destroyCount = 0;
+
+            ObjectPooling.Instance.ClearFishPoolList();
+        }
+
+        internal void ResetLevelFromCurrentLevel()
+        {
             _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
 
             _spawnManager.GetComponent<SpawnManager>().ClearActiveFishList();
@@ -418,6 +445,20 @@ namespace SharkGame
             UIController.Instance.SetPlayer(_playerSharkPrefab);
         }
 
+        public Sprite GetRewardImage(int _index)
+        {
+            return _dailyRewardData.Find(x => x.index == _index)._rewardImage;
+        }
+
+        public int GetRewardAmount(int _index)
+        {
+            return _dailyRewardData.Find(x => x.index == _index)._amount;
+        }
+
+        public SharkGameDataModel.DailyRewardType GetDailyRewardType(int _index)
+        {
+            return _dailyRewardData.Find(x => x.index == _index)._dailyRewardType;
+        }
         #endregion
     }
 }
