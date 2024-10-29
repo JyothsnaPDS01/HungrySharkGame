@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: aed46c267d77dc441974fe1f64a5e6ac
+  m_SerializeEntries:
+  - m_GUID: ba5fd97b7a689a7409dd5e2fdb7e2812
+    m_Address: Assets/Addressables_Unity/Addressables_Prefabs/UnderWaterEnvironment.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2641547031677998287, guid: ba5fd97b7a689a7409dd5e2fdb7e2812,
+      type: 3}
+    m_TargetAsset: {fileID: 2641547031677998287, guid: ba5fd97b7a689a7409dd5e2fdb7e2812,
+      type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ef40f825d89ad054892910fbee8e8ada, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1ac6722468f4dd74e984dc27719440d6, type: 2}
+    - {fileID: 11400000, guid: cb17429ffcc60bc47b1b7821ad7dd088, type: 2}

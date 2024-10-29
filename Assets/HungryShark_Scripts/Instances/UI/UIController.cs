@@ -56,6 +56,16 @@ namespace SharkGame
             DisbaleInGameParticleEffects();
         }
 
+        private void OnEnable()
+        {
+            SharkGameManager.Instance.OnUnderWaterEnvironmentSetup += UnderwaterSetup;
+        }
+
+        private void OnDisable()
+        {
+            SharkGameManager.Instance.OnUnderWaterEnvironmentSetup -= UnderwaterSetup;
+        }
+
         #endregion
 
         #region Private Variables
@@ -341,6 +351,11 @@ namespace SharkGame
 
             SetDailyRewardButtonInteractions();
 
+        }
+
+        private void UnderwaterSetup(GameObject _underWaterObj)
+        {
+            _underWaterEnvironmentPanel = _underWaterObj;
         }
 
         private void Update()
@@ -1427,6 +1442,7 @@ namespace SharkGame
 
             _loadingPanel.SetActive(true);
             currentScreen = SharkGameDataModel.Screen.LoadingPanel;
+
 
             StartCoroutine(LoadTheGame());
 

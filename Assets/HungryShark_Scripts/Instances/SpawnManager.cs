@@ -248,5 +248,10 @@ namespace SharkGame
             }
         }
 
+        public void SetPlayerTransform(Transform _playerObject)
+        {
+            _playerShark = _playerObject;
+        }
+
     }
 }

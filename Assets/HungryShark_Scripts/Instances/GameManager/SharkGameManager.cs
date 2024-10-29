@@ -78,6 +78,10 @@ namespace SharkGame
         [Header("Main Camera")]
         [SerializeField] private CameraFollow _mainCameraFollow;
 
+        [Header("Game Environment SpawnPoint")]
+        [SerializeField] private Transform _gameEnvironmentSpawnPoint;
+        [Header("Game Environment Prefab")]
+        [SerializeField] private GameObject _gameEnvironmentPrefab;
        
         public float PlayerHealthTimerRemaining
         {
@@ -166,6 +170,8 @@ namespace SharkGame
 
             // Optionally, disable VSync for better control over frame rate
             QualitySettings.vSyncCount = 0;
+
+            LoadTheGameEnvironmentAssets();
         }
 
 
@@ -175,6 +181,8 @@ namespace SharkGame
 
         #region Events
         public event Action<SharkGameDataModel.GameMode> OnGameModeChanged;
+
+        public event Action<GameObject> OnUnderWaterEnvironmentSetup;
         #endregion
 
         public SharkGameDataModel.GameMode CurrentGameMode
@@ -215,6 +223,7 @@ namespace SharkGame
             _spawnManager.SetActive(true);
             _objectPooling.GetComponent<ObjectPooling>().HandleGameMode(CurrentGameMode);
             _spawnManager.GetComponent<SpawnManager>().HandleGameMode(CurrentGameMode);
+            _spawnManager.GetComponent<SpawnManager>().SetPlayerTransform(_playerSharkPrefab.transform);
         }
 
         internal void InitializeLevel()
@@ -429,8 +438,6 @@ namespace SharkGame
             ObjectPooling.Instance.ClearFishPoolList();
         }
         #endregion
-
-
         public void SelectedPlayer(int _selectedIndex)
         {
             Debug.LogError("SelectedPlayer Index" + _selectedIndex);
@@ -458,6 +465,15 @@ namespace SharkGame
         public SharkGameDataModel.DailyRewardType GetDailyRewardType(int _index)
         {
             return _dailyRewardData.Find(x => x.index == _index)._dailyRewardType;
+        }
+
+        private GameObject _underWaterEnvironment;
+
+        public void LoadTheGameEnvironmentAssets()
+        {
+            _underWaterEnvironment = Instantiate(_gameEnvironmentPrefab, _gameEnvironmentSpawnPoint);
+            OnUnderWaterEnvironmentSetup?.Invoke(_underWaterEnvironment);
+            
         }
         #endregion
     }
