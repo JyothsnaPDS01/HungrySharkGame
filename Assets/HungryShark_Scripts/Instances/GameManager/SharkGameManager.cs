@@ -146,6 +146,8 @@ namespace SharkGame
 
         [Header("DailyRewardData")]
         [SerializeField] private List<SharkGameDataModel.DailyRewardData> _dailyRewardData;
+
+        [SerializeField] private SpawnObjectAddressables _spawnObjectAddressables;
         #endregion
 
         #region MonoBehaviour Methods
@@ -171,7 +173,8 @@ namespace SharkGame
             // Optionally, disable VSync for better control over frame rate
             QualitySettings.vSyncCount = 0;
 
-            LoadTheGameEnvironmentAssets();
+            //LoadTheGameEnvironmentAssets();
+            
         }
 
 
@@ -465,15 +468,6 @@ namespace SharkGame
         public SharkGameDataModel.DailyRewardType GetDailyRewardType(int _index)
         {
             return _dailyRewardData.Find(x => x.index == _index)._dailyRewardType;
-        }
-
-        private GameObject _underWaterEnvironment;
-
-        public void LoadTheGameEnvironmentAssets()
-        {
-            _underWaterEnvironment = Instantiate(_gameEnvironmentPrefab, _gameEnvironmentSpawnPoint);
-            OnUnderWaterEnvironmentSetup?.Invoke(_underWaterEnvironment);
-            
         }
         #endregion
     }

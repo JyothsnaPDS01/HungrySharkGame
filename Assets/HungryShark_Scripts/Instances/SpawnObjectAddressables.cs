@@ -1,24 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using System;
 
 namespace SharkGame
 {
     public class SpawnObjectAddressables : MonoBehaviour
     {
+        [SerializeField] private AssetReference assetReference;
+        [SerializeField] private AssetLabelReference assetLabelReference;
+
+        private GameObject _underwaterObject;
+
+        public event Action<GameObject> OnUnderWaterEnvironmentSetup;
+
         #region MonoBehaviour Methods
 
         private void Start()
         {
-            Addressables.LoadAssetAsync<GameObject>("Assets/Addressables_Unity/Addressables_Prefabs/UnderWaterEnvironment.prefab").Completed +=
+            Addressables.LoadAssetAsync<GameObject>(assetLabelReference).Completed +=
                 (asyncOperationHandle) =>
                 {
                     if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
                     {
                         //Success to load the object
-                        Instantiate(asyncOperationHandle.Result);
+                        _underwaterObject = Instantiate(asyncOperationHandle.Result);
+                        OnUnderWaterEnvironmentSetup?.Invoke(_underwaterObject);
                     }
                     else
                     {
@@ -27,6 +34,11 @@ namespace SharkGame
                     }
                 };
                
+        }
+
+        public GameObject LoadGameAsset()
+        {
+            return _underwaterObject;
         }
 
         #endregion

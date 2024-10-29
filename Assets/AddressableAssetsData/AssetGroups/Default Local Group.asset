@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: ba5fd97b7a689a7409dd5e2fdb7e2812
     m_Address: Assets/Addressables_Unity/Addressables_Prefabs/UnderWaterEnvironment.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Environment
     m_MainAsset: {fileID: 2641547031677998287, guid: ba5fd97b7a689a7409dd5e2fdb7e2812,
       type: 3}
     m_TargetAsset: {fileID: 2641547031677998287, guid: ba5fd97b7a689a7409dd5e2fdb7e2812,

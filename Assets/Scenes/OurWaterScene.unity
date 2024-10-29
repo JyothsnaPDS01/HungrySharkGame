@@ -1014,6 +1014,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53de917de546df4daa647a8a6498ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assetReference:
+    m_AssetGUID: ba5fd97b7a689a7409dd5e2fdb7e2812
+    m_SubObjectName: 
+  assetLabelReference:
+    m_LabelString: Environment
 --- !u!1 &61348367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,6 +1791,7 @@ MonoBehaviour:
   _unlockSharkCoinPopupPanel: {fileID: 2044941885}
   _unlockSharkCoinPopupUIPanel: {fileID: 1634643037}
   _unlockSharkpopUpTMP: {fileID: 773323642}
+  _spawnObjectAddressables: {fileID: 57906459}
   _selectionPanel: {fileID: 952585417}
   _loadingPanel: {fileID: 1193301554}
   _loadingPanelForTV: {fileID: 584926883}
@@ -24622,6 +24628,7 @@ MonoBehaviour:
     _amount: 1
     _rewardImage: {fileID: 21300000, guid: 07e6695442e105f4e92a97ba0a886245, type: 3}
     _dailyRewardType: 2
+  _spawnObjectAddressables: {fileID: 0}
 --- !u!1 &1473021182
 GameObject:
   m_ObjectHideFlags: 0

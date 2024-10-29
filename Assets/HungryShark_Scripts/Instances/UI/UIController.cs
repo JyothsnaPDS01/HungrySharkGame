@@ -58,12 +58,12 @@ namespace SharkGame
 
         private void OnEnable()
         {
-            SharkGameManager.Instance.OnUnderWaterEnvironmentSetup += UnderwaterSetup;
+            _spawnObjectAddressables.OnUnderWaterEnvironmentSetup += UnderwaterSetup;
         }
 
         private void OnDisable()
         {
-            SharkGameManager.Instance.OnUnderWaterEnvironmentSetup -= UnderwaterSetup;
+            _spawnObjectAddressables.OnUnderWaterEnvironmentSetup -= UnderwaterSetup;
         }
 
         #endregion
@@ -293,7 +293,7 @@ namespace SharkGame
         [SerializeField] private GameObject _unlockSharkCoinPopupUIPanel;
         [SerializeField] private Text _unlockSharkpopUpTMP;
 
-
+        [SerializeField] private SpawnObjectAddressables _spawnObjectAddressables;
         #endregion
 
         #region MonoBehaviour Methods
@@ -351,6 +351,7 @@ namespace SharkGame
 
             SetDailyRewardButtonInteractions();
 
+            _underWaterEnvironmentPanel = _spawnObjectAddressables.LoadGameAsset();
         }
 
         private void UnderwaterSetup(GameObject _underWaterObj)
