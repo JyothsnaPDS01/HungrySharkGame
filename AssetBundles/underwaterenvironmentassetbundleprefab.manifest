@@ -1,0 +1,42 @@
+ManifestFileVersion: 0
+CRC: 1023346254
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 49b79f5d89da367acb503bfa35b674ce
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 40244cbcb56331a24e33dd0a4df90562
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+Assets:
+- Assets/HungryShark_AssetBundlesWanted/AssetBundles_UnderEnvironment.prefab
+Dependencies: []
