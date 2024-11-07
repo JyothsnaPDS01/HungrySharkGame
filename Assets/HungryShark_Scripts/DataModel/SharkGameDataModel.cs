@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SharkGame;
+using UnityEngine.UI;
 
 namespace SharkGame.Models
 {
@@ -188,7 +189,8 @@ namespace SharkGame.Models
             SplashScreen,
             UnlockFullGamePanel,
             TutorialPanel,
-            FivePackSharkPanel
+            FivePackSharkPanel,
+            DailyRewardPanel
         }
         #endregion
 
@@ -219,5 +221,31 @@ namespace SharkGame.Models
             public GameObject _playerObject;
             public SmallFishTrigger _smallFishTrigger;
         }
+
+        #region DailyRewardS
+        [System.Serializable]
+        public class DailyRewardClass
+        {
+            public Button _dailyRewardButton;
+            public GameObject _blood;
+        }
+
+        [System.Serializable]
+        public class DailyRewardData
+        {
+            public int index;
+            public int _amount;
+            public Sprite _rewardImage;
+            public DailyRewardType _dailyRewardType;
+        }
+
+        [System.Serializable]
+        public enum DailyRewardType
+        {
+            Coins,
+            Gems,
+            Shark
+        }
+        #endregion
     }
 }

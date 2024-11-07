@@ -7,6 +7,7 @@ using DG.Tweening;
 using TMPro;
 using Script;
 using UnityEngine.Purchasing;
+using System;
 
 namespace SharkGame
 {
@@ -171,6 +172,7 @@ namespace SharkGame
 
         [Header("SharkSelection Coins UI")]
         [SerializeField] private Text _sharkSelectionCoinsTMP;
+        [SerializeField] private Text _sharkSelectionGemsTMP;
 
         [SerializeField] private bool mainMenuPanelOpened = false;
 
@@ -249,6 +251,31 @@ namespace SharkGame
         [Header("JoyStick UI")]
         [SerializeField] private GameObject _variableJoystick;
 
+        [Header("Daily Rewards DayValue")]
+        [SerializeField] private int dayValue;
+
+        [Header("Daily Rewards Buttons")]
+        [SerializeField] private List<SharkGameDataModel.DailyRewardClass> _dailyRewardList;
+
+        [Header("Daily Reward Panel")]
+        [SerializeField] private GameObject _dailyRewardPanel;
+        [SerializeField] private GameObject _dailyRewardUIPanel;
+        [SerializeField] private GameObject _dailyRewardPopUpPanel;
+        [SerializeField] private GameObject _dailyRewardPopUpUIPanel;
+
+        [SerializeField] private GameObject _coinsPanel;
+        [SerializeField] private GameObject _sharkPanel;
+        [SerializeField] private GameObject _gemsPanel;
+
+        [SerializeField] private Image _rewardImage;
+
+        [SerializeField] private TextMeshProUGUI _sharkTMP;
+        [SerializeField] private TextMeshProUGUI _rewardCoinTMP;
+        [SerializeField] private TextMeshProUGUI _gemCountTMP;
+
+        [SerializeField] private GameObject _okayButton;
+
+
         #endregion
 
         #region MonoBehaviour Methods
@@ -263,8 +290,14 @@ namespace SharkGame
                 SharkGameManager.Instance.CurrentCoins = PlayerPrefs.GetInt("CurrentCoins");
             }
 
+            if(PlayerPrefs.HasKey("CurrentGems"))
+            {
+                SharkGameManager.Instance.CurrentGems = PlayerPrefs.GetInt("CurrentGems");
+            }
+
             _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
             _sharkSelectionCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+            _sharkSelectionGemsTMP.text = SharkGameManager.Instance.CurrentGems.ToString();
 
             LoadInitialLevel();
 
@@ -279,18 +312,9 @@ namespace SharkGame
 
             StartCoroutine(PlaySharkSoundRepeatedly());
 
-            StartCoroutine(EnableTheSubscriptionPanel());
+            StartCoroutine(EnableTheDailyRewardsPanel());
             isMuted = false;
 
-            if (AndroidTV.IsAndroidOrFireTv())
-            {
-                //ipudu unna controlls
-            }
-            else
-            {
-                //joystick enable avtadi
-                //
-            }
             if(PlayerPrefs.HasKey("isTutorialEnabled"))
             {
                 isTutorialEnabled = PlayerPrefs.GetInt("isTutorialEnabled");
@@ -301,6 +325,15 @@ namespace SharkGame
                 isTutorialEnabled = PlayerPrefs.GetInt("isTutorialEnabled");
                 PlayerPrefs.Save();
             }
+
+            dayValue = PlayerPrefs.GetInt("DayValue");
+
+            Debug.LogError("DayValue" + dayValue);
+
+
+          
+
+            SetDailyRewardButtonInteractions();
 
         }
 
@@ -405,12 +438,11 @@ namespace SharkGame
             }
         }
 
-        private IEnumerator EnableTheSubscriptionPanel()
+        private IEnumerator EnableTheDailyRewardsPanel()
         {
             yield return new WaitForSeconds(2f);
-            _subscriptionPage.SetActive(true);
             _splashScreen.SetActive(false);
-            currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+            CheckDailyRewards();
         }
 
         #region Button Actions
@@ -1174,6 +1206,8 @@ namespace SharkGame
             //unlock all sharks
             Unlock_AllSharks();
             Buy_FullGame();
+            PlayerPrefs.SetInt("Subscribed", 1);
+            PlayerPrefs.Save();
         }
 
         public void Unlock_AllSharks()
@@ -1348,7 +1382,174 @@ namespace SharkGame
             SoundManager.Instance.MuteSounds(isMuted);
         }
 
+        private void EnableTheSubscriptionPanel()
+        {
+            _dailyRewardPanel.SetActive(false);
+            _dailyRewardUIPanel.transform.localScale = Vector3.zero;
+            _dailyRewardPopUpPanel.SetActive(false);
+            _dailyRewardPopUpUIPanel.transform.localScale = Vector3.zero;
+
+            if(!PlayerPrefs.HasKey("Subscribed"))
+            {
+                _subscriptionPage.SetActive(true);
+                currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+            }
+            else
+            {
+                _mainMenuPanel.SetActive(true);
+                currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
+            }
+          
+        }
+
+        #region DailyRewards
+
+        private DateTime NextRewardTime, FirstRewardTime;
+        private void CheckDailyRewards()
+        {
+            if(DailyRewardsLoader.Date == null && dayValue < 7)
+            {
+                //First Time run
+                if (PlayerPrefs.GetString("Day") == "")
+                {
+                    _dailyRewardPanel.SetActive(true);
+                    _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultButton(_dailyRewardList[dayValue]._dailyRewardButton.gameObject);
+                    _dailyRewardUIPanel.transform.DOScale(Vector3.one, 1f);
+                    currentScreen = SharkGameDataModel.Screen.DailyRewardPanel;
+                    Debug.Log("You got a reward today");
+                }
+                else
+                {
+                    string s = PlayerPrefs.GetString("Day");
+                    NextRewardTime = Convert.ToDateTime(s);
+
+                    if (NextRewardTime.Subtract(DateTime.Now).Hours <= 0)
+                    {
+                        _dailyRewardPanel.SetActive(true);
+                        _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultButton(_dailyRewardList[dayValue]._dailyRewardButton.gameObject);
+                        _dailyRewardUIPanel.transform.DOScale(Vector3.one, 1f);
+                        currentScreen = SharkGameDataModel.Screen.DailyRewardPanel;
+                        Debug.Log("You got a reward today");
+                    }
+                    else
+                    {
+                        //Enable the subscription panel
+                        Debug.LogError("You already claimed reward");
+                        EnableTheSubscriptionPanel();
+                    }
+                }
+                DailyRewardsLoader.Date = PlayerPrefs.GetString("Day");
+            }
+            else
+            {
+                Debug.LogError("Condition Checking for the Menu Panel or subscription panel");
+                EnableTheSubscriptionPanel();
+            }
+        }
+
+        private void SetDailyRewardButtonInteractions()
+        {
+            for(int i=0;i<_dailyRewardList.Count;i++)
+            {
+                _dailyRewardList[i]._dailyRewardButton.interactable = false;
+            }
+            _dailyRewardList[dayValue]._dailyRewardButton.interactable = true;
+        }
+
+        public void RewardClaimButton()
+        {
+            _dailyRewardList[dayValue]._dailyRewardButton.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+
+            _dailyRewardList[dayValue]._blood.SetActive(true);
+            _dailyRewardList[dayValue]._blood.transform.DOScale(Vector3.one, 2f);
+
+            StartCoroutine(DelayToEnableThePopUp());
+
+            IEnumerator DelayToEnableThePopUp()
+            {
+                yield return new WaitForSeconds(1f);
+                EnableRewardPopUp(dayValue);
+            }
+
+        }
+
+        private int unlockSharkIndexCounter = 1;
+
+
+        public void EnableRewardPopUp(int _dayValue)
+        {
+            _dailyRewardPopUpPanel.SetActive(true);
+            _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultButton(_okayButton);
+            _okayButton.transform.GetChild(0).gameObject.SetActive(true);
+
+            _dailyRewardPopUpUIPanel.transform.DOScale(Vector3.one, 1f);
+            _rewardImage.sprite = SharkGameManager.Instance.GetRewardImage(_dayValue);
+
+            SharkGameDataModel.DailyRewardType _type = SharkGameManager.Instance.GetDailyRewardType(_dayValue);
+
+            switch(_type)
+            {
+                case SharkGameDataModel.DailyRewardType.Coins:
+                    ResetAllPopRewardPanels();
+                    _coinsPanel.SetActive(true);
+                    _rewardCoinTMP.text = SharkGameManager.Instance.GetRewardAmount(_dayValue).ToString();
+                    SharkGameManager.Instance.CurrentCoins += SharkGameManager.Instance.GetRewardAmount(_dayValue);
+                    PlayerPrefs.SetInt("CurrentCoins", SharkGameManager.Instance.CurrentCoins);
+                    PlayerPrefs.Save();
+                    _inGameCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+                    _sharkSelectionCoinsTMP.text = SharkGameManager.Instance.CurrentCoins.ToString();
+
+                    break;
+                case SharkGameDataModel.DailyRewardType.Gems:
+                    ResetAllPopRewardPanels();
+                    _gemsPanel.SetActive(true);
+                    _gemCountTMP.text = SharkGameManager.Instance.GetRewardAmount(_dayValue).ToString();
+                    SharkGameManager.Instance.CurrentGems += SharkGameManager.Instance.GetRewardAmount(_dayValue);
+                    _sharkSelectionGemsTMP.text = SharkGameManager.Instance.CurrentGems.ToString();
+                    PlayerPrefs.SetInt("CurrentGems", SharkGameManager.Instance.CurrentGems);
+                    PlayerPrefs.Save();
+                    break;
+                case SharkGameDataModel.DailyRewardType.Shark:
+                    if(!PlayerPrefs.HasKey("Shark" + unlockSharkIndexCounter))
+                    {
+                        PlayerPrefs.SetInt("Shark" + unlockSharkIndexCounter, 1);
+                        PlayerPrefs.Save();
+                    }
+                    break;
+            }
+        }
+
+        public void RewardPopupOkayButtonClick()
+        {
+            FirstRewardTime = DateTime.Now;
+            NextRewardTime = FirstRewardTime.AddDays(1);
+            PlayerPrefs.SetString("Day", NextRewardTime.ToString());
+            dayValue++;
+            PlayerPrefs.SetInt("DayValue", dayValue);
+
+            if (dayValue >= 7)
+            {
+                dayValue = 0;
+                PlayerPrefs.SetInt("DayValue", dayValue);
+            }
+            EnableTheSubscriptionPanel();
+            //Invoke("EnableTheSubscriptionPanel", 2f);
+        }
+
+        public void ResetAllPopRewardPanels()
+        {
+            _coinsPanel.SetActive(false);
+            _sharkPanel.SetActive(false);
+            _gemsPanel.SetActive(false);
+        }
+        #endregion
+
         #endregion
 
     }
+}
+
+public static class DailyRewardsLoader
+{
+    public static string Date = null;
 }

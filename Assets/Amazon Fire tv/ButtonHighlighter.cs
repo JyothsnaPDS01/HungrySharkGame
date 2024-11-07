@@ -87,4 +87,9 @@ public class ButtonHighlighter : MonoBehaviour
             butt.GetComponent<Outline>().enabled = false;
         }
     }
+
+    public void SetDefaultButton(GameObject _defaultButton)
+    {
+        defaultButton = _defaultButton;
+    }
 }
