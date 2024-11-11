@@ -58,8 +58,8 @@ namespace SharkGame
 
         public SharkGameDataModel.SharkDirection CurrentSharkDirection { get { return _currentSharkDirection; } }
 
-        [Header("Variable Joystick")]
-        [SerializeField] public VariableJoystick variableJoystick;
+        [Header("Simple Joystick controller")]
+        [SerializeField] public SimpleTouchController simpleTouchController;
         #endregion
 
         #region Events
@@ -256,8 +256,12 @@ namespace SharkGame
 
         void DetectTabInput()
         {
-            horizontalInput = variableJoystick.Horizontal;
-            verticalInput = variableJoystick.Vertical;
+            Vector2 movement = simpleTouchController.GetTouchPosition;
+            //horizontalInput = variableJoystick.Horizontal;
+            //verticalInput = variableJoystick.Vertical;
+
+            horizontalInput = movement.x;
+            verticalInput = movement.y; 
         }
 
         void HandleSurfaceInteraction()

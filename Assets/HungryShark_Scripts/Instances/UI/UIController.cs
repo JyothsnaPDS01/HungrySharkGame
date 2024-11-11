@@ -251,7 +251,7 @@ namespace SharkGame
         [SerializeField] private Animator _targetPanelAnimator;
 
         [Header("JoyStick UI")]
-        [SerializeField] private GameObject _variableJoystick;
+        [SerializeField] private GameObject _simpleTouchController;
 
         [Header("Daily Rewards DayValue")]
         [SerializeField] private int dayValue;
@@ -488,8 +488,8 @@ namespace SharkGame
 
             _GamePanel.SetActive(true);
 
-            if (!AndroidTV.IsAndroidOrFireTv()) _variableJoystick.SetActive(true);
-            else if (AndroidTV.IsAndroidOrFireTv()) _variableJoystick.SetActive(false);
+            if (!AndroidTV.IsAndroidOrFireTv()) _simpleTouchController.SetActive(true);
+            else if (AndroidTV.IsAndroidOrFireTv()) _simpleTouchController.SetActive(false);
 
             _inGameLevelNumberTMP.text = "Level :" + " " + SharkGameManager.Instance.CurrentLevel.ToString();
             SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
@@ -872,8 +872,8 @@ namespace SharkGame
             _gamePausePanel.SetActive(false);
             _GamePanel.SetActive(true);
 
-            if (!AndroidTV.IsAndroidOrFireTv()) _variableJoystick.SetActive(true);
-            else if (AndroidTV.IsAndroidOrFireTv()) _variableJoystick.SetActive(false);
+            if (!AndroidTV.IsAndroidOrFireTv()) _simpleTouchController.SetActive(true);
+            else if (AndroidTV.IsAndroidOrFireTv()) _simpleTouchController.SetActive(false);
         }
 
         internal void SetGameOver()
@@ -1509,6 +1509,60 @@ namespace SharkGame
                 currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
             }
           
+        }
+
+        public void PopupBackButtonClick()
+        {
+            if (currentScreen == SharkGameDataModel.Screen.UnlockAllSharksPanel)
+            {
+                _unlockAllSharksPanel.SetActive(false);
+                EnableLoadingScreen();
+            }
+
+            else if (currentScreen == SharkGameDataModel.Screen.ThreePackSharkPanel)
+            {
+                if (!quitButtonClicked)
+                {
+                    if (SharkGameManager.Instance.IsLevelFail)
+                    {
+                        _5PackSharkUIPanel.SetActive(false);
+                        SharkGameManager.Instance.IsLevelFail = false;
+                        EnableLoadingScreen();
+                    }
+                    else
+                    {
+                        _5PackSharkUIPanel.SetActive(false);
+                        _mainMenuPanel.SetActive(true);
+                        currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
+                    }
+                }
+                else
+                {
+                    _5PackSharkUIPanel.SetActive(false);
+                    EnableLoadingScreen();
+                }
+            }
+
+            else if (currentScreen == SharkGameDataModel.Screen.UnlockFullGamePanel)
+            {
+                _unlockFullGamePanel.SetActive(false);
+                _subscriptionPage.SetActive(true);
+                currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+                SharkGameManager.Instance.ResetGameFromStartingLevel();
+                SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
+            }
+        }
+
+        public void PauseButtonClick()
+        {
+            if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
+                _gamePausePanel.SetActive(true);
+                _gamePauseAnimationPanel.transform.DOScale(Vector3.one, 1f);
+                _GamePanel.SetActive(false);
+                SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
+                SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+            }
         }
 
         #region DailyRewards
