@@ -1590,6 +1590,7 @@ namespace SharkGame
                     {
                         _dailyRewardPanel.SetActive(true);
                         _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultButton(_dailyRewardList[dayValue]._dailyRewardButton.gameObject);
+                        if (!AndroidTV.IsAndroidOrFireTv()) _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultParentForTab(_dailyRewardList[dayValue]._dailyRewardButton.gameObject);
                         _dailyRewardUIPanel.transform.DOScale(Vector3.one, 1f);
                         currentScreen = SharkGameDataModel.Screen.DailyRewardPanel;
                         Debug.Log("You got a reward today");
@@ -1643,7 +1644,11 @@ namespace SharkGame
         {
             _dailyRewardPopUpPanel.SetActive(true);
             _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultButton(_okayButton);
+            if (!AndroidTV.IsAndroidOrFireTv()) _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultParentForTab(_okayButton);
             _okayButton.transform.GetChild(0).gameObject.SetActive(true);
+            _okayButton.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), .5f)
+                      .SetLoops(-1, LoopType.Yoyo)  // Loop indefinitely with a "yoyo" effect
+                      .SetEase(Ease.InOutSine);
 
             _dailyRewardPopUpUIPanel.transform.DOScale(Vector3.one, 1f);
             _rewardImage.sprite = SharkGameManager.Instance.GetRewardImage(_dayValue);
@@ -1708,6 +1713,22 @@ namespace SharkGame
         #endregion
 
         #endregion
+
+        #region Application Pause
+
+        //void OnApplicationPause(bool isPaused)
+        //{
+        //    if (!isPaused)
+        //    {
+        //        _gamePausePanel.SetActive(true);
+        //        _gamePauseAnimationPanel.transform.DOScale(Vector3.one, 1f);
+        //        _GamePanel.SetActive(false);
+        //        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
+        //        SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+        //    }
+        //}
+        #endregion
+
 
     }
 }

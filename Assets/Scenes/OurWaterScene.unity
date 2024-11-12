@@ -22163,6 +22163,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 1042845544}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 0}
 --- !u!1 &209922425
 GameObject:
   m_ObjectHideFlags: 0
@@ -22848,6 +22849,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: border
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723688351441565445, guid: 78f894c3db032a440950ea3308515182,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78f894c3db032a440950ea3308515182, type: 3}
@@ -25446,6 +25452,8 @@ GameObject:
   - component: {fileID: 278535608}
   - component: {fileID: 278535609}
   - component: {fileID: 278535607}
+  - component: {fileID: 278535610}
+  - component: {fileID: 278535611}
   m_Layer: 5
   m_Name: Day1Panel
   m_TagString: Giveborder
@@ -25531,7 +25539,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -25546,10 +25554,10 @@ MonoBehaviour:
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
-    m_NormalTrigger: Normal
+    m_NormalTrigger: Highlighted
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 278535607}
@@ -25567,6 +25575,38 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &278535610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278535605}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5b3b68f7cb5ae48b4cb81ffdb021b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayButton: {fileID: 278535605}
+--- !u!95 &278535611
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278535605}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6061bfb42a7bf2d49abb6f8f555ce61b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &279083912
 GameObject:
   m_ObjectHideFlags: 0
@@ -35755,6 +35795,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 0}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 0}
 --- !u!222 &365877635
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43174,6 +43215,7 @@ GameObject:
   - component: {fileID: 406277926}
   - component: {fileID: 406277928}
   - component: {fileID: 406277927}
+  - component: {fileID: 406277929}
   m_Layer: 5
   m_Name: Day5Panel
   m_TagString: Giveborder
@@ -43259,7 +43301,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -43274,10 +43316,10 @@ MonoBehaviour:
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
-    m_NormalTrigger: Normal
+    m_NormalTrigger: Highlighted
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 406277927}
@@ -43295,6 +43337,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &406277929
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406277924}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6931b72cdcd178a4daebff1e9f4b0c5b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &406807993
 GameObject:
   m_ObjectHideFlags: 0
@@ -43424,6 +43485,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 1804538106}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 2033079483}
 --- !u!95 &408380061
 Animator:
   serializedVersion: 3
@@ -44673,7 +44735,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -2.2, y: -53.99951}
+  m_AnchoredPosition: {x: -2.2, y: -53.999634}
   m_SizeDelta: {x: 688, y: 308}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &433975590
@@ -81201,6 +81263,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 64159881}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 1725414679}
 --- !u!1 &796899317
 GameObject:
   m_ObjectHideFlags: 0
@@ -105445,6 +105508,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 1776811418}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 1776811418}
 --- !u!1 &953168540
 GameObject:
   m_ObjectHideFlags: 0
@@ -106461,6 +106525,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 937260491}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 937260491}
 --- !u!1 &966398734
 GameObject:
   m_ObjectHideFlags: 0
@@ -106936,6 +107001,7 @@ GameObject:
   - component: {fileID: 976259931}
   - component: {fileID: 976259930}
   - component: {fileID: 976259932}
+  - component: {fileID: 976259933}
   m_Layer: 5
   m_Name: OKayButton
   m_TagString: Giveborder
@@ -107020,7 +107086,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -107038,7 +107104,7 @@ MonoBehaviour:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 976259930}
@@ -107056,6 +107122,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &976259933
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976259928}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be8aeffef625a21438c6d211356da9f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &976536022
 GameObject:
   m_ObjectHideFlags: 0
@@ -107100,6 +107185,7 @@ GameObject:
   - component: {fileID: 977077995}
   - component: {fileID: 977077997}
   - component: {fileID: 977077996}
+  - component: {fileID: 977077998}
   m_Layer: 5
   m_Name: Day4Panel
   m_TagString: Giveborder
@@ -107185,7 +107271,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -107200,10 +107286,10 @@ MonoBehaviour:
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
-    m_NormalTrigger: Normal
+    m_NormalTrigger: Highlighted
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 977077996}
@@ -107221,6 +107307,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &977077998
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977077993}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc9b810d70624e5429414e5f5d0f2abd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &977111481
 GameObject:
   m_ObjectHideFlags: 0
@@ -117237,6 +117342,7 @@ MonoBehaviour:
   scaleAmount: 1.05
   defaultButton: {fileID: 269716615}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 1964025921}
 --- !u!4 &1071338406 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4301781751017244, guid: 20de1bf9e984c4606a378e2e88960fe2,
@@ -125088,6 +125194,8 @@ GameObject:
   - component: {fileID: 1128811950}
   - component: {fileID: 1128811952}
   - component: {fileID: 1128811951}
+  - component: {fileID: 1128811953}
+  - component: {fileID: 1128811954}
   m_Layer: 5
   m_Name: Day2Panel
   m_TagString: Giveborder
@@ -125173,7 +125281,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -125188,10 +125296,10 @@ MonoBehaviour:
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
-    m_NormalTrigger: Normal
+    m_NormalTrigger: Highlighted
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1128811951}
@@ -125209,6 +125317,38 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1128811953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128811948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5b3b68f7cb5ae48b4cb81ffdb021b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayButton: {fileID: 0}
+--- !u!95 &1128811954
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128811948}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1666cd710c6aa0a40b9909478dbb6cbf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1128871328
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -140088,6 +140228,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 1264858998}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 433975588}
 --- !u!95 &1315520310
 Animator:
   serializedVersion: 3
@@ -140553,7 +140694,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -9, y: 41.99951}
+  m_AnchoredPosition: {x: -9, y: 41.999634}
   m_SizeDelta: {x: 892, y: 740}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1322256461
@@ -141452,6 +141593,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 400206906}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 1724845560}
 --- !u!95 &1339877664
 Animator:
   serializedVersion: 3
@@ -143101,6 +143243,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 1247900595}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 0}
 --- !u!1 &1370061076
 GameObject:
   m_ObjectHideFlags: 0
@@ -183008,6 +183151,7 @@ MonoBehaviour:
   scaleAmount: 1
   defaultButton: {fileID: 74402680}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 1551060561}
 --- !u!1 &1595493553
 GameObject:
   m_ObjectHideFlags: 0
@@ -184107,6 +184251,7 @@ MonoBehaviour:
   scaleAmount: 1
   defaultButton: {fileID: 1411638233}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 1411638233}
 --- !u!114 &1616109925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192454,6 +192599,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 976259928}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 976259928}
 --- !u!1 &1685454461
 GameObject:
   m_ObjectHideFlags: 0
@@ -192928,7 +193074,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 221.00098, y: 28}
+  m_AnchoredPosition: {x: 221.00098, y: 28.000122}
   m_SizeDelta: {x: 1166, y: 1080}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1701618859
@@ -195552,6 +195698,7 @@ GameObject:
   - component: {fileID: 1737904798}
   - component: {fileID: 1737904800}
   - component: {fileID: 1737904799}
+  - component: {fileID: 1737904801}
   m_Layer: 5
   m_Name: Day7Panel
   m_TagString: Giveborder
@@ -195637,7 +195784,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -195652,10 +195799,10 @@ MonoBehaviour:
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
-    m_NormalTrigger: Normal
+    m_NormalTrigger: Highlighted
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1737904799}
@@ -195673,6 +195820,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &1737904801
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737904796}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b7aedb9b80340674091483fa54427e9a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1738162924
 GameObject:
   m_ObjectHideFlags: 0
@@ -196195,6 +196361,7 @@ GameObject:
   - component: {fileID: 1749827071}
   - component: {fileID: 1749827073}
   - component: {fileID: 1749827072}
+  - component: {fileID: 1749827074}
   m_Layer: 5
   m_Name: Day3Panel
   m_TagString: Giveborder
@@ -196280,7 +196447,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -196298,7 +196465,7 @@ MonoBehaviour:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
+    m_SelectedTrigger: Normal
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1749827072}
@@ -196316,6 +196483,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &1749827074
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749827069}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5cd043c11d7ff444cab6eddbc22c8632, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1749868749
 GameObject:
   m_ObjectHideFlags: 0
@@ -216114,6 +216300,7 @@ GameObject:
   - component: {fileID: 1946919824}
   - component: {fileID: 1946919826}
   - component: {fileID: 1946919825}
+  - component: {fileID: 1946919827}
   m_Layer: 5
   m_Name: Day6Panel
   m_TagString: Giveborder
@@ -216199,7 +216386,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -216214,10 +216401,10 @@ MonoBehaviour:
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
-    m_NormalTrigger: Normal
+    m_NormalTrigger: Highlighted
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1946919825}
@@ -216235,6 +216422,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &1946919827
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946919822}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 85fe856d19cf845468063bec1837bb5c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1947117178
 GameObject:
   m_ObjectHideFlags: 0
@@ -231061,6 +231267,7 @@ MonoBehaviour:
   scaleAmount: 1.1
   defaultButton: {fileID: 339401740}
   singleplaybtn: {fileID: 0}
+  _defaultImageParent: {fileID: 339401740}
 --- !u!1 &2045232574
 GameObject:
   m_ObjectHideFlags: 0
