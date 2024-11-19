@@ -352,22 +352,28 @@ namespace SharkGame
                 _annuallyButtonAnimator.enabled = true;
             }
 
-
-            if (!AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(true);
-            else if (AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(false);
+            if(SharkGameManager.Instance.CurrentLevel > 1)
+            {
+                if (!AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(true);
+                else if (AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(false);
+            }
+         
         }
 
         private void Update()
         {
             if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (AndroidTV.IsAndroidOrFireTv())
                 {
-                    _gamePausePanel.SetActive(true);
-                    _gamePauseAnimationPanel.transform.DOScale(Vector3.one, 1f);
-                    _GamePanel.SetActive(false);
-                    SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
-                    SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        _gamePausePanel.SetActive(true);
+                        _gamePauseAnimationPanel.transform.DOScale(Vector3.one, 1f);
+                        _GamePanel.SetActive(false);
+                        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
+                        SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+                    }
                 }
             }
 
@@ -565,7 +571,11 @@ namespace SharkGame
             SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
             GameObject.Find("Player_Shark").GetComponent<Player>().enabled = true;
 
-           // StartHealthTimer();
+
+            if (!AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(true);
+            else if (AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(false);
+
+            // StartHealthTimer();
 
         }
 
@@ -1831,6 +1841,12 @@ namespace SharkGame
             _coinsPanel.SetActive(false);
             _sharkPanel.SetActive(false);
             _gemsPanel.SetActive(false);
+        }
+
+        public void EnablePauseButton()
+        {
+            if (!AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(true);
+            else if (AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(false);
         }
 #endregion
 

@@ -508,6 +508,7 @@ namespace SharkGame
             else if(UIController.Instance.IsTutorialEnabled == 0)
             {
                 SharkGameManager.Instance.StartTimer();
+                UIController.Instance.EnablePauseButton();
             }
 
         }

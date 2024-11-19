@@ -4714,7 +4714,6 @@ MonoBehaviour:
   _unlockSharkCoinPopupUIPanel: {fileID: 1634643037}
   _unlockSharkpopUpTMP: {fileID: 773323642}
   _pauseButton: {fileID: 1247900595}
-  _degubText: {fileID: 0}
   _selectionPanel: {fileID: 952585417}
   _loadingPanel: {fileID: 1193301554}
   _loadingPanelForTV: {fileID: 584926883}
@@ -108774,6 +108773,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: border
       objectReference: {fileID: 0}
+    - target: {fileID: 8723688351441565445, guid: 78f894c3db032a440950ea3308515182,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78f894c3db032a440950ea3308515182, type: 3}
 --- !u!224 &978545503 stripped
@@ -132856,7 +132860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1247900596
 RectTransform:
   m_ObjectHideFlags: 0
