@@ -211,6 +211,7 @@ namespace SharkGame.Models
             public GameObject _directionImage;
             public TutorialSharkDirections _direction;
             public GameObject _directionInfo;
+            public GameObject _tabDirectionInfo;
         }
         #endregion
 

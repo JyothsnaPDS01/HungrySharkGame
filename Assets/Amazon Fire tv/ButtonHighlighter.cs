@@ -108,7 +108,7 @@ public class ButtonHighlighter : MonoBehaviour
 
     private void AnimateDefaultButton(GameObject button)
     {
-        Debug.Log("AnimateDefaultButton");
+        Debug.Log("AnimateDefaultButton in ButtonHightlighter");
         button.transform.localScale = Vector3.one;
 
         button.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), .5f)
