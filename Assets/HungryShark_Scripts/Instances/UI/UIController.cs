@@ -543,9 +543,13 @@ namespace SharkGame
         IEnumerator AnimateTutorialUI()
         {
             yield return new WaitForSeconds(.5f);
-            _directionImage.SetActive(false);
-            _directionInfo.SetActive(false);
-            _remoteImage.SetActive(false);
+
+            if (AndroidTV.IsAndroidOrFireTv())
+            {
+                _directionImage.SetActive(false);
+                _directionInfo.SetActive(false);
+                _remoteImage.SetActive(false);
+            }
 
             yield return new WaitForSeconds(1f);
             _targetPanelAnimator.SetBool("ammo", true);
@@ -1434,7 +1438,7 @@ namespace SharkGame
         {
             DeactiveAllLoadingSubPanels();
 
-            if(AndroidTV.IsAndroidOrFireTv())
+            if (AndroidTV.IsAndroidOrFireTv())
             {
                 _loadingPanelForTV.SetActive(true);
             }
@@ -1629,10 +1633,10 @@ namespace SharkGame
                 {
                     _dailyRewardPanel.SetActive(true);
                     _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultButton(_dailyRewardList[dayValue]._dailyRewardButton.gameObject);
-                    //if (!AndroidTV.IsAndroidOrFireTv())
-                    //{
-                    //    _dailyRewardList[dayValue]._dailyRewardButton.GetComponent<ButtonAnimation>().enabled = true;
-                    //}
+                    if (!AndroidTV.IsAndroidOrFireTv())
+                    {
+                        _dailyRewardList[dayValue]._dailyRewardButton.GetComponent<ButtonAnimation>().enabled = true;
+                    }
                     _dailyRewardUIPanel.transform.DOScale(Vector3.one, 1f);
                     currentScreen = SharkGameDataModel.Screen.DailyRewardPanel;
                     Debug.Log("You got a reward today");
@@ -1703,11 +1707,12 @@ namespace SharkGame
         {
             _dailyRewardPopUpPanel.SetActive(true);
             _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultButton(_okayButton);
-            //if (!AndroidTV.IsAndroidOrFireTv())
-            //{
-            //    _dailyRewardList[dayValue]._dailyRewardButton.GetComponent<ButtonAnimation>().enabled = false;
-            //}
-            //if (AndroidTV.IsAndroidOrFireTv()) _okayButton.transform.GetChild(0).gameObject.SetActive(true);
+            if (!AndroidTV.IsAndroidOrFireTv())
+            {
+                _dailyRewardList[dayValue]._dailyRewardButton.GetComponent<ButtonAnimation>().enabled = false;
+                _okayButton.GetComponent<ButtonAnimation>().enabled = true;
+            }
+            if (AndroidTV.IsAndroidOrFireTv()) _okayButton.transform.GetChild(0).gameObject.SetActive(true);
             _dailyRewardPopUpUIPanel.transform.DOScale(Vector3.one, 1f);
             _rewardImage.sprite = SharkGameManager.Instance.GetRewardImage(_dayValue);
 
@@ -1759,7 +1764,6 @@ namespace SharkGame
                 PlayerPrefs.SetInt("DayValue", dayValue);
             }
             EnableTheSubscriptionPanel();
-            //Invoke("EnableTheSubscriptionPanel", 2f);
         }
 
         public void ResetAllPopRewardPanels()

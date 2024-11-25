@@ -16,10 +16,10 @@ public class ButtonHighlighter : MonoBehaviour
     public GameObject _defaultImageParent;
     private void Awake()
     {
-        //if (!AndroidTV.IsAndroidOrFireTv())
-        //{
-        //    this.gameObject.GetComponent<ButtonHighlighter>().enabled = false;
-        //}
+        if (!AndroidTV.IsAndroidOrFireTv())
+        {
+            this.gameObject.GetComponent<ButtonHighlighter>().enabled = false;
+        }
     }
     void Start()
     {

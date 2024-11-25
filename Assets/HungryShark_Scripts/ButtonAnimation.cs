@@ -13,23 +13,23 @@ public class ButtonAnimation : MonoBehaviour
 
     void Start()
     {
-        //if (!AndroidTV.IsAndroidOrFireTv())
-        //{
-        //    if (_dayButton != null)
-        //    {
-        //        if(_dayButton.activeInHierarchy) AnimateDefaultButton();
-        //    }
-        //}
+        if (!AndroidTV.IsAndroidOrFireTv())
+        {
+            if (_dayButton != null)
+            {
+                if (_dayButton.activeInHierarchy) AnimateDefaultButton();
+            }
+        }
         //SwitchButtonTransitions();
     }
 
     private void SwitchButtonTransitions()
     {
-        if(!AndroidTV.IsAndroidOrFireTv())
+        if (!AndroidTV.IsAndroidOrFireTv())
         {
             _dayButton.GetComponent<Button>().transition = Selectable.Transition.Animation;
         }
-        else if(AndroidTV.IsAndroidOrFireTv())
+        else if (AndroidTV.IsAndroidOrFireTv())
         {
             _dayButton.GetComponent<Button>().transition = Selectable.Transition.ColorTint;
         }
@@ -40,23 +40,23 @@ public class ButtonAnimation : MonoBehaviour
         
     }
 
-    //public void AnimateDefaultButton()
-    //{
-    //    Debug.Log("AnimateDefaultButton");
-    //    this.transform.localScale = Vector3.one;
+    public void AnimateDefaultButton()
+    {
+        Debug.Log("AnimateDefaultButton");
+        this.transform.localScale = Vector3.one;
 
-    //    this.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1.5f)
-    //       .SetLoops(-1, LoopType.Yoyo)  // Loop indefinitely with a "yoyo" effect
-    //       .SetEase(Ease.InOutSine);
-    //}
+        this.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1.5f)
+           .SetLoops(-1, LoopType.Yoyo)  // Loop indefinitely with a "yoyo" effect
+           .SetEase(Ease.InOutSine);
+    }
 
     public void KillButtonAnimation()
     {
-        //if (!AndroidTV.IsAndroidOrFireTv())
-        //{
-        //    this.transform.DOKill();
-        //    this.transform.localScale = Vector3.one;
-        //}
+        if (!AndroidTV.IsAndroidOrFireTv())
+        {
+            this.transform.DOKill();
+            this.transform.localScale = Vector3.one;
+        }
     }
 
 
