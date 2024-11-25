@@ -115,15 +115,17 @@ namespace SharkGame
         {
             if (!IsReady()) return;
 
-            if(AndroidTV.IsAndroidOrFireTv())
-            {
-                DetectInput(); // Always check for input
-            }
+            //if(AndroidTV.IsAndroidOrFireTv())
+            //{
+            //    DetectInput(); // Always check for input
+            //}
 
-            else
-            {
-                DetectTabInput();
-            }
+            //else
+            //{
+            //    DetectTabInput();
+            //}
+
+            DetectInput(); // Always check for input
 
 
             if (isParabolicJumping || isTransitioning) return;
@@ -487,17 +489,21 @@ namespace SharkGame
 
             if (UIController.Instance.IsTutorialEnabled == 1)
             {
-                if(AndroidTV.IsAndroidOrFireTv())
-                {
-                    Debug.LogError("AndroidtV");
-                    UIController.Instance.EnableTutorial();
-                }
-                else if(!AndroidTV.IsAndroidOrFireTv())
-                {
-                    Debug.LogError("Tab");
-                    UIController.Instance.EnableTabTutorial();
-                }
+                //if(AndroidTV.IsAndroidOrFireTv())
+                //{
+                //    Debug.LogError("AndroidtV");
+                //    UIController.Instance.EnableTutorial();
+                //}
+                //else if(!AndroidTV.IsAndroidOrFireTv())
+                //{
+                //    Debug.LogError("Tab");
+                //    UIController.Instance.EnableTabTutorial();
+                //}
+
+                UIController.Instance.EnableTutorial();
             }
+
+            
         }
 
         private IEnumerator SharkMovementInitial()
@@ -599,7 +605,7 @@ namespace SharkGame
             }
             else if (SharkGameManager.Instance.CurrentGameMode == SharkGameDataModel.GameMode.Tutorial)
             {
-                if (AndroidTV.IsAndroidOrFireTv())
+                //if (AndroidTV.IsAndroidOrFireTv())
                 {
                     if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Down)
                     {
@@ -737,148 +743,148 @@ namespace SharkGame
                     }
                 }
 
-                else if(!AndroidTV.IsAndroidOrFireTv())
-                {
-                    if(UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Down)
-                    {
-                        Debug.LogError("Tab Tutorial is Down");
+                //else if(!AndroidTV.IsAndroidOrFireTv())
+                //{
+                //    if(UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Down)
+                //    {
+                //        Debug.LogError("Tab Tutorial is Down");
 
-                        if (tabMovement.y < -0.5f)
-                        {
-                            UIController.Instance.TutorialTabInputPressed();
+                //        if (tabMovement.y < -0.5f)
+                //        {
+                //            UIController.Instance.TutorialTabInputPressed();
 
-                            Debug.Log("Moving Down");
-                            // Add instructions for moving down
+                //            Debug.Log("Moving Down");
+                //            // Add instructions for moving down
 
-                            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-                            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
+                //            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
+                //            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
 
-                            // Maintain the current Z position
-                            targetPosition.z = _sharkRB.position.z;
+                //            // Maintain the current Z position
+                //            targetPosition.z = _sharkRB.position.z;
 
-                            // Clamp the Y position within specified bounds
-                            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
+                //            // Clamp the Y position within specified bounds
+                //            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
 
-                            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
+                //            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
 
-                            // Move the shark smoothly to the new position
-                            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
+                //            // Move the shark smoothly to the new position
+                //            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
 
-                            isMoving = true;
+                //            isMoving = true;
 
-                            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
-                            {
-                                _sharkAnimator.SetFloat("sharkAmount", .25f);
-                            }
-                            StartCoroutine(DelayTheChangingTabInput(SharkGameDataModel.TutorialSharkDirections.Up));
-                        }
-                    }
+                //            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                //            {
+                //                _sharkAnimator.SetFloat("sharkAmount", .25f);
+                //            }
+                //            StartCoroutine(DelayTheChangingTabInput(SharkGameDataModel.TutorialSharkDirections.Up));
+                //        }
+                //    }
 
-                    else if(UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Up)
-                    {
-                        Debug.LogError("Tab Tutorial is Up");
+                //    else if(UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Up)
+                //    {
+                //        Debug.LogError("Tab Tutorial is Up");
 
-                        if (tabMovement.y > 0.5f)
-                        {
-                            UIController.Instance.TutorialTabInputPressed();
+                //        if (tabMovement.y > 0.5f)
+                //        {
+                //            UIController.Instance.TutorialTabInputPressed();
 
-                            Debug.Log("Moving Up");
-                            // Add instructions for moving down
+                //            Debug.Log("Moving Up");
+                //            // Add instructions for moving down
 
-                            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-                            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
+                //            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
+                //            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
 
-                            // Maintain the current Z position
-                            targetPosition.z = _sharkRB.position.z;
+                //            // Maintain the current Z position
+                //            targetPosition.z = _sharkRB.position.z;
 
-                            // Clamp the Y position within specified bounds
-                            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
+                //            // Clamp the Y position within specified bounds
+                //            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
 
-                            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
+                //            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
 
-                            // Move the shark smoothly to the new position
-                            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
+                //            // Move the shark smoothly to the new position
+                //            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
 
-                            isMoving = true;
+                //            isMoving = true;
 
-                            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
-                            {
-                                _sharkAnimator.SetFloat("sharkAmount", .25f);
-                            }
-                            StartCoroutine(DelayTheChangingTabInput(SharkGameDataModel.TutorialSharkDirections.Left));
-                        }
-                    }
+                //            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                //            {
+                //                _sharkAnimator.SetFloat("sharkAmount", .25f);
+                //            }
+                //            StartCoroutine(DelayTheChangingTabInput(SharkGameDataModel.TutorialSharkDirections.Left));
+                //        }
+                //    }
 
-                    else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Left)
-                    {
-                        Debug.LogError("Tab Tutorial is Left");
+                //    else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Left)
+                //    {
+                //        Debug.LogError("Tab Tutorial is Left");
 
-                        if (tabMovement.x < -0.5f)
-                        {
-                            UIController.Instance.TutorialTabInputPressed();
+                //        if (tabMovement.x < -0.5f)
+                //        {
+                //            UIController.Instance.TutorialTabInputPressed();
 
-                            Debug.Log("Moving Up");
-                            // Add instructions for moving down
+                //            Debug.Log("Moving Up");
+                //            // Add instructions for moving down
 
-                            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-                            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
+                //            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
+                //            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
 
-                            // Maintain the current Z position
-                            targetPosition.z = _sharkRB.position.z;
+                //            // Maintain the current Z position
+                //            targetPosition.z = _sharkRB.position.z;
 
-                            // Clamp the Y position within specified bounds
-                            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
+                //            // Clamp the Y position within specified bounds
+                //            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
 
-                            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
+                //            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
 
-                            // Move the shark smoothly to the new position
-                            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
+                //            // Move the shark smoothly to the new position
+                //            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
 
-                            isMoving = true;
+                //            isMoving = true;
 
-                            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
-                            {
-                                _sharkAnimator.SetFloat("sharkAmount", .25f);
-                            }
-                            StartCoroutine(DelayTheChangingTabInput(SharkGameDataModel.TutorialSharkDirections.Right));
-                        }
-                    }
+                //            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                //            {
+                //                _sharkAnimator.SetFloat("sharkAmount", .25f);
+                //            }
+                //            StartCoroutine(DelayTheChangingTabInput(SharkGameDataModel.TutorialSharkDirections.Right));
+                //        }
+                //    }
 
-                    else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Right)
-                    {
-                        Debug.LogError("Tab Tutorial is Left");
+                //    else if (UIController.Instance.TutorialSharkDirection == SharkGameDataModel.TutorialSharkDirections.Right)
+                //    {
+                //        Debug.LogError("Tab Tutorial is Left");
 
-                        if (tabMovement.x > 0.5f)
-                        {
-                            UIController.Instance.TutorialTabInputPressed();
+                //        if (tabMovement.x > 0.5f)
+                //        {
+                //            UIController.Instance.TutorialTabInputPressed();
 
-                            Debug.Log("Moving Up");
-                            // Add instructions for moving down
+                //            Debug.Log("Moving Up");
+                //            // Add instructions for moving down
 
-                            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-                            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
+                //            Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
+                //            Vector3 targetPosition = _sharkRB.position + (inputDirection * _sharkSpeed * 5f * Time.fixedDeltaTime);
 
-                            // Maintain the current Z position
-                            targetPosition.z = _sharkRB.position.z;
+                //            // Maintain the current Z position
+                //            targetPosition.z = _sharkRB.position.z;
 
-                            // Clamp the Y position within specified bounds
-                            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
+                //            // Clamp the Y position within specified bounds
+                //            targetPosition.y = Mathf.Clamp(targetPosition.y, -45f, -20f);
 
-                            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
+                //            targetPosition.x = Mathf.Clamp(targetPosition.x, -53.27f, 86f);
 
-                            // Move the shark smoothly to the new position
-                            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
+                //            // Move the shark smoothly to the new position
+                //            _sharkRB.MovePosition(Vector3.Lerp(_sharkRB.position, targetPosition, 0.1f));
 
-                            isMoving = true;
+                //            isMoving = true;
 
-                            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
-                            {
-                                _sharkAnimator.SetFloat("sharkAmount", .25f);
-                            }
-                            StartCoroutine(DelayTheChangingTabInput(SharkGameDataModel.TutorialSharkDirections.None));
-                        }
-                    }
-                }
+                //            if (_sharkType != SharkGameDataModel.SharkType.GeneralShark)
+                //            {
+                //                _sharkAnimator.SetFloat("sharkAmount", .25f);
+                //            }
+                //            StartCoroutine(DelayTheChangingTabInput(SharkGameDataModel.TutorialSharkDirections.None));
+                //        }
+                //    }
+                //}
             }
         }
 

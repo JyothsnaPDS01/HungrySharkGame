@@ -13,13 +13,13 @@ public class ButtonAnimation : MonoBehaviour
 
     void Start()
     {
-        if (!AndroidTV.IsAndroidOrFireTv())
-        {
-            if (_dayButton != null)
-            {
-                if(_dayButton.activeInHierarchy) AnimateDefaultButton();
-            }
-        }
+        //if (!AndroidTV.IsAndroidOrFireTv())
+        //{
+        //    if (_dayButton != null)
+        //    {
+        //        if(_dayButton.activeInHierarchy) AnimateDefaultButton();
+        //    }
+        //}
         //SwitchButtonTransitions();
     }
 
@@ -52,11 +52,11 @@ public class ButtonAnimation : MonoBehaviour
 
     public void KillButtonAnimation()
     {
-        if (!AndroidTV.IsAndroidOrFireTv())
-        {
-            this.transform.DOKill();
-            this.transform.localScale = Vector3.one;
-        }
+        //if (!AndroidTV.IsAndroidOrFireTv())
+        //{
+        //    this.transform.DOKill();
+        //    this.transform.localScale = Vector3.one;
+        //}
     }
 
 

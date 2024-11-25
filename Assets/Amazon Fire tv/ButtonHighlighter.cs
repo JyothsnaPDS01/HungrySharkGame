@@ -16,10 +16,10 @@ public class ButtonHighlighter : MonoBehaviour
     public GameObject _defaultImageParent;
     private void Awake()
     {
-        if (!AndroidTV.IsAndroidOrFireTv())
-        {
-            this.gameObject.GetComponent<ButtonHighlighter>().enabled = false;
-        }
+        //if (!AndroidTV.IsAndroidOrFireTv())
+        //{
+        //    this.gameObject.GetComponent<ButtonHighlighter>().enabled = false;
+        //}
     }
     void Start()
     {
@@ -28,13 +28,13 @@ public class ButtonHighlighter : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(defaultButton);
         }
 
-        if (!AndroidTV.IsAndroidOrFireTv())
-        {
-            if (_defaultImageParent != null)
-            {
-                AnimateDefaultButton(_defaultImageParent);
-            }
-        }
+        //if (!AndroidTV.IsAndroidOrFireTv())
+        //{
+        //    if (_defaultImageParent != null)
+        //    {
+        //        AnimateDefaultButton(_defaultImageParent);
+        //    }
+        //}
     }
     private void OnEnable()
     {
@@ -106,33 +106,33 @@ public class ButtonHighlighter : MonoBehaviour
         defaultButton = _defaultButton;
     }
 
-    private void AnimateDefaultButton(GameObject button)
-    {
-        Debug.Log("AnimateDefaultButton in ButtonHightlighter");
-        button.transform.localScale = Vector3.one;
+    //private void AnimateDefaultButton(GameObject button)
+    //{
+    //    Debug.Log("AnimateDefaultButton in ButtonHightlighter");
+    //    button.transform.localScale = Vector3.one;
 
-        button.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), .5f)
-           .SetLoops(-1, LoopType.Yoyo)  // Loop indefinitely with a "yoyo" effect
-           .SetEase(Ease.InOutSine);     
-    }
+    //    button.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), .5f)
+    //       .SetLoops(-1, LoopType.Yoyo)  // Loop indefinitely with a "yoyo" effect
+    //       .SetEase(Ease.InOutSine);     
+    //}
 
-    private void RepeatAnimateDefaultButton()
-    {
-        if (_defaultImageParent != null)
-        {
-            AnimateDefaultButton(_defaultImageParent);
-        }
-    }
+    //private void RepeatAnimateDefaultButton()
+    //{
+    //    if (_defaultImageParent != null)
+    //    {
+    //        //AnimateDefaultButton(_defaultImageParent);
+    //    }
+    //}
 
     public void SetDefaultParentForTab(GameObject defaultParent)
     {
         _defaultImageParent = defaultParent;
-        AnimateDefaultButton(_defaultImageParent);
+        //AnimateDefaultButton(_defaultImageParent);
     }
 
-    private IEnumerator AnimateDefaultButtonwithDelay()
-    {
-        yield return new WaitForSeconds(.1f);
-        AnimateDefaultButton(_defaultImageParent);
-    }
+    //private IEnumerator AnimateDefaultButtonwithDelay()
+    //{
+    //    yield return new WaitForSeconds(.1f);
+    //    //AnimateDefaultButton(_defaultImageParent);
+    //}
 }

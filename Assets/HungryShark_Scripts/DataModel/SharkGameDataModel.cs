@@ -202,7 +202,8 @@ namespace SharkGame.Models
             Left,
             Right,
             Down,
-            Up
+            Up,
+            Middle
         }
 
         [System.Serializable]

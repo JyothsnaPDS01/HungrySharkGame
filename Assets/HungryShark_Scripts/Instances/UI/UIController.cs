@@ -286,6 +286,8 @@ namespace SharkGame
         [Header("Pause Button")]
         [SerializeField] private GameObject _pauseButton;
 
+        [SerializeField] private Text _degubText;
+
 
         #endregion
 
@@ -345,9 +347,7 @@ namespace SharkGame
             SetDailyRewardButtonInteractions();
 
             if (!AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(false);
-
             else if (AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(true);
-
         }
 
         private void Update()
@@ -437,7 +437,7 @@ namespace SharkGame
             }
 
         }
-        #endregion
+#endregion
 
         private IEnumerator PlaySharkSoundRepeatedly()
         {
@@ -464,7 +464,7 @@ namespace SharkGame
             CheckDailyRewards();
         }
 
-        #region Button Actions
+#region Button Actions
         public void LevelButtonClick()
         {
             SoundManager.Instance.PlayAudioClip(SharkGameDataModel.Sound.Button);
@@ -602,12 +602,18 @@ namespace SharkGame
         public void EndDirectionTutorial()
         {
             SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameHold;
+
             GameObject.Find("Player_Shark").GetComponent<Player>().enabled = false;
             StartCoroutine(AnimateTutorialUI());
         }
         IEnumerator AnimateTutorialUI()
         {
             yield return new WaitForSeconds(.5f);
+            _directionImage.SetActive(false);
+            _directionInfo.SetActive(false);
+            _remoteImage.SetActive(false);
+
+            yield return new WaitForSeconds(1f);
             _targetPanelAnimator.SetBool("ammo", true);
             yield return new WaitForSeconds(18f);
             _tutorialPanel.SetActive(false);
@@ -629,9 +635,9 @@ namespace SharkGame
         {
             _currentLevelData = levelConfig.levels[SharkGameManager.Instance.CurrentLevel - 1];
         }
-        #endregion
+#endregion
 
-        #region Private Methods
+#region Private Methods
         private void LoadInitialLevel()
         {
             SharkGameManager.Instance.InitializeLevel();
@@ -949,9 +955,9 @@ namespace SharkGame
                 item.SetActive(false);
             }
         }
-        #endregion
+#endregion
 
-        #region UI Button Actions
+#region UI Button Actions
 
         [Header("UI Screens")]
         [SerializeField] private GameObject _selectionPanel;
@@ -1436,6 +1442,8 @@ namespace SharkGame
             _duplicateSharks[currentSharkIndex].SetActive(true);
             _sharkHealthUIPanels[currentSharkIndex].SetActive(true);
 
+            CurrentScreen = SharkGameDataModel.Screen.SelectionPanel;
+
             _player.GetComponent<Player>().ResetSharkIdleState();
 
             _underWaterEnvironmentPanel.SetActive(false);
@@ -1639,6 +1647,28 @@ namespace SharkGame
                 SharkGameManager.Instance.ResetGameFromStartingLevel();
                 SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
             }
+
+            else if (currentScreen == SharkGameDataModel.Screen.SelectionPanel)
+            {
+                _mainMenuPanel.SetActive(true);
+                _selectionPanel.SetActive(false);
+                currentSharkIndex = 0;
+                foreach (var item in _duplicateSharks)
+                {
+                    item.SetActive(false);
+                    item.transform.position = new Vector3(_duplicateSharkXValue, item.transform.position.y, item.transform.position.z);
+                }
+                _bitePanel.SetActive(true);
+                _purchasePanel.SetActive(false);
+                ResetAllSharkHealthUIPanels();
+                currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
+            }
+            else if(currentScreen == SharkGameDataModel.Screen.MainMenuScreen)
+            {
+                _mainMenuPanel.SetActive(false);
+                _subscriptionPage.SetActive(true);
+                currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+            }
         }
 
         public void PauseButtonClick()
@@ -1653,7 +1683,7 @@ namespace SharkGame
             }
         }
 
-        #region DailyRewards
+#region DailyRewards
 
         private DateTime NextRewardTime, FirstRewardTime;
         private void CheckDailyRewards()
@@ -1739,11 +1769,11 @@ namespace SharkGame
         {
             _dailyRewardPopUpPanel.SetActive(true);
             _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultButton(_okayButton);
-            if (!AndroidTV.IsAndroidOrFireTv())
-            {
-                _dailyRewardList[dayValue]._dailyRewardButton.GetComponent<ButtonAnimation>().enabled = false;
-            }
-            if (AndroidTV.IsAndroidOrFireTv()) _okayButton.transform.GetChild(0).gameObject.SetActive(true);
+            //if (!AndroidTV.IsAndroidOrFireTv())
+            //{
+            //    _dailyRewardList[dayValue]._dailyRewardButton.GetComponent<ButtonAnimation>().enabled = false;
+            //}
+            //if (AndroidTV.IsAndroidOrFireTv()) _okayButton.transform.GetChild(0).gameObject.SetActive(true);
             _dailyRewardPopUpUIPanel.transform.DOScale(Vector3.one, 1f);
             _rewardImage.sprite = SharkGameManager.Instance.GetRewardImage(_dayValue);
 
@@ -1804,11 +1834,11 @@ namespace SharkGame
             _sharkPanel.SetActive(false);
             _gemsPanel.SetActive(false);
         }
-        #endregion
+#endregion
 
-        #endregion
+#endregion
 
-        #region Application Pause
+#region Application Pause
 
         private bool _isGameAlreadyPaused = false;
 
@@ -1824,19 +1854,24 @@ namespace SharkGame
                 // Check if the game was already paused before showing the pause panel
                 if (_isGameAlreadyPaused)
                 {
-                    _gamePausePanel.SetActive(true);
-                    _gamePauseAnimationPanel.transform.DOScale(Vector3.one, 1f);
-                    _GamePanel.SetActive(false);
-                    SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
-                    SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
+                    Debug.LogError("Current screen" + currentScreen);
+                    Debug.LogError("Game mode" + SharkGameManager.Instance.CurrentGameMode);
+                    if (currentScreen == SharkGameDataModel.Screen.InGamePanel)
+                    {
+                        _gamePausePanel.SetActive(true);
+                        _gamePauseAnimationPanel.transform.DOScale(Vector3.one, 1f);
+                        _GamePanel.SetActive(false);
+                        SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
+                        SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
 
-                    // Reset the pause status
-                    _isGameAlreadyPaused = false;
+                        // Reset the pause status
+                        _isGameAlreadyPaused = false;
+                    }
                 }
             }
         }
 
-        #endregion
+#endregion
 
 
     }
