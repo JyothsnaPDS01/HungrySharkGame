@@ -11,6 +11,8 @@ public class ButtonAnimation : MonoBehaviour
 
     [SerializeField] private GameObject _dayButton;
 
+    private Tween buttonTween; // Store the reference to the Tween
+
     void Start()
     {
         if (!AndroidTV.IsAndroidOrFireTv())
@@ -45,17 +47,25 @@ public class ButtonAnimation : MonoBehaviour
         Debug.Log("AnimateDefaultButton");
         this.transform.localScale = Vector3.one;
 
-        this.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1.5f)
-           .SetLoops(-1, LoopType.Yoyo)  // Loop indefinitely with a "yoyo" effect
-           .SetEase(Ease.InOutSine);
+        buttonTween = this.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1.5f)
+            .SetLoops(-1, LoopType.Yoyo) // Loop indefinitely with a "yoyo" effect
+            .SetEase(Ease.InOutSine);
     }
 
     public void KillButtonAnimation()
     {
         if (!AndroidTV.IsAndroidOrFireTv())
         {
-            this.transform.DOKill();
-            this.transform.localScale = Vector3.one;
+            // Kill the Tween to stop the animation
+            if (buttonTween != null && buttonTween.IsActive())
+            {
+                buttonTween.Kill();
+                Debug.Log("Button animation stopped.");
+            }
+            else
+            {
+                Debug.Log("No active button animation to stop.");
+            }
         }
     }
 

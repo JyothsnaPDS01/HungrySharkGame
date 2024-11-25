@@ -6012,6 +6012,7 @@ GameObject:
   - component: {fileID: 93768658}
   - component: {fileID: 93768660}
   - component: {fileID: 93768661}
+  - component: {fileID: 93768662}
   m_Layer: 5
   m_Name: WeeklyButton
   m_TagString: Giveborder
@@ -6154,6 +6155,100 @@ MonoBehaviour:
   titleText: {fileID: 0}
   descriptionText: {fileID: 0}
   priceText: {fileID: 0}
+--- !u!114 &93768662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93768656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1487378838}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1964025925}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1964025926}
+          m_MethodName: ResetScale
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 263176685}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 263176686}
+          m_MethodName: ResetScale
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 84542839}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 84542840}
+          m_MethodName: ResetScale
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &94018058
 GameObject:
   m_ObjectHideFlags: 0
@@ -14417,6 +14512,8 @@ GameObject:
   - component: {fileID: 165196659}
   - component: {fileID: 165196661}
   - component: {fileID: 165196660}
+  - component: {fileID: 165196662}
+  - component: {fileID: 165196663}
   m_Layer: 5
   m_Name: ContinueButtonPanel
   m_TagString: Untagged
@@ -14483,6 +14580,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165196658}
   m_CullTransparentMesh: 0
+--- !u!114 &165196662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165196658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d831c8e9d5b3fa144a8008d584c2171e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonObject: {fileID: 165196658}
+--- !u!95 &165196663
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165196658}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dc0559064455754409ca29031634ff2d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &165799447
 GameObject:
   m_ObjectHideFlags: 0
@@ -20266,6 +20395,28 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1487378837}
+          m_MethodName: ResetScale
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1487378838}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &177858518
 GameObject:
   m_ObjectHideFlags: 0
@@ -25671,6 +25822,28 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1487378837}
+          m_MethodName: ResetScale
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1487378838}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &269959427
 GameObject:
   m_ObjectHideFlags: 0
@@ -29645,6 +29818,7 @@ GameObject:
   - component: {fileID: 339401743}
   - component: {fileID: 339401742}
   - component: {fileID: 339401744}
+  - component: {fileID: 339401745}
   m_Layer: 5
   m_Name: OkayButton
   m_TagString: Giveborder
@@ -29764,6 +29938,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &339401745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339401740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5b3b68f7cb5ae48b4cb81ffdb021b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayButton: {fileID: 339401740}
 --- !u!1 &340013630
 GameObject:
   m_ObjectHideFlags: 0
@@ -30618,6 +30805,7 @@ GameObject:
   - component: {fileID: 348200915}
   - component: {fileID: 348200914}
   - component: {fileID: 348200913}
+  - component: {fileID: 348200916}
   m_Layer: 5
   m_Name: UnlockSharkButton
   m_TagString: Giveborder
@@ -30699,6 +30887,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 348200916}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &348200914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30736,6 +30935,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348200911}
   m_CullTransparentMesh: 0
+--- !u!114 &348200916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348200911}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5b3b68f7cb5ae48b4cb81ffdb021b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayButton: {fileID: 348200911}
 --- !u!1 &348248147
 GameObject:
   m_ObjectHideFlags: 0
@@ -35763,6 +35975,28 @@ MonoBehaviour:
       - m_Target: {fileID: 78430467}
         m_MethodName: SubscriptionContinueButtonClick
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 165196663}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 165196663}
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -87891,6 +88125,7 @@ GameObject:
   - component: {fileID: 894745888}
   - component: {fileID: 894745890}
   - component: {fileID: 894745889}
+  - component: {fileID: 894745891}
   m_Layer: 5
   m_Name: ContinueButtonPanel
   m_TagString: Untagged
@@ -87957,6 +88192,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894745887}
   m_CullTransparentMesh: 0
+--- !u!114 &894745891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894745887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5b3b68f7cb5ae48b4cb81ffdb021b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayButton: {fileID: 894745887}
 --- !u!1 &894756994
 GameObject:
   m_ObjectHideFlags: 0
@@ -116625,6 +116873,7 @@ GameObject:
   - component: {fileID: 1042845547}
   - component: {fileID: 1042845546}
   - component: {fileID: 1042845548}
+  - component: {fileID: 1042845549}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Giveborder
@@ -116744,6 +116993,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1042845549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042845544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5b3b68f7cb5ae48b4cb81ffdb021b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayButton: {fileID: 1042845544}
 --- !u!1 &1043046162
 GameObject:
   m_ObjectHideFlags: 0
@@ -128871,6 +129133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1168924437}
   - component: {fileID: 1168924438}
+  - component: {fileID: 1168924439}
   m_Layer: 5
   m_Name: TutorialPanel
   m_TagString: Untagged
@@ -128932,6 +129195,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1168924439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168924436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f08e4ec34cd9546b99daf8dd9191bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1169019079
 GameObject:
   m_ObjectHideFlags: 0
@@ -130002,7 +130277,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 434}
+  m_AnchoredPosition: {x: 0, y: 370}
   m_SizeDelta: {x: 800, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1185003903
@@ -155186,6 +155461,8 @@ GameObject:
   - component: {fileID: 1487378834}
   - component: {fileID: 1487378836}
   - component: {fileID: 1487378835}
+  - component: {fileID: 1487378837}
+  - component: {fileID: 1487378838}
   m_Layer: 5
   m_Name: WeekelyButtonPanel
   m_TagString: Untagged
@@ -155252,6 +155529,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487378833}
   m_CullTransparentMesh: 0
+--- !u!114 &1487378837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487378833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d831c8e9d5b3fa144a8008d584c2171e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonObject: {fileID: 1487378833}
+--- !u!95 &1487378838
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487378833}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d02e51f7444e21c42ab7e5885282049a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1487991306
 GameObject:
   m_ObjectHideFlags: 0
@@ -161078,6 +161387,7 @@ GameObject:
   - component: {fileID: 1504255346}
   - component: {fileID: 1504255349}
   - component: {fileID: 1504255348}
+  - component: {fileID: 1504255347}
   m_Layer: 5
   m_Name: PurchasePanel
   m_TagString: Untagged
@@ -161107,6 +161417,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -300}
   m_SizeDelta: {x: 535, y: 263}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1504255347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504255345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5b3b68f7cb5ae48b4cb81ffdb021b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayButton: {fileID: 1504255345}
 --- !u!114 &1504255348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207587,6 +207910,7 @@ GameObject:
   - component: {fileID: 1850529139}
   - component: {fileID: 1850529138}
   - component: {fileID: 1850529137}
+  - component: {fileID: 1850529140}
   m_Layer: 5
   m_Name: BitePanel
   m_TagString: Untagged
@@ -207696,6 +208020,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850529135}
   m_CullTransparentMesh: 0
+--- !u!114 &1850529140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850529135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5b3b68f7cb5ae48b4cb81ffdb021b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayButton: {fileID: 1850529135}
 --- !u!1 &1850938048
 GameObject:
   m_ObjectHideFlags: 0
@@ -223474,7 +223811,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964025921}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 85163d7ff187b244f8ef7ab8052a1464, type: 2}
   m_CullingMode: 0

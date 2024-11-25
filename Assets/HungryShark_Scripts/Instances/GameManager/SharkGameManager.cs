@@ -306,7 +306,16 @@ namespace SharkGame
         #region Health Timer
         internal void StartTimer()
         {
-            if(CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+            if (CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
+            {
+                Debug.Log("Starttimer1");
+                StartCoroutine(StartHealthTimer(_healthDuration));
+            }
+        }
+
+        internal void StartHealthTimer()
+        {
+            if (CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
                 StartCoroutine(StartHealthTimer(_healthDuration));
         }
 

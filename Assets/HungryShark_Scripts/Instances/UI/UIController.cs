@@ -536,7 +536,6 @@ namespace SharkGame
         public void EndDirectionTutorial()
         {
             SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameHold;
-
             GameObject.Find("Player_Shark").GetComponent<Player>().enabled = false;
             StartCoroutine(AnimateTutorialUI());
         }
@@ -558,8 +557,15 @@ namespace SharkGame
             //isTutorialEnabled = false;
             SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GameStart;
             GameObject.Find("Player_Shark").GetComponent<Player>().enabled = true;
+
+           // StartHealthTimer();
+
         }
 
+        private void StartHealthTimer()
+        {
+            SharkGameManager.Instance.StartTimer();
+        }
 
         public void UpdateKillAmount()
         {
@@ -1038,7 +1044,7 @@ namespace SharkGame
             // Perform actions after animation finishes
             Debug.Log("Animation clip finished!");
             _selectionPanel.GetComponent<Animator>().enabled = false;
-            rightButton.GetComponent<ButtonAnimation>().enabled = true;
+            //rightButton.GetComponent<ButtonAnimation>().enabled = true;
         }
 
         public void SubscriptionContinueButtonClick()

@@ -481,11 +481,13 @@ namespace SharkGame
             // Mark the initial movement as completed
             initialMovementCompleted = true;
 
-            if (UIController.Instance.IsTutorialEnabled == 0) EnableInput();
+            if (UIController.Instance.IsTutorialEnabled == 0)
+            {
+                EnableInput();
+            }
 
             //EnableInput();
 
-            SharkGameManager.Instance.StartTimer();
 
             if (UIController.Instance.IsTutorialEnabled == 1)
             {
@@ -501,9 +503,13 @@ namespace SharkGame
                 }
 
                 //UIController.Instance.EnableTutorial();
-
             }
-            
+
+            else if(UIController.Instance.IsTutorialEnabled == 0)
+            {
+                SharkGameManager.Instance.StartTimer();
+            }
+
         }
 
         private IEnumerator SharkMovementInitial()
@@ -551,7 +557,7 @@ namespace SharkGame
             // Mark the initial movement as completed
             initialMovementCompleted = true;
 
-            SharkGameManager.Instance.StartTimer();
+            //SharkGameManager.Instance.StartTimer();
         }
 
         private void HandleMovement()
