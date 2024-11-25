@@ -346,8 +346,8 @@ namespace SharkGame
 
             SetDailyRewardButtonInteractions();
 
-            if (!AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(false);
-            else if (AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(true);
+            if (!AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(true);
+            else if (AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(false);
         }
 
         private void Update()
@@ -361,72 +361,6 @@ namespace SharkGame
                     _GamePanel.SetActive(false);
                     SharkGameManager.Instance.CurrentGameMode = SharkGameDataModel.GameMode.GamePause;
                     SoundManager.Instance.PlayGameAudioClip(SharkGameDataModel.Sound.MainThemeSound, true);
-                }
-            }
-            else if (currentScreen == SharkGameDataModel.Screen.SelectionPanel)
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _mainMenuPanel.SetActive(true);
-                    _selectionPanel.SetActive(false);
-                    currentSharkIndex = 0;
-                    foreach (var item in _duplicateSharks)
-                    {
-                        item.SetActive(false);
-                        item.transform.position = new Vector3(_duplicateSharkXValue, item.transform.position.y, item.transform.position.z);
-                    }
-                    _bitePanel.SetActive(true);
-                    _purchasePanel.SetActive(false);
-                    ResetAllSharkHealthUIPanels();
-                    currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
-                }
-            }
-            else if (currentScreen == SharkGameDataModel.Screen.UnlockFullGamePanel)
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _unlockFullGamePanel.SetActive(false);
-                    _subscriptionPage.SetActive(true);
-                    currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
-                    SharkGameManager.Instance.ResetGameFromStartingLevel();
-                    SharkGameManager.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
-                }
-            }
-
-            else if (currentScreen == SharkGameDataModel.Screen.ThreePackSharkPanel)
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    if (!quitButtonClicked)
-                    {
-                        if (SharkGameManager.Instance.IsLevelFail)
-                        {
-                            _5PackSharkUIPanel.SetActive(false);
-                            SharkGameManager.Instance.IsLevelFail = false;
-                            EnableLoadingScreen();
-                        }
-                        else
-                        {
-                            _5PackSharkUIPanel.SetActive(false);
-                            _mainMenuPanel.SetActive(true);
-                            currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
-                        }
-                    }
-                    else
-                    {
-                        _5PackSharkUIPanel.SetActive(false);
-                        EnableLoadingScreen();
-                    }
-                }
-            }
-
-
-            else if (currentScreen == SharkGameDataModel.Screen.UnlockAllSharksPanel)
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _unlockAllSharksPanel.SetActive(false);
-                    EnableLoadingScreen();
                 }
             }
 
@@ -1695,10 +1629,10 @@ namespace SharkGame
                 {
                     _dailyRewardPanel.SetActive(true);
                     _dailyRewardPanel.GetComponent<ButtonHighlighter>().SetDefaultButton(_dailyRewardList[dayValue]._dailyRewardButton.gameObject);
-                    if (!AndroidTV.IsAndroidOrFireTv())
-                    {
-                        _dailyRewardList[dayValue]._dailyRewardButton.GetComponent<ButtonAnimation>().enabled = true;
-                    }
+                    //if (!AndroidTV.IsAndroidOrFireTv())
+                    //{
+                    //    _dailyRewardList[dayValue]._dailyRewardButton.GetComponent<ButtonAnimation>().enabled = true;
+                    //}
                     _dailyRewardUIPanel.transform.DOScale(Vector3.one, 1f);
                     currentScreen = SharkGameDataModel.Screen.DailyRewardPanel;
                     Debug.Log("You got a reward today");

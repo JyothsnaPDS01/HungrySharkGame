@@ -40,15 +40,15 @@ public class ButtonAnimation : MonoBehaviour
         
     }
 
-    public void AnimateDefaultButton()
-    {
-        Debug.Log("AnimateDefaultButton");
-        this.transform.localScale = Vector3.one;
+    //public void AnimateDefaultButton()
+    //{
+    //    Debug.Log("AnimateDefaultButton");
+    //    this.transform.localScale = Vector3.one;
 
-        this.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1.5f)
-           .SetLoops(-1, LoopType.Yoyo)  // Loop indefinitely with a "yoyo" effect
-           .SetEase(Ease.InOutSine);
-    }
+    //    this.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1.5f)
+    //       .SetLoops(-1, LoopType.Yoyo)  // Loop indefinitely with a "yoyo" effect
+    //       .SetEase(Ease.InOutSine);
+    //}
 
     public void KillButtonAnimation()
     {
