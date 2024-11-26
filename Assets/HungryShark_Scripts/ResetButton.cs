@@ -1,12 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Script;
 
-public class ResetButton : MonoBehaviour
+namespace SharkGame
 {
-    public GameObject buttonObject;
-    public void ResetScale()
+    public class ResetButton : MonoBehaviour
     {
-        transform.localScale = Vector3.one;
+        public GameObject buttonObject;
+
+        private void Start()
+        {
+            if (AndroidTV.IsAndroidOrFireTv())
+            {
+                buttonObject.GetComponent<Animator>().enabled = false;
+            }
+        }
+        public void ResetScale()
+        {
+            transform.localScale = Vector3.one;
+        }
     }
 }

@@ -286,9 +286,6 @@ namespace SharkGame
         [Header("Pause Button")]
         [SerializeField] private GameObject _pauseButton;
 
-        [SerializeField] private Text _degubText;
-
-
         #endregion
 
         #region MonoBehaviour Methods
@@ -345,6 +342,16 @@ namespace SharkGame
             Debug.LogError("DayValue" + dayValue);
 
             SetDailyRewardButtonInteractions();
+
+            if (AndroidTV.IsAndroidOrFireTv())
+            {
+                _annuallyButtonAnimator.enabled = false;
+            }
+            else if (!AndroidTV.IsAndroidOrFireTv())
+            {
+                _annuallyButtonAnimator.enabled = true;
+            }
+
 
             if (!AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(true);
             else if (AndroidTV.IsAndroidOrFireTv()) _pauseButton.SetActive(false);
@@ -999,6 +1006,7 @@ namespace SharkGame
 
         [Header("UI Panels")]
         [SerializeField] private GameObject _subscriptionPage;
+        [SerializeField] private Animator _annuallyButtonAnimator;
         [SerializeField] private GameObject _mainMenuPanel;
 
         public void SubscriptionButtonClick()
@@ -1291,7 +1299,10 @@ namespace SharkGame
             if (SharkGameManager.Instance.CurrentCoins <= 2000)
             {
                 _unlockSharkCoinPopupPanel.SetActive(true);
-                _purchasePanel.GetComponent<Animator>().enabled = false;
+                if (!AndroidTV.IsAndroidOrFireTv())
+                {
+                    _purchasePanel.GetComponent<Animator>().enabled = false;
+                }
                 _unlockSharkCoinPopupUIPanel.transform.DOScale(Vector3.one, 1f);
                 _unlockSharkpopUpTMP.text = "Need" + " " + (2000 - SharkGameManager.Instance.CurrentCoins) +" "+"Coins More";
             }
@@ -1300,7 +1311,8 @@ namespace SharkGame
         {
             _unlockSharkCoinPopupPanel.SetActive(false);
             _unlockSharkCoinPopupUIPanel.transform.localScale = Vector3.zero;
-            _purchasePanel.GetComponent<Animator>().enabled = true;
+            if (!AndroidTV.IsAndroidOrFireTv())
+                _purchasePanel.GetComponent<Animator>().enabled = true;
 
             if (AndroidTV.IsAndroidOrFireTv())
             {
@@ -1630,7 +1642,16 @@ namespace SharkGame
                     }
                     _bitePanel.SetActive(true);
                     _purchasePanel.SetActive(false);
+                    _unlockSharksCoinButtonPanel.SetActive(false);
                     ResetAllSharkHealthUIPanels();
+
+                    Navigation _LeftButton = leftButton.navigation;
+                    _LeftButton.selectOnDown = _biteButton;
+                    leftButton.navigation = _LeftButton;
+                    Navigation _Right = rightButton.navigation;
+                    _Right.selectOnDown = _biteButton;
+                    rightButton.navigation = _Right;
+
                     currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
                 }
                 else if(SharkGameManager.Instance.CurrentLevel > 1)

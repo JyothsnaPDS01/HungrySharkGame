@@ -4724,6 +4724,7 @@ MonoBehaviour:
   _duplicateShark: {fileID: 1465757741}
   _3PackSharkUIPanel: {fileID: 1339877661}
   _subscriptionPage: {fileID: 451701732}
+  _annuallyButtonAnimator: {fileID: 1964025925}
   _mainMenuPanel: {fileID: 1616109921}
   rightButton: {fileID: 1776811422}
   leftButton: {fileID: 1775770490}
@@ -223740,7 +223741,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964025921}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 85163d7ff187b244f8ef7ab8052a1464, type: 2}
   m_CullingMode: 0
