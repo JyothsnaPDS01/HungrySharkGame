@@ -315,8 +315,7 @@ namespace SharkGame
 
         internal void StartHealthTimer()
         {
-            if (CurrentGameMode == SharkGameDataModel.GameMode.GameStart)
-                StartCoroutine(StartHealthTimer(_healthDuration));
+             StartCoroutine(StartHealthTimer(_healthDuration));
         }
 
         public IEnumerator StartHealthTimer(float duration)

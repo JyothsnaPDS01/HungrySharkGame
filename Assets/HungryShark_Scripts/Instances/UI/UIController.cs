@@ -1016,6 +1016,7 @@ namespace SharkGame
             _mainMenuPanel.SetActive(false);
             DisbaleInGameParticleEffects();
             _selectionPanel.SetActive(true);
+            if (!AndroidTV.IsAndroidOrFireTv()) _bitePanel.GetComponent<Animator>().enabled = true;
 
             StartCoroutine(OffSelectionPanelAnimator());
             _sharkSelectionBGPlane.SetActive(true);
@@ -1056,6 +1057,7 @@ namespace SharkGame
             {
                 _sharkSelectionBGPlane.SetActive(true);
                 _selectionPanel.SetActive(true);
+                if (!AndroidTV.IsAndroidOrFireTv()) _bitePanel.GetComponent<Animator>().enabled = true;
                 currentScreen = SharkGameDataModel.Screen.SelectionPanel;
                 _duplicateSharks[currentSharkIndex].SetActive(true);
                 ResetAllSharkHealthUIPanels();
@@ -1139,6 +1141,11 @@ namespace SharkGame
                     Debug.LogError("else case oin shark");
                     _purchasePanel.SetActive(true);
                     _bitePanel.SetActive(false);
+                    if (!AndroidTV.IsAndroidOrFireTv())
+                    {
+                        _bitePanel.GetComponent<Animator>().enabled = false;
+                        _purchasePanel.GetComponent<Animator>().enabled = true;
+                    }
                     Navigation _LeftButton = leftButton.navigation;
                     _LeftButton.selectOnDown = _purchaseButton;
                     leftButton.navigation = _LeftButton;
@@ -1191,13 +1198,7 @@ namespace SharkGame
                 sharks_Buy.GetComponent<IAPButton>().productId = "angryhungryshark_shark" + (CurrentSharkIndex + 1).ToString();
             }
 
-            if(currentSharkIndex == _duplicateSharks.Capacity - 1)
-            {
-                leftButton.GetComponent<ButtonAnimation>().enabled = true;
-                rightButton.transform.DOKill();
-                rightButton.GetComponent<ButtonAnimation>().enabled = false;
-                rightButton.transform.localScale = Vector3.one;
-            }
+           
         }
 
         public void LeftArrowClick()
@@ -1223,6 +1224,11 @@ namespace SharkGame
                     {
                         _purchasePanel.SetActive(false);
                         _bitePanel.SetActive(true);
+                        if (!AndroidTV.IsAndroidOrFireTv())
+                        {
+                            _bitePanel.GetComponent<Animator>().enabled = true;
+                            _purchasePanel.GetComponent<Animator>().enabled = false;
+                        }
                     }
                 }
                 else if (!PlayerPrefs.HasKey("Shark" + (currentSharkIndex)))
@@ -1230,21 +1236,19 @@ namespace SharkGame
                     Debug.LogError("else case oin shark");
                     _purchasePanel.SetActive(true);
                     _bitePanel.SetActive(false);
+
+                    if (!AndroidTV.IsAndroidOrFireTv())
+                    {
+                        _bitePanel.GetComponent<Animator>().enabled = false;
+                        _purchasePanel.GetComponent<Animator>().enabled = true;
+                    }
+
                     Navigation _LeftButton = leftButton.navigation;
                     _LeftButton.selectOnDown = _purchaseButton;
                     leftButton.navigation = _LeftButton;
                     Navigation _Right = rightButton.navigation;
                     _Right.selectOnDown = _purchaseButton;
                     rightButton.navigation = _Right;
-
-                    rightButton.GetComponent<ButtonAnimation>().enabled = true;
-                    rightButton.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1f)
-           .SetLoops(-1, LoopType.Yoyo)  // Loop indefinitely with a "yoyo" effect
-           .SetEase(Ease.InOutSine);
-                    //rightButton.GetComponent<ButtonAnimation>().AnimateDefaultButton();
-                    leftButton.transform.DOKill();
-                    leftButton.transform.localScale = Vector3.one;
-                    leftButton.GetComponent<ButtonAnimation>().enabled = false;
                 }
 
                 if(currentSharkIndex == 1)
@@ -1267,6 +1271,12 @@ namespace SharkGame
             {
                 _bitePanel.SetActive(true);
                 _purchasePanel.SetActive(false);
+
+                if (!AndroidTV.IsAndroidOrFireTv())
+                {
+                    _bitePanel.GetComponent<Animator>().enabled = true;
+                    _purchasePanel.GetComponent<Animator>().enabled = false;
+                }
                 Navigation _LeftButton = leftButton.navigation;
                 _LeftButton.selectOnDown = _biteButton;
                 leftButton.navigation = _LeftButton;
@@ -1281,6 +1291,7 @@ namespace SharkGame
             if (SharkGameManager.Instance.CurrentCoins <= 2000)
             {
                 _unlockSharkCoinPopupPanel.SetActive(true);
+                _purchasePanel.GetComponent<Animator>().enabled = false;
                 _unlockSharkCoinPopupUIPanel.transform.DOScale(Vector3.one, 1f);
                 _unlockSharkpopUpTMP.text = "Need" + " " + (2000 - SharkGameManager.Instance.CurrentCoins) +" "+"Coins More";
             }
@@ -1289,11 +1300,15 @@ namespace SharkGame
         {
             _unlockSharkCoinPopupPanel.SetActive(false);
             _unlockSharkCoinPopupUIPanel.transform.localScale = Vector3.zero;
+            _purchasePanel.GetComponent<Animator>().enabled = true;
 
-            if(currentScreen == SharkGameDataModel.Screen.SelectionPanel)
+            if (AndroidTV.IsAndroidOrFireTv())
             {
-                _selectionPanel.GetComponent<ButtonHighlighter>().HighlightButton(rightButton);
-                EventSystem.current.SetSelectedGameObject(rightButton.gameObject);
+                if (currentScreen == SharkGameDataModel.Screen.SelectionPanel)
+                {
+                    _selectionPanel.GetComponent<ButtonHighlighter>().HighlightButton(rightButton);
+                    EventSystem.current.SetSelectedGameObject(rightButton.gameObject);
+                }
             }
         }
 
@@ -1308,6 +1323,13 @@ namespace SharkGame
                 yield return new WaitForSeconds(1f);
                 _purchasePanel.SetActive(false);
                 _bitePanel.SetActive(true);
+
+                if (!AndroidTV.IsAndroidOrFireTv())
+                {
+                    _bitePanel.GetComponent<Animator>().enabled = true;
+                    _purchasePanel.GetComponent<Animator>().enabled = false;
+                }
+
                 Navigation _LeftButton = leftButton.navigation;
                 _LeftButton.selectOnDown = _biteButton;
                 leftButton.navigation = _LeftButton;
@@ -1392,6 +1414,7 @@ namespace SharkGame
 
             _underWaterEnvironmentPanel.SetActive(false);
             _duplicateCamera.SetActive(true);
+            if (!AndroidTV.IsAndroidOrFireTv()) _bitePanel.GetComponent<Animator>().enabled = true;
 
             SharkGameManager.Instance.ResetPlayerAndObjectPooling();
         }
@@ -1411,6 +1434,7 @@ namespace SharkGame
             if (previousScreen == SharkGameDataModel.Screen.FivePackSharkPanel)
             {
                 _selectionPanel.SetActive(true);
+                if (!AndroidTV.IsAndroidOrFireTv()) _bitePanel.GetComponent<Animator>().enabled = true;
                 currentScreen = SharkGameDataModel.Screen.SelectionPanel;
                 _duplicateCamera.SetActive(true);
                 _sharkSelectionBGPlane.SetActive(true);
@@ -1594,18 +1618,27 @@ namespace SharkGame
 
             else if (currentScreen == SharkGameDataModel.Screen.SelectionPanel)
             {
-                _mainMenuPanel.SetActive(true);
-                _selectionPanel.SetActive(false);
-                currentSharkIndex = 0;
-                foreach (var item in _duplicateSharks)
+                if (SharkGameManager.Instance.CurrentLevel == 1)
                 {
-                    item.SetActive(false);
-                    item.transform.position = new Vector3(_duplicateSharkXValue, item.transform.position.y, item.transform.position.z);
+                    _mainMenuPanel.SetActive(true);
+                    _selectionPanel.SetActive(false);
+                    currentSharkIndex = 0;
+                    foreach (var item in _duplicateSharks)
+                    {
+                        item.SetActive(false);
+                        item.transform.position = new Vector3(_duplicateSharkXValue, item.transform.position.y, item.transform.position.z);
+                    }
+                    _bitePanel.SetActive(true);
+                    _purchasePanel.SetActive(false);
+                    ResetAllSharkHealthUIPanels();
+                    currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
                 }
-                _bitePanel.SetActive(true);
-                _purchasePanel.SetActive(false);
-                ResetAllSharkHealthUIPanels();
-                currentScreen = SharkGameDataModel.Screen.MainMenuScreen;
+                else if(SharkGameManager.Instance.CurrentLevel > 1)
+                {
+                    _selectionPanel.SetActive(false);
+                    _subscriptionPage.SetActive(true);
+                    currentScreen = SharkGameDataModel.Screen.SubscriptionPanel;
+                }
             }
             else if(currentScreen == SharkGameDataModel.Screen.MainMenuScreen)
             {
